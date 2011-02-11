@@ -1,0 +1,2 @@
+soundkonverter: shlib-without-versioned-soname usr/lib/libsoundkonvertercore.so libsoundkonvertercore.so
+soundkonverter: package-name-doesnt-match-sonames libsoundkonvertercore        

@@ -1,0 +1,24 @@
+soundkonverter for Debian
+-------------------------
+
+Due to patents problems, many decoders/encoders aren't available on Debian.
+
+At the moment you can find on Debian:
+ * cdda2wav (provides cdda2wav)
+ * cdparanoia (provides cdparanoia)
+ * faad (provides faad)
+ * ffmpeg (provides ffmpeg)
+ * flac (provides flac/metaflac)
+ * mp3gain (provides mp3gain)
+ * mplayer (provides mplayer)
+ * mppenc (provides mppenc)
+ * speex (provides speexenc/speexdec)
+ * timidity (provides timidity)
+ * vorbis-tools (provides oggdec/oggenc)
+ * vorbisgain (provides vorbisgain)
+ * wavpack (provide wvunpack/wavpack/wvgain)
+
+Note: you don't need all of the mentionned programs to use soundKonverter.
+
+ -- Fathi Boudra <fabo@debian.org>  Sat, 13 Oct 2007 14:50:28 +0200
+

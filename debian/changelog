@@ -1,0 +1,75 @@
+soundkonverter (0.9.94-2) unstable; urgency=low
+
+  * Made build system cope with upcoming linker changes.
+
+ -- Michael Meskes <meskes@debian.org>  Fri, 11 Feb 2011 11:02:10 +0100
+
+soundkonverter (0.9.94-1) unstable; urgency=low
+
+  * Imported Upstream version 0.9.94 (Closes: #595372, #602691)
+  * Bump Standards-Version to 3.9.1 (no changes needed).
+
+ -- Michael Meskes <meskes@debian.org>  Tue, 01 Feb 2011 10:35:10 +0100
+
+soundkonverter (0.9.91-1) unstable; urgency=low
+
+  * New Upstream version 0.9.91
+  * Bump Standards-Version to 3.9.0 (no changes needed).
+
+ -- Michael Meskes <meskes@debian.org>  Wed, 21 Jul 2010 11:28:07 +0200
+
+soundkonverter (0.9.90-1) unstable; urgency=low
+
+  * Imported Upstream version 0.9.90 for KDE4 which compiles fine with
+    binutils-gold. (Closes: #556353)
+  * Bump Standards-Version to 3.8.4 (no changes needed).
+  * Moved to source version 3.0.
+  * Added watch file.
+  * Added missing build dependencies. (Closes: #565850)
+  * Added information about git repository.
+  * Added the word "Copyright" to copyright file to make lintian happy.
+
+ -- Michael Meskes <meskes@debian.org>  Wed, 05 May 2010 09:15:31 +0200
+
+soundkonverter (0.3.10-1) unstable; urgency=low
+
+  * New upstream release.
+  * Bump Standards-Version from 3.8.1 to 3.8.2 (no changes needed).
+
+ -- Fathi Boudra <fabo@debian.org>  Sun, 05 Jul 2009 12:38:50 +0200
+
+soundkonverter (0.3.8-3) unstable; urgency=low
+
+  * Drop soundkonverter-amarok since it doesn't work with amarok 2.
+    (Closes: #528350)
+  * Add patch to fix ftbfs with gcc 4.4. Thanks to Martin Michlmayr.
+    (Closes: #505724)
+  * Bump Standards-Version from 3.8.0 to 3.8.1 (no changes needed).
+
+ -- Fathi Boudra <fabo@debian.org>  Tue, 12 May 2009 16:04:07 +0200
+
+soundkonverter (0.3.8-2) unstable; urgency=low
+
+  * Changed build dependency from automake-1.9 to automake. (Closes: #488814)
+
+ -- Michael Meskes <meskes@debian.org>  Tue, 01 Jul 2008 16:16:14 +0200
+
+soundkonverter (0.3.8-1) unstable; urgency=low
+
+  * New upstream version. (Closes: #488227)
+  * Made amarok script list the current version number. (Closes: #447623)
+  * Added a note to README.Debian about how to enable soundkonverter-amarok
+    script. (Closes: #447625)
+  * Moved homepage in description to its own field.
+  * Made lintian happy by slightly rewording copyright file.
+  * Bumped Standards-Version to 3.8.0, no changes needed.
+  * Added myself as uploader.
+
+ -- Michael Meskes <meskes@debian.org>  Fri, 27 Jun 2008 12:38:16 +0200
+
+soundkonverter (0.3.6-1) unstable; urgency=low
+
+  * Initial release. (Closes: #446403)
+
+ -- Fathi Boudra <fboudra@free.fr>  Sat, 13 Oct 2007 14:50:28 +0200
+

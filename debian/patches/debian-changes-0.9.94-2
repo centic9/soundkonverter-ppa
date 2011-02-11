@@ -1,0 +1,36 @@
+Description: Upstream changes introduced in version 0.9.94-2
+ This patch has been created by dpkg-source during the package build.
+ Here's the last changelog entry, hopefully it gives details on why
+ those changes were made:
+ .
+ soundkonverter (0.9.94-2) unstable; urgency=low
+ .
+   * Made build system cope with upcoming linker changes.
+ .
+ The person named in the Author field signed this changelog entry.
+Author: Michael Meskes <meskes@debian.org>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: http://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- soundkonverter-0.9.94.orig/CMakeLists.txt
++++ soundkonverter-0.9.94/CMakeLists.txt
+@@ -138,7 +138,7 @@ set(soundkonverter_SRCS
+ 
+ kde4_add_executable(soundkonverter ${soundkonverter_SRCS})
+ 
+-target_link_libraries(soundkonverter ${KDE4_KDEUI_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KIO_LIBS} ${TAGLIB_LIBRARIES} kcddb ${CDPARANOIA_LIBRARIES} soundkonvertercore)
++target_link_libraries(soundkonverter ${KDE4_KDEUI_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KIO_LIBS} ${KDE4_SOLID_LIBRARY} ${TAGLIB_LIBRARIES} kcddb ${CDPARANOIA_LIBRARIES} soundkonvertercore)
+ 
+ install(TARGETS soundkonverter DESTINATION ${BIN_INSTALL_DIR})
+ 
