@@ -1,0 +1,5 @@
+version=3
+
+opts=downloadurlmangle=s#blobs#blobs/raw# \
+ http://gitorious.org/soundkonverter/soundkonverter/trees/master/release /soundkonverter/soundkonverter/blobs/master/release/soundkonverter-([\d\.]*).tar.gz
+

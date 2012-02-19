@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Debian KDE Extras Team <pkg-kde-extras@lists.alioth.debian.org>
 Uploaders: Fathi Boudra <fabo@debian.org>, Mark Purcell <msp@debian.org>, Michael Meskes <meskes@debian.org>
 Build-Depends: cdbs, debhelper (>= 7), kdelibs5-dev, libtag1-dev, libcdparanoia-dev, libkcddb-dev, cmake
-Standards-Version: 3.9.1
+Standards-Version: 3.9.2
 Homepage: http://www.kde-apps.org/content/show.php?content=29024
 Vcs-Git: git://git.debian.org/pkg-kde/kde-extras/soundconverter.git
 Vcs-Browser: http://git.debian.org/?p=pkg-kde/kde-extras/soundconverter.git
