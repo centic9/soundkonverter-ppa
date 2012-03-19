@@ -1,91 +1,101 @@
-soundkonverter (1.3.2-1) unstable; urgency=low
+soundkonverter (1:1.4.0-1~yuuki2) precise; urgency=low
 
-  * New upstream version 1.3.2
+  * New upstream release 
 
- -- Michael Meskes <meskes@debian.org>  Sun, 19 Feb 2012 15:52:30 +0100
+ -- Yann Gilson <yann.gilson@gmail.com>  Mon, 19 Mar 2012 16:37:25 +0100
 
-soundkonverter (1.2.1-1) unstable; urgency=low
+soundkonverter (1:1.4.0-1~yuuki1) oneiric; urgency=low
 
-  * Added watch file.
-  * Removed linker patch because it was applied upstream.
-  * New upstream version.
-    (Closes: #456950, #485081, #513679, #582409, #593084, #653448)
-  * Bumped Standards-Version to 3.9.2, no changes needed.
+  * New upstream release 
 
- -- Michael Meskes <meskes@debian.org>  Wed, 11 Jan 2012 13:02:57 +0100
+ -- Yann Gilson <yann.gilson@gmail.com>  Mon, 19 Mar 2012 16:37:25 +0100
 
-soundkonverter (0.9.94-2) unstable; urgency=low
+soundkonverter (1:1.3.3-1~yuuki1) oneiric; urgency=low
 
-  * Made build system cope with upcoming linker changes.
+  * New upstream release 
 
- -- Michael Meskes <meskes@debian.org>  Fri, 11 Feb 2011 11:02:10 +0100
+ -- Yann Gilson <yann.gilson@gmail.com>  Thu, 23 Feb 2012 16:14:10 +0100
 
-soundkonverter (0.9.94-1) unstable; urgency=low
+soundkonverter (1:1.3.2-1~yuuki1) oneiric; urgency=low
 
-  * Imported Upstream version 0.9.94 (Closes: #595372, #602691)
-  * Bump Standards-Version to 3.9.1 (no changes needed).
+  * New upstream release 
 
- -- Michael Meskes <meskes@debian.org>  Tue, 01 Feb 2011 10:35:10 +0100
+ -- Yann Gilson <yann.gilson@gmail.com>  Thu, 16 Feb 2012 08:16:44 +0100
 
-soundkonverter (0.9.91-1) unstable; urgency=low
+soundkonverter (1:1.3.1-1~yuuki1) oneiric; urgency=low
 
-  * New Upstream version 0.9.91
-  * Bump Standards-Version to 3.9.0 (no changes needed).
+  * New upstream release 
 
- -- Michael Meskes <meskes@debian.org>  Wed, 21 Jul 2010 11:28:07 +0200
+ -- Yann Gilson <yann.gilson@gmail.com>  Sun, 12 Feb 2012 22:17:34 +0100
 
-soundkonverter (0.9.90-1) unstable; urgency=low
+soundkonverter (1:1.2.90-1~yuuki1) oneiric; urgency=low
 
-  * Imported Upstream version 0.9.90 for KDE4 which compiles fine with
-    binutils-gold. (Closes: #556353)
-  * Bump Standards-Version to 3.8.4 (no changes needed).
-  * Moved to source version 3.0.
-  * Added watch file.
-  * Added missing build dependencies. (Closes: #565850)
-  * Added information about git repository.
-  * Added the word "Copyright" to copyright file to make lintian happy.
+  * New upstream release 
 
- -- Michael Meskes <meskes@debian.org>  Wed, 05 May 2010 09:15:31 +0200
+ -- Yann Gilson <yann.gilson@gmail.com>  Sat, 28 Jan 2012 11:11:49 +0100
 
-soundkonverter (0.3.10-1) unstable; urgency=low
+soundkonverter (1:1.2.0-1~yuuki1) oneiric; urgency=low
 
-  * New upstream release.
-  * Bump Standards-Version from 3.8.1 to 3.8.2 (no changes needed).
+  * New upstream release 
 
- -- Fathi Boudra <fabo@debian.org>  Sun, 05 Jul 2009 12:38:50 +0200
+ -- Yann Gilson <yann.gilson@gmail.com>  Mon, 24 Oct 2011 11:03:18 +0200
 
-soundkonverter (0.3.8-3) unstable; urgency=low
+soundkonverter (1:1.1.90-1~yuuki1) oneiric; urgency=low
 
-  * Drop soundkonverter-amarok since it doesn't work with amarok 2.
-    (Closes: #528350)
-  * Add patch to fix ftbfs with gcc 4.4. Thanks to Martin Michlmayr.
-    (Closes: #505724)
-  * Bump Standards-Version from 3.8.0 to 3.8.1 (no changes needed).
+  * New upstream release 
 
- -- Fathi Boudra <fabo@debian.org>  Tue, 12 May 2009 16:04:07 +0200
+ -- Yann Gilson <yann.gilson@gmail.com>  Tue, 04 Oct 2011 16:40:49 +0200
 
-soundkonverter (0.3.8-2) unstable; urgency=low
+soundkonverter (1:1.1.0-1~yuuki2) oneiric; urgency=low
 
-  * Changed build dependency from automake-1.9 to automake. (Closes: #488814)
+  * Rebuilt for oneiric 
 
- -- Michael Meskes <meskes@debian.org>  Tue, 01 Jul 2008 16:16:14 +0200
+ -- Yann Gilson <yann.gilson@gmail.com>  Sat, 01 Oct 2011 15:50:17 +0200
 
-soundkonverter (0.3.8-1) unstable; urgency=low
+soundkonverter (1:1.1.0-1~yuuki1) natty; urgency=low
 
-  * New upstream version. (Closes: #488227)
-  * Made amarok script list the current version number. (Closes: #447623)
-  * Added a note to README.Debian about how to enable soundkonverter-amarok
-    script. (Closes: #447625)
-  * Moved homepage in description to its own field.
-  * Made lintian happy by slightly rewording copyright file.
-  * Bumped Standards-Version to 3.8.0, no changes needed.
-  * Added myself as uploader.
+  * New upstream release 
 
- -- Michael Meskes <meskes@debian.org>  Fri, 27 Jun 2008 12:38:16 +0200
+ -- Yann Gilson <yann.gilson@gmail.com>  Wed, 14 Sep 2011 19:29:27 +0200
 
-soundkonverter (0.3.6-1) unstable; urgency=low
+soundkonverter (1:1.0.0-1~yuuki1) natty; urgency=low
 
-  * Initial release. (Closes: #446403)
+  * New upstream release 
 
- -- Fathi Boudra <fboudra@free.fr>  Sat, 13 Oct 2007 14:50:28 +0200
+ -- Yann Gilson <yann.gilson@gmail.com>  Sun, 29 May 2011 21:42:27 +0200
 
+soundkonverter (1:0.9.95rc3-1~yuuki1) natty; urgency=low
+
+  * 3rd release candidate 
+
+ -- Yann Gilson <yann.gilson@gmail.com>  Sun, 10 Apr 2011 20:32:47 +0200
+
+soundkonverter (1.0~rc2-1~yuuki1) maverick; urgency=low
+
+  * 2nd release candidate 
+
+ -- Yann Gilson <yann.gilson@gmail.com>  Wed, 01 Dec 2010 17:32:10 +0100
+
+soundkonverter (1.0~rc1-1~yuuki1) maverick; urgency=low
+
+  * 1rst release candidate 
+
+ -- Yann Gilson <yann.gilson@gmail.com>  Tue, 02 Nov 2010 18:48:30 +0100
+
+soundkonverter (1.0~beta3-1~yuuki2) lucid; urgency=low
+
+  * New upstream beta version 
+
+ -- Yann Gilson <yann.gilson@gmail.com>  Thu, 09 Sep 2010 20:10:30 +0200
+
+soundkonverter (1.0~beta2-1~yuuki1) lucid; urgency=low
+
+  * New upstream version 
+
+ -- Yann Gilson <yann.gilson@gmail.com>  Fri, 16 Jul 2010 19:48:09 +0200
+
+soundkonverter (1.0~beta1-1~yuuki1) lucid; urgency=low
+
+  * New upstream version 
+
+ -- Yann Gilson <yann.gilson@gmail.com>  Thu, 06 May 2010 13:31:30 +0200
