@@ -1,7 +1,7 @@
 //
 // C++ Implementation: configgeneralpage
 //
-// Description: 
+// Description:
 //
 //
 // Author: Daniel Faust <hessijames@gmail.com>, (C) 2007
@@ -13,23 +13,22 @@
 
 #include "../config.h"
 
-#include <klocale.h>
-#include <kcombobox.h>
-#include <knuminput.h>
-#include <kiconloader.h>
-#include <klineedit.h>
-#include <kpushbutton.h>
-#include <kfiledialog.h>
+#include <KLocale>
+#include <KComboBox>
+#include <KLineEdit>
+#include <KPushButton>
+#include <KFileDialog>
+#include <KIntSpinBox>
+#include <KStandardDirs>
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qdir.h>
-#include <qregexp.h>
+#include <QLayout>
+#include <QLabel>
+#include <QCheckBox>
+#include <QDir>
+
 #include <solid/device.h>
+#include <solid/storagevolume.h>
 
-
-// ### soundkonverter 0.4: add an option to use vfat save names when the output device is vfat
 
 ConfigGeneralPage::ConfigGeneralPage( Config *_config, QWidget *parent )
     : ConfigPageBase( parent ),
@@ -56,6 +55,7 @@ ConfigGeneralPage::ConfigGeneralPage( Config *_config, QWidget *parent )
     QLabel *lDefaultProfile = new QLabel( i18n("Default profile")+":", this );
     defaultProfileBox->addWidget( lDefaultProfile );
     cDefaultProfile = new KComboBox( this );
+    QStringList sDefaultProfile;
     sDefaultProfile += i18n("Last used");
     sDefaultProfile += i18n("Very low");
     sDefaultProfile += i18n("Low");
@@ -91,30 +91,19 @@ ConfigGeneralPage::ConfigGeneralPage( Config *_config, QWidget *parent )
 //     cPriority->setCurrentIndex( config->data.general.priority / 10 ); // NOTE that just works for 'normal' and 'low'
 //     priorityBox->addWidget( cPriority );
 //     connect( cPriority, SIGNAL(activated(int)), this, SIGNAL(configChanged()) );
-// 
+//
 //     box->addSpacing( 5 );
-
-    QHBoxLayout *useVFATNamesBox = new QHBoxLayout( 0 );
-    box->addLayout( useVFATNamesBox );
-    cUseVFATNames = new QCheckBox( i18n("Use FAT compatible output file names"), this );
-    cUseVFATNames->setToolTip( i18n("Replaces some special characters like \'?\' by \'_\'.") );
-    cUseVFATNames->setChecked( config->data.general.useVFATNames );
-    useVFATNamesBox->addWidget( cUseVFATNames );
-    connect( cUseVFATNames, SIGNAL(toggled(bool)), this, SIGNAL(configChanged()) );
-
-    box->addSpacing( 5 );
 
     QHBoxLayout *conflictHandlingBox = new QHBoxLayout( 0 );
     box->addLayout( conflictHandlingBox );
     QLabel *lConflictHandling = new QLabel( i18n("Conflict handling")+":", this );
     conflictHandlingBox->addWidget( lConflictHandling );
     cConflictHandling = new KComboBox( this );
-    sConflictHandling += i18n("Generate new file name");
-    sConflictHandling += i18n("Skip file");
-//     sConflictHandling += i18n("Overwrite file");
-    cConflictHandling->addItems( sConflictHandling );
+    cConflictHandling->addItem( i18n("Generate new file name") );
+    cConflictHandling->addItem( i18n("Skip file") );
+//     cConflictHandling->addItem( i18n("Overwrite file") );
     cConflictHandling->setToolTip( i18n("Do that if the output file already exists") );
-    cConflictHandling->setCurrentIndex( config->data.general.conflictHandling );
+    cConflictHandling->setCurrentIndex( (int)config->data.general.conflictHandling );
     conflictHandlingBox->addWidget( cConflictHandling );
     connect( cConflictHandling, SIGNAL(activated(int)), this, SIGNAL(configChanged()) );
 
@@ -126,25 +115,25 @@ ConfigGeneralPage::ConfigGeneralPage( Config *_config, QWidget *parent )
     numFilesBox->addWidget( lNumFiles );
     iNumFiles = new KIntSpinBox( 1, 100, 1, 3, this );
     QList<Solid::Device> processors = Solid::Device::listFromType(Solid::DeviceInterface::Processor, QString());
-    iNumFiles->setToolTip( i18n("You shouldn't set this number higher then the amount of installed processor cores.\nThere have been %1 processor cores detected.").arg(processors.count()) );
+    iNumFiles->setToolTip( i18n("You shouldn't set this number higher than the amount of installed processor cores.\nThere have been %1 processor cores detected.").arg(processors.count()) );
     iNumFiles->setValue( config->data.general.numFiles );
     numFilesBox->addWidget( iNumFiles );
     connect( iNumFiles, SIGNAL(valueChanged(int)), this, SIGNAL(configChanged()) );
+    numFilesBox->setStretch( 0, 3 );
+    numFilesBox->setStretch( 1, 1 );
 
     box->addSpacing( 5 );
 
-    QHBoxLayout *updateDelayBox = new QHBoxLayout( 0 );
-    box->addLayout( updateDelayBox );
-    QLabel* lUpdateDelay = new QLabel( i18n("Status update delay")+":", this );
-    updateDelayBox->addWidget( lUpdateDelay );
-    iUpdateDelay = new KIntSpinBox( 50, 1000, 50, 100, parent );
-    iUpdateDelay->setToolTip( i18n("Update the progress bar in this interval (time in milliseconds)") );
-    iUpdateDelay->setSuffix( i18nc("milliseconds","ms") );
-    iUpdateDelay->setValue( config->data.general.updateDelay );
-    updateDelayBox->addWidget( iUpdateDelay );
-    connect( iUpdateDelay, SIGNAL(valueChanged(int)), this, SIGNAL(configChanged()) );
+//     QHBoxLayout *waitForAlbumGainBox = new QHBoxLayout( 0 );
+//     box->addLayout( waitForAlbumGainBox );
+    cWaitForAlbumGain = new QCheckBox( i18n("Apply album gain to converted files"), this );
+    cWaitForAlbumGain->setToolTip( i18n("Keep songs of the same album waiting in file list in order to apply album gain to all files.") );
+    cWaitForAlbumGain->setChecked( config->data.general.waitForAlbumGain );
+    cWaitForAlbumGain->hide();
+//     waitForAlbumGainBox->addWidget( cWaitForAlbumGain );
+//     connect( cWaitForAlbumGain, SIGNAL(toggled(bool)), this, SIGNAL(configChanged()) );
 
-    box->addSpacing( 5 );
+//     box->addSpacing( 5 );
 
     QHBoxLayout *createActionsMenuBox = new QHBoxLayout( 0 );
     box->addLayout( createActionsMenuBox );
@@ -153,16 +142,30 @@ ConfigGeneralPage::ConfigGeneralPage( Config *_config, QWidget *parent )
     cCreateActionsMenu->setChecked( config->data.general.createActionsMenu );
     createActionsMenuBox->addWidget( cCreateActionsMenu );
     connect( cCreateActionsMenu, SIGNAL(toggled(bool)), this, SIGNAL(configChanged()) );
-    
+
     box->addSpacing( 5 );
 
-    QHBoxLayout *removeFailedFilesBox = new QHBoxLayout( 0 );
-    box->addLayout( removeFailedFilesBox );
-    cRemoveFailedFiles = new QCheckBox( i18n("Remove partially converted files if a conversion fails"), this );
-    cRemoveFailedFiles->setToolTip( i18n("Disable this for debugging or if you are sure the files get converted correctly.") );
-    cRemoveFailedFiles->setChecked( config->data.general.removeFailedFiles );
-    removeFailedFilesBox->addWidget( cRemoveFailedFiles );
-    connect( cRemoveFailedFiles, SIGNAL(toggled(bool)), this, SIGNAL(configChanged()) );
+    QHBoxLayout *writeLogFilesBox = new QHBoxLayout( 0 );
+    box->addLayout( writeLogFilesBox );
+    cWriteLogFiles = new QCheckBox( i18n("Write log files to disc"), this );
+    cWriteLogFiles->setToolTip( i18n("Write log files to the hard drive while converting.\nThis can be useful if a crash occurs and you can't access the log file using the log viewer.\nLog files will be written to %1",KStandardDirs::locateLocal("data","soundkonverter/log/")) );
+    cWriteLogFiles->setChecked( config->data.general.writeLogFiles );
+    writeLogFilesBox->addWidget( cWriteLogFiles );
+    connect( cWriteLogFiles, SIGNAL(toggled(bool)), this, SIGNAL(configChanged()) );
+
+    box->addSpacing( 20 );
+
+    QHBoxLayout *replayGainGroupingBox = new QHBoxLayout( 0 );
+    box->addLayout( replayGainGroupingBox );
+    QLabel* lReplayGainGrouping = new QLabel( i18n("Group files in the Replay Gain tool by")+":", this );
+    replayGainGroupingBox->addWidget( lReplayGainGrouping );
+    cReplayGainGrouping = new KComboBox( this );
+    cReplayGainGrouping->addItem( i18nc("Group files in the Replay Gain tool by","Album tags and directories") );
+    cReplayGainGrouping->addItem( i18nc("Group files in the Replay Gain tool by","Album tags only") );
+    cReplayGainGrouping->addItem( i18nc("Group files in the Replay Gain tool by","Directories only") );
+    cReplayGainGrouping->setCurrentIndex( (int)config->data.general.replayGainGrouping );
+    replayGainGroupingBox->addWidget( cReplayGainGrouping );
+    connect( cReplayGainGrouping, SIGNAL(activated(int)), this, SIGNAL(configChanged()) );
 
     box->addStretch();
 }
@@ -176,13 +179,13 @@ void ConfigGeneralPage::resetDefaults()
     cDefaultProfile->setCurrentIndex( 0 );
     cDefaultFormat->setCurrentIndex( 0 );
 //     cPriority->setCurrentIndex( 1 );
-    cUseVFATNames->setChecked( true );
     cConflictHandling->setCurrentIndex( 0 );
     QList<Solid::Device> processors = Solid::Device::listFromType(Solid::DeviceInterface::Processor, QString());
     iNumFiles->setValue( ( processors.count() > 0 ) ? processors.count() : 1 );
-    iUpdateDelay->setValue( 100 );
+    cWaitForAlbumGain->setChecked( true );
     cCreateActionsMenu->setChecked( true );
-    cRemoveFailedFiles->setChecked( true );
+    cWriteLogFiles->setChecked( false );
+    cReplayGainGrouping->setCurrentIndex( 0 );
 
     emit configChanged( true );
 }
@@ -193,52 +196,20 @@ void ConfigGeneralPage::saveSettings()
     config->data.general.defaultProfile = cDefaultProfile->currentText();
     config->data.general.defaultFormat = cDefaultFormat->currentText();
 //     config->data.general.priority = cPriority->currentIndex() * 10; // NOTE that just works for 'normal' and 'low'
-    config->data.general.useVFATNames = cUseVFATNames->isChecked();
     config->data.general.conflictHandling = (Config::Data::General::ConflictHandling)cConflictHandling->currentIndex();
     config->data.general.numFiles = iNumFiles->value();
-    config->data.general.updateDelay = iUpdateDelay->value();
+    config->data.general.waitForAlbumGain = cWaitForAlbumGain->isChecked();
     config->data.general.createActionsMenu = cCreateActionsMenu->isChecked();
-    config->data.general.removeFailedFiles = cRemoveFailedFiles->isChecked();
+    config->data.general.writeLogFiles = cWriteLogFiles->isChecked();
+    config->data.general.replayGainGrouping = (Config::Data::General::ReplayGainGrouping)cReplayGainGrouping->currentIndex();
 }
-
-// int ConfigGeneralPage::profileIndex( const QString& string )
-// {
-//     return sDefaultProfile.indexOf( string );
-// }
-// 
-// int ConfigGeneralPage::formatIndex( const QString& string )
-// {
-//     return sDefaultFormat.indexOf( string );
-// }
-
-// void ConfigGeneralPage::selectDir()
-// {
-//     QString startDir = lDir->text();
-//     int i = startDir.find( QRegExp("%[aAbBcCdDgGnNpPtTyY]{1,1}") );
-//     if( i != -1 ) {
-//         i = startDir.findRev( "/", i );
-//         startDir = startDir.left( i );
-//     }
-// 
-//     QString directory = KFileDialog::getExistingDirectory( startDir, 0, i18n("Choose an output directory") );
-//     if( !directory.isEmpty() ) {
-//         QString dir = lDir->text();
-//         i = dir.find( QRegExp("%[aAbBcCdDgGnNpPtTyY]{1,1}") );
-//         if( i != -1 ) {
-//             i = dir.findRev( "/", i );
-//             lDir->setText( directory + dir.mid(i) );
-//         }
-//         else {
-//             lDir->setText( directory );
-//         }
-//     }
-// }
 
 void ConfigGeneralPage::profileChanged()
 {
-    QString profile = cDefaultProfile->currentText();
+    const QString profile = cDefaultProfile->currentText();
     QString lastFormat = cDefaultFormat->currentText();
-    if( lastFormat.isEmpty() ) lastFormat = config->data.general.defaultFormat;
+    if( lastFormat.isEmpty() )
+        lastFormat = config->data.general.defaultFormat;
 
     cDefaultFormat->clear();
 
@@ -271,15 +242,7 @@ void ConfigGeneralPage::profileChanged()
             }
         }
     }
-    
-    if( cDefaultFormat->findText(lastFormat) != -1 ) cDefaultFormat->setCurrentIndex( cDefaultFormat->findText(lastFormat) );
+
+    if( cDefaultFormat->findText(lastFormat) != -1 )
+        cDefaultFormat->setCurrentIndex( cDefaultFormat->findText(lastFormat) );
 }
-
-
-
-
-
-
-
-
-

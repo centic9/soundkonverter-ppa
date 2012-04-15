@@ -11,6 +11,7 @@
 #include "logger.h"
 #include "logviewer.h"
 #include "replaygainscanner/replaygainscanner.h"
+#include "aboutplugins.h"
 
 #include <KActionCollection>
 #include <KApplication>
@@ -30,8 +31,8 @@
 
 soundKonverter::soundKonverter()
     : KXmlGuiWindow(),
-      logViewer( 0 ),
       replayGainScanner( 0 ),
+      logViewer( 0 ),
       systemTray( 0 ),
       autoclose( false )
 {
@@ -61,8 +62,6 @@ soundKonverter::soundKonverter()
     // mainwindow to automatically save settings if changed: window size,
     // toolbar position, icon size, etc.
     setupGUI( ToolBar | Keys | Save | Create );
-        
-//     helpMenu()->addTitle(i18n("About plugins"));
 
     // clean up old files from previous soundKonverter versions
     if( config->data.app.configVersion < 1001 )
@@ -78,30 +77,53 @@ soundKonverter::soundKonverter()
             logger->log( 1000, i18n("Removing old file: %1").arg(QDir::homePath()+"/.kde4/share/kde4/services/ServiceMenus/add_replaygain_with_soundkonverter.desktop") );
         }
     }
+
+    // clean up log directory
+    QDir dir( KStandardDirs::locateLocal("data","soundkonverter/log/") );
+    dir.setFilter( QDir::Files | QDir::Writable );
+
+    QStringList list = dir.entryList();
+
+    for( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
+    {
+        if( *it != "1000.log" && (*it).endsWith(".log") )
+        {
+            QFile::remove( dir.absolutePath() + "/" + (*it) );
+            logger->log( 1000, i18n("Removing old file: %1").arg(dir.absolutePath()+"/"+(*it)) );
+        }
+    }
+
+    // Check if new backends got installed and the backend settings can be optimized
+    QList<CodecOptimizations::Optimization> optimizationList = config->getOptimizations();
+    if( !optimizationList.isEmpty() )
+    {
+        CodecOptimizations *optimizationsDialog = new CodecOptimizations( optimizationList, this );
+        connect( optimizationsDialog, SIGNAL(solutions(const QList<CodecOptimizations::Optimization>&)), config, SLOT(doOptimizations(const QList<CodecOptimizations::Optimization>&)) );
+        optimizationsDialog->open();
+    }
 }
 
 soundKonverter::~soundKonverter()
 {
     if( logViewer )
         delete logViewer;
-    
+
     if( replayGainScanner )
         delete replayGainScanner;
-    
+
     if( systemTray )
         delete systemTray;
 }
 
-void soundKonverter::saveProperties( const KConfigGroup& )
+void soundKonverter::saveProperties( KConfigGroup& configGroup )
 {
+    Q_UNUSED(configGroup)
+
+    m_view->killConversion();
+
     m_view->saveFileList( false );
 }
-    
-void soundKonverter::readProperties( const KConfigGroup& )
-{
-    m_view->loadFileList( false );
-}
-    
+
 void soundKonverter::showSystemTray()
 {
     #if KDE_IS_VERSION(4,4,0)
@@ -132,7 +154,6 @@ void soundKonverter::addReplayGainFiles( const KUrl::List& urls )
 
 void soundKonverter::ripCd( const QString& device )
 {
-//     KMessageBox::error( this, i18n("opening cd") );
     m_view->showCdDialog( device != "auto" ? device : "" );
 }
 
@@ -144,7 +165,6 @@ void soundKonverter::setupActions()
     KAction *logviewer = actionCollection()->addAction("logviewer");
     logviewer->setText(i18n("View logs..."));
     logviewer->setIcon(KIcon("view-list-text"));
-//     newAct->setShortcut(Qt::Key_F6);
     connect( logviewer, SIGNAL(triggered()), this, SLOT(showLogViewer()) );
 
     KAction *replaygainscanner = actionCollection()->addAction("replaygainscanner");
@@ -152,41 +172,46 @@ void soundKonverter::setupActions()
     replaygainscanner->setIcon(KIcon("soundkonverter-replaygain"));
     connect( replaygainscanner, SIGNAL(triggered()), this, SLOT(showReplayGainScanner()) );
 
+    KAction *aboutplugins = actionCollection()->addAction("aboutplugins");
+    aboutplugins->setText(i18n("About plugins..."));
+    aboutplugins->setIcon(KIcon("preferences-plugin"));
+    connect( aboutplugins, SIGNAL(triggered()), this, SLOT(showAboutPlugins()) );
+
     KAction *add_files = actionCollection()->addAction("add_files");
     add_files->setText(i18n("Add files..."));
     add_files->setIcon(KIcon("audio-x-generic"));
     connect( add_files, SIGNAL(triggered()), m_view, SLOT(showFileDialog()) );
-    
+
     KAction *add_folder = actionCollection()->addAction("add_folder");
     add_folder->setText(i18n("Add folder..."));
     add_folder->setIcon(KIcon("folder"));
     connect( add_folder, SIGNAL(triggered()), m_view, SLOT(showDirDialog()) );
-    
+
     KAction *add_audiocd = actionCollection()->addAction("add_audiocd");
     add_audiocd->setText(i18n("Add CD tracks..."));
     add_audiocd->setIcon(KIcon("media-optical-audio"));
     connect( add_audiocd, SIGNAL(triggered()), m_view, SLOT(showCdDialog()) );
-    
+
     KAction *add_url = actionCollection()->addAction("add_url");
     add_url->setText(i18n("Add url..."));
     add_url->setIcon(KIcon("network-workgroup"));
     connect( add_url, SIGNAL(triggered()), m_view, SLOT(showUrlDialog()) );
-    
+
     KAction *add_playlist = actionCollection()->addAction("add_playlist");
     add_playlist->setText(i18n("Add playlist..."));
     add_playlist->setIcon(KIcon("view-media-playlist"));
     connect( add_playlist, SIGNAL(triggered()), m_view, SLOT(showPlaylistDialog()) );
-    
+
     KAction *load = actionCollection()->addAction("load");
     load->setText(i18n("Load file list"));
     load->setIcon(KIcon("document-open"));
     connect( load, SIGNAL(triggered()), m_view, SLOT(loadFileList()) );
-    
+
     KAction *save = actionCollection()->addAction("save");
     save->setText(i18n("Save file list"));
     save->setIcon(KIcon("document-save"));
     connect( save, SIGNAL(triggered()), m_view, SLOT(saveFileList()) );
-    
+
     actionCollection()->addAction("start", m_view->start());
     actionCollection()->addAction("stop_menu", m_view->stopMenu());
 }
@@ -204,21 +229,27 @@ void soundKonverter::showConfigDialog()
 
 void soundKonverter::showLogViewer()
 {
-    if( !logViewer ) logViewer = new LogViewer( logger, 0 );
+    if( !logViewer )
+        logViewer = new LogViewer( logger, 0 );
 
     logViewer->show();
     logViewer->raise();
-/*    AboutPlugins *dialog = new AboutPlugins( config, this );
-    dialog->exec();
-    delete dialog;*/
 }
 
 void soundKonverter::showReplayGainScanner()
 {
-    if( !replayGainScanner ) replayGainScanner = new ReplayGainScanner( config, logger, 0 );
+    if( !replayGainScanner )
+        replayGainScanner = new ReplayGainScanner( config, logger, 0 );
 
     replayGainScanner->show();
     replayGainScanner->raise();
+}
+
+void soundKonverter::showAboutPlugins()
+{
+    AboutPlugins *dialog = new AboutPlugins( config, this );
+    dialog->exec();
+    dialog->deleteLater();
 }
 
 void soundKonverter::startConversion()
@@ -233,7 +264,6 @@ void soundKonverter::conversionStarted()
         #if KDE_IS_VERSION(4,4,0)
             systemTray->setToolTip( "soundkonverter", i18n("Converting") + ": 0%", "" );
         #else
-//             systemTray->setMovie( QMovie(KStandardDirs::findResource("data","soundkonverter/images/systray.mng")) );
             systemTray->setToolTip( i18n("Converting") + ": 0%" );
         #endif
     }
@@ -241,24 +271,23 @@ void soundKonverter::conversionStarted()
 
 void soundKonverter::conversionStopped( int state )
 {
-    if( autoclose && state != 1 && !m_view->isVisible() )
+    if( autoclose && state != 1 /*&& !m_view->isVisible()*/ )
         KApplication::kApplication()->quit(); // close app on conversion stop unless the conversion was stopped by the user or the window is shown
 
     if( systemTray )
     {
         #if KDE_IS_VERSION(4,4,0)
-//             systemTray->setIconByName( "soundkonverter" );
             systemTray->setToolTip( "soundkonverter", i18n("Finished"), "" );
         #else
-//             systemTray->setIcon( KIcon("soundkonverter") );
             systemTray->setToolTip( i18n("Finished") );
         #endif
     }
 }
 
-void soundKonverter::progressChanged(const QString& progress)
+void soundKonverter::progressChanged( const QString& progress )
 {
     setWindowTitle( progress + " - soundKonverter" );
+
     if( systemTray )
     {
         #if KDE_IS_VERSION(4,4,0)

@@ -44,7 +44,9 @@ public:
 
     /** Default Destructor */
     virtual ~soundKonverter();
-    
+
+    virtual void saveProperties( KConfigGroup& configGroup );
+
     void showSystemTray();
     void addConvertFiles( const KUrl::List& urls, const QString& profile, const QString& format, const QString& directory, const QString& notifyCommand );
     void addReplayGainFiles( const KUrl::List& urls );
@@ -56,13 +58,14 @@ private slots:
     void showConfigDialog();
     void showLogViewer();
     void showReplayGainScanner();
+    void showAboutPlugins();
     void progressChanged( const QString& progress );
 
     /** The conversion has started */
     void conversionStarted();
     /** The conversion has stopped */
     void conversionStopped( int state );
-    
+
 private:
     Config *config;
     Logger *logger;
@@ -71,22 +74,20 @@ private:
 
     soundKonverterView *m_view;
     LogViewer *logViewer;
-    
+
     #if KDE_IS_VERSION(4,4,0)
         KStatusNotifierItem *systemTray;
     #else
         KSystemTrayIcon *systemTray;
     #endif
 
-    void saveProperties( const KConfigGroup& );
-    void readProperties( const KConfigGroup& );
-    
     /// exit soundkonverter after all files have been converted
     bool autoclose;
 
 //     KToggleAction *m_toolbarAction;
 
     void setupActions();
+
 };
 
 #endif // _SOUNDKONVERTER_H_

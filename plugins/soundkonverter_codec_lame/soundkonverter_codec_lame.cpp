@@ -20,8 +20,10 @@
 soundkonverter_codec_lame::soundkonverter_codec_lame( QObject *parent, const QStringList& args  )
     : CodecPlugin( parent )
 {
+    Q_UNUSED(args)
+
     binaries["lame"] = "";
-    
+
     allCodecs += "mp3";
     allCodecs += "mp2";
     allCodecs += "wav";
@@ -44,15 +46,15 @@ QList<ConversionPipeTrunk> soundkonverter_codec_lame::codecTable()
     newTrunk.codecTo = "mp3";
     newTrunk.rating = 100;
     newTrunk.enabled = ( binaries["lame"] != "" );
-    newTrunk.problemInfo = i18n("In order to encode mp3 files, you need to install 'lame'.\nSince mp3 is a patented file format, lame may not be included in the default installation of your distribution.\nMany distributions offer lame in an additional software repository.");
-    newTrunk.data.hasInternalReplayGain = true;
+    newTrunk.problemInfo = standardMessage( "encode_codec,backend", "mp3", "lame" ) + "\n" + standardMessage( "install_patented_backend", "lame" );
+    newTrunk.data.hasInternalReplayGain = false;
     table.append( newTrunk );
 
     newTrunk.codecFrom = "mp3";
     newTrunk.codecTo = "wav";
     newTrunk.rating = 100;
     newTrunk.enabled = ( binaries["lame"] != "" );
-    newTrunk.problemInfo = i18n("In order to decode mp3 files, you need to install 'lame'.\nSince mp3 is a patented file format, lame may not be included in the default installation of your distribution.\nMany distributions offer lame in an additional software repository.");
+    newTrunk.problemInfo = standardMessage( "decode_codec,backend", "mp3", "lame" ) + "\n" + standardMessage( "install_patented_backend", "lame" );
     newTrunk.data.hasInternalReplayGain = false;
     table.append( newTrunk );
 
@@ -60,15 +62,15 @@ QList<ConversionPipeTrunk> soundkonverter_codec_lame::codecTable()
     newTrunk.codecTo = "mp3";
     newTrunk.rating = 100;
     newTrunk.enabled = ( binaries["lame"] != "" );
-    newTrunk.problemInfo = i18n("In order to encode/decode mp3 files, you need to install 'lame'.\nSince mp3 is a patented file format, lame may not be included in the default installation of your distribution.\nMany distributions offer lame in an additional software repository.");
-    newTrunk.data.hasInternalReplayGain = true;
+    newTrunk.problemInfo = standardMessage( "transcode_codec,backend", "mp3", "lame" ) + "\n" + standardMessage( "install_patented_backend", "lame" );
+    newTrunk.data.hasInternalReplayGain = false;
     table.append( newTrunk );
 
     newTrunk.codecFrom = "mp2";
     newTrunk.codecTo = "wav";
     newTrunk.rating = 70;
     newTrunk.enabled = ( binaries["lame"] != "" );
-    newTrunk.problemInfo = i18n("In order to decode mp2 files, you need to install 'lame'.\nSince mp3 is a patented file format, lame may not be included in the default installation of your distribution.\nMany distributions offer lame in an additional software repository.");
+    newTrunk.problemInfo = standardMessage( "decode_codec,backend", "mp2", "lame" ) + "\n" + standardMessage( "install_patented_backend", "lame" );
     newTrunk.data.hasInternalReplayGain = false;
     table.append( newTrunk );
 
@@ -76,82 +78,33 @@ QList<ConversionPipeTrunk> soundkonverter_codec_lame::codecTable()
     newTrunk.codecTo = "mp3";
     newTrunk.rating = 70;
     newTrunk.enabled = ( binaries["lame"] != "" );
-    newTrunk.problemInfo = i18n("In order to encode mp3/decode mp2 files, you need to install 'lame'.\nSince mp3 is a patented file format, lame may not be included in the default installation of your distribution.\nMany distributions offer lame in an additional software repository.");
-    newTrunk.data.hasInternalReplayGain = true;
+    newTrunk.problemInfo = standardMessage( "transcode_codec,backend", "mp2/mp3", "lame" ) + "\n" + standardMessage( "install_patented_backend", "lame" );
+    newTrunk.data.hasInternalReplayGain = false;
     table.append( newTrunk );
 
     return table;
 }
 
-BackendPlugin::FormatInfo soundkonverter_codec_lame::formatInfo( const QString& codecName )
-{
-    BackendPlugin::FormatInfo info;
-    info.codecName = codecName;
-
-    if( codecName == "mp3" )
-    {
-        info.lossless = false;
-        info.description = i18n("MP3 is a very popular lossy audio codec.");
-        info.mimeTypes.append( "audio/x-mp3" );
-        info.mimeTypes.append( "audio/mpeg" );
-        info.extensions.append( "mp3" );
-    }
-    else if( codecName == "mp2" )
-    {
-        info.lossless = false;
-        info.description = i18n("MP2 is an old lossy audio codec.");
-        info.mimeTypes.append( "audio/x-mp2" );
-        info.extensions.append( "mp2" );
-    }
-    else if( codecName == "wav" )
-    {
-        info.lossless = true;
-        info.description = i18n("Wave won't compress the audio stream.");
-        info.mimeTypes.append( "audio/x-wav" );
-        info.mimeTypes.append( "audio/wav" );
-        info.extensions.append( "wav" );
-    }
-
-    return info;
-}
-
-// QString soundkonverter_codec_lame::getCodecFromFile( const KUrl& filename, const QString& mimeType )
-// {
-//     if( mimeType == "audio/x-mp3" || mimeType == "audio/mp3" || mimeType == "audio/mpeg" )
-//     {
-//         return "mp3";
-//     }
-//     else if( mimeType == "audio/x-mp2" || mimeType == "audio/mp2" || mimeType == "video/mpeg" )
-//     {
-//         return "mp2";
-//     }
-//     else if( mimeType == "audio/x-wav" || mimeType == "audio/wav" )
-//     {
-//         return "wav";
-//     }
-//     else if( mimeType == "application/octet-stream" )
-//     {
-//         if( filename.url().endsWith(".mp3") ) return "mp3";
-//         if( filename.url().endsWith(".mp2") ) return "mp2";
-//         if( filename.url().endsWith(".wav") ) return "wav";
-//     }
-// 
-//     return "";
-// }
-
 bool soundkonverter_codec_lame::isConfigSupported( ActionType action, const QString& codecName )
 {
-    return true;
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+
+    return false;
 }
 
 void soundkonverter_codec_lame::showConfigDialog( ActionType action, const QString& codecName, QWidget *parent )
 {
-    KDialog *dialog = new KDialog( parent );
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+    Q_UNUSED(parent)
+
+/*    KDialog *dialog = new KDialog( parent );
     dialog->setCaption( i18n("Configure %1").arg(global_plugin_name)  );
     dialog->setButtons( KDialog::Ok | KDialog::Cancel | KDialog::Apply );
 
     QWidget *widget = new QWidget( dialog );
-    
+
 
     dialog->setMainWidget( widget );
 //     connect( dialog, SIGNAL( applyClicked() ), widget, SLOT( save() ) );
@@ -159,7 +112,7 @@ void soundkonverter_codec_lame::showConfigDialog( ActionType action, const QStri
 //     connect( widget, SIGNAL( changed( bool ) ), dialog, SLOT( enableButtonApply( bool ) ) );
 
     dialog->enableButtonApply( false );
-    dialog->show();
+    dialog->show();*/
 }
 
 bool soundkonverter_codec_lame::hasInfo()
@@ -174,7 +127,7 @@ void soundkonverter_codec_lame::showInfo( QWidget *parent )
     dialog->setButtons( KDialog::Ok );
 
     QLabel *widget = new QLabel( dialog );
-    
+
     widget->setText( i18n("LAME is a free high quality MP3 encoder.\nYou can get it at: http://lame.sourceforge.net") );
 
     dialog->setMainWidget( widget );
@@ -198,7 +151,8 @@ QWidget *soundkonverter_codec_lame::newCodecWidget()
 int soundkonverter_codec_lame::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     QStringList command = convertCommand( inputFile, outputFile, inputCodec, outputCodec, _conversionOptions, tags, replayGain );
-    if( command.isEmpty() ) return -1;
+    if( command.isEmpty() )
+        return -1;
 
     CodecPluginItem *newItem = new CodecPluginItem( this );
     newItem->id = lastId++;
@@ -219,8 +173,13 @@ int soundkonverter_codec_lame::convert( const KUrl& inputFile, const KUrl& outpu
 
 QStringList soundkonverter_codec_lame::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
-    if( !_conversionOptions ) return QStringList();
-    
+    Q_UNUSED(inputCodec)
+    Q_UNUSED(tags)
+    Q_UNUSED(replayGain)
+
+    if( !_conversionOptions )
+        return QStringList();
+
     QStringList command;
     ConversionOptions *conversionOptions = _conversionOptions;
     LameConversionOptions *lameConversionOptions = 0;
@@ -234,6 +193,23 @@ QStringList soundkonverter_codec_lame::convertCommand( const KUrl& inputFile, co
         command += binaries["lame"];
         command += "--nohist";
         command += "--pad-id3v2";
+        if( conversionOptions->pluginName != name() || !conversionOptions->cmdArguments.contains("-q") )
+        {
+            command += "-q";
+            command += "2";
+        }
+//         if( replayGain )
+//         {
+//             command += "--replaygain-accurate";
+//         }
+//         else
+//         {
+//             command += "--noreplaygain";
+//         }
+        if( conversionOptions->pluginName != name() || !conversionOptions->cmdArguments.contains("replaygain") )
+        {
+            command += "--noreplaygain";
+        }
         if( lameConversionOptions && lameConversionOptions->data.preset != LameConversionOptions::Data::UserDefined )
         {
             command += "--preset";
@@ -270,7 +246,10 @@ QStringList soundkonverter_codec_lame::convertCommand( const KUrl& inputFile, co
         {
             if( conversionOptions->qualityMode == ConversionOptions::Quality )
             {
-                command += "--vbr-new";
+                if( conversionOptions->pluginName != name() || !conversionOptions->cmdArguments.contains("--vbr-old") )
+                {
+                    command += "--vbr-new";
+                }
                 command += "-V";
                 command += QString::number(conversionOptions->quality);
             }
@@ -335,15 +314,15 @@ QStringList soundkonverter_codec_lame::convertCommand( const KUrl& inputFile, co
         {
             command += conversionOptions->cmdArguments;
         }
-        command += "\"" + inputFile.toLocalFile() + "\"";
-        command += "\"" + outputFile.toLocalFile() + "\"";
+        command += "\"" + escapeUrl(inputFile) + "\"";
+        command += "\"" + escapeUrl(outputFile) + "\"";
     }
     else
     {
         command += binaries["lame"];
         command += "--decode";
-        command += "\"" + inputFile.toLocalFile() + "\"";
-        command += "\"" + outputFile.toLocalFile() + "\"";
+        command += "\"" + escapeUrl(inputFile) + "\"";
+        command += "\"" + escapeUrl(outputFile) + "\"";
     }
 
     return command;
@@ -353,13 +332,13 @@ float soundkonverter_codec_lame::parseOutput( const QString& output )
 {
     // decoding
     // Frame#  1398/8202   256 kbps  L  R (...)
-    
+
     // encoding
-    // \r  3600/3696   (97%)|    0:05/    0:05|    0:05/    0:05|   18.190x|    0:00 
-  
+    // \r  3600/3696   (97%)|    0:05/    0:05|    0:05/    0:05|   18.190x|    0:00
+
     QString data = output;
     QString frame, count;
-    
+
     if( output.contains("Frame#") )
     {
         data.remove( 0, data.indexOf("Frame#")+7 );
@@ -382,7 +361,7 @@ float soundkonverter_codec_lame::parseOutput( const QString& output )
         data.remove( data.indexOf("%"), data.length()-data.indexOf("%") );
         return data.toFloat();
     }*/
-    
+
     return -1;
 }
 

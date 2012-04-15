@@ -9,10 +9,14 @@
 soundkonverter_codec_faac::soundkonverter_codec_faac( QObject *parent, const QStringList& args  )
     : CodecPlugin( parent )
 {
+    Q_UNUSED(args)
+
     binaries["faac"] = "";
     binaries["faad"] = "";
 
     allCodecs += "aac";
+    allCodecs += "m4a";
+    allCodecs += "mp4";
     allCodecs += "wav";
 }
 
@@ -33,7 +37,15 @@ QList<ConversionPipeTrunk> soundkonverter_codec_faac::codecTable()
     newTrunk.codecTo = "aac";
     newTrunk.rating = 100;
     newTrunk.enabled = ( binaries["faac"] != "" );
-    newTrunk.problemInfo = i18n("In order to encode aac files, you need to install 'faac'.\nSince faac inludes a patented codec, it may not be included in the default installation of your distribution. Many distributions offer faac in an additional software repository.");
+    newTrunk.problemInfo = standardMessage( "encode_codec,backend", "aac", "faac" ) + "\n" + standardMessage( "install_patented_backend", "faac" );
+    newTrunk.data.hasInternalReplayGain = false;
+    table.append( newTrunk );
+
+    newTrunk.codecFrom = "wav";
+    newTrunk.codecTo = "m4a";
+    newTrunk.rating = 100;
+    newTrunk.enabled = ( binaries["faac"] != "" );
+    newTrunk.problemInfo = standardMessage( "encode_codec,backend", "m4a", "faac" ) + "\n" + standardMessage( "install_patented_backend", "faac" );
     newTrunk.data.hasInternalReplayGain = false;
     table.append( newTrunk );
 
@@ -41,50 +53,43 @@ QList<ConversionPipeTrunk> soundkonverter_codec_faac::codecTable()
     newTrunk.codecTo = "wav";
     newTrunk.rating = 100;
     newTrunk.enabled = ( binaries["faad"] != "" );
-    newTrunk.problemInfo = i18n("In order to decode aac files, you need to install 'faad'.\nSince faad inludes a patented codec, it may not be included in the default installation of your distribution. Many distributions offer faad in an additional software repository.");
+    newTrunk.problemInfo = standardMessage( "decode_codec,backend", "aac", "faac" ) + "\n" + standardMessage( "install_patented_backend", "faac" );
+    newTrunk.data.hasInternalReplayGain = false;
+    table.append( newTrunk );
+
+    newTrunk.codecFrom = "m4a";
+    newTrunk.codecTo = "wav";
+    newTrunk.rating = 100;
+    newTrunk.enabled = ( binaries["faad"] != "" );
+    newTrunk.problemInfo = standardMessage( "decode_codec,backend", "m4a", "faac" ) + "\n" + standardMessage( "install_patented_backend", "faac" );
+    newTrunk.data.hasInternalReplayGain = false;
+    table.append( newTrunk );
+
+    newTrunk.codecFrom = "mp4";
+    newTrunk.codecTo = "wav";
+    newTrunk.rating = 100;
+    newTrunk.enabled = ( binaries["faad"] != "" );
+    newTrunk.problemInfo = standardMessage( "decode_codec,backend", "mp4", "faac" ) + "\n" + standardMessage( "install_patented_backend", "faac" );
     newTrunk.data.hasInternalReplayGain = false;
     table.append( newTrunk );
 
     return table;
 }
 
-BackendPlugin::FormatInfo soundkonverter_codec_faac::formatInfo( const QString& codecName )
-{
-    BackendPlugin::FormatInfo info;
-    info.codecName = codecName;
-
-    if( codecName == "aac" )
-    {
-        info.lossless = false;
-        info.description = i18n("Advanced Audio Coding is a lossy and popular audio format."); // http://en.wikipedia.org/wiki/Advanced_Audio_Coding
-        info.mimeTypes.append( "audio/aac" );
-        info.mimeTypes.append( "audio/aacp" );
-        info.mimeTypes.append( "audio/mp4" );
-        info.mimeTypes.append( "video/mp4" );
-        info.extensions.append( "aac" );
-        info.extensions.append( "3gp" );
-        info.extensions.append( "mp4" );
-        info.extensions.append( "m4a" );
-    }
-    else if( codecName == "wav" )
-    {
-        info.lossless = true;
-        info.description = i18n("Wave won't compress the audio stream.");
-        info.mimeTypes.append( "audio/x-wav" );
-        info.mimeTypes.append( "audio/wav" );
-        info.extensions.append( "wav" );
-    }
-
-    return info;
-}
-
 bool soundkonverter_codec_faac::isConfigSupported( ActionType action, const QString& codecName )
 {
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+
     return false;
 }
 
 void soundkonverter_codec_faac::showConfigDialog( ActionType action, const QString& codecName, QWidget *parent )
-{}
+{
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+    Q_UNUSED(parent)
+}
 
 bool soundkonverter_codec_faac::hasInfo()
 {
@@ -92,7 +97,9 @@ bool soundkonverter_codec_faac::hasInfo()
 }
 
 void soundkonverter_codec_faac::showInfo( QWidget *parent )
-{}
+{
+    Q_UNUSED(parent)
+}
 
 QWidget *soundkonverter_codec_faac::newCodecWidget()
 {
@@ -109,7 +116,8 @@ QWidget *soundkonverter_codec_faac::newCodecWidget()
 int soundkonverter_codec_faac::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     QStringList command = convertCommand( inputFile, outputFile, inputCodec, outputCodec, _conversionOptions, tags, replayGain );
-    if( command.isEmpty() ) return -1;
+    if( command.isEmpty() )
+        return -1;
 
     CodecPluginItem *newItem = new CodecPluginItem( this );
     newItem->id = lastId++;
@@ -130,12 +138,17 @@ int soundkonverter_codec_faac::convert( const KUrl& inputFile, const KUrl& outpu
 
 QStringList soundkonverter_codec_faac::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
-    if( !_conversionOptions ) return QStringList();
-    
+    Q_UNUSED(inputCodec)
+    Q_UNUSED(tags)
+    Q_UNUSED(replayGain)
+
+    if( !_conversionOptions )
+        return QStringList();
+
     QStringList command;
     ConversionOptions *conversionOptions = _conversionOptions;
 
-    if( outputCodec == "aac" )
+    if( outputCodec == "aac" || outputCodec == "m4a" )
     {
         command += binaries["faac"];
         if( conversionOptions->qualityMode == ConversionOptions::Quality )
@@ -154,15 +167,15 @@ QStringList soundkonverter_codec_faac::convertCommand( const KUrl& inputFile, co
             command += QString::number(conversionOptions->samplingRate);
         }
         command += "-o";
-        command += "\"" + outputFile.toLocalFile() + "\"";
-        command += "\"" + inputFile.toLocalFile() + "\"";
+        command += "\"" + escapeUrl(outputFile) + "\"";
+        command += "\"" + escapeUrl(inputFile) + "\"";
     }
     else
     {
         command += binaries["faad"];
         command += "-o";
-        command += "\"" + outputFile.toLocalFile() + "\"";
-        command += "\"" + inputFile.toLocalFile() + "\"";
+        command += "\"" + escapeUrl(outputFile) + "\"";
+        command += "\"" + escapeUrl(inputFile) + "\"";
     }
 
     return command;
@@ -171,21 +184,21 @@ QStringList soundkonverter_codec_faac::convertCommand( const KUrl& inputFile, co
 float soundkonverter_codec_faac::parseOutput( const QString& output )
 {
     //  9397/9397  (100%)|  136.1  |    9.1/9.1    |   23.92x | 0.0
-  
+
     QRegExp regEnc("(\\d+)/(\\d+)");
     if( output.contains(regEnc) )
     {
         return (float)regEnc.cap(1).toInt()*100/regEnc.cap(2).toInt();
     }
-    
+
     // 15% decoding xxx
-    
+
     QRegExp regDec("(\\d+)%");
     if( output.contains(regDec) )
     {
         return (float)regDec.cap(1).toInt();
     }
-    
+
     return -1;
 }
 

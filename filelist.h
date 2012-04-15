@@ -11,6 +11,7 @@
 
 class FileListItem;
 class Config;
+class Logger;
 class TagEngine;
 class OptionsEditor;
 class OptionsLayer;
@@ -37,15 +38,17 @@ public:
     };
 
     /** Constructor */
-    FileList( Config *_config, QWidget *parent = 0 );
+    FileList( Logger *_logger, Config *_config, QWidget *parent = 0 );
 
     /** Destructor */
     virtual ~FileList();
 
     FileListItem *topLevelItem( int index ) const { return static_cast<FileListItem*>( QTreeWidget::topLevelItem(index) ); }
+//     FileListItem *itemAbove( FileListItem* item ) const { return static_cast<FileListItem*>( QTreeWidget::itemAbove(item) ); }
+//     FileListItem *itemBelow( FileListItem* item ) const { return static_cast<FileListItem*>( QTreeWidget::itemBelow(item) ); }
 
     void setOptionsLayer( OptionsLayer *_optionsLayer ) { optionsLayer = _optionsLayer; }
-    
+
     void load( bool user = false );
     void save( bool user = false );
     void updateAllItems();
@@ -58,13 +61,15 @@ private:
     QProgressBar *pScanStatus;
     /** Update timer for the scan status */
     QTime tScanStatus;
-    
+
     int TimeCount;
     QTime Time;
 
     void convertNextItem();
     int waitingCount();
     int convertingCount();
+
+//     qulonglong spaceLeftForDirectory( const QString& dir );
 
     QList<FileListItem*> selectedFiles;
 
@@ -75,6 +80,8 @@ private:
 
     bool queue;
 
+//     QStringList fullDiscs; // a list of mount points with volumes that don't have enougth space left
+
     /**
      * A command that should be executed after the conversion of a file is complete
      * %i will be replaced by the input file path
@@ -82,6 +89,7 @@ private:
      */
     QString notifyCommand;
 
+    Logger *logger;
     Config *config;
     TagEngine *tagEngine;
     OptionsEditor *optionsEditor;
@@ -101,16 +109,18 @@ private slots:
     void convertSelectedItems();
     void killSelectedItems();
     void itemsSelected();
-    
+
     void updateItems( QList<FileListItem*> items );
 
     // connected to OptionsEditor
     void selectPreviousItem();
     void selectNextItem();
 
+    bool checkWaitingForAlbumGain();
+
 public slots:
     // connected to soundKonverterView
-    void addFiles( const KUrl::List& fileList, ConversionOptions *conversionOptions, const QString& notifyCommand = "", QString codecName = "", int conversionOptionsId = -1, FileListItem *after = 0, bool enabled = false );
+    void addFiles( const KUrl::List& fileList, ConversionOptions *conversionOptions, const QString& notifyCommand = "", const QString& _codecName = "", int conversionOptionsId = -1, FileListItem *after = 0, bool enabled = false );
     void addDir( const KUrl& directory, bool recursive, const QStringList& codecList, ConversionOptions *conversionOptions );
 //     void addTracks( int cdId, QList< int > trackList, ConversionOptions* conversionOptions );
     void addTracks( const QString& device, QList<int> trackList, int tracks, QList<TagData*> tagList, ConversionOptions *conversionOptions );
@@ -120,8 +130,16 @@ public slots:
     void continueConversion();
 
     // connected to Convert
-    /** The conversion of an item has finished and the state is reported ( 0 = ok, -1 = error, 1 = aborted ) */
+    /**
+     * The conversion of an item has finished and the state is reported:
+     * 0   = ok
+     * -1  = error
+     * 1   = aborted
+     * 100 = backend needs configuration
+     * 101 = disc is full
+     */
     void itemFinished( FileListItem*, int );
+    void replaygainFinished( QList<FileListItem*>, int );
     /** The ripping of a track has finished, so the device is free for ripping the next track */
     void rippingFinished( const QString& device );
 
@@ -141,6 +159,7 @@ signals:
     // connected to Convert
     void convertItem( FileListItem* );
     void killItem( FileListItem* );
+    void replaygainItems( QList<FileListItem*> );
 
     // connected to OptionsEditor
     void editItems( QList<FileListItem*> );

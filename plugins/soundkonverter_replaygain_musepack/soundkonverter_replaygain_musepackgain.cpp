@@ -3,12 +3,17 @@
 
 #include "soundkonverter_replaygain_musepackgain.h"
 
+#include <KStandardDirs>
+#include <QFile>
+
 
 soundkonverter_replaygain_musepackgain::soundkonverter_replaygain_musepackgain( QObject *parent, const QStringList& args  )
     : ReplayGainPlugin( parent )
 {
+    Q_UNUSED(args)
+
     binaries["replaygain"] = "";
-    
+
     allCodecs += "musepack";
 }
 
@@ -20,17 +25,29 @@ QString soundkonverter_replaygain_musepackgain::name()
     return global_plugin_name;
 }
 
-// QMap<QString,int> soundkonverter_replaygain_replaygain::codecList()
-// {
-//     QMap<QString,int> list;
-// 
-//     if( binaries["replaygain"] != "" )
-//     {
-//         list.insert( "ogg vorbis", 100 );
-//     }
-// 
-//     return list;
-// }
+void soundkonverter_replaygain_musepackgain::scanForBackends( const QStringList& directoryList )
+{
+    binaries["replaygain"] = KStandardDirs::findExe( "replaygain" );
+    if( binaries["replaygain"].isEmpty() )
+        binaries["replaygain"] = KStandardDirs::findExe( "mpcgain" );
+
+    if( binaries["replaygain"].isEmpty() )
+    {
+        for( QList<QString>::const_iterator b = directoryList.begin(); b != directoryList.end(); ++b )
+        {
+            if( QFile::exists((*b) + "/replaygain") )
+            {
+                binaries["replaygain"] = (*b) + "/replaygain";
+                break;
+            }
+            else if( QFile::exists((*b) + "/mpcgain") )
+            {
+                binaries["replaygain"] = (*b) + "/mpcgain";
+                break;
+            }
+        }
+    }
+}
 
 QList<ReplayGainPipe> soundkonverter_replaygain_musepackgain::codecTable()
 {
@@ -40,59 +57,26 @@ QList<ReplayGainPipe> soundkonverter_replaygain_musepackgain::codecTable()
     newPipe.codecName = "musepack";
     newPipe.rating = 100;
     newPipe.enabled = ( binaries["replaygain"] != "" );
-    newPipe.problemInfo = i18n("In order to calculate Replay Gain tags for musepack files, you need to install 'replaygain'.\nYou can get it at http://www.musepack.net");
+    newPipe.problemInfo = standardMessage( "replygain_codec,backend", "musepack", "replaygain" ) + "\n" + standardMessage( "install_website_backend,url", "replaygain", "http://www.musepack.net" );
     table.append( newPipe );
 
     return table;
 }
 
-BackendPlugin::FormatInfo soundkonverter_replaygain_musepackgain::formatInfo( const QString& codecName )
-{
-    BackendPlugin::FormatInfo info;
-    info.codecName = codecName;
-
-    if( codecName == "musepack" )
-    {
-        info.lossless = false;
-        info.description = i18n("Musepack is a free and lossy file format based on mp2 and optimized for high quality."); // http://en.wikipedia.org/wiki/Musepack
-        info.mimeTypes.append( "audio/x-musepack" );
-        info.mimeTypes.append( "audio/musepack" );
-        info.extensions.append( "mpc" );
-        info.extensions.append( "mp+" );
-        info.extensions.append( "mpp" );
-    }
-
-    return info;
-}
-
-// QString soundkonverter_replaygain_replaygain::getCodecFromFile( const KUrl& filename, const QString& mimeType )
-// {
-//     if( mimeType == "application/x-ogg" || mimeType == "application/ogg" || mimeType == "audio/ogg" || mimeType == "audio/vorbis" || mimeType == "audio/x-vorbis+ogg" )
-//     {
-//         return "ogg vorbis";
-//     }
-//     else if( mimeType == "application/octet-stream" )
-//     {
-//         if( filename.url().endsWith(".ogg") ) return "ogg vorbis";
-//     }
-// 
-//     return "";
-// }
-
-/*bool soundkonverter_replaygain_replaygain::canApply( const KUrl& filename )
-{
-    if( filename.url().endsWith(".ogg") ) return true;
-
-    return false;
-}*/
-
 bool soundkonverter_replaygain_musepackgain::isConfigSupported( ActionType action, const QString& codecName )
 {
-    return true;
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+
+    return false;
 }
 
 void soundkonverter_replaygain_musepackgain::showConfigDialog( ActionType action, const QString& codecName, QWidget *parent )
-{}
+{
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+    Q_UNUSED(parent)
+}
 
 bool soundkonverter_replaygain_musepackgain::hasInfo()
 {
@@ -100,11 +84,17 @@ bool soundkonverter_replaygain_musepackgain::hasInfo()
 }
 
 void soundkonverter_replaygain_musepackgain::showInfo( QWidget *parent )
-{}
+{
+    Q_UNUSED(parent)
+}
 
 int soundkonverter_replaygain_musepackgain::apply( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
 {
-    if( fileList.count() <= 0 ) return -1;
+    if( fileList.count() <= 0 )
+        return -1;
+
+    if( mode == ReplayGainPlugin::Remove )
+        return -1;
 
     ReplayGainPluginItem *newItem = new ReplayGainPluginItem( this );
     newItem->id = lastId++;
@@ -113,9 +103,7 @@ int soundkonverter_replaygain_musepackgain::apply( const KUrl::List& fileList, R
     connect( newItem->process, SIGNAL(readyRead()), this, SLOT(processOutput()) );
     connect( newItem->process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processExit(int,QProcess::ExitStatus)) );
 
-//     newItem->mode = mode;
     (*newItem->process) << binaries["replaygain"];
-    (*newItem->process) << "--auto";
     for( int i=0; i<fileList.count(); i++ )
     {
         (*newItem->process) << fileList.at(i).toLocalFile();
@@ -126,38 +114,12 @@ int soundkonverter_replaygain_musepackgain::apply( const KUrl::List& fileList, R
     return newItem->id;
 }
 
-// QString soundkonverter_replaygain_replaygain::applyCommand( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
-// {
-//     QString command;
-// 
-//     if( fileList.count() <= 0 ) return command;
-// 
-//     if( mode == ReplayGainPlugin::Add )
-//     {
-//         command += "replaygain";
-//         command += " --album";
-//         for( int i = 0; i < fileList.count(); i++ )
-//         {
-//             command += " \"" + fileList.at(i).toLocalFile() + "\"";
-//         }
-//     }
-//     else
-//     {
-//         command += "replaygain";
-//         command += " --clean";
-//         for( int i = 0; i < fileList.count(); i++ )
-//         {
-//             command += " \"" + fileList.at(i).toLocalFile() + "\"";
-//         }
-//     }
-// 
-//     return command;
-// }
-
 float soundkonverter_replaygain_musepackgain::parseOutput( const QString& output )
 {
+    Q_UNUSED(output)
+
     // no progress provided
-    
+
     return -1;
 }
 

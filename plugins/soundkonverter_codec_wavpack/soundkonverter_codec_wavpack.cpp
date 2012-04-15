@@ -9,6 +9,8 @@
 soundkonverter_codec_wavpack::soundkonverter_codec_wavpack( QObject *parent, const QStringList& args  )
     : CodecPlugin( parent )
 {
+    Q_UNUSED(args)
+
     binaries["wavpack"] = "";
     binaries["wvunpack"] = "";
 
@@ -33,7 +35,7 @@ QList<ConversionPipeTrunk> soundkonverter_codec_wavpack::codecTable()
     newTrunk.codecTo = "wavpack";
     newTrunk.rating = 100;
     newTrunk.enabled = ( binaries["wavpack"] != "" );
-    newTrunk.problemInfo = i18n("In order to encode wavpack files, you need to install 'wavpack'.\nYou can get it at http://www.wavpack.com");
+    newTrunk.problemInfo = standardMessage( "encode_codec,backend", "wavpack", "wavpack" ) + "\n" + standardMessage( "install_website_backend,url", "wavpack", "http://www.wavpack.com" );
     newTrunk.data.hasInternalReplayGain = false;
     table.append( newTrunk );
 
@@ -41,45 +43,27 @@ QList<ConversionPipeTrunk> soundkonverter_codec_wavpack::codecTable()
     newTrunk.codecTo = "wav";
     newTrunk.rating = 100;
     newTrunk.enabled = ( binaries["wvunpack"] != "" );
-    newTrunk.problemInfo = i18n("In order to decode wavpack files, you need to install 'wvunpack'.\nwvunpack should be in the package 'wavpack'.");
+    newTrunk.problemInfo = standardMessage( "decode_codec,backend", "wavpack", "wvunpack" ) + "\n" + i18n( "'%1' is usually in the package '%2' which you can download at %3", QString("wvunpack"), QString("wavpack"), QString("http://www.wavpack.com") );
     newTrunk.data.hasInternalReplayGain = false;
     table.append( newTrunk );
 
     return table;
 }
 
-BackendPlugin::FormatInfo soundkonverter_codec_wavpack::formatInfo( const QString& codecName )
-{
-    BackendPlugin::FormatInfo info;
-    info.codecName = codecName;
-
-    if( codecName == "wavpack" )
-    {
-        info.lossless = true;
-        info.description = i18n("WavPack is a free and lossless audio codec.\nFor more information see: http://www.wavpack.com");
-        info.mimeTypes.append( "audio/x-wavpack" );
-        info.extensions.append( "wv" );
-        info.extensions.append( "wvp" );
-    }
-    else if( codecName == "wav" )
-    {
-        info.lossless = true;
-        info.description = i18n("Wave won't compress the audio stream.");
-        info.mimeTypes.append( "audio/x-wav" );
-        info.mimeTypes.append( "audio/wav" );
-        info.extensions.append( "wav" );
-    }
-
-    return info;
-}
-
 bool soundkonverter_codec_wavpack::isConfigSupported( ActionType action, const QString& codecName )
 {
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+
     return false;
 }
 
 void soundkonverter_codec_wavpack::showConfigDialog( ActionType action, const QString& codecName, QWidget *parent )
-{}
+{
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+    Q_UNUSED(parent)
+}
 
 bool soundkonverter_codec_wavpack::hasInfo()
 {
@@ -87,7 +71,9 @@ bool soundkonverter_codec_wavpack::hasInfo()
 }
 
 void soundkonverter_codec_wavpack::showInfo( QWidget *parent )
-{}
+{
+    Q_UNUSED(parent)
+}
 
 QWidget *soundkonverter_codec_wavpack::newCodecWidget()
 {
@@ -104,7 +90,8 @@ QWidget *soundkonverter_codec_wavpack::newCodecWidget()
 int soundkonverter_codec_wavpack::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     QStringList command = convertCommand( inputFile, outputFile, inputCodec, outputCodec, _conversionOptions, tags, replayGain );
-    if( command.isEmpty() ) return -1;
+    if( command.isEmpty() )
+        return -1;
 
     CodecPluginItem *newItem = new CodecPluginItem( this );
     newItem->id = lastId++;
@@ -125,8 +112,13 @@ int soundkonverter_codec_wavpack::convert( const KUrl& inputFile, const KUrl& ou
 
 QStringList soundkonverter_codec_wavpack::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
-    if( !_conversionOptions ) return QStringList();
-    
+    Q_UNUSED(inputCodec)
+    Q_UNUSED(tags)
+    Q_UNUSED(replayGain)
+
+    if( !_conversionOptions )
+        return QStringList();
+
     QStringList command;
     ConversionOptions *conversionOptions = _conversionOptions;
 
@@ -155,20 +147,20 @@ QStringList soundkonverter_codec_wavpack::convertCommand( const KUrl& inputFile,
             }
             command += conversionOptions->cmdArguments;
         }
-        if( inputFile.toLocalFile() == "-" )
+        if( inputFile.isEmpty() )
         {
             command += "--raw-pcm";
         }
-        command += "\"" + inputFile.toLocalFile() + "\"";
+        command += "\"" + escapeUrl(inputFile) + "\"";
         command += "-o";
-        command += "\"" + outputFile.toLocalFile() + "\"";
+        command += "\"" + escapeUrl(outputFile) + "\"";
     }
     else
     {
         command += binaries["wvunpack"];
-        command += "\"" + inputFile.toLocalFile() + "\"";
+        command += "\"" + escapeUrl(inputFile) + "\"";
         command += "-o";
-        command += "\"" + outputFile.toLocalFile() + "\"";
+        command += "\"" + escapeUrl(outputFile) + "\"";
     }
 
     return command;
@@ -178,13 +170,13 @@ float soundkonverter_codec_wavpack::parseOutput( const QString& output )
 {
     // creating test.wv,  58% done...
     // restoring test.wv.wav,  31% done...
-  
+
     QRegExp reg("\\s+(\\d+)% done");
     if( output.contains(reg) )
     {
         return (float)reg.cap(1).toInt();
     }
-    
+
     return -1;
 }
 

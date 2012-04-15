@@ -1,9 +1,13 @@
 
 #include "tagengine.h"
+#include "MetaReplayGain.h"
 
 #include <QFile>
+#include <QDir>
+#include <QBuffer>
 // #include <KDebug>
 
+#include <KLocale>
 
 #include <fileref.h>
 #include <id3v1genres.h> //used to load genre list
@@ -19,8 +23,11 @@
 #include <vorbisfile.h>
 #include <flacfile.h>
 #include <textidentificationframe.h>
+#include <attachedpictureframe.h>
 #include <xiphcomment.h>
 #include <mpcfile.h>
+#include <mp4tag.h>
+#include <mp4file.h>
 
 
 /*//#include <taglib/attachedpictureframe.h>
@@ -43,13 +50,13 @@
 // #include "wavpack/wvfile.h"
 // // #include "trueaudio/ttafile.h"
 */
-/*#ifdef HAVE_MP4V2
-#include "metadata/mp4/mp4file.h"
-#include "metadata/mp4/mp4tag.h"
-#else
-#include "metadata/m4a/mp4file.h"
-#include "metadata/m4a/mp4itunestag.h"
-#endif*/
+// #ifdef HAVE_MP4V2
+// #include "metadata/mp4/mp4file.h"
+// #include "metadata/mp4/mp4tag.h"
+// #else
+// #include "metadata/m4a/mp4file.h"
+// #include "metadata/m4a/mp4itunestag.h"
+// #endif
 
 // TODO COMPILATION tag
 // FIXME BPM tag
@@ -57,25 +64,116 @@
 //using namespace std;
 //using namespace MediaInfoLib;
 
-TagData::TagData( const QString& _artist, const QString& _composer,
-             const QString& _album, const QString& _title,
-             const QString& _genre, const QString& _comment,
-             int _track, int _disc, int _year,
-             int _length, int _fileSize, int _bitrate, int _samplingRate )
+// Taglib added support for FLAC pictures in 1.7.0
+#if (TAGLIB_MAJOR_VERSION > 1) || (TAGLIB_MAJOR_VERSION == 1 && TAGLIB_MINOR_VERSION >= 7)
+# define TAGLIB_HAS_FLAC_PICTURELIST
+#endif
+
+
+CoverData::CoverData( const QByteArray& _data, const QString& _mimyType, Role _role, const QString& _description, QObject *parent )
+        : QObject( parent )
 {
-    artist = _artist;
-    composer = _composer;
-    album = _album;
-    title = _title;
-    genre = _genre;
-    comment = _comment;
-    track = _track;
-    disc = _disc;
-    year = _year;
-    length = _length;
-    fileSize = _fileSize;
-    bitrate = _bitrate;
-    samplingRate = _samplingRate;
+    data = _data;
+    mimeType = _mimyType;
+    role = _role;
+    description = _description;
+}
+
+CoverData::~CoverData()
+{}
+
+QString CoverData::roleName( Role role )
+{
+    switch( role )
+    {
+        case Other:
+            return i18nc("cover type","Unclassified");
+        case FileIcon:
+            return i18nc("cover type","32x32 PNG file icon");
+        case OtherFileIcon:
+            return i18nc("cover type","File icon");
+        case FrontCover:
+            return i18nc("cover type","Front cover");
+        case BackCover:
+            return i18nc("cover type","Back cover");
+        case LeafletPage:
+            return i18nc("cover type","Leaflet page");
+        case Media:
+            return i18nc("cover type","CD photo");
+        case LeadArtist:
+            return i18nc("cover type","Lead artist picture");
+        case Artist:
+            return i18nc("cover type","Artist picture");
+        case Conductor:
+            return i18nc("cover type","Conductor picture");
+        case Band:
+            return i18nc("cover type","Band picture");
+        case Composer:
+            return i18nc("cover type","Composer picture");
+        case Lyricist:
+            return i18nc("cover type","Lyricist picture");
+        case RecordingLocation:
+            return i18nc("cover type","Picture of the recording location");
+        case DuringRecording:
+            return i18nc("cover type","Picture of the artists during recording");
+        case DuringPerformance:
+            return i18nc("cover type","Picture of the artists during performance");
+        case MovieScreenCapture:
+            return i18nc("cover type","Picture from a video");
+        case ColouredFish:
+            return i18nc("cover type","Picture of a large, coloured fish");
+        case Illustration:
+            return i18nc("cover type","Illustration related to the track");
+        case BandLogo:
+            return i18nc("cover type","Band logo");
+        case PublisherLogo:
+            return i18nc("cover type","Publisher logo");
+    }
+
+    return QString();
+}
+
+
+// TagData::TagData( const QString& _artist, const QString& _composer,
+//              const QString& _album, const QString& _title,
+//              const QString& _genre, const QString& _comment,
+//              int _track, int _disc, int _discTotal, int _year,
+//              int _length, int _fileSize, int _bitrate, int _samplingRate )
+// {
+//     artist = _artist;
+//     composer = _composer;
+//     album = _album;
+//     title = _title;
+//     genre = _genre;
+//     comment = _comment;
+//     track = _track;
+//     disc = _disc;
+//     discTotal = _discTotal;
+//     year = _year;
+//     length = _length;
+//     fileSize = _fileSize;
+//     bitrate = _bitrate;
+//     samplingRate = _samplingRate;
+//     coversRead = false;
+// }
+
+TagData::TagData()
+{
+    artist = QString();
+    composer = QString();
+    album = QString();
+    title = QString();
+    genre = QString();
+    comment = QString();
+    track = 0;
+    disc = 0;
+    discTotal = 0;
+    year = 0;
+    length = 0;
+    fileSize = 0;
+    bitrate = 0;
+    samplingRate = 0;
+    coversRead = false;
 }
 
 TagData::~TagData()
@@ -110,7 +208,7 @@ TagData* TagEngine::readTags( const KUrl& fileName ) // TagLib
     TagData *tagData = new TagData();
 
     TagLib::FileRef fileref( fileName.pathOrUrl().toLocal8Bit() );
-    
+
     if( !fileref.isNull() )
     {
         TagLib::Tag *tag = fileref.tag();
@@ -144,11 +242,25 @@ TagData* TagEngine::readTags( const KUrl& fileName ) // TagLib
             tagData->samplingRate = audioProperties->sampleRate();
         }
 
+        Meta::ReplayGainTagMap replayGainTags = Meta::readReplayGainTags( fileref );
+        if( replayGainTags.contains(Meta::ReplayGain_Track_Gain) )
+            tagData->track_gain = replayGainTags[ Meta::ReplayGain_Track_Gain ];
+        if( replayGainTags.contains(Meta::ReplayGain_Album_Gain) )
+            tagData->album_gain = replayGainTags[ Meta::ReplayGain_Album_Gain ];
+
         QString disc;
-        QString track_gain;
-        QString album_gain;
+//         QString track_gain;
+//         QString album_gain;
         if ( TagLib::MPEG::File *file = dynamic_cast<TagLib::MPEG::File *>( fileref.file() ) )
         {
+            // TXXX : TagLib::ID3v2::UserTextIdentificationFrame
+            // TBPM : BPM
+            // TPE2 : Album artist
+            // TCMP : Compilation (true,1 vs. false,0)
+            // POPM : rating, playcount
+            // APIC : TagLib::ID3v2::AttachedPictureFrame
+            // UFID : TagLib::ID3v2::UniqueFileIdentifierFrame
+
             if ( file->ID3v2Tag() )
             {
                 if ( !file->ID3v2Tag()->frameListMap()[ "TPOS" ].isEmpty() )
@@ -156,18 +268,30 @@ TagData* TagEngine::readTags( const KUrl& fileName ) // TagLib
 
                 if ( !file->ID3v2Tag()->frameListMap()[ "TCOM" ].isEmpty() )
                     tagData->composer = TStringToQString( file->ID3v2Tag()->frameListMap()["TCOM"].front()->toString() );
-            }
-            if ( file->APETag() )
-            {
-                if ( !file->APETag()->itemListMap()[ "REPLAYGAIN_TRACK_GAIN" ].isEmpty() )
-                    track_gain = TStringToQString( file->APETag()->itemListMap()["REPLAYGAIN_TRACK_GAIN"].toString() );
 
-                if ( !file->APETag()->itemListMap()[ "REPLAYGAIN_ALBUM_GAIN" ].isEmpty() )
-                    album_gain = TStringToQString( file->APETag()->itemListMap()["REPLAYGAIN_ALBUM_GAIN"].toString() );
+//                 TagLib::ID3v2::FrameList apic_frames = file->ID3v2Tag()->frameListMap()["APIC"];
+//                 if( !apic_frames.isEmpty() )
+//                 {
+//                     TagLib::ID3v2::AttachedPictureFrame* pic = static_cast<TagLib::ID3v2::AttachedPictureFrame*>(apic_frames.front());
+//
+//                     tagData->cover.loadFromData( (const uchar*) pic->picture().data(), pic->picture().size() );
+//                 }
             }
+//             if ( file->APETag() )
+//             {
+//                 if ( !file->APETag()->itemListMap()[ "REPLAYGAIN_TRACK_GAIN" ].isEmpty() )
+//                     track_gain = TStringToQString( file->APETag()->itemListMap()["REPLAYGAIN_TRACK_GAIN"].toString() );
+//
+//                 if ( !file->APETag()->itemListMap()[ "REPLAYGAIN_ALBUM_GAIN" ].isEmpty() )
+//                     album_gain = TStringToQString( file->APETag()->itemListMap()["REPLAYGAIN_ALBUM_GAIN"].toString() );
+//             }
         }
         else if ( TagLib::Ogg::Vorbis::File *file = dynamic_cast<TagLib::Ogg::Vorbis::File *>( fileref.file() ) )
         {
+            // ALBUMARTIST
+            // BPM
+            // COMPILATION (1 vs. 0)
+
             if ( file->tag() )
             {
                 if ( !file->tag()->fieldListMap()[ "COMPOSER" ].isEmpty() )
@@ -176,11 +300,11 @@ TagData* TagEngine::readTags( const KUrl& fileName ) // TagLib
                 if ( !file->tag()->fieldListMap()[ "DISCNUMBER" ].isEmpty() )
                     disc = TStringToQString( file->tag()->fieldListMap()["DISCNUMBER"].front() );
 
-                if ( !file->tag()->fieldListMap()[ "REPLAYGAIN_TRACK_GAIN" ].isEmpty() )
-                    track_gain = TStringToQString( file->tag()->fieldListMap()["REPLAYGAIN_TRACK_GAIN"].front() );
-
-                if ( !file->tag()->fieldListMap()[ "REPLAYGAIN_ALBUM_GAIN" ].isEmpty() )
-                    album_gain = TStringToQString( file->tag()->fieldListMap()["REPLAYGAIN_ALBUM_GAIN"].front() );
+//                 if ( !file->tag()->fieldListMap()[ "REPLAYGAIN_TRACK_GAIN" ].isEmpty() )
+//                     track_gain = TStringToQString( file->tag()->fieldListMap()["REPLAYGAIN_TRACK_GAIN"].front() );
+//
+//                 if ( !file->tag()->fieldListMap()[ "REPLAYGAIN_ALBUM_GAIN" ].isEmpty() )
+//                     album_gain = TStringToQString( file->tag()->fieldListMap()["REPLAYGAIN_ALBUM_GAIN"].front() );
             }
         }
         else if ( TagLib::FLAC::File *file = dynamic_cast<TagLib::FLAC::File *>( fileref.file() ) )
@@ -193,11 +317,11 @@ TagData* TagEngine::readTags( const KUrl& fileName ) // TagLib
                 if ( !file->xiphComment()->fieldListMap()[ "DISCNUMBER" ].isEmpty() )
                     disc = TStringToQString( file->xiphComment()->fieldListMap()["DISCNUMBER"].front() );
 
-                if ( !file->xiphComment()->fieldListMap()[ "REPLAYGAIN_TRACK_GAIN" ].isEmpty() )
-                    track_gain = TStringToQString( file->xiphComment()->fieldListMap()["REPLAYGAIN_TRACK_GAIN"].front() );
-
-                if ( !file->xiphComment()->fieldListMap()[ "REPLAYGAIN_ALBUM_GAIN" ].isEmpty() )
-                    album_gain = TStringToQString( file->xiphComment()->fieldListMap()["REPLAYGAIN_ALBUM_GAIN"].front() );
+//                 if ( !file->xiphComment()->fieldListMap()[ "REPLAYGAIN_TRACK_GAIN" ].isEmpty() )
+//                     track_gain = TStringToQString( file->xiphComment()->fieldListMap()["REPLAYGAIN_TRACK_GAIN"].front() );
+//
+//                 if ( !file->xiphComment()->fieldListMap()[ "REPLAYGAIN_ALBUM_GAIN" ].isEmpty() )
+//                     album_gain = TStringToQString( file->xiphComment()->fieldListMap()["REPLAYGAIN_ALBUM_GAIN"].front() );
             }
 
             /*if ( file->tag() )
@@ -209,16 +333,36 @@ TagData* TagEngine::readTags( const KUrl& fileName ) // TagLib
                     album_gain = TStringToQString( file->tag()->fieldListMap()["REPLAYGAIN_ALBUM_GAIN"].front() );
             }*/
         }
-        /*else if ( TagLib::MP4::File *file = dynamic_cast<TagLib::MP4::File *>( fileref.file() ) )
+        else if ( TagLib::MP4::File *file = dynamic_cast<TagLib::MP4::File *>( fileref.file() ) )
         {
+            // \xA9wrt : Composer
+            // aART : Album artist
+            // tmpo : BPM
+            // disk
+            // cpil : Compilation (true vs. false)
+
             TagLib::MP4::Tag *mp4tag = dynamic_cast<TagLib::MP4::Tag *>( file->tag() );
             if( mp4tag )
             {
-                tagData->composer = TStringToQString( mp4tag->composer() );
-
-                disc = QString::number( mp4tag->disk() );
+                TagLib::MP4::ItemListMap map = mp4tag->itemListMap();
+                for( TagLib::MP4::ItemListMap::ConstIterator it = map.begin(); it != map.end(); ++it )
+                {
+                    if( it->first == "\xA9wrt" )
+                    {
+                        tagData->composer = TStringToQString( it->second.toStringList().front() );
+                    }
+                    else if( it->first == "disk" )
+                    {
+                        tagData->disc = it->second.toIntPair().first;
+                        tagData->discTotal = it->second.toIntPair().second;
+                    }
+//                     else if( it->first == "\xA9lyr" )
+//                     {
+//                         tagData->comment = TStringToQString( it->second.toStringList().front() );
+//                     }
+                }
             }
-        }*/
+        }
         /*else if ( TagLib::MPC::File *file = dynamic_cast<TagLib::MPC::File *>( fileref.file() ) )
         {
             if ( file->APETag() )
@@ -257,29 +401,34 @@ TagData* TagEngine::readTags( const KUrl& fileName ) // TagLib
         {
             int i = disc.indexOf('/');
             if( i != -1 )
-                // disc.right( i ).toInt() is total number of discs, we don't use this at the moment
+            {
                 tagData->disc = disc.left( i ).toInt();
+                tagData->discTotal = disc.right( disc.count() - i - 1 ).toInt();
+            }
             else
+            {
                 tagData->disc = disc.toInt();
+                tagData->discTotal = 0;
+            }
         }
 
-        if( !track_gain.isEmpty() )
-        {
-            int i = track_gain.indexOf(' ');
-            if( i != -1 )
-                tagData->track_gain = track_gain.left( i ).toFloat();
-            else
-                tagData->track_gain = track_gain.toFloat();
-        }
-
-        if( !album_gain.isEmpty() )
-        {
-            int i = album_gain.indexOf(' ');
-            if( i != -1 )
-                tagData->album_gain = album_gain.left( i ).toFloat();
-            else
-                tagData->album_gain = album_gain.toFloat();
-        }
+//         if( !track_gain.isEmpty() )
+//         {
+//             int i = track_gain.indexOf(' ');
+//             if( i != -1 )
+//                 tagData->track_gain = track_gain.left( i ).toFloat();
+//             else
+//                 tagData->track_gain = track_gain.toFloat();
+//         }
+//
+//         if( !album_gain.isEmpty() )
+//         {
+//             int i = album_gain.indexOf(' ');
+//             if( i != -1 )
+//                 tagData->album_gain = album_gain.left( i ).toFloat();
+//             else
+//                 tagData->album_gain = album_gain.toFloat();
+//         }
 
         return tagData;
     }
@@ -289,7 +438,8 @@ TagData* TagEngine::readTags( const KUrl& fileName ) // TagLib
 
 bool TagEngine::writeTags( const KUrl& fileName, TagData *tagData )
 {
-    if( !tagData ) tagData = new TagData();
+    if( !tagData )
+        tagData = new TagData();
 
     TagLib::FileRef fileref( fileName.pathOrUrl().toLocal8Bit(), false );
 
@@ -314,55 +464,77 @@ bool TagEngine::writeTags( const KUrl& fileName, TagData *tagData )
             return false;
         }
 
+        QString disc;
+        if( tagData->disc > 0 )
+        {
+            disc = QString::number(tagData->disc);
+            if( tagData->discTotal > 0 )
+            {
+                disc += "/" + QString::number(tagData->discTotal);
+            }
+        }
+
         if ( TagLib::MPEG::File *file = dynamic_cast<TagLib::MPEG::File *>( fileref.file() ) )
         {
             if ( file->ID3v2Tag() )
             {
-                if ( !file->ID3v2Tag()->frameListMap()[ "TPOS" ].isEmpty() )
+                if( !disc.isEmpty() )
                 {
-                    file->ID3v2Tag()->frameListMap()[ "TPOS" ].front()->setText( TagLib::String(QString::number(tagData->disc).toUtf8().data(), TagLib::String::UTF8) );
-                }
-                else
-                {
-                    TagLib::ID3v2::TextIdentificationFrame *frame = new TagLib::ID3v2::TextIdentificationFrame( "TPOS", TagLib::ID3v2::FrameFactory::instance()->defaultTextEncoding() );
-                    frame->setText( TagLib::String(QString::number(tagData->disc).toUtf8().data(), TagLib::String::UTF8) );
-                    file->ID3v2Tag()->addFrame( frame );
+                    if ( !file->ID3v2Tag()->frameListMap()[ "TPOS" ].isEmpty() )
+                    {
+                        file->ID3v2Tag()->frameListMap()[ "TPOS" ].front()->setText( TagLib::String(disc.toUtf8().data(), TagLib::String::UTF8) );
+                    }
+                    else
+                    {
+                        TagLib::ID3v2::TextIdentificationFrame *frame = new TagLib::ID3v2::TextIdentificationFrame( "TPOS", TagLib::ID3v2::FrameFactory::instance()->defaultTextEncoding() );
+                        frame->setText( TagLib::String(disc.toUtf8().data(), TagLib::String::UTF8) );
+                        file->ID3v2Tag()->addFrame( frame );
+                    }
                 }
 
-                if ( !file->ID3v2Tag()->frameListMap()[ "TCOM" ].isEmpty() )
+                if( !tagData->composer.isEmpty() )
                 {
-                    file->ID3v2Tag()->frameListMap()[ "TCOM" ].front()->setText( TagLib::String(tagData->composer.toUtf8().data(), TagLib::String::UTF8) );
-                }
-                else
-                {
-                    TagLib::ID3v2::TextIdentificationFrame *frame = new TagLib::ID3v2::TextIdentificationFrame( "TCOM", TagLib::ID3v2::FrameFactory::instance()->defaultTextEncoding() );
-                    frame->setText( TagLib::String(tagData->composer.toUtf8().data(), TagLib::String::UTF8) );
-                    file->ID3v2Tag()->addFrame( frame );
+                    if ( !file->ID3v2Tag()->frameListMap()[ "TCOM" ].isEmpty() )
+                    {
+                        file->ID3v2Tag()->frameListMap()[ "TCOM" ].front()->setText( TagLib::String(tagData->composer.toUtf8().data(), TagLib::String::UTF8) );
+                    }
+                    else
+                    {
+                        TagLib::ID3v2::TextIdentificationFrame *frame = new TagLib::ID3v2::TextIdentificationFrame( "TCOM", TagLib::ID3v2::FrameFactory::instance()->defaultTextEncoding() );
+                        frame->setText( TagLib::String(tagData->composer.toUtf8().data(), TagLib::String::UTF8) );
+                        file->ID3v2Tag()->addFrame( frame );
+                    }
                 }
 
                 // TODO check if hacks are neccessary for taglib 1.5
                 // HACK sets the id3v2 genre tag as string
-                if ( !file->ID3v2Tag()->frameListMap()[ "TCON" ].isEmpty() )
+                if( !tagData->genre.isEmpty() )
                 {
-                    file->ID3v2Tag()->frameListMap()[ "TCON" ].front()->setText( TagLib::String(tagData->genre.toUtf8().data(), TagLib::String::UTF8) );
-                }
-                else
-                {
-                    TagLib::ID3v2::TextIdentificationFrame *frame = new TagLib::ID3v2::TextIdentificationFrame( "TCON", TagLib::ID3v2::FrameFactory::instance()->defaultTextEncoding() );
-                    frame->setText( TagLib::String(tagData->genre.toUtf8().data(), TagLib::String::UTF8) );
-                    file->ID3v2Tag()->addFrame( frame );
+                    if ( !file->ID3v2Tag()->frameListMap()[ "TCON" ].isEmpty() )
+                    {
+                        file->ID3v2Tag()->frameListMap()[ "TCON" ].front()->setText( TagLib::String(tagData->genre.toUtf8().data(), TagLib::String::UTF8) );
+                    }
+                    else
+                    {
+                        TagLib::ID3v2::TextIdentificationFrame *frame = new TagLib::ID3v2::TextIdentificationFrame( "TCON", TagLib::ID3v2::FrameFactory::instance()->defaultTextEncoding() );
+                        frame->setText( TagLib::String(tagData->genre.toUtf8().data(), TagLib::String::UTF8) );
+                        file->ID3v2Tag()->addFrame( frame );
+                    }
                 }
 
                 // HACK sets the id3v2 year tag
-                if ( !file->ID3v2Tag()->frameListMap()[ "TYER" ].isEmpty() )
+                if( tagData->year > 0 )
                 {
-                    file->ID3v2Tag()->frameListMap()[ "TYER" ].front()->setText( TagLib::String(QString::number(tagData->year).toUtf8().data(), TagLib::String::UTF8) );
-                }
-                else
-                {
-                    TagLib::ID3v2::TextIdentificationFrame *frame = new TagLib::ID3v2::TextIdentificationFrame( "TYER", TagLib::ID3v2::FrameFactory::instance()->defaultTextEncoding() );
-                    frame->setText( TagLib::String(QString::number(tagData->year).toUtf8().data(), TagLib::String::UTF8) );
-                    file->ID3v2Tag()->addFrame( frame );
+                    if ( !file->ID3v2Tag()->frameListMap()[ "TYER" ].isEmpty() )
+                    {
+                        file->ID3v2Tag()->frameListMap()[ "TYER" ].front()->setText( TagLib::String(QString::number(tagData->year).toUtf8().data(), TagLib::String::UTF8) );
+                    }
+                    else
+                    {
+                        TagLib::ID3v2::TextIdentificationFrame *frame = new TagLib::ID3v2::TextIdentificationFrame( "TYER", TagLib::ID3v2::FrameFactory::instance()->defaultTextEncoding() );
+                        frame->setText( TagLib::String(QString::number(tagData->year).toUtf8().data(), TagLib::String::UTF8) );
+                        file->ID3v2Tag()->addFrame( frame );
+                    }
                 }
             }
         }
@@ -370,28 +542,34 @@ bool TagEngine::writeTags( const KUrl& fileName, TagData *tagData )
         {
             if ( file->tag() )
             {
-                file->tag()->addField( "COMPOSER", TagLib::String(tagData->composer.toUtf8().data(), TagLib::String::UTF8), true );
+                if( !tagData->composer.isEmpty() )
+                    file->tag()->addField( "COMPOSER", TagLib::String(tagData->composer.toUtf8().data(), TagLib::String::UTF8), true );
 
-                file->tag()->addField( "DISCNUMBER", TagLib::String(QString::number(tagData->disc).toUtf8().data(), TagLib::String::UTF8), true );
+                if( !disc.isEmpty() )
+                    file->tag()->addField( "DISCNUMBER", TagLib::String(disc.toUtf8().data(), TagLib::String::UTF8), true );
             }
         }
         else if ( TagLib::FLAC::File *file = dynamic_cast<TagLib::FLAC::File *>( fileref.file() ) )
         {
             if ( file->xiphComment() )
             {
-                file->xiphComment()->addField( "COMPOSER", TagLib::String(tagData->composer.toUtf8().data(), TagLib::String::UTF8), true );
+                if( !tagData->composer.isEmpty() )
+                    file->xiphComment()->addField( "COMPOSER", TagLib::String(tagData->composer.toUtf8().data(), TagLib::String::UTF8), true );
 
-                file->xiphComment()->addField( "DISCNUMBER", TagLib::String(QString::number(tagData->disc).toUtf8().data(), TagLib::String::UTF8), true );
+                if( !disc.isEmpty() )
+                    file->xiphComment()->addField( "DISCNUMBER", TagLib::String(disc.toUtf8().data(), TagLib::String::UTF8), true );
             }
         }
-        /*else if ( TagLib::MP4::File *file = dynamic_cast<TagLib::MP4::File *>( fileref.file() ) )
+        else if ( TagLib::MP4::File *file = dynamic_cast<TagLib::MP4::File *>( fileref.file() ) )
         {
             TagLib::MP4::Tag *mp4tag = dynamic_cast<TagLib::MP4::Tag *>( file->tag() );
             if( mp4tag )
             {
-                mp4tag->setComposer( QStringToTString( tagData->composer ) );
+                if( !tagData->composer.isEmpty() )
+                    mp4tag->itemListMap()["\xA9wrt"] = TagLib::StringList(TagLib::String(tagData->composer.toUtf8().data(), TagLib::String::UTF8));
 
-                mp4tag->setDisk( QString::number(tagData->disc) );
+                if( tagData->disc > 0 )
+                    mp4tag->itemListMap()["disk"] = TagLib::MP4::Item( tagData->disc, tagData->discTotal );
             }
         }
         /*if ( TagLib::TTA::File *file = dynamic_cast<TagLib::TTA::File *>( fileref.file() ) ) // NOTE writing works, but reading not
@@ -427,10 +605,270 @@ bool TagEngine::writeTags( const KUrl& fileName, TagData *tagData )
     return false;
 }
 
+QList<CoverData*> TagEngine::readCovers( const KUrl& fileName ) // TagLib
+{
+    QList<CoverData*> covers;
+
+    TagLib::FileRef fileref( fileName.pathOrUrl().toLocal8Bit() );
+
+    if( !fileref.isNull() )
+    {
+        if ( TagLib::MPEG::File *file = dynamic_cast<TagLib::MPEG::File *>( fileref.file() ) )
+        {
+            // TXXX : TagLib::ID3v2::UserTextIdentificationFrame
+            // TBPM : BPM
+            // TPE2 : Album artist
+            // TCMP : Compilation (true,1 vs. false,0)
+            // POPM : rating, playcount
+            // APIC : TagLib::ID3v2::AttachedPictureFrame
+            // UFID : TagLib::ID3v2::UniqueFileIdentifierFrame
+
+            if ( file->ID3v2Tag() )
+            {
+                TagLib::ID3v2::FrameList apic_frames = file->ID3v2Tag()->frameListMap()["APIC"];
+
+                for( TagLib::ID3v2::FrameList::ConstIterator iter = apic_frames.begin(); iter != apic_frames.end(); ++iter )
+                {
+                    TagLib::ID3v2::AttachedPictureFrame *pic =
+                            dynamic_cast< TagLib::ID3v2::AttachedPictureFrame * >( *iter );
+
+                    QByteArray image_data( pic->picture().data(), pic->picture().size() );
+                    CoverData *newCover = new CoverData( image_data, TStringToQString(pic->mimeType()), CoverData::Role(pic->type()), TStringToQString(pic->description()) );
+                    covers.append( newCover );
+                }
+            }
+        }
+        else if ( TagLib::Ogg::Vorbis::File *file = dynamic_cast<TagLib::Ogg::Vorbis::File *>( fileref.file() ) )
+        {
+            // ALBUMARTIST
+            // BPM
+            // COMPILATION (1 vs. 0)
+
+            if ( file->tag() )
+            {
+                TagLib::Ogg::FieldListMap map = file->tag()->fieldListMap();
+
+                // Ogg lacks a definitive standard for embedding cover art, but it seems
+                // b64 encoding a field called COVERART is the general convention
+
+                TagLib::StringList coverArtValue;
+                TagLib::StringList mimeTypeValue;
+                TagLib::StringList descriptionValue;
+
+                for( TagLib::Ogg::FieldListMap::ConstIterator it = map.begin(); it != map.end(); ++it )
+                {
+                    const TagLib::String key = it->first;
+                    const TagLib::StringList value = it->second;
+
+                    if( key == TagLib::String("COVERART") )
+                    {
+                        coverArtValue = value;
+                    }
+                    else if( key == TagLib::String("COVERARTMIME") )
+                    {
+                        mimeTypeValue = value;
+                    }
+                    else if( key == TagLib::String("COVERARTDESCRIPTION") )
+                    {
+                        descriptionValue = value;
+                    }
+                }
+
+                for( uint i=0; i<coverArtValue.size(); i++ )
+                {
+                    QByteArray image_data_b64(coverArtValue[i].toCString());
+                    QByteArray image_data = QByteArray::fromBase64(image_data_b64);
+
+                    CoverData *newCover = new CoverData( image_data, TStringToQString(mimeTypeValue[i]), CoverData::FrontCover, TStringToQString(descriptionValue[i]) );
+                    covers.append( newCover );
+                }
+
+//                 if( map.contains("COVERART") )//COVERARTMIME,COVERARTDESCRIPTION
+//                 {
+//                     QByteArray image_data_b64(map["COVERART"].toString().toCString());
+//                     QByteArray image_data = QByteArray::fromBase64(image_data_b64);
+//
+// //                     if( !tagData->cover.loadFromData( image_data ) )
+// //                         tagData->cover.loadFromData( image_data_b64 );
+//                     CoverData *newCover = new CoverData( image_data, QString(), CoverData::FrontCover );
+//                     covers.append( newCover );
+//                 }
+            }
+        }
+        else if ( TagLib::FLAC::File *file = dynamic_cast<TagLib::FLAC::File *>( fileref.file() ) )
+        {
+            if ( file->xiphComment() )
+            {
+                #ifdef TAGLIB_HAS_FLAC_PICTURELIST
+                const TagLib::List<TagLib::FLAC::Picture*> picturelist = file->pictureList();
+                for( TagLib::List<TagLib::FLAC::Picture*>::ConstIterator it = picturelist.begin(); it != picturelist.end(); it++ )
+                {
+                    const TagLib::FLAC::Picture *picture = *it;
+
+                    QByteArray image_data( picture->data().data(), picture->data().size() );
+                    CoverData *newCover = new CoverData( image_data, TStringToQString(picture->mimeType()), CoverData::Role(picture->type()), TStringToQString(picture->description()) );
+                    covers.append( newCover );
+                }
+                #endif // TAGLIB_HAS_FLAC_PICTURELIST
+            }
+        }
+        else if ( TagLib::MP4::File *file = dynamic_cast<TagLib::MP4::File *>( fileref.file() ) )
+        {
+            TagLib::MP4::Tag *mp4tag = dynamic_cast<TagLib::MP4::Tag *>( file->tag() );
+            if( mp4tag )
+            {
+                TagLib::MP4::ItemListMap map = mp4tag->itemListMap();
+                for( TagLib::MP4::ItemListMap::ConstIterator it = map.begin(); it != map.end(); ++it )
+                {
+                    if( it->first == "covr" )
+                    {
+                        TagLib::MP4::CoverArtList coverList = it->second.toCoverArtList();
+                        for( TagLib::MP4::CoverArtList::Iterator cover = coverList.begin(); cover != coverList.end(); ++cover )
+                        {
+                            QByteArray image_data( cover->data().data(), cover->data().size() );
+                            const QString mimeType = cover->format() == TagLib::MP4::CoverArt::PNG ? "image/png" : "image/jpeg";
+                            CoverData *newCover = new CoverData( image_data, mimeType, CoverData::FrontCover );
+                            covers.append( newCover );
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return covers;
+}
+
+bool TagEngine::writeCovers( const KUrl& fileName, QList<CoverData*> covers )
+{
+    if( covers.isEmpty() )
+        return true;
+
+    TagLib::FileRef fileref( fileName.pathOrUrl().toLocal8Bit(), false );
+
+    if ( !fileref.isNull() )
+    {
+        if ( TagLib::MPEG::File *file = dynamic_cast<TagLib::MPEG::File *>( fileref.file() ) )
+        {
+            if ( file->ID3v2Tag() )
+            {
+                foreach( CoverData *cover, covers )
+                {
+                    TagLib::ID3v2::AttachedPictureFrame *frame = new TagLib::ID3v2::AttachedPictureFrame( "APIC" );
+                    frame->setPicture( TagLib::ByteVector( cover->data.data(), cover->data.size() ) );
+                    frame->setType( TagLib::ID3v2::AttachedPictureFrame::Type( cover->role ) );
+                    if( !cover->mimeType.isEmpty() )
+                        frame->setMimeType( TagLib::ByteVector(cover->mimeType.toUtf8().data()) );
+                    if( !cover->description.isEmpty() )
+                        frame->setDescription( TagLib::ByteVector(cover->description.toUtf8().data()) );
+
+                    file->ID3v2Tag()->addFrame( frame );
+                }
+            }
+
+            return fileref.save();
+        }
+        else if ( TagLib::FLAC::File *file = dynamic_cast<TagLib::FLAC::File *>( fileref.file() ) )
+        {
+            if ( file->xiphComment() )
+            {
+                #ifdef TAGLIB_HAS_FLAC_PICTURELIST
+                foreach( CoverData *cover, covers )
+                {
+                    TagLib::FLAC::Picture *newPicture = new TagLib::FLAC::Picture();
+                    newPicture->setData( TagLib::ByteVector( cover->data.data(), cover->data.size() ) );
+                    newPicture->setType( TagLib::FLAC::Picture::Type( cover->role ) );
+                    if( !cover->mimeType.isEmpty() )
+                        newPicture->setMimeType( TagLib::ByteVector(cover->mimeType.toUtf8().data()) );
+                    if( !cover->description.isEmpty() )
+                        newPicture->setDescription( TagLib::ByteVector(cover->description.toUtf8().data()) );
+
+                    file->addPicture( newPicture );
+                }
+                #endif // TAGLIB_HAS_FLAC_PICTURELIST
+            }
+
+            return fileref.save();
+        }
+        else if ( TagLib::MP4::File *file = dynamic_cast<TagLib::MP4::File *>( fileref.file() ) )
+        {
+            TagLib::MP4::Tag *mp4tag = dynamic_cast<TagLib::MP4::Tag *>( file->tag() );
+            if( mp4tag )
+            {
+                TagLib::MP4::CoverArtList coversList;
+                foreach( CoverData *cover, covers )
+                {
+                    const TagLib::MP4::CoverArt::Format format = cover->mimeType == "image/png" ? TagLib::MP4::CoverArt::PNG : TagLib::MP4::CoverArt::JPEG;
+
+                    coversList.append( TagLib::MP4::CoverArt( format, TagLib::ByteVector( cover->data.data(), cover->data.size() ) ) );
+                }
+                mp4tag->itemListMap()["covr"] = TagLib::MP4::Item( coversList );
+            }
+
+            return fileref.save();
+        }
+    }
+
+    return false;
+}
+
+bool TagEngine::writeCoversToDirectory( const QString& directoryName, QList<CoverData*> covers )
+{
+    if( covers.isEmpty() )
+        return true;
+
+    QDir dir( directoryName );
+
+    if( directoryName.isEmpty() || !dir.exists() )
+        return false;
+
+
+    int i = covers.count() > 1 ? 1 : 0;
+
+    foreach( CoverData *cover, covers )
+    {
+        QString fileName = cover->description;
+        if( fileName.isEmpty() )
+        {
+            fileName = i18nc("cover file name","cover");
+
+            if( i > 0 )
+                fileName += QString::number(i);
+        }
+        QString extension;
+        if( cover->mimeType == "image/jpeg" )
+        {
+            extension = ".jpg";
+            if( fileName.toLower().endsWith(".jpg") )
+                fileName = fileName.left( fileName.count() - 4 );
+            if( fileName.toLower().endsWith(".jpeg") )
+                fileName = fileName.left( fileName.count() - 5 );
+        }
+        else if( cover->mimeType == "image/png" )
+        {
+            extension = ".png";
+            if( fileName.toLower().endsWith(".png") )
+                fileName = fileName.left( fileName.count() - 4 );
+        }
+
+        QFile file( directoryName + "/" + fileName + extension );
+        if( !file.exists() )
+        {
+            file.open( QIODevice::WriteOnly );
+            file.write( cover->data.data(), cover->data.size() );
+            file.close();
+        }
+
+        i++;
+    }
+
+    return false;
+}
+
 // bool TagEngine::canWrite( QString format )
 // {
 //     format = format.lower();
-// 
+//
 //     if( format == "ogg" ||
 //         format == "flac" || format == "fla" ||
 //         format == "mp3" || // TODO mp2 ?

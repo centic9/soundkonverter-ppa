@@ -1,7 +1,7 @@
 //
 // C++ Interface: configdialog
 //
-// Description: 
+// Description:
 //
 //
 // Author: Daniel Faust <hessijames@gmail.com>, (C) 2007
@@ -17,6 +17,7 @@
 class Config;
 class ConfigGeneralPage;
 class ConfigAdvancedPage;
+class ConfigCoverArtPage;
 class ConfigBackendsPage;
 
 /**
@@ -37,13 +38,16 @@ private:
     ConfigGeneralPage *configGeneralPage;
     KPageWidgetItem *advancedPage;
     ConfigAdvancedPage *configAdvancedPage;
+    KPageWidgetItem *coverArtPage;
+    ConfigCoverArtPage *configCoverArtPage;
     KPageWidgetItem *backendsPage;
     ConfigBackendsPage *configBackendsPage;
-    
+
     bool lastUseVFATNames;
     int lastConflictHandling;
 
 private slots:
+    void pageChanged( KPageWidgetItem *current, KPageWidgetItem *before );
     void configChanged( bool state );
     void okClicked();
     void applyClicked();

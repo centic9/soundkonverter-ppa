@@ -7,6 +7,8 @@
 soundkonverter_replaygain_wvgain::soundkonverter_replaygain_wvgain( QObject *parent, const QStringList& args  )
     : ReplayGainPlugin( parent )
 {
+    Q_UNUSED(args)
+
     binaries["wvgain"] = "";
 
     allCodecs += "wavpack";
@@ -20,18 +22,6 @@ QString soundkonverter_replaygain_wvgain::name()
     return global_plugin_name;
 }
 
-// QMap<QString,int> soundkonverter_replaygain_wvgain::codecList()
-// {
-//     QMap<QString,int> list;
-// 
-//     if( binaries["wvgain"] != "" )
-//     {
-//         list.insert( "ogg vorbis", 100 );
-//     }
-// 
-//     return list;
-// }
-
 QList<ReplayGainPipe> soundkonverter_replaygain_wvgain::codecTable()
 {
     QList<ReplayGainPipe> table;
@@ -40,43 +30,26 @@ QList<ReplayGainPipe> soundkonverter_replaygain_wvgain::codecTable()
     newPipe.codecName = "wavpack";
     newPipe.rating = 100;
     newPipe.enabled = ( binaries["wvgain"] != "" );
-    newPipe.problemInfo = i18n("In order to calculate Replay Gain tags for wavpack files, you need to install 'wvgain'. wvgain is usually in the package 'wavpack'.");
+    newPipe.problemInfo = standardMessage( "replaygain_codec,backend", "wavpack", "wvgain" ) + "\n" + i18n( "'%1' is usually in the package '%2' which you can download at %3", QString("wvgain"), QString("wavpack"), QString("http://www.wavpack.com") );
     table.append( newPipe );
 
     return table;
 }
 
-BackendPlugin::FormatInfo soundkonverter_replaygain_wvgain::formatInfo( const QString& codecName )
-{
-    BackendPlugin::FormatInfo info;
-    info.codecName = codecName;
-
-    if( codecName == "wavpack" )
-    {
-        info.lossless = true;
-        info.description = i18n("WavPack is a free and lossless audio codec.\nFor more information see: http://www.wavpack.com");
-        info.mimeTypes.append( "audio/x-wavpack" );
-        info.extensions.append( "wv" );
-        info.extensions.append( "wvp" );
-    }
-
-    return info;
-}
-
-/*bool soundkonverter_replaygain_wvgain::canApply( const KUrl& filename )
-{
-    if( filename.url().endsWith(".ogg") ) return true;
-
-    return false;
-}*/
-
 bool soundkonverter_replaygain_wvgain::isConfigSupported( ActionType action, const QString& codecName )
 {
-    return true;
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+
+    return false;
 }
 
 void soundkonverter_replaygain_wvgain::showConfigDialog( ActionType action, const QString& codecName, QWidget *parent )
-{}
+{
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+    Q_UNUSED(parent)
+}
 
 bool soundkonverter_replaygain_wvgain::hasInfo()
 {
@@ -84,11 +57,14 @@ bool soundkonverter_replaygain_wvgain::hasInfo()
 }
 
 void soundkonverter_replaygain_wvgain::showInfo( QWidget *parent )
-{}
+{
+    Q_UNUSED(parent)
+}
 
 int soundkonverter_replaygain_wvgain::apply( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
 {
-    if( fileList.count() <= 0 ) return -1;
+    if( fileList.count() <= 0 )
+        return -1;
 
     ReplayGainPluginItem *newItem = new ReplayGainPluginItem( this );
     newItem->id = lastId++;
@@ -97,7 +73,6 @@ int soundkonverter_replaygain_wvgain::apply( const KUrl::List& fileList, ReplayG
     connect( newItem->process, SIGNAL(readyRead()), this, SLOT(processOutput()) );
     connect( newItem->process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processExit(int,QProcess::ExitStatus)) );
 
-//     newItem->mode = mode;
     (*newItem->process) << binaries["wvgain"];
     if( mode == ReplayGainPlugin::Add )
     {
@@ -122,38 +97,10 @@ int soundkonverter_replaygain_wvgain::apply( const KUrl::List& fileList, ReplayG
     return newItem->id;
 }
 
-// QString soundkonverter_replaygain_wvgain::applyCommand( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
-// {
-//     QString command;
-// 
-//     if( fileList.count() <= 0 ) return command;
-// 
-//     if( mode == ReplayGainPlugin::Add )
-//     {
-//         command += "wvgain";
-//         command += " --album";
-//         for( int i = 0; i < fileList.count(); i++ )
-//         {
-//             command += " \"" + fileList.at(i).toLocalFile() + "\"";
-//         }
-//     }
-//     else
-//     {
-//         command += "wvgain";
-//         command += " --clean";
-//         for( int i = 0; i < fileList.count(); i++ )
-//         {
-//             command += " \"" + fileList.at(i).toLocalFile() + "\"";
-//         }
-//     }
-// 
-//     return command;
-// }
-
 float soundkonverter_replaygain_wvgain::parseOutput( const QString& output )
 {
     // analyzing test.wv,  35% done...
-  
+
     QRegExp reg("\\s+(\\d+)% done");
     if( output.contains(reg) )
     {

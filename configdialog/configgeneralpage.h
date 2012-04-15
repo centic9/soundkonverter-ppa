@@ -1,7 +1,7 @@
 //
 // C++ Interface: configgeneralpage
 //
-// Description: 
+// Description:
 //
 //
 // Author: Daniel Faust <hessijames@gmail.com>, (C) 2007
@@ -37,18 +37,15 @@ public:
 private:
     KComboBox *cStartTab;
     KComboBox *cDefaultProfile;
-    QStringList sDefaultProfile;
     KComboBox *cDefaultFormat;
-    QStringList sDefaultFormat;
 //     KComboBox *cPriority;
 //     QStringList sPriority;
-    QCheckBox *cUseVFATNames;
     KComboBox *cConflictHandling;
-    QStringList sConflictHandling;
     KIntSpinBox *iNumFiles;
-    KIntSpinBox *iUpdateDelay;
+    QCheckBox *cWaitForAlbumGain;
     QCheckBox *cCreateActionsMenu;
-    QCheckBox *cRemoveFailedFiles;
+    QCheckBox *cWriteLogFiles;
+    KComboBox *cReplayGainGrouping;
 
     Config *config;
 

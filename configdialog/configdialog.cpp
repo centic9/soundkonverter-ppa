@@ -1,7 +1,7 @@
 //
 // C++ Implementation: configdialog
 //
-// Description: 
+// Description:
 //
 //
 // Author: Daniel Faust <hessijames@gmail.com>, (C) 2007
@@ -13,7 +13,8 @@
 
 #include "../config.h"
 #include "configgeneralpage.h"
-// #include "configadvancedpage.h"
+#include "configadvancedpage.h"
+#include "configcoverartpage.h"
 #include "configbackendspage.h"
 
 #include <KLocale>
@@ -25,6 +26,7 @@ ConfigDialog::ConfigDialog( Config *_config, QWidget *parent/*, Page startPage*/
     config( _config )
 {
     setButtons( KDialog::Help | KDialog::Default | KDialog::Apply | KDialog::Ok | KDialog::Cancel );
+    setCaption( i18n("Settings") );
     configChanged(false);
 
     connect( this, SIGNAL(applyClicked()), this, SLOT(applyClicked()) );
@@ -36,15 +38,22 @@ ConfigDialog::ConfigDialog( Config *_config, QWidget *parent/*, Page startPage*/
     generalPage->setIcon( KIcon("configure") );
     connect( configGeneralPage, SIGNAL(configChanged(bool)), this, SLOT(configChanged(bool)) );
 
-//     configAdvancedPage = new ConfigAdvancedPage( config, this );
-//     advancedPage = addPage( (QWidget*)configAdvancedPage, i18n("Advanced") );
-//     advancedPage->setIcon( KIcon("preferences-desktop-gaming") );
-//     connect( configAdvancedPage, SIGNAL(configChanged(bool)), this, SLOT(configChanged(bool)) );
+    configAdvancedPage = new ConfigAdvancedPage( config, this );
+    advancedPage = addPage( (QWidget*)configAdvancedPage, i18n("Advanced") );
+    advancedPage->setIcon( KIcon("preferences-desktop-gaming") );
+    connect( configAdvancedPage, SIGNAL(configChanged(bool)), this, SLOT(configChanged(bool)) );
+
+    configCoverArtPage = new ConfigCoverArtPage( config, this );
+    coverArtPage = addPage( (QWidget*)configCoverArtPage, i18n("Cover art") );
+    coverArtPage->setIcon( KIcon("image-x-generic") );
+    connect( configCoverArtPage, SIGNAL(configChanged(bool)), this, SLOT(configChanged(bool)) );
 
     configBackendsPage = new ConfigBackendsPage( config, this );
     backendsPage = addPage( (QWidget*)configBackendsPage, i18n("Backends") );
     backendsPage->setIcon( KIcon("applications-system") );
     connect( configBackendsPage, SIGNAL(configChanged(bool)), this, SLOT(configChanged(bool)) );
+
+    connect( this, SIGNAL(currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)), this, SLOT(pageChanged(KPageWidgetItem*,KPageWidgetItem*)) );
 
     lastUseVFATNames = config->data.general.useVFATNames;
     lastConflictHandling = (int)config->data.general.conflictHandling;
@@ -52,6 +61,13 @@ ConfigDialog::ConfigDialog( Config *_config, QWidget *parent/*, Page startPage*/
 
 ConfigDialog::~ConfigDialog()
 {}
+
+void ConfigDialog::pageChanged( KPageWidgetItem *current, KPageWidgetItem *before )
+{
+    Q_UNUSED(before)
+
+    button(KDialog::Default)->setEnabled( current != backendsPage );
+}
 
 void ConfigDialog::configChanged( bool state )
 {
@@ -67,10 +83,11 @@ void ConfigDialog::applyClicked()
 void ConfigDialog::okClicked()
 {
     configGeneralPage->saveSettings();
-//     configAdvancedPage->saveSettings();
+    configAdvancedPage->saveSettings();
+    configCoverArtPage->saveSettings();
     configBackendsPage->saveSettings();
     config->save();
-    
+
     if( lastUseVFATNames != config->data.general.useVFATNames || lastConflictHandling != (int)config->data.general.conflictHandling )
     {
         emit updateFileList();
@@ -85,7 +102,11 @@ void ConfigDialog::defaultClicked()
     }
     else if( currentPage() == advancedPage )
     {
-//         configAdvancedPage->resetDefaults();
+        configAdvancedPage->resetDefaults();
+    }
+    else if( currentPage() == coverArtPage )
+    {
+        configCoverArtPage->resetDefaults();
     }
     else if( currentPage() == backendsPage )
     {

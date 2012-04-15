@@ -23,7 +23,7 @@ ReplayGainFileList::ReplayGainFileList( Config *_config, Logger *_logger, QWidge
 
     queue = false;
     killed = false;
-    
+
     lastAlbumItem = 0;
 
     setAcceptDrops( true );
@@ -81,14 +81,14 @@ ReplayGainFileList::ReplayGainFileList( Config *_config, Logger *_logger, QWidge
 
     setContextMenuPolicy( Qt::CustomContextMenu );
     connect( this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)) );
-    
+
     QList<ReplayGainPlugin*> replayGainPlugins = config->pluginLoader()->getAllReplayGainPlugins();
     for( int i=0; i<replayGainPlugins.size(); i++ )
     {
         connect( replayGainPlugins.at(i), SIGNAL(jobFinished(int,int)), this, SLOT(pluginProcessFinished(int,int)) );
         connect( replayGainPlugins.at(i), SIGNAL(log(int,const QString&)), this, SLOT(pluginLog(int,const QString&)) );
     }
-    
+
     connect( &updateTimer, SIGNAL(timeout()), this, SLOT(updateProgress()) );
 }
 
@@ -115,11 +115,11 @@ void ReplayGainFileList::dropEvent( QDropEvent *event )
     QStringList errorList;
     QMap< QString, QList<QStringList> > problems;
     QString fileName;
-    
+
     if( event->source() == this )
     {
         QTreeWidgetItem *destination = itemAt(event->pos());
-        
+
         if( !destination || static_cast<ReplayGainFileListItem*>(destination)->type!=ReplayGainFileListItem::Track )
         {
 //             QList<QTreeWidgetItem*> parents;
@@ -161,7 +161,7 @@ void ReplayGainFileList::dropEvent( QDropEvent *event )
 //                 }
 //             }
 //         }
-        
+
         for( int i=0; i<topLevelItemCount(); i++ )
         {
             ReplayGainFileListItem *item = topLevelItem(i);
@@ -281,7 +281,7 @@ void ReplayGainFileList::resizeEvent( QResizeEvent *event )
 int ReplayGainFileList::listDir( const QString& directory, const QStringList& filter, bool recursive, bool fast, int count )
 {
     QString codecName;
-  
+
     QDir dir( directory );
     dir.setFilter( QDir::Files | QDir::Dirs | QDir::NoSymLinks | QDir::Readable );
 
@@ -290,9 +290,9 @@ int ReplayGainFileList::listDir( const QString& directory, const QStringList& fi
     for( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
     {
         if( *it == "." || *it == ".." ) continue;
-        
+
         QFileInfo fileInfo( directory + "/" + *it );
-        
+
         if( fileInfo.isDir() && recursive )
         {
             count = listDir( directory + "/" + *it, filter, recursive, fast, count );
@@ -300,7 +300,7 @@ int ReplayGainFileList::listDir( const QString& directory, const QStringList& fi
         else if( !fileInfo.isDir() ) // NOTE checking for isFile may not work with all file names
         {
             count++;
-            
+
             if( fast )
             {
                 pScanStatus->setMaximum( count );
@@ -308,7 +308,7 @@ int ReplayGainFileList::listDir( const QString& directory, const QStringList& fi
             else
             {
                 codecName = config->pluginLoader()->getCodecFromFile( directory + "/" + *it );
-                
+
                 if( filter.count() == 0 || filter.contains(codecName) )
                 {
                     addFiles( KUrl(directory + "/" + *it), codecName );
@@ -325,23 +325,26 @@ int ReplayGainFileList::listDir( const QString& directory, const QStringList& fi
     return count;
 }
 
-void ReplayGainFileList::addFiles( const KUrl::List& fileList, QString codecName, ReplayGainFileListItem *after, bool enabled )
+void ReplayGainFileList::addFiles( const KUrl::List& fileList, const QString& _codecName )
 {
-    ReplayGainFileListItem *lastListItem;
-    if( !after && !enabled ) lastListItem = topLevelItem( topLevelItemCount()-1 );
-    else lastListItem = after;
     ReplayGainFileListItem *newAlbumItem, *newItem;
+    QString codecName;
     QString filePathName;
     QString device;
     QStringList unsupportedList;
     int samplingRate;
+    KUrl url;
 
     for( int i=0; i<fileList.count(); i++ )
     {
-        if( codecName.isEmpty() )
+        if( !_codecName.isEmpty() )
+        {
+            codecName = _codecName;
+        }
+        else
         {
             codecName = config->pluginLoader()->getCodecFromFile( fileList.at(i) );
-            
+
             if( !config->pluginLoader()->canReplayGain(codecName,0) )
             {
                 unsupportedList.append( fileList.at(i).pathOrUrl() );
@@ -356,16 +359,33 @@ void ReplayGainFileList::addFiles( const KUrl::List& fileList, QString codecName
             newAlbumItem = 0;
             newItem = 0;
             samplingRate = tags->samplingRate;
+            url = fileList.at(i);
 
             // search for an existing album
             for( int j=0; j<topLevelItemCount(); j++ )
             {
-                if( topLevelItem(j)->type == ReplayGainFileListItem::Album && topLevelItem(j)->codecName == codecName && topLevelItem(j)->samplingRate == samplingRate && topLevelItem(j)->albumName == tags->album )
+                if( topLevelItem(j)->type == ReplayGainFileListItem::Album &&
+                    topLevelItem(j)->codecName == codecName &&
+                    topLevelItem(j)->samplingRate == samplingRate &&
+                    (
+                      (
+                          config->data.general.replayGainGrouping == Config::Data::General::AlbumDirectory &&
+                          topLevelItem(j)->albumName == tags->album &&
+                          topLevelItem(j)->url.toLocalFile() == url.directory()
+                      ) || (
+                          config->data.general.replayGainGrouping == Config::Data::General::Album &&
+                          topLevelItem(j)->albumName == tags->album
+                      ) || (
+                          config->data.general.replayGainGrouping == Config::Data::General::Directory &&
+                          topLevelItem(j)->url.toLocalFile() == url.directory()
+                      )
+                    )
+                  )
                 {
                     newItem = new ReplayGainFileListItem( topLevelItem(j) );
                     newItem->type = ReplayGainFileListItem::Track;
                     newItem->codecName = codecName;
-                    newItem->url = fileList.at(i);
+                    newItem->url = url;
                     newItem->tags = tags;
                     newItem->time = tags->length;
                     break;
@@ -380,6 +400,7 @@ void ReplayGainFileList::addFiles( const KUrl::List& fileList, QString codecName
                 newAlbumItem->type = ReplayGainFileListItem::Album;
                 newAlbumItem->codecName = codecName;
                 newAlbumItem->samplingRate = samplingRate;
+                newAlbumItem->url = url.directory();
                 newAlbumItem->albumName = tags->album;
                 newAlbumItem->setExpanded( true );
                 newAlbumItem->setFlags( newAlbumItem->flags() ^ Qt::ItemIsDragEnabled );
@@ -390,10 +411,20 @@ void ReplayGainFileList::addFiles( const KUrl::List& fileList, QString codecName
                 newItem->type = ReplayGainFileListItem::Track;
                 newItem->codecName = codecName;
                 newItem->samplingRate = samplingRate;
-                newItem->url = fileList.at(i);
+                newItem->url = url;
                 newItem->tags = tags;
                 newItem->time = tags->length;
             }
+        }
+        else if( tags )
+        {
+            newItem = new ReplayGainFileListItem( this );
+            newItem->type = ReplayGainFileListItem::Track;
+            newItem->codecName = codecName;
+            newItem->samplingRate = tags->samplingRate;
+            newItem->url = fileList.at(i);
+            newItem->tags = tags;
+            newItem->time = tags->length;
         }
         else
         {
@@ -403,7 +434,7 @@ void ReplayGainFileList::addFiles( const KUrl::List& fileList, QString codecName
             newItem->url = fileList.at(i);
             newItem->time = 200;
         }
-        
+
         totalTime += newItem->time;
 
         updateItem( newItem );
@@ -433,7 +464,7 @@ void ReplayGainFileList::addDir( const KUrl& directory, bool recursive, const QS
 void ReplayGainFileList::removeSelectedItems()
 {
     ReplayGainFileListItem *item, *child;
-    
+
     for( int i=0; i<topLevelItemCount(); i++ )
     {
         item = topLevelItem(i);
@@ -468,10 +499,11 @@ void ReplayGainFileList::updateItem( ReplayGainFileListItem *item )
 {
     if( !item )
         return;
-    
+
     if( item->type == ReplayGainFileListItem::Album )
     {
-        item->setText( Column_File, item->albumName + " (" + item->codecName + ", " + QString::number(item->samplingRate) + " Hz)" );
+        const QString identificator = config->data.general.replayGainGrouping == Config::Data::General::Directory ? item->url.pathOrUrl().right(item->url.pathOrUrl().length()-item->url.pathOrUrl().lastIndexOf("/")-1) : item->albumName;
+        item->setText( Column_File, identificator + " (" + item->codecName + ", " + QString::number(item->samplingRate) + " Hz)" );
     }
     else
     {
@@ -501,12 +533,12 @@ void ReplayGainFileList::updateItem( ReplayGainFileListItem *item )
 void ReplayGainFileList::processItems( const QList<ReplayGainFileListItem*>& itemList )
 {
     ReplayGainFileListItem *parent = 0;
-    
+
     if( itemList.count() <= 0 )
         return;
-    
+
     QList<ReplayGainPipe> pipes = config->pluginLoader()->getReplayGainPipes( itemList.at(0)->codecName );
-    
+
     if( itemList.at(0)->take >= pipes.count() )
     {
         for( int i=0; i<itemList.count(); i++ )
@@ -517,18 +549,18 @@ void ReplayGainFileList::processItems( const QList<ReplayGainFileListItem*>& ite
         processNextFile();
         return;
     }
-    
+
     currentPlugin = pipes.at(itemList.at(0)->take).plugin;
-    
+
     if( !currentPlugin )
         return;
-    
+
     KUrl::List urls;
     for( int i=0; i<itemList.count(); i++ )
     {
         urls += itemList.at(i)->url;
     }
-    
+
     currentId = currentPlugin->apply( urls, mode );
 
     currentTime = 0;
@@ -553,7 +585,7 @@ void ReplayGainFileList::calcAllReplayGain( bool force )
     ReplayGainFileListItem *item, *child;
 
     emit processStarted();
-    
+
     queue = true;
     killed = false;
     totalTime = 0;
@@ -592,7 +624,7 @@ void ReplayGainFileList::removeAllReplayGain()
     ReplayGainFileListItem *item, *child;
 
     emit processStarted();
-    
+
     queue = true;
     killed = false;
     totalTime = 0;
@@ -666,20 +698,20 @@ void ReplayGainFileList::processNextFile()
         }
         return;
     }
-  
+
     QList<ReplayGainFileListItem*> itemList;
     bool calcGain;
 
     for( int i=0; i<topLevelItemCount() && count<config->data.general.numFiles; i++ )
     {
         ReplayGainFileListItem *item = topLevelItem(i);
-        
+
         calcGain = false;
         itemList.clear();
-        
+
         if( item->state != ReplayGainFileListItem::Waiting )
             continue;
-        
+
         if( item->type == ReplayGainFileListItem::Track )
         {
             itemList += item;
@@ -688,45 +720,53 @@ void ReplayGainFileList::processNextFile()
         }
         else
         {
-            float albumGain;
+            float albumGain = 210588;
             for( int j=0; j<item->childCount(); j++ )
             {
                 ReplayGainFileListItem *child = (ReplayGainFileListItem*)item->child(j);
                 if( child->state != ReplayGainFileListItem::Waiting )
                     continue;
-                
+
                 if( j == 0 && child->tags )
                     albumGain = child->tags->album_gain;
-                
+
                 itemList += child;
                 if( mode == ReplayGainPlugin::Force || mode == ReplayGainPlugin::Remove || !child->tags || child->tags->album_gain != albumGain || child->tags->album_gain == 210588 )
                     calcGain = true;
 //                 if( child->state == ReplayGainFileListItem::Processing ) { itemList.clear(); break; } // NOTE this would be possible if per file calaculation would be possible
             }
         }
-        
-        if( !calcGain )
-        {
-            for( int j=0; j<item->childCount(); j++ )
-            {
-                ReplayGainFileListItem *child = (ReplayGainFileListItem*)item->child(j);
-                child->state = ReplayGainFileListItem::Processed;
-                updateItem( child );
-                processedTime += child->time;
-            }
-            item->state = ReplayGainFileListItem::Processed;
-            updateItem( item );
-            if( item->type == ReplayGainFileListItem::Track )
-                processedTime += item->time;
-        }
-        else
+
+//         // why?
+//         if( !calcGain )
+//         {
+//             for( int j=0; j<item->childCount(); j++ )
+//             {
+//                 ReplayGainFileListItem *child = (ReplayGainFileListItem*)item->child(j);
+//                 child->state = ReplayGainFileListItem::Processed;
+//                 updateItem( child );
+//                 processedTime += child->time;
+//             }
+//             item->state = ReplayGainFileListItem::Processed;
+//             updateItem( item );
+//             if( item->type == ReplayGainFileListItem::Track )
+//                 processedTime += item->time;
+//         }
+//         else
+//         {
+//             count++;
+//             processItems( itemList );
+//             return;
+//         }
+
+        if( calcGain )
         {
             count++;
             processItems( itemList );
             return;
         }
     }
-    
+
     if( count <= 0 )
     {
         queue = false;
@@ -760,20 +800,21 @@ int ReplayGainFileList::processingCount()
             }
         }
     }
-    
+
     return count;
 }
 
 void ReplayGainFileList::pluginProcessFinished( int id, int exitCode )
 {
     ReplayGainFileListItem *item, *child;
-    int processedCount;
+//     int processedCount;
 
     for( int i=0; i<topLevelItemCount(); i++ )
     {
         item = topLevelItem(i);
         if( item->type == ReplayGainFileListItem::Track && item->processId == id )
         {
+            item->processId = -1;
             if( killed )
             {
                 item->state = ReplayGainFileListItem::Waiting;
@@ -800,6 +841,7 @@ void ReplayGainFileList::pluginProcessFinished( int id, int exitCode )
                 child = (ReplayGainFileListItem*)item->child(j);
                 if( child->processId == id )
                 {
+                    child->processId = -1;
                     if( killed )
                     {
                         child->state = ReplayGainFileListItem::Waiting;
@@ -846,6 +888,8 @@ void ReplayGainFileList::pluginProcessFinished( int id, int exitCode )
 
 void ReplayGainFileList::pluginLog( int id, const QString& message )
 {
+    Q_UNUSED(id)
+
     logger->log( 1000, "\t" + message.trimmed().replace("\n","\n\t") );
 }
 
