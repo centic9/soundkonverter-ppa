@@ -38,7 +38,8 @@
 #include <KMessageBox>
 
 soundKonverterView::soundKonverterView( Logger *_logger, Config *_config, CDManager *_cdManager, QWidget *parent )
-    : config( _config ),
+    : QWidget( parent ),
+      config( _config ),
       logger( _logger ),
       cdManager( _cdManager )
 {
@@ -50,7 +51,7 @@ soundKonverterView::soundKonverterView( Logger *_logger, Config *_config, CDMana
     gridLayout->setContentsMargins( 6, 6, 6, 6 );
 //     gridLayout->setSpacing( 0 );
 
-    fileList = new FileList( config, this );
+    fileList = new FileList( logger, config, this );
     gridLayout->addWidget( fileList, 1, 0 );
     gridLayout->setRowStretch( 1, 1 );
     connect( fileList, SIGNAL(fileCountChanged(int)), this, SLOT(fileCountChanged(int)) );
@@ -61,7 +62,6 @@ soundKonverterView::soundKonverterView( Logger *_logger, Config *_config, CDMana
     optionsLayer = new OptionsLayer( config, this );
     fileList->setOptionsLayer( optionsLayer );
     optionsLayer->hide();
-//     optionsLayer->fadeIn();
     gridLayout->addWidget( optionsLayer, 1, 0 );
     connect( optionsLayer, SIGNAL(done(const KUrl::List&,ConversionOptions*,const QString&)), fileList, SLOT(addFiles(const KUrl::List&,ConversionOptions*,const QString&)) );
 
@@ -167,11 +167,11 @@ void soundKonverterView::showFileDialog()
     FileOpener *dialog = new FileOpener( config, this );
 //     dialog->resize( size().width() - 10, size().height() );
 
-    connect( dialog, SIGNAL(done(const KUrl::List&,ConversionOptions*)), fileList, SLOT(addFiles(const KUrl::List&,ConversionOptions*)) );
+    connect( dialog, SIGNAL(open(const KUrl::List&,ConversionOptions*)), fileList, SLOT(addFiles(const KUrl::List&,ConversionOptions*)) );
 
     dialog->exec();
 
-    disconnect( dialog, SIGNAL(done(const KUrl::List&,ConversionOptions*)), 0, 0 );
+    disconnect( dialog, SIGNAL(open(const KUrl::List&,ConversionOptions*)), 0, 0 );
 
     delete dialog;
 
@@ -181,12 +181,12 @@ void soundKonverterView::showFileDialog()
 void soundKonverterView::showDirDialog()
 {
     DirOpener *dialog = new DirOpener( config, DirOpener::Convert, this );
-    
-    connect( dialog, SIGNAL(done(const KUrl&,bool,const QStringList&,ConversionOptions*)), fileList, SLOT(addDir(const KUrl&,bool,const QStringList&,ConversionOptions*)) );
+
+    connect( dialog, SIGNAL(open(const KUrl&,bool,const QStringList&,ConversionOptions*)), fileList, SLOT(addDir(const KUrl&,bool,const QStringList&,ConversionOptions*)) );
 
     dialog->exec();
-    
-    disconnect( dialog, SIGNAL(done(const KUrl&,bool,const QStringList&,ConversionOptions*)), 0, 0 );
+
+    disconnect( dialog, SIGNAL(open(const KUrl&,bool,const QStringList&,ConversionOptions*)), 0, 0 );
 
     delete dialog;
 
@@ -195,6 +195,8 @@ void soundKonverterView::showDirDialog()
 
 void soundKonverterView::showCdDialog( const QString& device, bool intern )
 {
+    Q_UNUSED(intern)
+
     /*
     ConversionOptions conversionOptions = options->getCurrentOptions();
 
@@ -249,7 +251,7 @@ void soundKonverterView::showCdDialog( const QString& device, bool intern )
 
     kapp->eventLoop()->exitLoop();
 */
-    
+
     QString message;
     QStringList errorList;
     if( !config->pluginLoader()->canDecode("audio cd",&errorList) )
@@ -280,7 +282,7 @@ void soundKonverterView::showCdDialog( const QString& device, bool intern )
 //         KMessageBox::information( this, i18n("No audio CD found.") );
         KMessageBox::error( this, i18n("No CD device found") );
     }
-    
+
     delete dialog;
 /*
     kapp->eventLoop()->enterLoop();
@@ -295,11 +297,11 @@ void soundKonverterView::showUrlDialog()
 {
     UrlOpener *dialog = new UrlOpener( config, this );
 
-    connect( dialog, SIGNAL(done(const KUrl::List&,ConversionOptions*)), fileList, SLOT(addFiles(const KUrl::List&,ConversionOptions*)) );
+    connect( dialog, SIGNAL(open(const KUrl::List&,ConversionOptions*)), fileList, SLOT(addFiles(const KUrl::List&,ConversionOptions*)) );
 
     dialog->exec();
 
-    disconnect( dialog, SIGNAL(done(const KUrl::List&,ConversionOptions*)), 0, 0 );
+    disconnect( dialog, SIGNAL(open(const KUrl::List&,ConversionOptions*)), 0, 0 );
 
     delete dialog;
 
@@ -311,11 +313,11 @@ void soundKonverterView::showPlaylistDialog()
     PlaylistOpener *dialog = new PlaylistOpener( config, this );
 //     dialog->resize( size().width() - 10, size().height() );
 
-    connect( dialog, SIGNAL(done(const KUrl::List&,ConversionOptions*)), fileList, SLOT(addFiles(const KUrl::List&,ConversionOptions*)) );
+    connect( dialog, SIGNAL(open(const KUrl::List&,ConversionOptions*)), fileList, SLOT(addFiles(const KUrl::List&,ConversionOptions*)) );
 
     dialog->exec();
 
-    disconnect( dialog, SIGNAL(done(const KUrl::List&,ConversionOptions*)), 0, 0 );
+    disconnect( dialog, SIGNAL(open(const KUrl::List&,ConversionOptions*)), 0, 0 );
 
     delete dialog;
 
@@ -329,7 +331,7 @@ void soundKonverterView::addConvertFiles( const KUrl::List& urls, QString _profi
     //    codec    @0 files @1 solutions
     QMap< QString, QList<QStringList> > problems;
     QString fileName;
-    
+
     for( int i=0; i<urls.size(); i++ )
     {
         QString codecName = config->pluginLoader()->getCodecFromFile( urls.at(i) );
@@ -464,7 +466,7 @@ void soundKonverterView::addConvertFiles( const KUrl::List& urls, QString _profi
                 }
             }
         }
-        
+
         if( lossy )
         {
             format = "";
@@ -518,6 +520,11 @@ void soundKonverterView::startConversion()
     fileList->startConversion();
 }
 
+void soundKonverterView::killConversion()
+{
+    fileList->killConversion();
+}
+
 void soundKonverterView::fileCountChanged( int count )
 {
     pStart->setEnabled( count > 0 );
@@ -545,7 +552,7 @@ void soundKonverterView::conversionStopped( int state )
 void soundKonverterView::queueModeChanged( bool enabled )
 {
     stopAction->setVisible( enabled );
-    continueAction->setVisible( !enabled );    
+    continueAction->setVisible( !enabled );
 }
 
 void soundKonverterView::loadFileList( bool user )

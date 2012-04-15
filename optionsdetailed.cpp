@@ -6,12 +6,8 @@
 #include "outputdirectory.h"
 #include "global.h"
 
-#include <kdebug.h>
-
 #include <QLayout>
 #include <QLabel>
-// #include <QString>
-// #include <QToolTip>
 
 #include <KLocale>
 #include <QFrame>
@@ -48,7 +44,7 @@ OptionsDetailed::OptionsDetailed( Config* _config, QWidget* parent )
     topBox->addWidget( cFormat );
     cFormat->addItems( config->pluginLoader()->formatList(PluginLoader::Encode,PluginLoader::CompressionType(PluginLoader::Lossy|PluginLoader::Lossless|PluginLoader::Hybrid)) );
     connect( cFormat, SIGNAL(activated(const QString&)), this, SLOT(formatChanged(const QString&)) );
-    connect( cFormat, SIGNAL(activated(const QString&)), this, SLOT(somethingChanged()) );
+//     connect( cFormat, SIGNAL(activated(const QString&)), this, SLOT(somethingChanged()) );
 
     topBox->addStretch();
 
@@ -96,6 +92,7 @@ OptionsDetailed::OptionsDetailed( Config* _config, QWidget* parent )
     //connect( cBpm, SIGNAL(toggled(bool)), this, SLOT(somethingChanged()) );
     bottomBox->addStretch();
     lEstimSize = new QLabel( QString(QChar(8776))+"? B / min." );
+    lEstimSize->hide(); // hide for now because most plugins report inaccurate data
     bottomBox->addWidget( lEstimSize );
     pProfileSave = new KPushButton( KIcon("document-save"), "", this );
     bottomBox->addWidget( pProfileSave );
@@ -109,7 +106,6 @@ OptionsDetailed::OptionsDetailed( Config* _config, QWidget* parent )
     pProfileLoad->setPopupMode( QToolButton::InstantPopup );
     pProfileLoad->setFixedWidth( pProfileLoad->height() );
     pProfileLoad->setToolTip( i18n("Load saved profiles") );
-    updateProfiles();
 //     connect( pProfileLoad, SIGNAL(clicked()), this, SLOT(saveProfile()) );
 
 /*
@@ -126,23 +122,28 @@ OptionsDetailed::OptionsDetailed( Config* _config, QWidget* parent )
         }
         widgets += newWidget;
     }
-    
+
     adjustSize();
     size_hint = sizeHint();
-    
+
     for( int i=0; i<plugins.count(); i++ )
     {
         grid->removeWidget( widgets.at(i) );
         plugins.at(i)->deleteCodecWidget( widgets.at(i) );
     }
 */
-    cFormat->setCurrentIndex( 0 );
-    formatChanged( cFormat->currentText() );
 }
-
 
 OptionsDetailed::~OptionsDetailed()
 {}
+
+void OptionsDetailed::init()
+{
+    updateProfiles();
+
+    cFormat->setCurrentIndex( 0 );
+    formatChanged( cFormat->currentText() );
+}
 
 // QSize OptionsDetailed::sizeHint()
 // {
@@ -156,8 +157,9 @@ void OptionsDetailed::setReplayGainChecked( bool enabled )
 
 bool OptionsDetailed::isReplayGainEnabled( QString *toolTip )
 {
-    if( toolTip ) *toolTip = cReplayGain->toolTip();
-    
+    if( toolTip )
+        *toolTip = cReplayGain->toolTip();
+
     return cReplayGain->isEnabled();
 }
 
@@ -178,16 +180,14 @@ CodecPlugin *OptionsDetailed::getCurrentPlugin()
 void OptionsDetailed::updateProfiles()
 {
     QMenu *menu = new QMenu( this );
-    QStringList profiles = config->customProfiles();
-    int numProfiles = 0;
+    const QStringList profiles = config->customProfiles();
     for( int i=0; i<profiles.count(); i++ )
     {
         menu->addAction( profiles.at(i), this, SLOT(loadCustomProfileButtonClicked()) );
-        numProfiles++;
     }
-    
+
     pProfileLoad->setMenu( menu );
-    pProfileLoad->setShown( numProfiles>0 );
+    pProfileLoad->setShown( profiles.count() > 0 );
 }
 
 void OptionsDetailed::formatChanged( const QString& format )
@@ -220,7 +220,7 @@ void OptionsDetailed::formatChanged( const QString& format )
 
 void OptionsDetailed::encoderChanged( const QString& encoder )
 {
-    CodecPlugin *plugin = config->pluginLoader()->codecPluginByName( encoder );
+    CodecPlugin *plugin = (CodecPlugin*)config->pluginLoader()->backendPluginByName( encoder );
     if( !plugin )
     {
 //         TODO leads to crashes
@@ -243,7 +243,7 @@ void OptionsDetailed::encoderChanged( const QString& encoder )
         wPlugin->show();
 //         wPlugin->setVisible( cFormat->currentText() != "wav" );
     }
-    
+
     QStringList errorList;
     cReplayGain->setEnabled( config->pluginLoader()->canReplayGain(cFormat->currentText(),currentPlugin,&errorList) );
     if( !cReplayGain->isEnabled() )
@@ -271,12 +271,16 @@ void OptionsDetailed::encoderChanged( const QString& encoder )
 
 void OptionsDetailed::somethingChanged()
 {
+    int dataRate = 0;
+
     if( wPlugin )
+        dataRate = qobject_cast<CodecWidget*>(wPlugin)->currentDataRate();
+
+    if( dataRate > 0 )
     {
-        int rate = qobject_cast<CodecWidget*>(wPlugin)->currentDataRate();
-        lEstimSize->setText( QString(QChar(8776))+" "+Global::prettyNumber(rate,"B")+" / min." );
-        lEstimSize->setToolTip( i18n("Using the current conversion options will create files with approximately %1 per minute.").arg(Global::prettyNumber(rate,"B")) );
-        emit currentDataRateChanged( rate );
+        const QString dataRateString = Global::prettyNumber(dataRate,"B");
+        lEstimSize->setText( QString(QChar(8776))+" "+dataRateString+" / min." );
+        lEstimSize->setToolTip( i18n("Using the current conversion options will create files with approximately %1 per minute.").arg(dataRateString) );
     }
     else
     {
@@ -284,43 +288,56 @@ void OptionsDetailed::somethingChanged()
         lEstimSize->setToolTip( "" );
     }
 
-//     emit optionsChanged();
+    emit currentDataRateChanged( dataRate );
 }
 
 ConversionOptions *OptionsDetailed::currentConversionOptions()
 {
     ConversionOptions *options = 0;
+
     if( wPlugin && currentPlugin )
     {
         options = qobject_cast<CodecWidget*>(wPlugin)->currentConversionOptions();
         if( options )
         {
             options->codecName = cFormat->currentText();
-            options->pluginName = currentPlugin->name();
+            if( options->codecName != "wav" )
+                options->pluginName = currentPlugin->name();
+            else
+                options->pluginName = "";
             options->profile = qobject_cast<CodecWidget*>(wPlugin)->currentProfile();
             options->outputDirectoryMode = outputDirectory->mode();
             options->outputDirectory = outputDirectory->directory();
+            options->outputFilesystem = outputDirectory->filesystem();
             options->replaygain = cReplayGain->isChecked();
 //             options->bpm = cBpm->isChecked();
+
+            config->data.general.lastProfile = currentProfile();
+            config->data.general.lastFormat = cFormat->currentText();
         }
     }
-    config->data.general.lastFormat = cFormat->currentText();
+
     return options;
 }
 
 bool OptionsDetailed::setCurrentConversionOptions( ConversionOptions *options )
 {
-    if( !options ) return false;
+    if( !options )
+        return false;
 
     cFormat->setCurrentIndex( cFormat->findText(options->codecName) );
     formatChanged( cFormat->currentText() );
     cPlugin->setCurrentIndex( cPlugin->findText(options->pluginName) );
     encoderChanged( cPlugin->currentText() );
+    outputDirectory->setMode( (OutputDirectory::Mode)options->outputDirectoryMode );
+    outputDirectory->setDirectory( options->outputDirectory );
     cReplayGain->setChecked( options->replaygain );
 //     cBpm->setChecked( options->bpm );
 
-    if( wPlugin ) return qobject_cast<CodecWidget*>(wPlugin)->setCurrentConversionOptions( options );
-    else return false;
+    if( wPlugin )
+        return qobject_cast<CodecWidget*>(wPlugin)->setCurrentConversionOptions( options );
+    else
+        return false;
 }
 
 bool OptionsDetailed::saveCustomProfile()
@@ -328,8 +345,9 @@ bool OptionsDetailed::saveCustomProfile()
     if( wPlugin && currentPlugin )
     {
         bool ok;
-        QString profileName = KInputDialog::getText( i18n("New profile"), i18n("Enter a name for the new profile:"), "", &ok );
-        if( !ok ) return false;
+        const QString profileName = KInputDialog::getText( i18n("New profile"), i18n("Enter a name for the new profile:"), "", &ok );
+        if( !ok )
+            return false;
 
         QStringList profiles;
         profiles += i18n("Very low");
@@ -364,7 +382,7 @@ bool OptionsDetailed::saveCustomProfile()
         {
             if( config->data.profiles.at(i).profileName == profileName )
             {
-                int ret = KMessageBox::questionYesNo( this, i18n("A profile with this name already exists.\n\nDo you want to overwrite the existing one?"), i18n("Profile already exists") );
+                const int ret = KMessageBox::questionYesNo( this, i18n("A profile with this name already exists.\n\nDo you want to overwrite the existing one?"), i18n("Profile already exists") );
                 if( ret == KMessageBox::Yes )
                 {
                     config->data.profiles[i].pluginName = currentPlugin->name();
@@ -391,7 +409,7 @@ bool OptionsDetailed::saveCustomProfile()
                 }
             }
         }
-        
+
         Config::ProfileData profile;
         int i=1;
         do {
@@ -426,9 +444,8 @@ bool OptionsDetailed::saveCustomProfile()
 
 void OptionsDetailed::loadCustomProfileButtonClicked()
 {
-    QString profile = qobject_cast<QAction*>(QObject::sender())->text().replace("&","");
+    const QString profile = qobject_cast<QAction*>(QObject::sender())->text().replace("&","");
     loadCustomProfile( profile );
-    config->data.general.lastProfile = profile;
 }
 
 bool OptionsDetailed::loadCustomProfile( const QString& profile )
@@ -465,14 +482,17 @@ bool OptionsDetailed::loadCustomProfile( const QString& profile )
 
 QString OptionsDetailed::currentProfile()
 {
-    if( wPlugin ) return qobject_cast<CodecWidget*>(wPlugin)->currentProfile();
-    else return "";
+    if( wPlugin )
+        return qobject_cast<CodecWidget*>(wPlugin)->currentProfile();
+    else
+        return "";
 }
 
 void OptionsDetailed::setCurrentProfile( const QString& profile )
 {
-    if( !wPlugin ) return;
-    
+    if( !wPlugin )
+        return;
+
     if( !qobject_cast<CodecWidget*>(wPlugin)->setCurrentProfile(profile) )
     {
         // TODO find a plugin that supports the profile (eg. hybrid)

@@ -9,6 +9,8 @@
 soundkonverter_codec_timidity::soundkonverter_codec_timidity( QObject *parent, const QStringList& args  )
     : CodecPlugin( parent )
 {
+    Q_UNUSED(args)
+
     binaries["timidity"] = "";
 
     allCodecs += "midi";
@@ -33,7 +35,7 @@ QList<ConversionPipeTrunk> soundkonverter_codec_timidity::codecTable()
     newTrunk.codecTo = "wav";
     newTrunk.rating = 90;
     newTrunk.enabled = ( binaries["timidity"] != "" );
-    newTrunk.problemInfo = i18n("In order to decode midi files, you need to install 'timidity'.\ntimidity should be shipped with your distribution.");
+    newTrunk.problemInfo = standardMessage( "decode_codec,backend", "midi", "timidity" ) + "\n" + standardMessage( "install_opensource_backend", "timidity" );
     newTrunk.data.hasInternalReplayGain = false;
     table.append( newTrunk );
 
@@ -41,59 +43,27 @@ QList<ConversionPipeTrunk> soundkonverter_codec_timidity::codecTable()
     newTrunk.codecTo = "wav";
     newTrunk.rating = 90;
     newTrunk.enabled = ( binaries["timidity"] != "" );
-    newTrunk.problemInfo = i18n("In order to decode mod files, you need to install 'timidity'.\ntimidity should be shipped with your distribution.");
+    newTrunk.problemInfo = standardMessage( "decode_codec,backend", "mod", "timidity" ) + "\n" + standardMessage( "install_opensource_backend", "timidity" );
     newTrunk.data.hasInternalReplayGain = false;
     table.append( newTrunk );
 
     return table;
 }
 
-BackendPlugin::FormatInfo soundkonverter_codec_timidity::formatInfo( const QString& codecName )
-{
-    BackendPlugin::FormatInfo info;
-    info.codecName = codecName;
-
-    if( codecName == "midi" )
-    {
-        info.lossless = true;
-        info.description = i18n("midi is a very old sound file format, that doesn't encode audio waves but stores instrument timings.");
-        info.mimeTypes.append( "audio/midi" );
-        info.extensions.append( "midi" );
-        info.extensions.append( "mid" );
-        info.extensions.append( "kar" );
-    }
-    if( codecName == "midi" )
-    {
-        info.lossless = true;
-        info.description = i18n("mod is a very old sound file format, that doesn't encode audio waves but stores instrument timings.");
-        info.mimeTypes.append( "audio/x-mod" );
-        info.extensions.append( "669" );
-        info.extensions.append( "m15" );
-        info.extensions.append( "med" );
-        info.extensions.append( "mod" );
-        info.extensions.append( "mtm" );
-        info.extensions.append( "ult" );
-        info.extensions.append( "uni" );
-    }
-    else if( codecName == "wav" )
-    {
-        info.lossless = true;
-        info.description = i18n("Wave won't compress the audio stream.");
-        info.mimeTypes.append( "audio/x-wav" );
-        info.mimeTypes.append( "audio/wav" );
-        info.extensions.append( "wav" );
-    }
-
-    return info;
-}
-
 bool soundkonverter_codec_timidity::isConfigSupported( ActionType action, const QString& codecName )
 {
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+
     return false;
 }
 
 void soundkonverter_codec_timidity::showConfigDialog( ActionType action, const QString& codecName, QWidget *parent )
-{}
+{
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+    Q_UNUSED(parent)
+}
 
 bool soundkonverter_codec_timidity::hasInfo()
 {
@@ -101,7 +71,9 @@ bool soundkonverter_codec_timidity::hasInfo()
 }
 
 void soundkonverter_codec_timidity::showInfo( QWidget *parent )
-{}
+{
+    Q_UNUSED(parent)
+}
 
 QWidget *soundkonverter_codec_timidity::newCodecWidget()
 {
@@ -118,7 +90,8 @@ QWidget *soundkonverter_codec_timidity::newCodecWidget()
 int soundkonverter_codec_timidity::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     QStringList command = convertCommand( inputFile, outputFile, inputCodec, outputCodec, _conversionOptions, tags, replayGain );
-    if( command.isEmpty() ) return -1;
+    if( command.isEmpty() )
+        return -1;
 
     CodecPluginItem *newItem = new CodecPluginItem( this );
     newItem->id = lastId++;
@@ -139,18 +112,20 @@ int soundkonverter_codec_timidity::convert( const KUrl& inputFile, const KUrl& o
 
 QStringList soundkonverter_codec_timidity::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
-    if( !_conversionOptions ) return QStringList();
-    
+    Q_UNUSED(inputCodec)
+    Q_UNUSED(_conversionOptions)
+    Q_UNUSED(tags)
+    Q_UNUSED(replayGain)
+
     QStringList command;
-    ConversionOptions *conversionOptions = _conversionOptions;
 
     if( outputCodec == "wav" )
     {
         command += binaries["timidity"];
         command += "-Ow";
         command += "-o";
-        command += "\"" + outputFile.toLocalFile() + "\"";
-        command += "\"" + inputFile.toLocalFile() + "\"";
+        command += "\"" + escapeUrl(outputFile) + "\"";
+        command += "\"" + escapeUrl(inputFile) + "\"";
     }
 
     return command;
@@ -158,6 +133,8 @@ QStringList soundkonverter_codec_timidity::convertCommand( const KUrl& inputFile
 
 float soundkonverter_codec_timidity::parseOutput( const QString& output )
 {
+    Q_UNUSED(output)
+
     // no output
 
     return -1;

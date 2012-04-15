@@ -31,10 +31,10 @@ LameCodecWidget::LameCodecWidget()
     QLabel *lPreset = new QLabel( i18n("Preset")+":", this );
     presetBox->addWidget( lPreset );
     cPreset = new KComboBox( this );
-    cPreset->addItem( i18n("Medium") );
-    cPreset->addItem( i18n("Standard") );
-    cPreset->addItem( i18n("Extreme") );
-    cPreset->addItem( i18n("Insane") );
+    cPreset->addItem( i18nc("Backend profile","Medium") );
+    cPreset->addItem( i18nc("Backend profile","Standard") );
+    cPreset->addItem( i18nc("Backend profile","Extreme") );
+    cPreset->addItem( i18nc("Backend profile","Insane") );
     cPreset->addItem( i18n("Specify bitrate") );
     cPreset->addItem( i18n("User defined") );
     connect( cPreset, SIGNAL(activated(const QString&)), this, SLOT(presetChanged(const QString&)) );
@@ -115,7 +115,7 @@ LameCodecWidget::LameCodecWidget()
     cBitrateMode->setFixedWidth( cBitrateMode->sizeHint().width() );
     connect( cBitrateMode, SIGNAL(activated(int)), SIGNAL(somethingChanged()) );
     userdefinedTopBox->addWidget( cBitrateMode );
-    
+
     /*
     QLabel *lBitrateRange = new QLabel( i18n("Bitrate range")+":", userdefinedBox );
     userdefinedTopBox->addWidget( lBitrateRange );
@@ -178,7 +178,7 @@ LameCodecWidget::LameCodecWidget()
     userdefinedMidBox->addStretch();
 
     // cmd arguments box
-    
+
     QHBoxLayout *cmdArgumentsBox = new QHBoxLayout();
     grid->addLayout( cmdArgumentsBox, 2, 0 );
 
@@ -425,6 +425,8 @@ QDomDocument LameCodecWidget::customProfile()
 
 bool LameCodecWidget::setCustomProfile( const QString& profile, const QDomDocument& document )
 {
+    Q_UNUSED(profile)
+
     QDomElement root = document.documentElement();
     QDomElement encodingOptions = root.elementsByTagName("encodingOptions").at(0).toElement();
     QDomElement data = encodingOptions.elementsByTagName("data").at(0).toElement();
@@ -450,8 +452,8 @@ bool LameCodecWidget::setCustomProfile( const QString& profile, const QDomDocume
 
 int LameCodecWidget::currentDataRate()
 {
-    int dataRate;
-    
+    int dataRate = 0;
+
     if( currentFormat == "wav" )
     {
         dataRate = 10590000;
@@ -509,7 +511,7 @@ int LameCodecWidget::currentDataRate()
             dataRate *= 1.1f;
         }
     }
-    
+
     return dataRate;
 }
 
@@ -517,28 +519,28 @@ void LameCodecWidget::presetChanged( const QString& preset )
 {
     cPreset->setToolTip( "" );
 
-    if( preset == i18n("Medium") )
+    if( preset == i18nc("Backend profile","Medium") )
     {
         iPresetBitrate->setEnabled( false );
         cPresetFast->setEnabled( true );
         userdefinedBox->setEnabled( false );
         cPreset->setToolTip( i18n("This preset should provide near transparency to most people on most music (~150 kbps abr).") );
     }
-    else if( preset == i18n("Standard") )
+    else if( preset == i18nc("Backend profile","Standard") )
     {
         iPresetBitrate->setEnabled( false );
         cPresetFast->setEnabled( true );
         userdefinedBox->setEnabled( false );
         cPreset->setToolTip( i18n("This preset should generally be transparent to most people on most music\nand is already quite high in quality (~230 kbps abr).") );
     }
-    else if( preset == i18n("Extreme") )
+    else if( preset == i18nc("Backend profile","Extreme") )
     {
         iPresetBitrate->setEnabled( false );
         cPresetFast->setEnabled( true );
         userdefinedBox->setEnabled( false );
         cPreset->setToolTip( i18n("If you have extremely good hearing and similar equipment, this preset will generally provide\nslightly higher quality than the standard mode (~280 kbps abr).") );
     }
-    else if( preset == i18n("Insane") )
+    else if( preset == i18nc("Backend profile","Insane") )
     {
         iPresetBitrate->setEnabled( false );
         cPresetFast->setEnabled( false );
@@ -601,7 +603,7 @@ void LameCodecWidget::modeChanged( int mode )
 //         sQuality->setTickInterval( 800 );
         sQuality->setSingleStep( 8 );
         iQuality->setRange( 8, 320 );
-        iQuality->setSingleStep( 8 );
+        iQuality->setSingleStep( 1 );
         iQuality->setSuffix( " kbps" );
         sQuality->setValue( 160 );
         iQuality->setValue( 160 );

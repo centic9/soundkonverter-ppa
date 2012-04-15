@@ -1,0 +1,17 @@
+[Desktop Entry]
+X-KDE-Solid-Predicate=OpticalDisc.availableContent & 'Audio'
+Type=Service
+Actions=Rip
+X-KDE-Priority=TopLevel
+
+[Desktop Action Rip]
+Name=Rip Audio CD with soundKonverter
+Name[cs]=Vytáhněte skladby z CD za pomoci soundKonverteru
+Name[de]=Audio-CD mit soundKonverter auslesen
+Name[es_AR]=Extrear CD de audio con soundKonverter
+Name[et]=Ripi audio-CD soundKonverteriga
+Name[fr]=Ripper des CDs audio avec soundKonverter
+Name[hu]=Audio CD beolvasása a soundKonverterrel
+Name[pt]=Extrair um CD áudio com o soundKonverter
+Icon=soundkonverter
+Exec=soundkonverter --rip %d

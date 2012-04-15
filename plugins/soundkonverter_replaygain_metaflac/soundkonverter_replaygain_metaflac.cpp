@@ -7,6 +7,8 @@
 soundkonverter_replaygain_metaflac::soundkonverter_replaygain_metaflac( QObject *parent, const QStringList& args  )
     : ReplayGainPlugin( parent )
 {
+    Q_UNUSED(args)
+
     binaries["metaflac"] = "";
 
     allCodecs += "flac";
@@ -28,39 +30,26 @@ QList<ReplayGainPipe> soundkonverter_replaygain_metaflac::codecTable()
     newPipe.codecName = "flac";
     newPipe.rating = 100;
     newPipe.enabled = ( binaries["metaflac"] != "" );
-    newPipe.problemInfo = i18n("In order to calculate Replay Gain tags for flac files, you need to install 'metaflac'. metaflac is usually in the package 'flac' which should be shipped with your distribution.");
+    newPipe.problemInfo = standardMessage( "replygain_codec,backend", "flac", "metaflac" ) + "\n" + i18n( "'%1' is usually in the package '%2' which should be shipped with your distribution.", QString("metaflac"), QString("flac") );
     table.append( newPipe );
 
     return table;
 }
 
-BackendPlugin::FormatInfo soundkonverter_replaygain_metaflac::formatInfo( const QString& codecName )
-{
-    BackendPlugin::FormatInfo info;
-    info.codecName = codecName;
-
-    if( codecName == "flac" )
-    {
-        info.lossless = true;
-        info.description = i18n("FLAC is a free and lossless audio codec.");
-        info.mimeTypes.append( "audio/x-flac" );
-        info.mimeTypes.append( "audio/x-flac+ogg" );
-        info.mimeTypes.append( "audio/x-oggflac" );
-        info.extensions.append( "flac" );
-        info.extensions.append( "fla" );
-//         info.extensions.append( "ogg" );
-    }
-
-    return info;
-}
-
 bool soundkonverter_replaygain_metaflac::isConfigSupported( ActionType action, const QString& codecName )
 {
-    return true;
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+
+    return false;
 }
 
 void soundkonverter_replaygain_metaflac::showConfigDialog( ActionType action, const QString& codecName, QWidget *parent )
-{}
+{
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+    Q_UNUSED(parent)
+}
 
 bool soundkonverter_replaygain_metaflac::hasInfo()
 {
@@ -68,11 +57,14 @@ bool soundkonverter_replaygain_metaflac::hasInfo()
 }
 
 void soundkonverter_replaygain_metaflac::showInfo( QWidget *parent )
-{}
+{
+    Q_UNUSED(parent)
+}
 
 int soundkonverter_replaygain_metaflac::apply( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
 {
-    if( fileList.count() <= 0 ) return -1;
+    if( fileList.count() <= 0 )
+        return -1;
 
     ReplayGainPluginItem *newItem = new ReplayGainPluginItem( this );
     newItem->id = lastId++;
@@ -81,7 +73,6 @@ int soundkonverter_replaygain_metaflac::apply( const KUrl::List& fileList, Repla
     connect( newItem->process, SIGNAL(readyRead()), this, SLOT(processOutput()) );
     connect( newItem->process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processExit(int,QProcess::ExitStatus)) );
 
-//     newItem->mode = mode;
     (*newItem->process) << binaries["metaflac"];
     if( mode == ReplayGainPlugin::Add || mode == ReplayGainPlugin::Force )
     {
@@ -101,36 +92,10 @@ int soundkonverter_replaygain_metaflac::apply( const KUrl::List& fileList, Repla
     return newItem->id;
 }
 
-// QString soundkonverter_replaygain_metaflac::applyCommand( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
-// {
-//     QString command;
-// 
-//     if( fileList.count() <= 0 ) return command;
-// 
-//     if( mode == ReplayGainPlugin::Add )
-//     {
-//         command += "metaflac";
-//         command += " --album";
-//         for( int i = 0; i < fileList.count(); i++ )
-//         {
-//             command += " \"" + fileList.at(i).toLocalFile() + "\"";
-//         }
-//     }
-//     else
-//     {
-//         command += "metaflac";
-//         command += " --clean";
-//         for( int i = 0; i < fileList.count(); i++ )
-//         {
-//             command += " \"" + fileList.at(i).toLocalFile() + "\"";
-//         }
-//     }
-// 
-//     return command;
-// }
-
 float soundkonverter_replaygain_metaflac::parseOutput( const QString& output )
 {
+    Q_UNUSED(output)
+
     // metaflac doesn't provide any progress data
     return -1;
 }

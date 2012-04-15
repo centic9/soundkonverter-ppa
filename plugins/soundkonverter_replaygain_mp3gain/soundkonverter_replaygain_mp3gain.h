@@ -5,9 +5,11 @@
 #include "../../core/replaygainplugin.h"
 
 #include <KUrl>
+#include <QWeakPointer>
 
 class ConversionOptions;
-
+class KDialog;
+class QComboBox;
 
 class soundkonverter_replaygain_mp3gain : public ReplayGainPlugin
 {
@@ -21,11 +23,8 @@ public:
 
     QString name();
 
-//     QMap<QString,int> codecList();
     QList<ReplayGainPipe> codecTable();
-    BackendPlugin::FormatInfo formatInfo( const QString& codecName );
-//     QString getCodecFromFile( const KUrl& filename, const QString& mimeType = "application/octet-stream" );
-//     bool canApply( const KUrl& filename );
+
     bool isConfigSupported( ActionType action, const QString& codecName );
     void showConfigDialog( ActionType action, const QString& codecName, QWidget *parent );
     bool hasInfo();
@@ -33,7 +32,22 @@ public:
 
     int apply( const KUrl::List& fileList, ApplyMode mode = Add );
     float parseOutput( const QString& output );
-//     QString applyCommand( const KUrl::List& fileList, ApplyMode mode = Add );
+
+private:
+    KUrl::List undoFileList;
+
+    QWeakPointer<KDialog> configDialog;
+    QComboBox *configDialogTagLabelComboBox;
+
+    int tagMode;
+
+private slots:
+    /** The undo process has exited */
+    virtual void undoProcessExit( int exitCode, QProcess::ExitStatus exitStatus );
+
+    void configDialogSave();
+    void configDialogDefault();
+
 };
 
 // K_EXPORT_COMPONENT_FACTORY( soundkonverter_replaygain_mp3gain, KGenericFactory<soundkonverter_replaygain_mp3gain> );

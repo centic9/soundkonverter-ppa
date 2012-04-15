@@ -31,6 +31,10 @@ PlaylistOpener::PlaylistOpener( Config *_config, QWidget *parent, Qt::WFlags f )
     setWindowIcon( KIcon("view-media-playlist") );
     setButtons( 0 );
     
+    // Prevent the dialog from beeing too wide because of the directory history
+    if( parent && width() > parent->width() )
+        resize( parent->width() - 10, sizeHint().height() );
+    
     QWidget *widget = new QWidget();
     setMainWidget( widget );
 
@@ -204,7 +208,8 @@ void PlaylistOpener::okClickedSlot()
 {
     if( options->currentConversionOptions() )
     {
-        emit done( urls, options->currentConversionOptions() );
+        options->accepted();
+        emit open( urls, options->currentConversionOptions() );
         accept();
     }
     else

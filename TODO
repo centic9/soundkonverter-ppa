@@ -1,27 +1,32 @@
 ### Prio 1 ###
 
-test vfat compatible file names
-processID/convertID/... eindeutig berechnen ... müsste so funktionieren
+flac piping
+
+cdtext
+user scripts
+edit ripper parameters
+edit encoder parameters [/]
+copy custom tags / lyrics
+cover downloading
+musicbrianz
+
+cdopener.cpp / bluray -> ask users for `cat /proc/sys/dev/cdrom/info`
 
 ### Prio 2 ###
 
-use qt animations
-cdtext
+hybrid formats
 optimize profiles
-activate replaygain window when opened on application start
-make converted files wait for applying album gain
+better ripping control
+save last options as user profile?
+use qt animations
 ReplayGainScanner: Drag'n'Drop ... verbesserungswürdig, funktioniert aber grundsätzlich
 ReplayGainScanner: split album through context menu
 ReplayGainScanner: split albums by disc
-edit ripper parameters
-edit encoder parameters [/]
 ReplayGainScanner: parallele Berechnung
-session management
 changing default decoder only takes effect after restart
 
 ### Prio 3 ###
 
-better ripping control
 
 
 ### Plugins ###
@@ -29,28 +34,29 @@ better ripping control
 [x] ffmpeg
 [x] flac
 [x] lame
-[x] mplayer         parse progress
+[x] mplayer
 [x] neroaac
 [x] timidity
+[x] fluidsynth
 [x] vorbistools
 [x] twolame
 [ ] gogo
 [x] musepack
 [ ] mpc123
-[>] aften
+[x] aften
 [x] flake
 [x] mac
 [x] shorten
-[ ] tta
+[>] tta
 [ ] bonk
 [ ] optimfrog
 [x] wavpack
 [ ] lac
 [ ] lpac
-[>] speex
+[x] speex
 [>] sox
-[ ] gstreamer
-[ ] phonon
+[>] gstreamer
+[ ] phonon?
 
 [x] aacgain
 [x] metaflac
@@ -67,7 +73,7 @@ better ripping control
 
 KShell::quoteArg
 
-KStandardDirs::findExe("mplayer");
+https://code.google.com/r/johntyree-gogglesmm/source/browse/src/GMTag.cpp?r=744628216e15f5804ff69b767d46405aa77e8ae8
 
 ### main.cpp ###
 
@@ -80,4 +86,48 @@ void cleanup( int )
     kapp->exit();
 }
 
+
+Create a named pipe called pipe.wav
+#: mkfifo pipe.wav
+
+Now execute the following command. It will hang, as it is waiting for the data to flow through the pipe.
+#: lame --preset standard pipe.wav output.file
+
+In a different terminal, execute the following command, to get the data flowing.
+#: mplayer -ao pcm:file=pipe.wav input.file
+
+
+QFile debugfile("/dev/shm/soundKonverter");
+if( debugfile.open(QIODevice::Append|QIODevice::Text) )
+{
+    QTextStream debugstream(&debugfile);
+    debugstream << "type: " << data << "\n";
+    debugfile.close();
+}
+
+
+QFile debugfile("/dev/shm/soundKonverter");
+debugfile.open(QIODevice::Append|QIODevice::Text);
+QTextStream debugstream(&debugfile);
+debugstream << "type: " << data << "\n";
+debugfile.close();
+
 ###
+
+
+deviceList = Solid::Device::listFromType( Solid::DeviceInterface::OpticalDisc );
+foreach( const Solid::Device &device, deviceList )
+{
+debug() << "Found Solid::DeviceInterface::OpticalDisc with udi = " << device.udi();
+debug() << "Device name is = " << device.product() << " and was made by " << device.vendor();
+
+const Solid::OpticalDisc * opt = device.as<Solid::OpticalDisc>();
+
+if ( opt && opt->availableContent() & Solid::OpticalDisc::Audio )
+{
+debug() << "device is an Audio CD";
+m_type[device.udi()] = MediaDeviceCache::SolidAudioCdType;
+m_name[device.udi()] = device.vendor() + " - " + device.product();
+}
+}
+

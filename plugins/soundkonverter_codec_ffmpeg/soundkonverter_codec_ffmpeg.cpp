@@ -5,27 +5,154 @@
 #include "../../core/conversionoptions.h"
 #include "ffmpegcodecwidget.h"
 
+#include <KMessageBox>
+#include <KDialog>
+#include <QCheckBox>
+#include <QHBoxLayout>
+#include <QFileInfo>
 
-// TODO video files
+
+// TODO check for decoders at runtime, too
 
 soundkonverter_codec_ffmpeg::soundkonverter_codec_ffmpeg( QObject *parent, const QStringList& args  )
     : CodecPlugin( parent )
 {
+    Q_UNUSED(args)
+
     binaries["ffmpeg"] = "";
-    
-    // encoders
-    codecMap["wav"] = "pcm_s16le";
-    codecMap["ogg vorbis"] = "libvorbis"; // vorbis
-    codecMap["mp3"] = "libmp3lame";
-    codecMap["flac"] = "flac";
-    codecMap["wma"] = "wmav2";
-    codecMap["aac"] = "libfaac"; // aac
-    codecMap["ac3"] = "ac3";
-    codecMap["alac"] = "alac";
-    codecMap["mp2"] = "mp2";
+
+    KSharedConfig::Ptr conf = KGlobal::config();
+    KConfigGroup group;
+
+    group = conf->group( "Plugin-"+name() );
+    configVersion = group.readEntry( "configVersion", 0 );
+    experimentalCodecsEnabled = group.readEntry( "experimentalCodecsEnabled", false );
+    ffmpegLastModified = group.readEntry( "ffmpegLastModified", QDateTime() );
+    ffmpegCodecList = group.readEntry( "codecList", QStringList() ).toSet();
+
+    CodecData data;
+    FFmpegCodecData ffmpegData;
+
+    data.ffmpegCodecList.clear();
+    data.codecName = "wav";
+    ffmpegData.name = "pcm_s16le";
+    ffmpegData.external = false;
+    ffmpegData.experimental = false;
+    data.ffmpegCodecList.append( ffmpegData );
+    codecList.append( data );
+
+    data.ffmpegCodecList.clear();
+    data.codecName = "ogg vorbis";
+    ffmpegData.name = "libvorbis";
+    ffmpegData.external = true;
+    ffmpegData.experimental = false;
+    data.ffmpegCodecList.append( ffmpegData );
+    ffmpegData.name = "vorbis";
+    ffmpegData.external = true; // ?
+    ffmpegData.experimental = true;
+    data.ffmpegCodecList.append( ffmpegData );
+    codecList.append( data );
+
+    data.ffmpegCodecList.clear();
+    data.codecName = "mp3";
+    ffmpegData.name = "libmp3lame";
+    ffmpegData.external = true;
+    ffmpegData.experimental = false;
+    data.ffmpegCodecList.append( ffmpegData );
+    codecList.append( data );
+
+    data.ffmpegCodecList.clear();
+    data.codecName = "flac";
+    ffmpegData.name = "flac";
+    ffmpegData.external = false;
+    ffmpegData.experimental = false;
+    data.ffmpegCodecList.append( ffmpegData );
+    codecList.append( data );
+
+    data.ffmpegCodecList.clear();
+    data.codecName = "wma";
+    ffmpegData.name = "wmav2";
+    ffmpegData.external = false;
+    ffmpegData.experimental = false;
+    data.ffmpegCodecList.append( ffmpegData );
+    ffmpegData.name = "wmav1";
+    ffmpegData.external = false;
+    ffmpegData.experimental = false;
+    data.ffmpegCodecList.append( ffmpegData );
+    codecList.append( data );
+
+    data.ffmpegCodecList.clear();
+    data.codecName = "aac";
+    ffmpegData.name = "libfaac";
+    ffmpegData.external = true;
+    ffmpegData.experimental = false;
+    data.ffmpegCodecList.append( ffmpegData );
+    ffmpegData.name = "aac";
+    ffmpegData.external = false;
+    ffmpegData.experimental = true;
+    data.ffmpegCodecList.append( ffmpegData );
+    codecList.append( data );
+
+    data.ffmpegCodecList.clear();
+    data.codecName = "m4a";
+    ffmpegData.name = "libfaac";
+    ffmpegData.external = true;
+    ffmpegData.experimental = false;
+    data.ffmpegCodecList.append( ffmpegData );
+    ffmpegData.name = "aac";
+    ffmpegData.external = false;
+    ffmpegData.experimental = true;
+    data.ffmpegCodecList.append( ffmpegData );
+    codecList.append( data );
+
+    data.ffmpegCodecList.clear();
+    data.codecName = "ac3";
+    ffmpegData.name = "ac3";
+    ffmpegData.external = false;
+    ffmpegData.experimental = false;
+    data.ffmpegCodecList.append( ffmpegData );
+    codecList.append( data );
+
+    data.ffmpegCodecList.clear();
+    data.codecName = "alac";
+    ffmpegData.name = "alac";
+    ffmpegData.external = false;
+    ffmpegData.experimental = false;
+    data.ffmpegCodecList.append( ffmpegData );
+    codecList.append( data );
+
+    data.ffmpegCodecList.clear();
+    data.codecName = "mp2";
+    ffmpegData.name = "mp2";
+    ffmpegData.external = false;
+    ffmpegData.experimental = false;
+    data.ffmpegCodecList.append( ffmpegData );
+    codecList.append( data );
+
+    data.ffmpegCodecList.clear();
+    data.codecName = "amr nb";
+    ffmpegData.name = "libopencore_amrnb";
+    ffmpegData.external = true;
+    ffmpegData.experimental = false;
+    data.ffmpegCodecList.append( ffmpegData );
+    codecList.append( data );
+
 //     codecMap["sonic"] = "sonic";
 //     codecMap["sonic lossless"] = "sonicls";
-    codecMap["amr nb"] = "libopencore_amrnb";
+//     codecMap["real audio 1"] = "real_144";
+//     codecMap["e-ac3"] = "eac3";
+
+    for( int i=0; i<codecList.count(); i++ )
+    {
+        for( int j=0; j<codecList.at(i).ffmpegCodecList.count(); j++ )
+        {
+            if( !codecList.at(i).ffmpegCodecList.at(j).external && ( !codecList.at(i).ffmpegCodecList.at(j).experimental || experimentalCodecsEnabled ) )
+            {
+                codecList[i].currentFFmpegCodec = codecList.at(i).ffmpegCodecList.at(j);
+                break;
+            }
+        }
+    }
 }
 
 soundkonverter_codec_ffmpeg::~soundkonverter_codec_ffmpeg()
@@ -36,11 +163,18 @@ QString soundkonverter_codec_ffmpeg::name()
     return global_plugin_name;
 }
 
+int soundkonverter_codec_ffmpeg::version()
+{
+    return global_plugin_version;
+}
+
 QList<ConversionPipeTrunk> soundkonverter_codec_ffmpeg::codecTable()
 {
     QList<ConversionPipeTrunk> table;
-    
-    // decode
+    QStringList fromCodecs;
+    QStringList toCodecs;
+
+    /// decode
     fromCodecs += "wav";
     fromCodecs += "ogg vorbis";
     fromCodecs += "mp3";
@@ -56,10 +190,11 @@ QList<ConversionPipeTrunk> soundkonverter_codec_ffmpeg::codecTable()
     fromCodecs += "amr nb";
     fromCodecs += "amr wb";
     fromCodecs += "ape";
-//     fromCodecs += "eac3";
+//     fromCodecs += "e-ac3";
     fromCodecs += "speex";
+    fromCodecs += "m4a";
     fromCodecs += "mp1";
-    fromCodecs += "mpc";
+    fromCodecs += "musepack";
     fromCodecs += "shorten";
 //     fromCodecs += "mlp";
 //     fromCodecs += "truehd";
@@ -67,10 +202,10 @@ QList<ConversionPipeTrunk> soundkonverter_codec_ffmpeg::codecTable()
     fromCodecs += "tta";
     fromCodecs += "wavpack";
     fromCodecs += "ra";
-    // containers
+    /// containers
     fromCodecs += "3gp";
     fromCodecs += "rm";
-    // video
+    /// video
     fromCodecs += "avi";
     fromCodecs += "mkv";
     fromCodecs += "ogv";
@@ -81,33 +216,96 @@ QList<ConversionPipeTrunk> soundkonverter_codec_ffmpeg::codecTable()
     fromCodecs += "wmv";
     fromCodecs += "rv";
 
-    // encode
-    toCodecs += "wav";
-    toCodecs += "ogg vorbis";
-    toCodecs += "mp3";
-    toCodecs += "flac";
-    toCodecs += "wma";
-    toCodecs += "aac";
-    toCodecs += "ac3";
-    toCodecs += "alac";
-    toCodecs += "mp2";
-//     toCodecs += "sonic";
-//     toCodecs += "sonic lossless";
-    toCodecs += "amr nb";
-    
-    
+    /// encode
+    if( !binaries["ffmpeg"].isEmpty() )
+    {
+        QFileInfo ffmpegInfo( binaries["ffmpeg"] );
+        if( ffmpegInfo.lastModified() > ffmpegLastModified || configVersion < version() )
+        {
+            infoProcess = new KProcess();
+            infoProcess.data()->setOutputChannelMode( KProcess::MergedChannels );
+            connect( infoProcess.data(), SIGNAL(readyRead()), this, SLOT(infoProcessOutput()) );
+            connect( infoProcess.data(), SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(infoProcessExit(int,QProcess::ExitStatus)) );
+
+            QStringList command;
+            command += binaries["ffmpeg"];
+            command += "-codecs";
+            infoProcess.data()->clearProgram();
+            infoProcess.data()->setShellCommand( command.join(" ") );
+            infoProcess.data()->start();
+
+            infoProcess.data()->waitForFinished( 3000 );
+        }
+    }
+
+    for( int i=0; i<codecList.count(); i++ )
+    {
+        for( int j=0; j<codecList.at(i).ffmpegCodecList.count(); j++ )
+        {
+            if( ( !codecList.at(i).ffmpegCodecList.at(j).experimental || experimentalCodecsEnabled ) && ffmpegCodecList.contains(codecList.at(i).ffmpegCodecList.at(j).name) )
+            {
+                codecList[i].currentFFmpegCodec = codecList.at(i).ffmpegCodecList.at(j);
+                break;
+            }
+        }
+        toCodecs += codecList.at(i).codecName;
+    }
+
     for( int i=0; i<fromCodecs.count(); i++ )
     {
         for( int j=0; j<toCodecs.count(); j++ )
         {
-            if( fromCodecs.at(i) == "wav" && toCodecs.at(j) == "wav" ) continue;
-          
+            if( fromCodecs.at(i) == "wav" && toCodecs.at(j) == "wav" )
+                continue;
+
+            bool codecEnabled = ( toCodecs.at(j) == "wav" ); // always enabled if decoding
+            QStringList ffmpegProblemInfo;
+            if( !codecEnabled )
+            {
+                for( int k=0; k<codecList.count(); k++ )
+                {
+                    if( codecList.at(k).codecName == toCodecs.at(j) )
+                    {
+                        if( !codecList.at(k).currentFFmpegCodec.name.isEmpty() ) // everything should work, lets exit
+                        {
+                            codecEnabled = true;
+                            break;
+                        }
+                        for( int l=0; l<codecList.at(k).ffmpegCodecList.count(); l++ )
+                        {
+                            if( codecList.at(k).ffmpegCodecList.at(l).experimental && !experimentalCodecsEnabled )
+                            {
+                                ffmpegProblemInfo.append( i18n("Enable experimental codecs in the ffmpeg configuration dialog.") );
+                            }
+                            if( codecList.at(k).ffmpegCodecList.at(l).external )
+                            {
+                                ffmpegProblemInfo.append( i18n("Compile ffmpeg with %1 support.",codecList.at(k).ffmpegCodecList.at(l).name) );
+                            }
+                        }
+                    }
+                }
+            }
+
             ConversionPipeTrunk newTrunk;
             newTrunk.codecFrom = fromCodecs.at(i);
             newTrunk.codecTo = toCodecs.at(j);
             newTrunk.rating = 90;
-            newTrunk.enabled = ( binaries["ffmpeg"] != "" );
-            newTrunk.problemInfo = i18n("You need to install 'ffmpeg'. Since ffmpeg inludes many patented codecs, it may not be included in the default installation of your distribution. Many distributions offer ffmpeg in an additional software repository.");
+            newTrunk.enabled = ( binaries["ffmpeg"] != "" ) && codecEnabled;
+            if( binaries["ffmpeg"] == "" )
+            {
+                if( toCodecs.at(j) == "wav" )
+                {
+                    newTrunk.problemInfo = standardMessage( "decode_codec,backend", fromCodecs.at(i), "ffmpeg" ) + "\n" + standardMessage( "install_patented_backend", "ffmpeg" );
+                }
+                else if( fromCodecs.at(i) == "wav" )
+                {
+                    newTrunk.problemInfo = standardMessage( "encode_codec,backend", toCodecs.at(j), "ffmpeg" ) + "\n" + standardMessage( "install_patented_backend", "ffmpeg" );
+                }
+            }
+            else
+            {
+                newTrunk.problemInfo = ffmpegProblemInfo.join("\n"+i18nc("like in either or","or")+"\n");
+            }
             newTrunk.data.hasInternalReplayGain = false;
             table.append( newTrunk );
         }
@@ -117,373 +315,71 @@ QList<ConversionPipeTrunk> soundkonverter_codec_ffmpeg::codecTable()
     codecs += QSet<QString>::fromList(fromCodecs);
     codecs += QSet<QString>::fromList(toCodecs);
     allCodecs = codecs.toList();
-    
+
     return table;
 }
 
-BackendPlugin::FormatInfo soundkonverter_codec_ffmpeg::formatInfo( const QString& codecName )
-{
-    BackendPlugin::FormatInfo info;
-    info.codecName = codecName;
-
-    if( codecName == "wav" )
-    {
-        info.lossless = true;
-        info.description = i18n("Wave won't compress the audio stream.");
-        info.mimeTypes.append( "audio/x-wav" );
-        info.mimeTypes.append( "audio/wav" );
-        info.extensions.append( "wav" );
-    }
-    else if( codecName == "ogg vorbis" )
-    {
-        info.lossless = false;
-        info.description = i18n("Ogg Vorbis is a free and lossy high quality audio codec.\nFor more information see: http://www.xiph.org/vorbis/");
-        info.mimeTypes.append( "application/ogg" );
-        info.mimeTypes.append( "audio/vorbis" );
-        info.mimeTypes.append( "application/x-ogg" );
-        info.mimeTypes.append( "audio/ogg" );
-        info.mimeTypes.append( "audio/x-vorbis+ogg" );
-        info.extensions.append( "ogg" );
-    }
-    else if( codecName == "mp3" )
-    {
-        info.lossless = false;
-        info.description = i18n("MP3 is a very popular lossy audio codec.");
-        info.mimeTypes.append( "audio/x-mp3" );
-        info.mimeTypes.append( "audio/mpeg" );
-        info.mimeTypes.append( "audio/mp3" );
-        info.extensions.append( "mp3" );
-    }
-    else if( codecName == "flac" )
-    {
-        info.lossless = true;
-        info.description = i18n("Flac is the free lossless audio codec.\nAs it name says, it compresses without any loss.");
-        info.mimeTypes.append( "audio/x-flac" );
-        info.mimeTypes.append( "audio/x-flac+ogg" );
-        info.mimeTypes.append( "audio/x-oggflac" );
-        info.extensions.append( "flac" );
-        info.extensions.append( "fla" );
-//         info.extensions.append( "ogg" );
-    }
-    else if( codecName == "wma" )
-    {
-        info.lossless = false;
-        info.description = i18n("Windows Media Audio is a propritary audio codec from Microsoft.");
-        info.mimeTypes.append( "audio/x-ms-wma" );
-        info.extensions.append( "wma" );
-    }
-    else if( codecName == "aac" )
-    {
-        info.lossless = false;
-        info.description = i18n("Advanced Audio Coding is a lossy and popular audio format."); // http://en.wikipedia.org/wiki/Advanced_Audio_Coding
-        info.mimeTypes.append( "audio/aac" );
-        info.mimeTypes.append( "audio/aacp" );
-        info.mimeTypes.append( "audio/mp4" );
-        info.mimeTypes.append( "video/mp4" );
-        info.extensions.append( "aac" );
-        info.extensions.append( "3gp" );
-        info.extensions.append( "mp4" );
-        info.extensions.append( "m4a" );
-    }
-    else if( codecName == "ac3" ) // TODO description
-    {
-        info.lossless = false;
-        info.description = i18n("Dolby Digital-Audio"); // http://en.wikipedia.org/wiki/Ac3
-        info.mimeTypes.append( "audio/ac3" );
-        info.extensions.append( "ac3" );
-    }
-    else if( codecName == "alac" )
-    {
-        info.lossless = true;
-        info.description = i18n("Apple Lossless Audio Codec is a lossless audio format from Apple."); // http://en.wikipedia.org/wiki/Alac
-//         info.mimeTypes.append( "audio/x-ms-wma" );
-        info.extensions.append( "m4a" );
-        info.extensions.append( "mp4" );
-    }
-    else if( codecName == "mp2" )
-    {
-        info.lossless = false;
-        info.description = i18n("MPEG-1 Audio Layer II is an old lossy audio format."); // http://en.wikipedia.org/wiki/MPEG-1_Audio_Layer_II
-//         info.mimeTypes.append( "audio/mpeg" );
-        info.extensions.append( "mp2" );
-    }
-//     else if( codecName == "sonic" ) // TODO description
-//     {
-//         info.lossless = false;
-//         info.description = i18n("Sonic");
-// //         info.mimeTypes.append( "audio/x-ms-wma" );
-// //         info.extensions.append( "wma" );
-//     }
-//     else if( codecName == "sonicls" ) // TODO description
-//     {
-//         info.lossless = true;
-//         info.description = i18n("Sonic Lossless");
-// //         info.mimeTypes.append( "audio/x-ms-wma" );
-// //         info.extensions.append( "wma" );
-//     }
-    else if( codecName == "als" ) // TODO description
-    {
-        info.lossless = true;
-        info.description = i18n("MPEG-4 Audio Lossless Coding");
-//         info.mimeTypes.append( "audio/x-ms-wma" );
-        info.extensions.append( "mp4" );
-    }
-    else if( codecName == "amr nb" )
-    {
-        info.lossless = false;
-        info.description = i18n("Adaptive Multi-Rate Narrow-Band is based on 3gp and mainly used for speech compression in mobile communication."); // http://en.wikipedia.org/wiki/Adaptive_Multi-Rate_audio_codec
-        info.mimeTypes.append( "audio/amr" );
-        info.mimeTypes.append( "audio/3gpp" );
-        info.mimeTypes.append( "audio/3gpp2" );
-        info.extensions.append( "amr" );
-    }
-    else if( codecName == "amr wb" )
-    {
-        info.lossless = false;
-        info.description = i18n("Adaptive Multi-Rate Wide-Band is an advanced version of amr nb which uses a higher data rate resulting in a higher quality."); // http://en.wikipedia.org/wiki/Adaptive_Multi-Rate_Wideband
-        info.mimeTypes.append( "audio/amr-wb" );
-        info.mimeTypes.append( "audio/3gpp" );
-        info.extensions.append( "awb" );
-    }
-    else if( codecName == "ape" )
-    {
-        info.lossless = true;
-        info.description = i18n("Monkey's Audio is a propritary lossless audio format."); // http://en.wikipedia.org/wiki/Monkey's_Audio
-        info.mimeTypes.append( "audio/x-ape" );
-        info.extensions.append( "ape" );
-        info.extensions.append( "apl" );
-    }
-//     else if( codecName == "eac3" ) // TODO description
-//     {
-//         info.lossless = false;
-//         info.description = i18n("Dolby Digital Plus (Enhanced AC-3) is an advanced version of AC-3 for use on Blu-Ray discs.");
-// //         info.mimeTypes.append( "audio/x-ms-wma" );
-// //         info.extensions.append( "wma" );
-//     }
-    else if( codecName == "speex" )
-    {
-        info.lossless = false;
-        info.description = i18n("Speex is a free and lossy audio codec designed for low quality speech encoding.\nFor more information see: http://www.speex.org");
-        info.mimeTypes.append( "audio/x-speex" );
-        info.mimeTypes.append( "audio/x-speex+ogg" );
-        info.extensions.append( "spx" );
-//         info.extensions.append( "ogg" );
-    }
-    else if( codecName == "mp1" )
-    {
-        info.lossless = false;
-        info.description = i18n("MPEG-1 Audio Layer I very old and lossy file format."); // http://en.wikipedia.org/wiki/MP1
-//         info.mimeTypes.append( "audio/mpeg" );
-        info.extensions.append( "mp1" );
-    }
-    else if( codecName == "musepack" )
-    {
-        info.lossless = false;
-        info.description = i18n("Musepack is a free and lossy file format based on mp2 and optimized for high quality."); // http://en.wikipedia.org/wiki/Musepack
-        info.mimeTypes.append( "audio/x-musepack" );
-        info.mimeTypes.append( "audio/musepack" );
-        info.extensions.append( "mpc" );
-        info.extensions.append( "mp+" );
-        info.extensions.append( "mpp" );
-    }
-    else if( codecName == "shorten" )
-    {
-        info.lossless = true;
-        info.description = i18n("Shorten is a free and lossless audio codec.\nFor more information see: http://etree.org/shnutils/shorten/");
-        info.mimeTypes.append( "application/x-shorten" );
-        info.extensions.append( "shn" );
-    }
-//     else if( codecName == "mlp" ) // TODO description
-//     {
-//         info.lossless = true;
-//         info.description = i18n("Meridian Lossless Packing is an old propritary lossless audio format."); // http://en.wikipedia.org/wiki/Meridian_Lossless_Packing
-// //         info.mimeTypes.append( "audio/x-ms-wma" );
-// //         info.extensions.append( "wma" );
-//     }
-//     else if( codecName == "truehd" ) // TODO description
-//     {
-//         info.lossless = true;
-//         info.description = i18n("Dolby TrueHD is a lossless audio format based on mlp for use on Blu-Ray discs."); // http://en.wikipedia.org/wiki/Dolby_TrueHD
-// //         info.mimeTypes.append( "audio/x-ms-wma" );
-// //         info.extensions.append( "wma" );
-//     }
-//     else if( codecName == "truespeech" )
-//     {
-//         info.lossless = false;
-//         info.description = i18n("Truespeech is a propritary speech codec for low bitrates."); // http://en.wikipedia.org/wiki/Truespeech
-// //         info.mimeTypes.append( "audio/x-ms-wma" );
-// //         info.extensions.append( "wma" );
-//     }
-    else if( codecName == "tta" )
-    {
-        info.lossless = true;
-        info.description = i18n("True Audio is a free lossless audio format."); // http://en.wikipedia.org/wiki/TTA_(codec)
-        info.mimeTypes.append( "audio/x-tta" );
-        info.extensions.append( "tta" );
-    }
-    else if( codecName == "wavpack" )
-    {
-        info.lossless = true;
-        info.description = i18n("WavPack is a free lossless audio format."); // http://en.wikipedia.org/wiki/WavPack
-        info.mimeTypes.append( "audio/x-wavpack" );
-        info.extensions.append( "wv" );
-        info.extensions.append( "wvp" );
-    }
-    else if( codecName == "ra" )
-    {
-        info.lossless = false;
-        info.description = i18n("Real Media Audio is a propritary and lossy codec.");
-        info.mimeTypes.append( "audio/vnd.rn-realaudio" );
-        info.extensions.append( "ra" );
-        info.extensions.append( "rax" );
-    }
-    else if( codecName == "3gp" )
-    {
-        info.lossless = false;
-        info.description = i18n("3GP is a audio/video container format for mobile devices."); // http://de.wikipedia.org/wiki/3gp
-        info.mimeTypes.append( "video/3gpp" );
-        info.mimeTypes.append( "audio/3gpp" );
-        info.mimeTypes.append( "video/3gpp2" );
-        info.mimeTypes.append( "audio/3gpp2" );
-        info.extensions.append( "3gp" );
-        info.extensions.append( "3g2" );
-        info.extensions.append( "3gpp" );
-        info.extensions.append( "3ga" );
-        info.extensions.append( "3gp2" );
-        info.extensions.append( "3gpp2" );
-    }
-    else if( codecName == "rm" )
-    {
-        info.lossless = false;
-        info.description = i18n("Real Media is a propritary and lossy codec.");
-        info.mimeTypes.append( "application/vnd.rn-realmedia" );
-        info.extensions.append( "rm" );
-        info.extensions.append( "rmj" );
-        info.extensions.append( "rmm" );
-        info.extensions.append( "rms" );
-        info.extensions.append( "rmvb" );
-        info.extensions.append( "rmx" );
-        info.extensions.append( "rm" );
-        info.extensions.append( "rm" );
-        info.extensions.append( "rm" );
-        info.extensions.append( "rm" );
-    }
-    else if( codecName == "avi" )
-    {
-        info.lossless = false;
-//         info.description = i18n("");
-        info.mimeTypes.append( "video/x-msvideo" );
-        info.extensions.append( "avi" );
-        info.extensions.append( "divx" );
-    }
-    else if( codecName == "mkv" )
-    {
-        info.lossless = false;
-//         info.description = i18n("");
-        info.mimeTypes.append( "video/x-matroska" );
-        info.extensions.append( "mkv" );
-    }
-    else if( codecName == "ogv" )
-    {
-        info.lossless = false;
-//         info.description = i18n("");
-        info.mimeTypes.append( "video/ogg" );
-        info.extensions.append( "ogv" );
-    }
-    else if( codecName == "mpeg" )
-    {
-        info.lossless = false;
-//         info.description = i18n("");
-        info.mimeTypes.append( "video/mpeg" );
-        info.extensions.append( "mpg" );
-        info.extensions.append( "mpeg" );
-        info.extensions.append( "m2t" );
-        info.extensions.append( "m2ts" );
-        info.extensions.append( "mod" );
-        info.extensions.append( "mp2" );
-        info.extensions.append( "mpe" );
-        info.extensions.append( "mts" );
-        info.extensions.append( "ts" );
-        info.extensions.append( "vob" );
-    }
-    else if( codecName == "mov" )
-    {
-        info.lossless = false;
-//         info.description = i18n("");
-        info.mimeTypes.append( "video/quicktime" );
-        info.extensions.append( "mov" );
-        info.extensions.append( "moov" );
-        info.extensions.append( "qt" );
-        info.extensions.append( "qtvr" );
-    }
-    else if( codecName == "mp4" )
-    {
-        info.lossless = false;
-//         info.description = i18n("");
-        info.mimeTypes.append( "video/mp4" );
-        info.extensions.append( "mp4" );
-        info.extensions.append( "m4v" );
-    }
-    else if( codecName == "flv" )
-    {
-        info.lossless = false;
-//         info.description = i18n("");
-        info.mimeTypes.append( "video/x-flv" );
-        info.mimeTypes.append( "video/flv" );
-        info.extensions.append( "flv" );
-    }
-    else if( codecName == "wmv" )
-    {
-        info.lossless = false;
-//         info.description = i18n("");
-        info.mimeTypes.append( "video/x-ms-wmv" );
-        info.mimeTypes.append( "video/x-ms-asf" );
-        info.extensions.append( "wmv" );
-        info.extensions.append( "asf" );
-    }
-    else if( codecName == "rv" )
-    {
-        info.lossless = false;
-//         info.description = i18n("");
-        info.mimeTypes.append( "video/vnd.rn-realvideo" );
-        info.extensions.append( "rv" );
-        info.extensions.append( "rvx" );
-    }
-
-    return info;
-}
-
-
-// QString soundkonverter_codec_ffmpeg::getCodecFromFile( const KUrl& filename, const QString& mimeType )
-// {
-//     for( int i=0; i<allCodecs.count(); i++ )
-//     {
-//         if( formatInfo(allCodecs.at(i)).mimeTypes.indexOf(mimeType) != -1 )
-//         {
-//             return allCodecs.at(i);
-//         }
-//     }
-//     
-//     QString extension = filename.url().right( filename.url().length() - filename.url().lastIndexOf(".") - 1 );
-// 
-//     for( int i=0; i<allCodecs.count(); i++ )
-//     {
-//         if( formatInfo(allCodecs.at(i)).extensions.indexOf(extension) != -1 )
-//         {
-//             return allCodecs.at(i);
-//         }
-//     }
-//         
-//     return "";
-// }
 
 bool soundkonverter_codec_ffmpeg::isConfigSupported( ActionType action, const QString& codecName )
 {
-    return false;
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+
+    return true;
 }
 
 void soundkonverter_codec_ffmpeg::showConfigDialog( ActionType action, const QString& codecName, QWidget *parent )
-{}
+{
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+
+    if( !configDialog.data() )
+    {
+        configDialog = new KDialog( parent );
+        configDialog.data()->setCaption( i18n("Configure %1").arg(global_plugin_name)  );
+        configDialog.data()->setButtons( KDialog::Ok | KDialog::Cancel | KDialog::Default );
+
+        QWidget *configDialogWidget = new QWidget( configDialog.data() );
+        QHBoxLayout *configDialogBox = new QHBoxLayout( configDialogWidget );
+        configDialogExperimantalCodecsEnabledCheckBox = new QCheckBox( i18n("Enable experimental codecs"), configDialogWidget );
+        configDialogBox->addWidget( configDialogExperimantalCodecsEnabledCheckBox );
+
+        configDialog.data()->setMainWidget( configDialogWidget );
+        connect( configDialog.data(), SIGNAL( okClicked() ), this, SLOT( configDialogSave() ) );
+        connect( configDialog.data(), SIGNAL( defaultClicked() ), this, SLOT( configDialogDefault() ) );
+    }
+    configDialogExperimantalCodecsEnabledCheckBox->setChecked( experimentalCodecsEnabled );
+    configDialog.data()->show();
+}
+
+void soundkonverter_codec_ffmpeg::configDialogSave()
+{
+    if( configDialog.data() )
+    {
+        const bool old_experimentalCodecsEnabled = experimentalCodecsEnabled;
+        experimentalCodecsEnabled = configDialogExperimantalCodecsEnabledCheckBox->isChecked();
+
+        KSharedConfig::Ptr conf = KGlobal::config();
+        KConfigGroup group;
+
+        group = conf->group( "Plugin-"+name() );
+        group.writeEntry( "experimentalCodecsEnabled", experimentalCodecsEnabled );
+
+        if( experimentalCodecsEnabled != old_experimentalCodecsEnabled )
+        {
+            KMessageBox::information( configDialog.data(), i18n("Please restart soundKonverter in order to activate the changes.") );
+        }
+        configDialog.data()->deleteLater();
+    }
+}
+
+void soundkonverter_codec_ffmpeg::configDialogDefault()
+{
+    if( configDialog.data() )
+    {
+        configDialogExperimantalCodecsEnabledCheckBox->setChecked( false );
+    }
+}
 
 bool soundkonverter_codec_ffmpeg::hasInfo()
 {
@@ -491,7 +387,9 @@ bool soundkonverter_codec_ffmpeg::hasInfo()
 }
 
 void soundkonverter_codec_ffmpeg::showInfo( QWidget *parent )
-{}
+{
+    Q_UNUSED(parent)
+}
 
 QWidget *soundkonverter_codec_ffmpeg::newCodecWidget()
 {
@@ -507,6 +405,10 @@ QWidget *soundkonverter_codec_ffmpeg::newCodecWidget()
 
 int soundkonverter_codec_ffmpeg::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
+    Q_UNUSED(inputCodec)
+    Q_UNUSED(tags)
+    Q_UNUSED(replayGain)
+
     QStringList command;
     ConversionOptions *conversionOptions = _conversionOptions;
 
@@ -514,10 +416,22 @@ int soundkonverter_codec_ffmpeg::convert( const KUrl& inputFile, const KUrl& out
     {
         command += binaries["ffmpeg"];
         command += "-i";
-        command += "\"" + inputFile.toLocalFile() + "\"";
-        command += "-acodec";
-        command += codecMap[conversionOptions->codecName];
-        if( outputCodec != "alac" )
+        command += "\"" + escapeUrl(inputFile) + "\"";
+        for( int i=0; i<codecList.count(); i++ )
+        {
+            if( codecList.at(i).codecName == outputCodec )
+            {
+                command += "-acodec";
+                command += codecList.at(i).currentFFmpegCodec.name;
+                if( codecList.at(i).currentFFmpegCodec.experimental )
+                {
+                    command += "-strict";
+                    command += "experimental";
+                }
+                break;
+            }
+        }
+        if( outputCodec != "alac" && outputCodec != "flac" )
         {
             command += "-ab";
             command += QString::number(conversionOptions->bitrate) + "k";
@@ -531,14 +445,18 @@ int soundkonverter_codec_ffmpeg::convert( const KUrl& inputFile, const KUrl& out
                 command += "-ac 1";
             }
         }
-        command += "\"" + outputFile.toLocalFile() + "\"";
+        if( conversionOptions->pluginName == name() )
+        {
+            command += conversionOptions->cmdArguments;
+        }
+        command += "\"" + escapeUrl(outputFile) + "\"";
     }
-    else // NOTE really necessary?
+    else
     {
         command += binaries["ffmpeg"];
         command += "-i";
-        command += "\"" + inputFile.toLocalFile() + "\"";
-        command += "\"" + outputFile.toLocalFile() + "\"";
+        command += "\"" + escapeUrl(inputFile) + "\"";
+        command += "\"" + escapeUrl(outputFile) + "\"";
     }
 
     CodecPluginItem *newItem = new CodecPluginItem( this );
@@ -560,17 +478,19 @@ int soundkonverter_codec_ffmpeg::convert( const KUrl& inputFile, const KUrl& out
 
 QStringList soundkonverter_codec_ffmpeg::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
-    if( !_conversionOptions ) return QStringList();
-    
-    QStringList command;
-    ConversionOptions *conversionOptions = _conversionOptions;
+    Q_UNUSED(inputCodec)
+    Q_UNUSED(_conversionOptions)
+    Q_UNUSED(tags)
+    Q_UNUSED(replayGain)
 
-    if( conversionOptions->codecName == "wav" )
+    QStringList command;
+
+    if( outputCodec == "wav" )
     {
-        command += "ffmpeg";
+        command += binaries["ffmpeg"];
         command += "-i";
-        command += "\"" + inputFile.toLocalFile() + "\"";
-        command += "\"" + outputFile.toLocalFile() + "\"";
+        command += "\"" + escapeUrl(inputFile) + "\"";
+        command += "\"" + escapeUrl(outputFile) + "\"";
     }
 
     return command;
@@ -578,27 +498,23 @@ QStringList soundkonverter_codec_ffmpeg::convertCommand( const KUrl& inputFile, 
 
 float soundkonverter_codec_ffmpeg::parseOutput( const QString& output, int *length )
 {
-    // size=    1508kB time=48.25 bitrate= 256.0kbits/s
-    
-    QString data = output;
-    QString time;
-    
-    QRegExp reg("(\\d{2,}):(\\d{2}):(\\d{2})\\.(\\d{2})");
-    if( length && data.contains(reg) )
+    // Duration: 00:02:16.50, start: 0.000000, bitrate: 1411 kb/s
+    // size=    2445kB time=00:01:58.31 bitrate= 169.3kbits/s
+
+    QRegExp regLength("Duration: (\\d{2}):(\\d{2}):(\\d{2})\\.(\\d{2})");
+    if( length && output.contains(regLength) )
     {
-        *length = reg.cap(1).toInt()*3600 + reg.cap(2).toInt()*60 + reg.cap(3).toInt();
-//         emit log( 1000, "got length: " + QString::number(*length) );
+        *length = regLength.cap(1).toInt()*3600 + regLength.cap(2).toInt()*60 + regLength.cap(3).toInt();
     }
-    if( data.contains("time") )
+    QRegExp reg("time=(\\d{2}):(\\d{2}):(\\d{2})\\.(\\d{2})");
+    if( output.contains(reg) )
     {
-        data.remove( 0, data.indexOf("time")+5 );
-        time = data.left( data.indexOf(" ") );
-        return time.toFloat();
+        return reg.cap(1).toInt()*3600 + reg.cap(2).toInt()*60 + reg.cap(3).toInt();;
     }
-    
+
     // TODO error handling
     // Error while decoding stream #0.0
-    
+
     return -1;
 }
 
@@ -609,22 +525,65 @@ float soundkonverter_codec_ffmpeg::parseOutput( const QString& output )
 
 void soundkonverter_codec_ffmpeg::processOutput()
 {
-    CodecPluginItem *pluginItem;
-    float progress;
     for( int i=0; i<backendItems.size(); i++ )
     {
         if( backendItems.at(i)->process == QObject::sender() )
         {
-            QString output = backendItems.at(i)->process->readAllStandardOutput().data();
-            pluginItem = qobject_cast<CodecPluginItem*>(backendItems.at(i));
-            progress = parseOutput( output, &pluginItem->data.length );
-            if( progress == -1 && !output.simplified().isEmpty() ) emit log( backendItems.at(i)->id, output );
+            const QString output = backendItems.at(i)->process->readAllStandardOutput().data();
+
+            CodecPluginItem *pluginItem = qobject_cast<CodecPluginItem*>(backendItems.at(i));
+
+            float progress = parseOutput( output, &pluginItem->data.length );
+            if( progress == -1 && !output.simplified().isEmpty() )
+                emit log( backendItems.at(i)->id, output );
+
             progress = progress * 100 / pluginItem->data.length;
-            if( progress > backendItems.at(i)->progress ) backendItems.at(i)->progress = progress;
+            if( progress > backendItems.at(i)->progress )
+                backendItems.at(i)->progress = progress;
+
             return;
         }
     }
 }
+
+void soundkonverter_codec_ffmpeg::infoProcessOutput()
+{
+    infoProcessOutputData.append( infoProcess.data()->readAllStandardOutput().data() );
+}
+
+void soundkonverter_codec_ffmpeg::infoProcessExit( int exitCode, QProcess::ExitStatus exitStatus )
+{
+    Q_UNUSED(exitStatus)
+    Q_UNUSED(exitCode)
+
+    ffmpegCodecList.clear();
+
+    for( int i=0; i<codecList.count(); i++ )
+    {
+        for( int j=0; j<codecList.at(i).ffmpegCodecList.count(); j++ )
+        {
+            if( infoProcessOutputData.contains( QRegExp(" (D| )E.{4} "+codecList.at(i).ffmpegCodecList.at(j).name+" ")) )
+            {
+                ffmpegCodecList += codecList.at(i).ffmpegCodecList.at(j).name;
+            }
+        }
+    }
+
+    QFileInfo ffmpegInfo( binaries["ffmpeg"] );
+    ffmpegLastModified = ffmpegInfo.lastModified();
+
+    KSharedConfig::Ptr conf = KGlobal::config();
+    KConfigGroup group;
+
+    group = conf->group( "Plugin-"+name() );
+    group.writeEntry( "configVersion", version() );
+    group.writeEntry( "ffmpegLastModified", ffmpegLastModified );
+    group.writeEntry( "codecList", ffmpegCodecList.toList() );
+
+    infoProcessOutputData.clear();
+    infoProcess.data()->deleteLater();
+}
+
 
 #include "soundkonverter_codec_ffmpeg.moc"
 

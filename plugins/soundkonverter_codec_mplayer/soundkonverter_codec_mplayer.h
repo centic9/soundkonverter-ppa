@@ -20,8 +20,7 @@ public:
     QString name();
 
     QList<ConversionPipeTrunk> codecTable();
-    BackendPlugin::FormatInfo formatInfo( const QString& codecName );
-//     QString getCodecFromFile( const KUrl& filename, const QString& mimeType = "application/octet-stream" );
+
     bool isConfigSupported( ActionType action, const QString& format );
     void showConfigDialog( ActionType action, const QString& format, QWidget *parent );
     bool hasInfo();
@@ -30,17 +29,13 @@ public:
 
     int convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false );
     QStringList convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false );
-    float parseOutput( const QString& output, int *length );
     float parseOutput( const QString& output );
 
 private:
    QStringList fromCodecs;
    QStringList toCodecs;
    QMap<QString,QString> codecMap;
-    
-private slots:
-    /** Get the process' output */
-    void processOutput();
+
 };
 
 K_EXPORT_SOUNDKONVERTER_CODEC( mplayer, soundkonverter_codec_mplayer );

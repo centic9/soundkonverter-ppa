@@ -7,8 +7,10 @@
 soundkonverter_replaygain_vorbisgain::soundkonverter_replaygain_vorbisgain( QObject *parent, const QStringList& args  )
     : ReplayGainPlugin( parent )
 {
+    Q_UNUSED(args)
+
     binaries["vorbisgain"] = "";
-    
+
     allCodecs += "ogg vorbis";
 }
 
@@ -20,18 +22,6 @@ QString soundkonverter_replaygain_vorbisgain::name()
     return global_plugin_name;
 }
 
-// QMap<QString,int> soundkonverter_replaygain_vorbisgain::codecList()
-// {
-//     QMap<QString,int> list;
-// 
-//     if( binaries["vorbisgain"] != "" )
-//     {
-//         list.insert( "ogg vorbis", 100 );
-//     }
-// 
-//     return list;
-// }
-
 QList<ReplayGainPipe> soundkonverter_replaygain_vorbisgain::codecTable()
 {
     QList<ReplayGainPipe> table;
@@ -40,60 +30,26 @@ QList<ReplayGainPipe> soundkonverter_replaygain_vorbisgain::codecTable()
     newPipe.codecName = "ogg vorbis";
     newPipe.rating = 100;
     newPipe.enabled = ( binaries["vorbisgain"] != "" );
-    newPipe.problemInfo = i18n("In order to calculate Replay Gain tags for ogg vorbis files, you need to install 'vorbisgain'. vorbisgain is usually in the package 'vorbisgain' which should be shipped with your distribution.");
+    newPipe.problemInfo = standardMessage( "replygain_codec,backend", "ogg vorbis", "vorbisgain" ) + "\n" + standardMessage( "install_opensource_backend", "vorbisgain" );
     table.append( newPipe );
 
     return table;
 }
 
-BackendPlugin::FormatInfo soundkonverter_replaygain_vorbisgain::formatInfo( const QString& codecName )
-{
-    BackendPlugin::FormatInfo info;
-    info.codecName = codecName;
-
-    if( codecName == "ogg vorbis" )
-    {
-        info.lossless = false;
-        info.description = i18n("Ogg Vorbis is a free and lossy high quality audio codec.");
-        info.mimeTypes.append( "application/ogg" );
-        info.mimeTypes.append( "audio/vorbis" );
-        info.mimeTypes.append( "application/x-ogg" );
-        info.mimeTypes.append( "audio/ogg" );
-        info.mimeTypes.append( "audio/x-vorbis+ogg" );
-        info.extensions.append( "ogg" );
-    }
-
-    return info;
-}
-
-// QString soundkonverter_replaygain_vorbisgain::getCodecFromFile( const KUrl& filename, const QString& mimeType )
-// {
-//     if( mimeType == "application/x-ogg" || mimeType == "application/ogg" || mimeType == "audio/ogg" || mimeType == "audio/vorbis" || mimeType == "audio/x-vorbis+ogg" )
-//     {
-//         return "ogg vorbis";
-//     }
-//     else if( mimeType == "application/octet-stream" )
-//     {
-//         if( filename.url().endsWith(".ogg") ) return "ogg vorbis";
-//     }
-// 
-//     return "";
-// }
-
-/*bool soundkonverter_replaygain_vorbisgain::canApply( const KUrl& filename )
-{
-    if( filename.url().endsWith(".ogg") ) return true;
-
-    return false;
-}*/
-
 bool soundkonverter_replaygain_vorbisgain::isConfigSupported( ActionType action, const QString& codecName )
 {
-    return true;
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+
+    return false;
 }
 
 void soundkonverter_replaygain_vorbisgain::showConfigDialog( ActionType action, const QString& codecName, QWidget *parent )
-{}
+{
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+    Q_UNUSED(parent)
+}
 
 bool soundkonverter_replaygain_vorbisgain::hasInfo()
 {
@@ -101,11 +57,14 @@ bool soundkonverter_replaygain_vorbisgain::hasInfo()
 }
 
 void soundkonverter_replaygain_vorbisgain::showInfo( QWidget *parent )
-{}
+{
+    Q_UNUSED(parent)
+}
 
 int soundkonverter_replaygain_vorbisgain::apply( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
 {
-    if( fileList.count() <= 0 ) return -1;
+    if( fileList.count() <= 0 )
+        return -1;
 
     ReplayGainPluginItem *newItem = new ReplayGainPluginItem( this );
     newItem->id = lastId++;
@@ -114,7 +73,8 @@ int soundkonverter_replaygain_vorbisgain::apply( const KUrl::List& fileList, Rep
     connect( newItem->process, SIGNAL(readyRead()), this, SLOT(processOutput()) );
     connect( newItem->process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(processExit(int,QProcess::ExitStatus)) );
 
-//     newItem->mode = mode;
+    newItem->data.fileCount = fileList.count();
+
     (*newItem->process) << binaries["vorbisgain"];
     if( mode == ReplayGainPlugin::Add )
     {
@@ -139,44 +99,65 @@ int soundkonverter_replaygain_vorbisgain::apply( const KUrl::List& fileList, Rep
     return newItem->id;
 }
 
-// QString soundkonverter_replaygain_vorbisgain::applyCommand( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
-// {
-//     QString command;
-// 
-//     if( fileList.count() <= 0 ) return command;
-// 
-//     if( mode == ReplayGainPlugin::Add )
-//     {
-//         command += "vorbisgain";
-//         command += " --album";
-//         for( int i = 0; i < fileList.count(); i++ )
-//         {
-//             command += " \"" + fileList.at(i).toLocalFile() + "\"";
-//         }
-//     }
-//     else
-//     {
-//         command += "vorbisgain";
-//         command += " --clean";
-//         for( int i = 0; i < fileList.count(); i++ )
-//         {
-//             command += " \"" + fileList.at(i).toLocalFile() + "\"";
-//         }
-//     }
-// 
-//     return command;
-// }
+// float soundkonverter_replaygain_vorbisgain::parseOutput( const QString& output, BackendPluginItem *backendItem ) TODO ogg replaygain fix
+float soundkonverter_replaygain_vorbisgain::parseOutput( const QString& output, ReplayGainPluginItem *replayGainItem )
+{
+    float progress = -1;
+
+    // -12.14 dB |  46927 |  0.25 |    11599 | 03 - Sugar.ogg
+    //   59% - 04 - Suggestions.ogg
+
+    QRegExp regApply("(\\d+)%");
+    if( output.contains(regApply) )
+    {
+        progress = (float)regApply.cap(1).toInt();
+    }
+
+    if( progress == -1 )
+        return -1;
+
+    if( !replayGainItem )
+        return progress;
+
+    if( progress > 90 && replayGainItem->data.lastFileProgress <= 90 )
+    {
+        replayGainItem->data.processedFiles++;
+    }
+    replayGainItem->data.lastFileProgress = progress;
+
+    int processedFiles = replayGainItem->data.processedFiles;
+    if( progress > 90 )
+        processedFiles--;
+
+    return float( processedFiles * 100 + progress ) / replayGainItem->data.fileCount;
+}
 
 float soundkonverter_replaygain_vorbisgain::parseOutput( const QString& output )
 {
-    // 35% - /home/daniel/soundKonverter/LP3/2 - 04 - Ratatat - Mirando.ogg
-    
-    if( output.contains("Gain   |  Peak  | Scale | New Peak | Track") || output.contains("----------+--------+-------+----------+------") ) return 0.0f;
-    if( output == "" || !output.contains("%") ) return -1.0f;
+    return parseOutput( output, 0 );
+}
 
-    QString data = output;
-    data = data.left( data.indexOf("%") );
-    return data.toFloat();
+void soundkonverter_replaygain_vorbisgain::processOutput()
+{
+    ReplayGainPluginItem *pluginItem;
+    float progress;
+    for( int i=0; i<backendItems.size(); i++ )
+    {
+        if( backendItems.at(i)->process == QObject::sender() )
+        {
+            const QString output = backendItems.at(i)->process->readAllStandardOutput().data();
+            pluginItem = qobject_cast<ReplayGainPluginItem*>(backendItems.at(i));
+            progress = parseOutput( output, pluginItem );
+
+            if( progress == -1 && !output.simplified().isEmpty() )
+                emit log( backendItems.at(i)->id, output );
+
+            if( progress > backendItems.at(i)->progress )
+                backendItems.at(i)->progress = progress;
+
+            return;
+        }
+    }
 }
 
 #include "soundkonverter_replaygain_vorbisgain.moc"

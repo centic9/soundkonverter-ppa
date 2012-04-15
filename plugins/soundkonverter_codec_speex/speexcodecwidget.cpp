@@ -4,17 +4,15 @@
 #include "speexcodecwidget.h"
 #include "../../core/conversionoptions.h"
 
-#include <math.h>
+// #include <math.h>
 
 #include <QLayout>
 #include <QLabel>
-// #include <QCheckBox>
 #include <KLocale>
 #include <KComboBox>
 #include <QDoubleSpinBox>
-// #include <QGroupBox>
 #include <QSlider>
-#include <QCheckBox>
+// #include <QCheckBox>
 #include <QLineEdit>
 
 
@@ -41,67 +39,22 @@ SpeexCodecWidget::SpeexCodecWidget()
     topBox->addWidget( cMode );
 
     sQuality = new QSlider( Qt::Horizontal, this );
-//     sQuality->setTickPosition( QSlider::TicksBelow );
-//     sQuality->setFixedWidth( sQuality->sizeHint().width() );
     connect( sQuality, SIGNAL(valueChanged(int)), this, SLOT(qualitySliderChanged(int)) );
     connect( sQuality, SIGNAL(valueChanged(int)), SIGNAL(somethingChanged()) );
     topBox->addWidget( sQuality );
 
     dQuality = new QDoubleSpinBox( this );
-    dQuality->setRange( 8, 320 );
+    dQuality->setRange( 8, 160 );
     dQuality->setSuffix( " kbps" );
     dQuality->setFixedWidth( dQuality->sizeHint().width() );
-//     dQuality->setFixedHeight( cMode->minimumSizeHint().height() );
     connect( dQuality, SIGNAL(valueChanged(double)), this, SLOT(qualitySpinBoxChanged(double)) );
     connect( dQuality, SIGNAL(valueChanged(double)), SIGNAL(somethingChanged()) );
     topBox->addWidget( dQuality );
-
-    topBox->addSpacing( 12 );
-
-    QLabel *lBitrateMode = new QLabel( i18n("Bitrate mode")+":", this );
-    topBox->addWidget( lBitrateMode );
-    cBitrateMode = new KComboBox( this );
-    cBitrateMode->addItem( i18n("Variable") );
-    cBitrateMode->addItem( i18n("Avarage") );
-    cBitrateMode->addItem( i18n("Constant") );
-    cBitrateMode->setFixedWidth( cBitrateMode->sizeHint().width() );
-    connect( cBitrateMode, SIGNAL(activated(int)), SIGNAL(somethingChanged()) );
-    topBox->addWidget( cBitrateMode );
 
     topBox->addStretch();
 
     QHBoxLayout *midBox = new QHBoxLayout();
     grid->addLayout( midBox, 1, 0 );
-
-    chChannels = new QCheckBox( i18n("Channels")+":", this );
-    connect( chChannels, SIGNAL(toggled(bool)), this, SLOT(channelsToggled(bool)) );
-    connect( chChannels, SIGNAL(toggled(bool)), SIGNAL(somethingChanged()) );
-    midBox->addWidget( chChannels );
-    cChannels = new KComboBox( this );
-    cChannels->addItem( i18n("Mono") );
-    midBox->addWidget( cChannels );
-    channelsToggled( false );
-
-    midBox->addSpacing( 12 );
-
-    chSamplerate = new QCheckBox( i18n("Resample")+":", this );
-    connect( chSamplerate, SIGNAL(toggled(bool)), this, SLOT(samplerateToggled(bool)) );
-    connect( chSamplerate, SIGNAL(toggled(bool)), SIGNAL(somethingChanged()) );
-    midBox->addWidget( chSamplerate );
-    cSamplerate = new KComboBox( this );
-    cSamplerate->addItem( "8000 Hz" );
-    cSamplerate->addItem( "11025 Hz" );
-    cSamplerate->addItem( "12000 Hz" );
-    cSamplerate->addItem( "16000 Hz" );
-    cSamplerate->addItem( "22050 Hz" );
-    cSamplerate->addItem( "24000 Hz" );
-    cSamplerate->addItem( "32000 Hz" );
-    cSamplerate->addItem( "44100 Hz" );
-    cSamplerate->addItem( "48000 Hz" );
-    cSamplerate->setCurrentIndex( 4 );
-    connect( cSamplerate, SIGNAL(activated(int)), SIGNAL(somethingChanged()) );
-    midBox->addWidget( cSamplerate );
-    samplerateToggled( false );
 
     midBox->addStretch();
 
@@ -143,22 +96,19 @@ ConversionOptions *SpeexCodecWidget::currentConversionOptions()
         options->qualityMode = ConversionOptions::Bitrate;
         options->bitrate = dQuality->value();
         options->quality = qualityForBitrate( options->bitrate );
-        options->bitrateMode = ( cBitrateMode->currentText()==i18n("Avarage") ) ? ConversionOptions::Abr : ConversionOptions::Cbr;
+        options->bitrateMode = ConversionOptions::Abr;
         options->bitrateMin = 0;
         options->bitrateMax = 0;
     }
-    if( chSamplerate->isChecked() ) options->samplingRate = cSamplerate->currentText().replace(" Hz","").toInt();
-    else options->samplingRate = 0;
-    if( chChannels->isChecked() ) options->channels = 1;
-    else options->channels = 0;
 
     return options;
 }
 
 bool SpeexCodecWidget::setCurrentConversionOptions( ConversionOptions *_options )
 {
-    if( !_options || _options->pluginName != global_plugin_name ) return false;
-    
+    if( !_options || _options->pluginName != global_plugin_name )
+        return false;
+
     ConversionOptions *options = _options;
 
     if( options->qualityMode == ConversionOptions::Quality )
@@ -166,26 +116,22 @@ bool SpeexCodecWidget::setCurrentConversionOptions( ConversionOptions *_options 
         cMode->setCurrentIndex( cMode->findText(i18n("Quality")) );
         modeChanged( cMode->currentIndex() );
         dQuality->setValue( options->quality );
-        cBitrateMode->setCurrentIndex( cBitrateMode->findText(i18n("Variable")) );
     }
     else
     {
         cMode->setCurrentIndex( cMode->findText(i18n("Bitrate")) );
         modeChanged( cMode->currentIndex() );
         dQuality->setValue( options->bitrate );
-        if( options->bitrateMode == ConversionOptions::Abr ) cBitrateMode->setCurrentIndex( cBitrateMode->findText(i18n("Avarage")) );
-        else cBitrateMode->setCurrentIndex( cBitrateMode->findText(i18n("Constant")) );
     }
-    chSamplerate->setChecked( options->samplingRate != 0 );
-    if( options->samplingRate != 0 ) cSamplerate->setCurrentIndex( cSamplerate->findText(QString::number(options->samplingRate)+" Hz") );
-    chChannels->setChecked( options->channels != 0 );
-    
+
     return true;
 }
 
 void SpeexCodecWidget::setCurrentFormat( const QString& format )
 {
-    if( currentFormat == format ) return;
+    if( currentFormat == format )
+        return;
+
     currentFormat = format;
     setEnabled( currentFormat != "wav" );
 }
@@ -196,23 +142,23 @@ QString SpeexCodecWidget::currentProfile()
     {
         return i18n("Lossless");
     }
-    else if( cMode->currentIndex() == 0 && dQuality->value() == 2.0 && chChannels->isChecked() && chSamplerate->isChecked() && cSamplerate->currentIndex() == 4 )
+    else if( cMode->currentIndex() == 0 && dQuality->value() == 2.0 )
     {
         return i18n("Very low");
     }
-    else if( cMode->currentIndex() == 0 && dQuality->value() == 3.0 && !chChannels->isChecked() && chSamplerate->isChecked() && cSamplerate->currentIndex() == 4 )
+    else if( cMode->currentIndex() == 0 && dQuality->value() == 4.0 )
     {
         return i18n("Low");
     }
-    else if( cMode->currentIndex() == 0 && dQuality->value() == 4.0 && !chChannels->isChecked() && !chSamplerate->isChecked() )
+    else if( cMode->currentIndex() == 0 && dQuality->value() == 6.0 )
     {
         return i18n("Medium");
     }
-    else if( cMode->currentIndex() == 0 && dQuality->value() == 5.0 && !chChannels->isChecked() && !chSamplerate->isChecked() )
+    else if( cMode->currentIndex() == 0 && dQuality->value() == 8.0 )
     {
         return i18n("High");
     }
-    else if( cMode->currentIndex() == 0 && dQuality->value() == 6.0 && !chChannels->isChecked() && !chSamplerate->isChecked() )
+    else if( cMode->currentIndex() == 0 && dQuality->value() == 10.0 )
     {
         return i18n("Very high");
     }
@@ -228,55 +174,38 @@ bool SpeexCodecWidget::setCurrentProfile( const QString& profile )
         modeChanged( 0 );
         sQuality->setValue( 200 );
         dQuality->setValue( 2.0 );
-        cBitrateMode->setCurrentIndex( 0 );
-        chChannels->setChecked( true );
-        chSamplerate->setChecked( true );
-        cSamplerate->setCurrentIndex( 4 );
         return true;
     }
     else if( profile == i18n("Low") )
     {
         cMode->setCurrentIndex( 0 );
         modeChanged( 0 );
-        sQuality->setValue( 300 );
-        dQuality->setValue( 3.0 );
-        cBitrateMode->setCurrentIndex( 0 );
-        chChannels->setChecked( false );
-        chSamplerate->setChecked( true );
-        cSamplerate->setCurrentIndex( 4 );
+        sQuality->setValue( 400 );
+        dQuality->setValue( 4.0 );
         return true;
     }
     else if( profile == i18n("Medium") )
     {
         cMode->setCurrentIndex( 0 );
         modeChanged( 0 );
-        sQuality->setValue( 400 );
-        dQuality->setValue( 4.0 );
-        cBitrateMode->setCurrentIndex( 0 );
-        chChannels->setChecked( false );
-        chSamplerate->setChecked( false );
+        sQuality->setValue( 600 );
+        dQuality->setValue( 6.0 );
         return true;
     }
     else if( profile == i18n("High") )
     {
         cMode->setCurrentIndex( 0 );
         modeChanged( 0 );
-        sQuality->setValue( 500 );
-        dQuality->setValue( 5.0 );
-        cBitrateMode->setCurrentIndex( 0 );
-        chChannels->setChecked( false );
-        chSamplerate->setChecked( false );
+        sQuality->setValue( 800 );
+        dQuality->setValue( 8.0 );
         return true;
     }
     else if( profile == i18n("Very high") )
     {
         cMode->setCurrentIndex( 0 );
         modeChanged( 0 );
-        sQuality->setValue( 600 );
-        dQuality->setValue( 6.0 );
-        cBitrateMode->setCurrentIndex( 0 );
-        chChannels->setChecked( false );
-        chSamplerate->setChecked( false );
+        sQuality->setValue( 1000 );
+        dQuality->setValue( 10.0 );
         return true;
     }
 
@@ -293,62 +222,32 @@ QDomDocument SpeexCodecWidget::customProfile()
     QDomElement encodingOptions = profile.createElement("encodingOptions");
     encodingOptions.setAttribute("qualityMode",cMode->currentIndex());
     encodingOptions.setAttribute("quality",dQuality->value());
-    encodingOptions.setAttribute("bitrateMode",cBitrateMode->currentIndex());
-    encodingOptions.setAttribute("channelsEnabled",chChannels->isChecked() && chChannels->isEnabled());
-    encodingOptions.setAttribute("channels",cChannels->currentIndex());
-    encodingOptions.setAttribute("samplerateEnabled",chSamplerate->isChecked() && chSamplerate->isEnabled());
-    encodingOptions.setAttribute("samplerate",cSamplerate->currentIndex());
     root.appendChild(encodingOptions);
     return profile;
 }
 
 bool SpeexCodecWidget::setCustomProfile( const QString& profile, const QDomDocument& document )
 {
+    Q_UNUSED(profile)
+
     QDomElement root = document.documentElement();
     QDomElement encodingOptions = root.elementsByTagName("encodingOptions").at(0).toElement();
     cMode->setCurrentIndex( encodingOptions.attribute("qualityMode").toInt() );
     modeChanged( cMode->currentIndex() );
     sQuality->setValue( (int)(encodingOptions.attribute("quality").toDouble()*100) );
     dQuality->setValue( encodingOptions.attribute("quality").toDouble() );
-    cBitrateMode->setCurrentIndex( encodingOptions.attribute("bitrateMode").toInt() );
-    chChannels->setChecked( encodingOptions.attribute("channelsEnabled").toInt() );
-    cChannels->setCurrentIndex( encodingOptions.attribute("channels").toInt() );
-    chSamplerate->setChecked( encodingOptions.attribute("samplerateEnabled").toInt() );
-    cSamplerate->setCurrentIndex( encodingOptions.attribute("samplerate").toInt() );
     return true;
 }
 
 int SpeexCodecWidget::currentDataRate()
 {
     int dataRate;
-    
+
     if( currentFormat == "wav" )
     {
         dataRate = 10590000;
     }
-    else
-    {
-        if( cMode->currentIndex() == 0 )
-        {
-            dataRate = 500000 + dQuality->value()*150000;
-            if( dQuality->value() > 7 ) dataRate += (dQuality->value()-7)*250000;
-            if( dQuality->value() > 9 ) dataRate += (dQuality->value()-9)*800000;
-        }
-        else
-        {
-            dataRate = dQuality->value()/8*60*1000;
-        }
-        
-        if( chChannels->isChecked() )
-        {
-            dataRate *= 0.9f;
-        }
-        if( chSamplerate->isChecked() && cSamplerate->currentText().replace(" Hz","").toInt() <= 22050 )
-        {
-            dataRate *= 0.9f;
-        }
-    }
-    
+
     return dataRate;
 }
 
@@ -356,61 +255,39 @@ void SpeexCodecWidget::modeChanged( int mode )
 {
     if( mode == 0 )
     {
-        sQuality->setRange( -100, 1000 );
-//         sQuality->setTickInterval( 100 );
-        sQuality->setSingleStep( 50 );
-        dQuality->setRange( -1, 10 );
-        dQuality->setSingleStep( 0.5 );
-        dQuality->setDecimals( 2 );
+        sQuality->setRange( 0, 10 );
+        sQuality->setSingleStep( 1 );
+        dQuality->setRange( 0, 10 );
+        dQuality->setSingleStep( 1 );
+        dQuality->setDecimals( 0 );
         dQuality->setSuffix( "" );
-        sQuality->setValue( 400 );
-        dQuality->setValue( 4.0 );
+        sQuality->setValue( 8 );
+        dQuality->setValue( 8 );
 //         dQuality->setValue( qualityForBitrate(dQuality->value()) );
 //         qualitySpinBoxChanged( dQuality->value() );
-
-        cBitrateMode->clear();
-        cBitrateMode->addItem( i18n("Variable") );
-        cBitrateMode->setEnabled( false );
     }
     else
     {
-        sQuality->setRange( 800, 32000 );
-//         sQuality->setTickInterval( 800 );
-        sQuality->setSingleStep( 800 );
-        dQuality->setRange( 8, 320 );
+        sQuality->setRange( 8, 160 );
+        sQuality->setSingleStep( 8 );
+        dQuality->setRange( 8, 160 );
         dQuality->setSingleStep( 8 );
         dQuality->setDecimals( 0 );
         dQuality->setSuffix( " kbps" );
-        sQuality->setValue( 16000 );
-        dQuality->setValue( 160 );
+        sQuality->setValue( 64 );
+        dQuality->setValue( 64 );
 //         dQuality->setValue( bitrateForQuality(dQuality->value()) );
 //         qualitySpinBoxChanged( dQuality->value() );
-
-        cBitrateMode->clear();
-        cBitrateMode->addItem( i18n("Avarage") );
-        cBitrateMode->addItem( i18n("Constant") );
-        cBitrateMode->setEnabled( true );
     }
 }
 
 void SpeexCodecWidget::qualitySliderChanged( int quality )
 {
-    dQuality->setValue( double(quality)/100.0 );
+    dQuality->setValue( quality );
 }
 
 void SpeexCodecWidget::qualitySpinBoxChanged( double quality )
 {
-    sQuality->setValue( round(quality*100.0) );
+    sQuality->setValue( quality );
 }
-
-void SpeexCodecWidget::channelsToggled( bool enabled )
-{
-    cChannels->setEnabled( enabled );
-}
-
-void SpeexCodecWidget::samplerateToggled( bool enabled )
-{
-    cSamplerate->setEnabled( enabled );
-}
-
 

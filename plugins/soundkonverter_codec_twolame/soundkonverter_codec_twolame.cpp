@@ -19,8 +19,10 @@
 soundkonverter_codec_twolame::soundkonverter_codec_twolame( QObject *parent, const QStringList& args  )
     : CodecPlugin( parent )
 {
+    Q_UNUSED(args)
+
     binaries["twolame"] = "";
-    
+
     allCodecs += "mp2";
     allCodecs += "wav";
 }
@@ -42,85 +44,41 @@ QList<ConversionPipeTrunk> soundkonverter_codec_twolame::codecTable()
     newTrunk.codecTo = "mp2";
     newTrunk.rating = 100;
     newTrunk.enabled = ( binaries["twolame"] != "" );
-    newTrunk.problemInfo = i18n("In order to encode mp2 files, you need to install 'twolame'.");
+    newTrunk.problemInfo = standardMessage( "encode_codec,backend", "mp2", "twolame" );
     newTrunk.data.hasInternalReplayGain = false;
     table.append( newTrunk );
-
-//     newTrunk.codecFrom = "mp2";
-//     newTrunk.codecTo = "wav";
-//     newTrunk.rating = 100;
-//     newTrunk.enabled = ( binaries["twolame"] != "" );
-//     newTrunk.problemInfo = i18n("In order to decode mp2 files, you need to install 'twolame'.");
-//     newTrunk.data.hasInternalReplayGain = false;
-//     table.append( newTrunk );
 
     return table;
 }
 
-BackendPlugin::FormatInfo soundkonverter_codec_twolame::formatInfo( const QString& codecName )
-{
-    BackendPlugin::FormatInfo info;
-    info.codecName = codecName;
-
-    if( codecName == "mp2" )
-    {
-        info.lossless = false;
-        info.description = i18n("MP2 is an old lossy audio codec.");
-        info.mimeTypes.append( "audio/x-mp2" );
-        info.extensions.append( "mp2" );
-    }
-    else if( codecName == "wav" )
-    {
-        info.lossless = true;
-        info.description = i18n("Wave won't compress the audio stream.");
-        info.mimeTypes.append( "audio/x-wav" );
-        info.mimeTypes.append( "audio/wav" );
-        info.extensions.append( "wav" );
-    }
-
-    return info;
-}
-
-// QString soundkonverter_codec_twolame::getCodecFromFile( const KUrl& filename, const QString& mimeType )
-// {
-//     if( mimeType == "audio/x-mp2" || mimeType == "audio/mp2" || mimeType == "video/mpeg" )
-//     {
-//         return "mp2";
-//     }
-//     else if( mimeType == "audio/x-wav" || mimeType == "audio/wav" )
-//     {
-//         return "wav";
-//     }
-//     else if( mimeType == "application/octet-stream" )
-//     {
-//         if( filename.url().endsWith(".mp2") ) return "mp2";
-//         if( filename.url().endsWith(".wav") ) return "wav";
-//     }
-// 
-//     return "";
-// }
-
 bool soundkonverter_codec_twolame::isConfigSupported( ActionType action, const QString& codecName )
 {
-    return true;
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+
+    return false;
 }
 
 void soundkonverter_codec_twolame::showConfigDialog( ActionType action, const QString& codecName, QWidget *parent )
 {
-    KDialog *dialog = new KDialog( parent );
-    dialog->setCaption( i18n("Configure %1").arg(global_plugin_name)  );
-    dialog->setButtons( KDialog::Ok | KDialog::Cancel | KDialog::Apply );
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+    Q_UNUSED(parent)
 
-    QWidget *widget = new QWidget( dialog );
-    
+//     KDialog *dialog = new KDialog( parent );
+//     dialog->setCaption( i18n("Configure %1").arg(global_plugin_name)  );
+//     dialog->setButtons( KDialog::Ok | KDialog::Cancel | KDialog::Apply );
 
-    dialog->setMainWidget( widget );
+//     QWidget *widget = new QWidget( dialog );
+
+
+//     dialog->setMainWidget( widget );
 //     connect( dialog, SIGNAL( applyClicked() ), widget, SLOT( save() ) );
 //     connect( dialog, SIGNAL( okClicked() ), widget, SLOT( save() ) );
 //     connect( widget, SIGNAL( changed( bool ) ), dialog, SLOT( enableButtonApply( bool ) ) );
 
-    dialog->enableButtonApply( false );
-    dialog->show();
+//     dialog->enableButtonApply( false );
+//     dialog->show();
 }
 
 bool soundkonverter_codec_twolame::hasInfo()
@@ -135,7 +93,7 @@ void soundkonverter_codec_twolame::showInfo( QWidget *parent )
     dialog->setButtons( KDialog::Ok );
 
     QLabel *widget = new QLabel( dialog );
-    
+
     widget->setText( i18n("TwoLame is a free MP2 encoder.\nYou can get it at: http://www.twolame.org") );
 
     dialog->setMainWidget( widget );
@@ -159,7 +117,8 @@ QWidget *soundkonverter_codec_twolame::newCodecWidget()
 int soundkonverter_codec_twolame::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     QStringList command = convertCommand( inputFile, outputFile, inputCodec, outputCodec, _conversionOptions, tags, replayGain );
-    if( command.isEmpty() ) return -1;
+    if( command.isEmpty() )
+        return -1;
 
     CodecPluginItem *newItem = new CodecPluginItem( this );
     newItem->id = lastId++;
@@ -180,15 +139,20 @@ int soundkonverter_codec_twolame::convert( const KUrl& inputFile, const KUrl& ou
 
 QStringList soundkonverter_codec_twolame::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
-    if( !_conversionOptions ) return QStringList();
-    
+    Q_UNUSED(inputCodec)
+    Q_UNUSED(tags)
+    Q_UNUSED(replayGain)
+
+    if( !_conversionOptions )
+        return QStringList();
+
     QStringList command;
     ConversionOptions *conversionOptions = _conversionOptions;
 
     if( outputCodec == "mp2" )
     {
         command += binaries["twolame"];
-        if( inputFile.toLocalFile() == "-" )
+        if( inputFile.isEmpty() )
         {
             command += "-r";
         }
@@ -231,16 +195,9 @@ QStringList soundkonverter_codec_twolame::convertCommand( const KUrl& inputFile,
         {
             command += conversionOptions->cmdArguments;
         }
-        command += "\"" + inputFile.toLocalFile() + "\"";
-        command += "\"" + outputFile.toLocalFile() + "\"";
+        command += "\"" + escapeUrl(inputFile) + "\"";
+        command += "\"" + escapeUrl(outputFile) + "\"";
     }
-//     else
-//     {
-//         command += binaries["twolame"];
-//         command += "--decode";
-//         command += "\"" + inputFile.toLocalFile() + "\"";
-//         command += "\"" + outputFile.toLocalFile() + "\"";
-//     }
 
     return command;
 }
@@ -249,13 +206,13 @@ float soundkonverter_codec_twolame::parseOutput( const QString& output )
 {
     // decoding
     // Frame#  1398/8202   256 kbps  L  R (...)
-    
+
     // encoding
-    // \r  3600/3696   (97%)|    0:05/    0:05|    0:05/    0:05|   18.190x|    0:00 
-  
+    // \r  3600/3696   (97%)|    0:05/    0:05|    0:05/    0:05|   18.190x|    0:00
+
     QString data = output;
     QString frame, count;
-    
+
     if( output.contains("Frame#") )
     {
         data.remove( 0, data.indexOf("Frame#")+7 );
@@ -278,7 +235,7 @@ float soundkonverter_codec_twolame::parseOutput( const QString& output )
         data.remove( data.indexOf("%"), data.length()-data.indexOf("%") );
         return data.toFloat();
     }*/
-    
+
     return -1;
 }
 

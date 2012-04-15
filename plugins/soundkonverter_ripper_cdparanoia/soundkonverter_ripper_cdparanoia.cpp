@@ -16,6 +16,8 @@
 soundkonverter_ripper_cdparanoia::soundkonverter_ripper_cdparanoia( QObject *parent, const QStringList& args  )
     : RipperPlugin( parent )
 {
+    Q_UNUSED(args)
+
     binaries["cdparanoia"] = "";
 }
 
@@ -27,18 +29,6 @@ QString soundkonverter_ripper_cdparanoia::name()
     return global_plugin_name;
 }
 
-/*
-RipperInfo soundkonverter_ripper_cdparanoia::ripperInfo()
-{
-    RipperInfo info;
-    info.enabled = !binaries["cdparanoia"].isEmpty();
-    info.canRipEntireCd = true;
-    info.rating = 100;
-    info.problemInfo = i18n("In order to rip audio cds with cdparanoia, you need to install the cdparanoia package.\nMost distibutions are providing this package.");
-    
-    return info;
-}
-*/
 QList<ConversionPipeTrunk> soundkonverter_ripper_cdparanoia::codecTable()
 {
     QList<ConversionPipeTrunk> table;
@@ -49,30 +39,26 @@ QList<ConversionPipeTrunk> soundkonverter_ripper_cdparanoia::codecTable()
     newTrunk.rating = 100;
     newTrunk.enabled = ( binaries["cdparanoia"] != "" );
     newTrunk.data.canRipEntireCd = true;
-    newTrunk.problemInfo = i18n("In order to rip audio cds per track or to a single file, you need to install cdparanoia. cdparanoia is usually shipped with your distribution, the package name can vary.");
+    newTrunk.problemInfo = i18n( "In order to rip audio cds per track or to a single file, you need to install 'cdparanoia'.\n'cdparanoia' is usually shipped with your distribution, the package name can vary." );
     table.append( newTrunk );
 
     return table;
 }
 
-BackendPlugin::FormatInfo soundkonverter_ripper_cdparanoia::formatInfo( const QString& codecName )
-{
-    BackendPlugin::FormatInfo info;
-    return info;
-}
-
-QString soundkonverter_ripper_cdparanoia::getCodecFromFile( const KUrl& filename, const QString& mimeType )
-{
-    return "";
-}
-
 bool soundkonverter_ripper_cdparanoia::isConfigSupported( ActionType action, const QString& codecName )
 {
-    return true;
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+
+    return false;
 }
 
 void soundkonverter_ripper_cdparanoia::showConfigDialog( ActionType action, const QString& codecName, QWidget *parent )
-{}
+{
+    Q_UNUSED(action)
+    Q_UNUSED(codecName)
+    Q_UNUSED(parent)
+}
 
 bool soundkonverter_ripper_cdparanoia::hasInfo()
 {
@@ -80,7 +66,9 @@ bool soundkonverter_ripper_cdparanoia::hasInfo()
 }
 
 void soundkonverter_ripper_cdparanoia::showInfo( QWidget *parent )
-{}
+{
+    Q_UNUSED(parent)
+}
 
 int soundkonverter_ripper_cdparanoia::rip( const QString& device, int track, int tracks, const KUrl& outputFile )
 {
@@ -119,6 +107,11 @@ int soundkonverter_ripper_cdparanoia::rip( const QString& device, int track, int
 
 QStringList soundkonverter_ripper_cdparanoia::ripCommand( const QString& device, int track, int tracks, const KUrl& outputFile )
 {
+    Q_UNUSED(device)
+    Q_UNUSED(track)
+    Q_UNUSED(tracks)
+    Q_UNUSED(outputFile)
+
     return QStringList();
 }
 
@@ -126,7 +119,7 @@ float soundkonverter_ripper_cdparanoia::parseOutput( const QString& output, int 
 {
     // Ripping from sector       0 (track  1 [0:00.00])
     //           to sector   16361 (track  1 [3:38.11])
-    
+
     // ##: -2 [wrote] @ 19242887\n
 
     if( output.contains("sector") )
