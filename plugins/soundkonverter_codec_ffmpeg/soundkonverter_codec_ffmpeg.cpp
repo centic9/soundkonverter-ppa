@@ -202,6 +202,7 @@ QList<ConversionPipeTrunk> soundkonverter_codec_ffmpeg::codecTable()
     fromCodecs += "tta";
     fromCodecs += "wavpack";
     fromCodecs += "ra";
+    fromCodecs += "sad";
     /// containers
     fromCodecs += "3gp";
     fromCodecs += "rm";
@@ -478,22 +479,15 @@ int soundkonverter_codec_ffmpeg::convert( const KUrl& inputFile, const KUrl& out
 
 QStringList soundkonverter_codec_ffmpeg::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
+    Q_UNUSED(inputFile)
+    Q_UNUSED(outputFile)
     Q_UNUSED(inputCodec)
+    Q_UNUSED(outputCodec)
     Q_UNUSED(_conversionOptions)
     Q_UNUSED(tags)
     Q_UNUSED(replayGain)
 
-    QStringList command;
-
-    if( outputCodec == "wav" )
-    {
-        command += binaries["ffmpeg"];
-        command += "-i";
-        command += "\"" + escapeUrl(inputFile) + "\"";
-        command += "\"" + escapeUrl(outputFile) + "\"";
-    }
-
-    return command;
+    return QStringList();
 }
 
 float soundkonverter_codec_ffmpeg::parseOutput( const QString& output, int *length )

@@ -1,18 +1,18 @@
 
-#ifndef SHORTENCODECWIDGET_H
-#define SHORTENCODECWIDGET_H
+#ifndef FLACCODECWIDGET_H
+#define FLACCODECWIDGET_H
 
 #include "../../core/codecwidget.h"
 
 class QCheckBox;
 class KLineEdit;
 
-class ShortenCodecWidget : public CodecWidget
+class TTAEncCodecWidget : public CodecWidget
 {
     Q_OBJECT
 public:
-    ShortenCodecWidget();
-    ~ShortenCodecWidget();
+    TTAEncCodecWidget();
+    ~TTAEncCodecWidget();
 
     ConversionOptions *currentConversionOptions();
     bool setCurrentConversionOptions( ConversionOptions *_options );
@@ -33,4 +33,4 @@ signals:
     void somethingChanged();
 };
 
-#endif // SHORTENCODECWIDGET_H
+#endif // FLACCODECWIDGET_H

@@ -97,6 +97,7 @@ void Config::load()
         chkdf.remove();
     }
     data.advanced.maxSizeForSharedMemoryTempFiles = group.readEntry( "maxSizeForSharedMemoryTempFiles", data.advanced.sharedMemorySize / 2 );
+    data.advanced.usePipes = group.readEntry( "usePipes", false );
 
     group = conf->group( "CoverArt" );
     data.coverArt.writeCovers = group.readEntry( "writeCovers", 1 );
@@ -116,8 +117,6 @@ void Config::load()
 
     pPluginLoader->load();
 
-    QList<CodecPlugin*> codecPlugins;
-    QList<ReplayGainPlugin*> replaygainPlugins;
     QString pluginName;
     bool found;
     QStringList enabledPlugins;
@@ -463,6 +462,7 @@ void Config::save()
     group = conf->group( "Advanced" );
     group.writeEntry( "useSharedMemoryForTempFiles", data.advanced.useSharedMemoryForTempFiles );
     group.writeEntry( "maxSizeForSharedMemoryTempFiles", data.advanced.maxSizeForSharedMemoryTempFiles );
+    group.writeEntry( "usePipes", data.advanced.usePipes );
 
     group = conf->group( "CoverArt" );
     group.writeEntry( "writeCovers", data.coverArt.writeCovers );
@@ -596,6 +596,9 @@ QStringList Config::customProfiles()
 
     for( int i=0; i<data.profiles.count(); i++ )
     {
+        if( data.profiles.at(i).profileName == "soundkonverter_last_used" )
+            continue;
+
         QList<CodecPlugin*> plugins = pPluginLoader->encodersForCodec( data.profiles.at(i).codecName );
 
         for( int j=0; j<plugins.count(); j++ )
