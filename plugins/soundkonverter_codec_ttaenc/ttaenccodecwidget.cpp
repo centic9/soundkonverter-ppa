@@ -1,7 +1,7 @@
 
-#include "shortencodecglobal.h"
+#include "ttaenccodecglobal.h"
 
-#include "shortencodecwidget.h"
+#include "ttaenccodecwidget.h"
 #include "../../core/conversionoptions.h"
 
 #include <QLayout>
@@ -10,9 +10,9 @@
 #include <KLocale>
 
 
-ShortenCodecWidget::ShortenCodecWidget()
+TTAEncCodecWidget::TTAEncCodecWidget()
     : CodecWidget(),
-    currentFormat( "shorten" )
+    currentFormat( "tta" )
 {
     QGridLayout *grid = new QGridLayout( this );
     grid->setContentsMargins( 0, 0, 0, 0 );
@@ -33,10 +33,10 @@ ShortenCodecWidget::ShortenCodecWidget()
     grid->setRowStretch( 2, 1 );
 }
 
-ShortenCodecWidget::~ShortenCodecWidget()
+TTAEncCodecWidget::~TTAEncCodecWidget()
 {}
 
-ConversionOptions *ShortenCodecWidget::currentConversionOptions()
+ConversionOptions *TTAEncCodecWidget::currentConversionOptions()
 {
     ConversionOptions *options = new ConversionOptions();
     options->qualityMode = ConversionOptions::Lossless;
@@ -48,7 +48,7 @@ ConversionOptions *ShortenCodecWidget::currentConversionOptions()
     return options;
 }
 
-bool ShortenCodecWidget::setCurrentConversionOptions( ConversionOptions *_options )
+bool TTAEncCodecWidget::setCurrentConversionOptions( ConversionOptions *_options )
 {
     if( !_options || _options->pluginName != global_plugin_name )
         return false;
@@ -61,7 +61,7 @@ bool ShortenCodecWidget::setCurrentConversionOptions( ConversionOptions *_option
     return true;
 }
 
-void ShortenCodecWidget::setCurrentFormat( const QString& format )
+void TTAEncCodecWidget::setCurrentFormat( const QString& format )
 {
     if( currentFormat == format )
         return;
@@ -70,17 +70,17 @@ void ShortenCodecWidget::setCurrentFormat( const QString& format )
     setEnabled( currentFormat != "wav" );
 }
 
-QString ShortenCodecWidget::currentProfile()
+QString TTAEncCodecWidget::currentProfile()
 {
     return i18n("Lossless");
 }
 
-bool ShortenCodecWidget::setCurrentProfile( const QString& profile )
+bool TTAEncCodecWidget::setCurrentProfile( const QString& profile )
 {
     return profile == i18n("Lossless");
 }
 
-QDomDocument ShortenCodecWidget::customProfile()
+QDomDocument TTAEncCodecWidget::customProfile()
 {
     QDomDocument profile("soundkonverter_profile");
     QDomElement root = profile.createElement("soundkonverter");
@@ -94,7 +94,7 @@ QDomDocument ShortenCodecWidget::customProfile()
     return profile;
 }
 
-bool ShortenCodecWidget::setCustomProfile( const QString& profile, const QDomDocument& document )
+bool TTAEncCodecWidget::setCustomProfile( const QString& profile, const QDomDocument& document )
 {
     Q_UNUSED(profile)
 
@@ -105,7 +105,7 @@ bool ShortenCodecWidget::setCustomProfile( const QString& profile, const QDomDoc
     return true;
 }
 
-int ShortenCodecWidget::currentDataRate()
+int TTAEncCodecWidget::currentDataRate()
 {
     int dataRate;
 

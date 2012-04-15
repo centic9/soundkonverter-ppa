@@ -191,6 +191,21 @@ void ReplayGainFileList::dropEvent( QDropEvent *event )
             }
             else
             {
+                if( !codecName.startsWith("audio") && !codecName.startsWith("video") && !codecName.startsWith("application") )
+                    continue;
+
+                if( codecName == "application/x-ole-storage" || // Thumbs.db
+                    codecName == "application/x-wine-extension-ini" ||
+                    codecName == "application/x-cue" ||
+                    codecName == "application/x-k3b" ||
+                    codecName == "application/pdf" ||
+                    codecName == "application/x-trash" ||
+                    codecName.startsWith("application/vnd.oasis.opendocument") ||
+                    codecName.startsWith("application/vnd.openxmlformats-officedocument") ||
+                    codecName.startsWith("application/vnd.sun.xml")
+                )
+                    continue;
+
                 fileName = KUrl(q_urls.at(i)).pathOrUrl();
                 if( codecName.isEmpty() ) codecName = fileName.right(fileName.length()-fileName.lastIndexOf(".")-1);
                 if( problems.value(codecName).count() < 2 )
@@ -283,19 +298,18 @@ int ReplayGainFileList::listDir( const QString& directory, const QStringList& fi
     QString codecName;
 
     QDir dir( directory );
-    dir.setFilter( QDir::Files | QDir::Dirs | QDir::NoSymLinks | QDir::Readable );
+    dir.setFilter( QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Readable );
+    dir.setSorting( QDir::LocaleAware );
 
-    QStringList list = dir.entryList();
+    const QStringList list = dir.entryList();
 
-    for( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
+    foreach( const QString fileName, list )
     {
-        if( *it == "." || *it == ".." ) continue;
-
-        QFileInfo fileInfo( directory + "/" + *it );
+        QFileInfo fileInfo( directory + "/" + fileName );
 
         if( fileInfo.isDir() && recursive )
         {
-            count = listDir( directory + "/" + *it, filter, recursive, fast, count );
+            count = listDir( directory + "/" + fileName, filter, recursive, fast, count );
         }
         else if( !fileInfo.isDir() ) // NOTE checking for isFile may not work with all file names
         {
@@ -307,11 +321,11 @@ int ReplayGainFileList::listDir( const QString& directory, const QStringList& fi
             }
             else
             {
-                codecName = config->pluginLoader()->getCodecFromFile( directory + "/" + *it );
+                codecName = config->pluginLoader()->getCodecFromFile( directory + "/" + fileName );
 
                 if( filter.count() == 0 || filter.contains(codecName) )
                 {
-                    addFiles( KUrl(directory + "/" + *it), codecName );
+                    addFiles( KUrl(directory + "/" + fileName), codecName );
                     if( tScanStatus.elapsed() > config->data.general.updateDelay * 10 )
                     {
                         pScanStatus->setValue( count );

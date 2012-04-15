@@ -1,6 +1,8 @@
 ### Prio 1 ###
 
 flac piping
+filelist progress bar translucent background
+bug: filelist progress bar sometimes scans multiple times - parent directory is scanned
 
 cdtext
 user scripts
@@ -17,7 +19,6 @@ cdopener.cpp / bluray -> ask users for `cat /proc/sys/dev/cdrom/info`
 hybrid formats
 optimize profiles
 better ripping control
-save last options as user profile?
 use qt animations
 ReplayGainScanner: Drag'n'Drop ... verbesserungswürdig, funktioniert aber grundsätzlich
 ReplayGainScanner: split album through context menu
@@ -47,7 +48,7 @@ changing default decoder only takes effect after restart
 [x] flake
 [x] mac
 [x] shorten
-[>] tta
+[x] tta
 [ ] bonk
 [ ] optimfrog
 [x] wavpack
