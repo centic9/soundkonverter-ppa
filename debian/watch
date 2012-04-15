@@ -1,4 +1,5 @@
 version=3
-opts=dversionmangle=s/~// \
-  http://kde-apps.org/content/download.php?content=29024&id=5 \
-  https://api.opensuse.org/public/source/home:HessiJames/soundkonverter-kde4/soundkonverter-(.*).tar.bz2
+
+opts=downloadurlmangle=s#blobs#blobs/raw# \
+ http://gitorious.org/soundkonverter/soundkonverter/trees/master/release /soundkonverter/soundkonverter/blobs/master/release/soundkonverter-([\d\.]*).tar.gz
+

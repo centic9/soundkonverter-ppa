@@ -1,3 +1,9 @@
+soundkonverter (1:1.4.0-1~ppa1) lucid; urgency=low
+
+  * Port to Lucid.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 15 Apr 2012 09:15:38 +0200
+
 soundkonverter (1:1.4.0-1~yuuki2) precise; urgency=low
 
   * New upstream release 

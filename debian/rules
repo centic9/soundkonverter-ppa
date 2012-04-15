@@ -2,7 +2,6 @@
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/cmake.mk
-DEB_DH_DEB_DH_BUILDDEB_ARGS := -- -Zlzma
 
 install/soundkonverter::
 	install -D -p -m0644 debian/soundkonverter.lintian-overrides \
@@ -10,4 +9,3 @@ install/soundkonverter::
 	find debian -type f -name userscript.sh | xargs rm -f
 	rm -rf debian/soundkonverter/usr/share/apps/soundkonverter/amarokscript
 	install -m 644 *plugin.desktop debian/soundkonverter/usr/share/kde4/servicetypes
-
