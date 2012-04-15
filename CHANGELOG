@@ -1,0 +1,66 @@
+0.9.94 (1.0.0 rc2):
+-Add: Updated czech translation (by Pavel Fric)
+-Fix: Tint items in the Replay Gain scanner red while calculating Replay Gain
+-Fix: Make the Replay Gain scanner skip file with calculated tags
+-Fix: Ensure items in the file list and Replay Gain file list get redrawn after an update
+-Fix: Hide open directory dialog before scanning the directory to show the progressbar
+-Fix: Don't crash when deleting file list items
+-Fix: Don't recognize vorbis files as flac
+-Fix: Call lame with correct --abr and --cbr parameters
+
+0.9.93 (1.0.0 rc1):
+-Add: Video formats for ffmpeg and mplayer
+-Add: German translation
+-Change: Re-enable the CD ripper (using paranoia again)
+-Change: Save frames properly when generating cuesheet files
+-Fix: Retry conversion if file output size is too small
+-Fix: Delete temp files properly if a conversion pipe failed
+-Fix: alac extensions
+-Fix: Some bugs in the CD ripper dialog
+-Fix: Drag'n'drop directories wouldn't work
+-Fix: Make shortcuts work
+
+0.9.92 (1.0.0 beta3):
+-Add: User defined command line arguments for lame and some new plugins
+-Add: User defined command to execute after a file has been converted
+-Add: Create action menus for the file manager
+-Add: Flake plugin
+-Add: TwoLame plugin (Warning: Corrupted a file while testing)
+-Add: Monkey's Audio Compressor plugin
+-Add: WavPack and Wv Gain plugin
+-Add: shorten plugin
+-Add: MusePack codec and replaygain plugins
+-Change: Disable CD ripper, due to some incompatibilitys with kde (still accessible through the command line though)
+-Change: Create temp files in the kde-user temp dir
+-Change: Remove partially converted files on abort or fail
+-Change: Remove old KDE4 action menus created by soundKonverter 0.3
+-Fix: Remove audio/mpeg mime type from mp1 and mp2 codecs in the ffmpeg and mplayer plugins because it would conflict with mp3
+-Fix: soundKonverter would get stuck when trying to add replaygain (add argument for mp3gain/aacgain to lower gain to avoid clipping)
+-Fix: soundkonverter would crash when trying to rip a cd or add files if the options widget can't be initialized correctly
+-Fix: The options widget wasn't initialized correctly causing some crashes
+-Fix: Don't truncate text in the combo button (add files, etc.)
+-Fix: Try the plugin selected by the user in the detailed tab at first
+-Fix: The options editor dialog would show wrong data
+
+0.9.91 (1.0.0 beta2):
+-Add: flac and metaflac plugins
+-Add: faac, neroaac and aacgain plugins
+-Add: timidity plugin
+-Add: Enclosing %x space holders in the output directory with "[]" will only activate the space holder if the tag is not empty
+-Add: Czech translation (by Pavel Fric)
+-Change: use input file name as output file name if output mode is set to "metadata" and the file name can't be filled with either the track number or title
+-Change: added message box to warn the user when trying to rip audio cds with kde < 4.4.0
+-Change: don't close soundkonverter when started invisible but the conversion was aborted by the user
+-Change: don't save file list after each succeeded conversion because it was slowing down the conversion when converting a lot of files
+-Fix: File conflict handling
+-Fix: Update file list if configuration changed
+-Fix: Rip CDs by passing parameters to soundkonverter
+-Fix: Replay Gain tool would only process one file/album
+-Fix: Downloading files from remote locations
+-Fix: Options editor wouldn't save modified tags
+-Fix: Hitting the button "edit tags" in the options editor wouldn't work
+-Fix: The options editor would cause a crash when files where removed from the file list
+-Fix: Race condition when trying to convert multiple files having the same output file name simultaneously
+
+0.9.90 (1.0.0 beta1):
+First usable release of the soundKonverter 1.0 series

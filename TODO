@@ -1,0 +1,83 @@
+### Prio 1 ###
+
+test vfat compatible file names
+processID/convertID/... eindeutig berechnen ... müsste so funktionieren
+
+### Prio 2 ###
+
+use qt animations
+cdtext
+optimize profiles
+activate replaygain window when opened on application start
+make converted files wait for applying album gain
+ReplayGainScanner: Drag'n'Drop ... verbesserungswürdig, funktioniert aber grundsätzlich
+ReplayGainScanner: split album through context menu
+ReplayGainScanner: split albums by disc
+edit ripper parameters
+edit encoder parameters [/]
+ReplayGainScanner: parallele Berechnung
+session management
+changing default decoder only takes effect after restart
+
+### Prio 3 ###
+
+better ripping control
+
+
+### Plugins ###
+[x] faac
+[x] ffmpeg
+[x] flac
+[x] lame
+[x] mplayer         parse progress
+[x] neroaac
+[x] timidity
+[x] vorbistools
+[x] twolame
+[ ] gogo
+[x] musepack
+[ ] mpc123
+[>] aften
+[x] flake
+[x] mac
+[x] shorten
+[ ] tta
+[ ] bonk
+[ ] optimfrog
+[x] wavpack
+[ ] lac
+[ ] lpac
+[>] speex
+[>] sox
+[ ] gstreamer
+[ ] phonon
+
+[x] aacgain
+[x] metaflac
+[x] mp3gain
+[x] vorbisgain
+[x] wvgain
+[x] replaygain
+
+[x] cdparanoia
+[>] cdda2wav
+
+
+### Code ###
+
+KShell::quoteArg
+
+KStandardDirs::findExe("mplayer");
+
+### main.cpp ###
+
+signal( SIGQUIT, cleanup );
+signal( SIGINT, cleanup );
+
+void cleanup( int )
+{
+    kDebug(5970) << i18n("Just caught a software interrupt.");
+    kapp->exit();
+}
+
+###
