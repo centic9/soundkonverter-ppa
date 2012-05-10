@@ -329,6 +329,7 @@ CDOpener::CDOpener( Config *_config, const QString& _device, QWidget *parent, Qt
 
 
     audioOutput = new Phonon::AudioOutput( Phonon::MusicCategory, this );
+    audioOutput->setVolume( 0.5 );
     mediaObject = new Phonon::MediaObject( this );
     mediaObject->setTickInterval( 500 );
 
@@ -566,33 +567,38 @@ QMap<QString,QString> CDOpener::cdDevices()
 
     for( int i=0; i<deviceList.count(); i++ )
     {
-        if( deviceList.at(i).contains("sr") || deviceList.at(i).contains("hd") )
+        deviceList[i] = "/dev/"+deviceList.at(i);
+        cdDrive = cdda_identify( deviceList.at(i).toAscii(), CDDA_MESSAGE_PRINTIT, 0 );
+        if( cdDrive && cdda_open(cdDrive) == 0 )
         {
-            if( deviceList.at(i).contains("sr") )
-                deviceList[i] = deviceList.at(i).right( deviceList.at(i).length() - deviceList.at(i).indexOf("r") - 1 );
-
-            deviceList[i] = "/dev/scd"+deviceList.at(i);
-            cdDrive = cdda_identify( deviceList.at(i).toAscii(), CDDA_MESSAGE_PRINTIT, 0 );
-            if( cdDrive && cdda_open(cdDrive) == 0 )
-            {
-                QString type;
-                if( dvdBurnList.at(i) == "1" )
-                    type = i18n("DVD Recorder");
-                else if( dvdPlayList.at(i) == "1" && cdBurnList.at(i) == "1" )
-                    type = i18n("CD Recorder") + "/" + i18n("DVD Player");
-                else if( dvdPlayList.at(i) == "1" )
-                    type = i18n("DVD Player");
-                else if( cdBurnList.at(i) == "1" )
-                    type = i18n("CD Recorder");
-                else
-                    type = i18n("CD Player");
-                const QString desc = i18n("%1 (%2): Audio CD with %3 tracks").arg(type).arg(deviceList.at(i)).arg(cdda_tracks(cdDrive));
-                devices.insert( deviceList.at(i), desc );
-            }
+            QString type;
+            if( dvdBurnList.at(i) == "1" )
+                type = i18n("DVD Recorder");
+            else if( dvdPlayList.at(i) == "1" && cdBurnList.at(i) == "1" )
+                type = i18n("CD Recorder") + "/" + i18n("DVD Player");
+            else if( dvdPlayList.at(i) == "1" )
+                type = i18n("DVD Player");
+            else if( cdBurnList.at(i) == "1" )
+                type = i18n("CD Recorder");
+            else
+                type = i18n("CD Player");
+            const QString desc = i18n("%1 (%2): Audio CD with %3 tracks").arg(type).arg(deviceList.at(i)).arg(cdda_audio_tracks(cdDrive));
+            devices.insert( deviceList.at(i), desc );
         }
     }
 
     return devices;
+}
+
+int CDOpener::cdda_audio_tracks( cdrom_drive *cdDrive ) const
+{
+    const int nrOfTracks = cdda_tracks(cdDrive);
+    for( int i=1; i<=nrOfTracks; i++ )
+    {
+        if( !(IS_AUDIO(cdDrive,i-1)) )
+            return i-1;
+    }
+    return nrOfTracks;
 }
 
 bool CDOpener::openCdDevice( const QString& _device )
@@ -649,7 +655,7 @@ bool CDOpener::openCdDevice( const QString& _device )
     newTags->genre = i18n("Unknown");
     tags += newTags;
 
-    for( int i=0; i<cdda_tracks(cdDrive); i++ )
+    for( int i=0; i<cdda_audio_tracks(cdDrive); i++ )
     {
         TagData *newTags = new TagData();
         newTags->track = i+1;
@@ -709,9 +715,12 @@ void CDOpener::requestCddb( bool autoRequest )
     KCDDB::TrackOffsetList offsets;
     for( int i=1; i<=cdda_tracks(cdDrive); i++ )
     {
+        if( !(IS_AUDIO(cdDrive,i-1)) )
+            break;
+
         offsets.append( cdda_track_firstsector(cdDrive,i) + 150 );
     }
-    offsets.append( cdda_disc_lastsector(cdDrive) + 150 );
+    offsets.append( cdda_disc_lastsector(cdDrive) + 150 + 1 );
 
     cddb->config().reparse();
     cddb->setBlockingMode( false );
@@ -773,7 +782,7 @@ void CDOpener::lookup_cddb_done( KCDDB::Result result )
     QString composer = "";
     bool various_composer = false;
 
-    for( int i=1; i<=cdda_tracks(cdDrive); i++ )
+    for( int i=1; i<=cdda_audio_tracks(cdDrive); i++ )
     {
         tags.at(i)->artist = info.track(i-1).get(KCDDB::Artist).toString();
         tags.at(i)->title = info.track(i-1).get(KCDDB::Title).toString();
@@ -1213,7 +1222,7 @@ void CDOpener::addClicked()
     {
         QList<int> tracks;
         QList<TagData*> tagList;
-        const int trackCount = cdda_tracks( cdDrive );
+        const int trackCount = cdda_audio_tracks( cdDrive );
 
         if( cEntireCd->isEnabled() && cEntireCd->isChecked() )
         {

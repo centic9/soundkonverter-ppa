@@ -1,4 +1,0 @@
-version=3
-opts=dversionmangle=s/~// \
-  http://kde-apps.org/content/download.php?content=29024&id=5 \
-  https://api.opensuse.org/public/source/home:HessiJames/soundkonverter-kde4/soundkonverter-(.*).tar.bz2
