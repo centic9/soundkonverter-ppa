@@ -241,21 +241,10 @@ OptionsEditor::OptionsEditor( Config *_config, QWidget *parent )
     tagsGridLayout->addWidget( pEditTags, 7, 1, Qt::AlignHCenter );
     pEditTags->hide();
     connect( pEditTags, SIGNAL(clicked()), this, SLOT(editTagsClicked()) );
-
-
-
-    QWidget *infoWidget = new QWidget( this );
-    KPageWidgetItem *infoPage = addPage( infoWidget, i18n("Infos") );
-    infoPage->setIcon( KIcon( "dialog-information" ) );
-    QGridLayout *infoGridLayout = new QGridLayout( infoWidget );
-    lPipes = new QLabel( "", infoWidget );
-    infoGridLayout->addWidget( lPipes, 0, 0 );
 }
-
 
 OptionsEditor::~OptionsEditor()
 {}
-
 
 void OptionsEditor::setTagInputEnabled( bool enabled )
 {
@@ -307,17 +296,47 @@ void OptionsEditor::setTagInputEnabled( bool enabled )
 
 void OptionsEditor::itemsSelected( QList<FileListItem*> items )
 {
-    applyChanges();
-
-    for( QList<FileListItem*>::Iterator it = items.begin(); it != items.end(); )
+    selectedItems.clear();
+    foreach( FileListItem *item, items )
     {
-        if( (*it)->state == FileListItem::Ripping || (*it)->state == FileListItem::Converting || (*it)->state == FileListItem::ApplyingReplayGain )
-            it = items.erase( it );
-        else
-            it++;
+        bool canEdit = false;
+        if( item )
+        {
+            switch( item->state )
+            {
+                case FileListItem::WaitingForConversion:
+                    canEdit = true;
+                    break;
+                case FileListItem::Ripping:
+                    break;
+                case FileListItem::Converting:
+                    break;
+                case FileListItem::ApplyingReplayGain:
+                    break;
+                case FileListItem::WaitingForAlbumGain:
+                    break;
+                case FileListItem::ApplyingAlbumGain:
+                    break;
+                case FileListItem::Stopped:
+                    canEdit = true;
+                    break;
+                case FileListItem::BackendNeedsConfiguration:
+                    canEdit = true;
+                    break;
+                case FileListItem::DiscFull:
+                    canEdit = true;
+                    break;
+                case FileListItem::Skipped:
+                    canEdit = true;
+                    break;
+                case FileListItem::Failed:
+                    canEdit = true;
+                    break;
+            }
+        }
+        if( canEdit )
+            selectedItems.append( item );
     }
-
-    selectedItems = items;
 
     // remove all cover widgets
     foreach( QLabel* label, lCovers )
@@ -350,39 +369,15 @@ void OptionsEditor::itemsSelected( QList<FileListItem*> items )
 
     if( selectedItems.count() == 1 )
     {
+        FileListItem *item = selectedItems.first();
+
         setCaption( selectedItems.first()->url.fileName() );
-        // HACK ...but seems to work...
-        // FIXME directory does get set properly
-//         disconnect( options, SIGNAL(optionsChanged()), 0, 0 );
-//         options->setCurrentOptions( items.first()->options );
-//         connect( options, SIGNAL(optionsChanged()), this, SLOT(optionsChanged()) );
+
         const bool success = options->setCurrentConversionOptions( config->conversionOptionsManager()->getConversionOptions(selectedItems.first()->conversionOptionsId) );
         options->setEnabled( success );
-        // TODO show error message
+        // TODO show error message if !success
 
-        // info tab
-        ConversionOptions *conversionOptions = config->conversionOptionsManager()->getConversionOptions(items.first()->conversionOptionsId);
-        QString pipes_text;
-        if( conversionOptions )
-        {
-            pipes_text = i18n("Possible conversion strategies:");
-            const QString inputCodec = config->pluginLoader()->getCodecFromFile( items.first()->url );
-            QList<ConversionPipe> conversionPipes = config->pluginLoader()->getConversionPipes( inputCodec, conversionOptions->codecName, conversionOptions->pluginName );
-            for( int i=0; i<conversionPipes.size(); i++ )
-            {
-                QStringList pipe_str;
-
-                for( int j=0; j<conversionPipes.at(i).trunks.size(); j++ )
-                {
-                    pipe_str += QString("%1 %2 %3 (%4)").arg(conversionPipes.at(i).trunks.at(j).codecFrom).arg("->").arg(conversionPipes.at(i).trunks.at(j).codecTo).arg(conversionPipes.at(i).trunks.at(j).plugin->name());
-                }
-
-                pipes_text += "\n" + pipe_str.join(", ");
-            }
-        }
-        lPipes->setText( pipes_text );
-
-        if( items.first()->tags == 0 && !items.first()->local )
+        if( item->tags == 0 && !item->local )
         {
             setTagInputEnabled( false );
             lEditTags->setText( i18n("The tags could not be read, because this is not a local file.\n"
@@ -392,7 +387,7 @@ void OptionsEditor::itemsSelected( QList<FileListItem*> items )
             lEditTags->show();
             pEditTags->show();
         }
-        else if( items.first()->tags == 0 )
+        else if( item->tags == 0 )
         {
             setTagInputEnabled( false );
             lEditTags->setText( i18n("Reading the tags of this file failed.\n"
@@ -404,12 +399,12 @@ void OptionsEditor::itemsSelected( QList<FileListItem*> items )
         }
         else
         {
-            if( !items.first()->tags->coversRead )
+            if( !item->tags->coversRead )
             {
-                items.first()->tags->covers = tagEngine->readCovers( items.first()->url );
-                items.first()->tags->coversRead = true;
+                item->tags->covers = tagEngine->readCovers( item->url );
+                item->tags->coversRead = true;
             }
-            foreach( CoverData* cover, items.first()->tags->covers )
+            foreach( CoverData* cover, item->tags->covers )
             {
                 QPixmap pixmap;
                 pixmap.loadFromData( cover->data );
@@ -432,37 +427,39 @@ void OptionsEditor::itemsSelected( QList<FileListItem*> items )
 
                 label->setPixmap( pixmap.scaledToHeight( 48, Qt::SmoothTransformation ) );
             }
-            lCoversLabel->setEnabled( items.first()->tags->covers.count() > 0 );
-            lTitle->setText( items.first()->tags->title );
-            iNumber->setValue( items.first()->tags->track );
-            lArtist->setText( items.first()->tags->artist );
-            lComposer->setText( items.first()->tags->composer );
-            lAlbum->setText( items.first()->tags->album );
-            iDisc->setValue( items.first()->tags->disc );
-            iDiscTotal->setValue( items.first()->tags->discTotal );
-            iYear->setValue( items.first()->tags->year );
-            cGenre->setEditText( items.first()->tags->genre );
-            tComment->setText( items.first()->tags->comment );
+            lCoversLabel->setEnabled( item->tags->covers.count() > 0 );
+            lTitle->setText( item->tags->title );
+            iNumber->setValue( item->tags->track );
+            lArtist->setText( item->tags->artist );
+            lComposer->setText( item->tags->composer );
+            lAlbum->setText( item->tags->album );
+            iDisc->setValue( item->tags->disc );
+            iDiscTotal->setValue( item->tags->discTotal );
+            iYear->setValue( item->tags->year );
+            cGenre->setEditText( item->tags->genre );
+            tComment->setText( item->tags->comment );
         }
     }
     else // selectedItems.count() > 1
     {
-        setCaption( i18n("%1 Files").arg(items.count()) );
-        QList<FileListItem*>::Iterator it = items.begin();
-        const int conversionOptionsId = (*it)->conversionOptionsId;
-        const QString title = ( (*it)->tags == 0 ) ? "" : (*it)->tags->title;
-        const int number = ( (*it)->tags == 0 ) ? 0 : (*it)->tags->track;
-        const QString artist = ( (*it)->tags == 0 ) ? "" : (*it)->tags->artist;
-        const QString composer = ( (*it)->tags == 0 ) ? "" : (*it)->tags->composer;
-        const QString album = ( (*it)->tags == 0 ) ? "" : (*it)->tags->album;
-        const int disc = ( (*it)->tags == 0 ) ? 0 : (*it)->tags->disc;
-        const int discTotal = ( (*it)->tags == 0 ) ? 0 : (*it)->tags->discTotal;
-        const int year = ( (*it)->tags == 0 ) ? 0 : (*it)->tags->year;
-        const QString genre = ( (*it)->tags == 0 ) ? "" : (*it)->tags->genre;
-        const QString comment = ( (*it)->tags == 0 ) ? "" : (*it)->tags->comment;
-        while( it != items.end() )
+        setCaption( i18n("%1 Files").arg(selectedItems.count()) );
+
+        FileListItem *firstItem = selectedItems.first();
+        const int     conversionOptionsId = firstItem->conversionOptionsId;
+        const QString title               = ( firstItem->tags == 0 ) ? "" : firstItem->tags->title;
+        const int     number              = ( firstItem->tags == 0 ) ? 0  : firstItem->tags->track;
+        const QString artist              = ( firstItem->tags == 0 ) ? "" : firstItem->tags->artist;
+        const QString composer            = ( firstItem->tags == 0 ) ? "" : firstItem->tags->composer;
+        const QString album               = ( firstItem->tags == 0 ) ? "" : firstItem->tags->album;
+        const int     disc                = ( firstItem->tags == 0 ) ? 0  : firstItem->tags->disc;
+        const int     discTotal           = ( firstItem->tags == 0 ) ? 0  : firstItem->tags->discTotal;
+        const int     year                = ( firstItem->tags == 0 ) ? 0  : firstItem->tags->year;
+        const QString genre               = ( firstItem->tags == 0 ) ? "" : firstItem->tags->genre;
+        const QString comment             = ( firstItem->tags == 0 ) ? "" : firstItem->tags->comment;
+
+        foreach( FileListItem *item, selectedItems )
         {
-            if( (*it)->conversionOptionsId != conversionOptionsId )
+            if( item->conversionOptionsId != conversionOptionsId )
             {
                 options->setEnabled( false );
                 lEditOptions->setText( i18n("You have selected multiple files with different conversion options.\nYou can change the options of all files by hitting the button below.") );
@@ -470,7 +467,7 @@ void OptionsEditor::itemsSelected( QList<FileListItem*> items )
                 pEditOptions->show();
             }
 
-            if( (*it)->tags == 0 )
+            if( item->tags == 0 )
             {
                 setTagInputEnabled( false );
                 lEditTags->setText( i18n("Reading the tags of one or more files failed.\n"
@@ -479,83 +476,77 @@ void OptionsEditor::itemsSelected( QList<FileListItem*> items )
                         "to read the tags a second time.") );
                 lEditTags->show();
                 pEditTags->show();
-                it++;
                 continue;
             }
 
-            if( title != (*it)->tags->title && lTitle->isEnabled() )
+            if( title != item->tags->title && lTitle->isEnabled() )
             {
                 lTitle->setEnabled( false );
                 lTitle->setText( "" );
                 pTitleEdit->show();
             }
-            if( number != (*it)->tags->track && iNumber->isEnabled() )
+            if( number != item->tags->track && iNumber->isEnabled() )
             {
                 iNumber->setEnabled( false );
                 iNumber->setValue( 1 );
                 pNumberEdit->show();
             }
-            if( artist != (*it)->tags->artist && lArtist->isEnabled() )
+            if( artist != item->tags->artist && lArtist->isEnabled() )
             {
                 lArtist->setEnabled( false );
                 lArtist->setText( "" );
                 pArtistEdit->show();
             }
-            if( composer != (*it)->tags->composer && lComposer->isEnabled() )
+            if( composer != item->tags->composer && lComposer->isEnabled() )
             {
                 lComposer->setEnabled( false );
                 lComposer->setText( "" );
                 pComposerEdit->show();
             }
-            if( album != (*it)->tags->album && lAlbum->isEnabled() )
+            if( album != item->tags->album && lAlbum->isEnabled() )
             {
                 lAlbum->setEnabled( false );
                 lAlbum->setText( "" );
                 pAlbumEdit->show();
             }
-            if( disc != (*it)->tags->disc && iDisc->isEnabled() )
+            if( disc != item->tags->disc && iDisc->isEnabled() )
             {
                 iDisc->setEnabled( false );
                 iDisc->setValue( 1 );
                 pDiscEdit->show();
             }
-            if( discTotal != (*it)->tags->discTotal && iDiscTotal->isEnabled() )
+            if( discTotal != item->tags->discTotal && iDiscTotal->isEnabled() )
             {
                 iDiscTotal->setEnabled( false );
                 iDiscTotal->setValue( 1 );
                 pDiscTotalEdit->show();
             }
-            if( year != (*it)->tags->year && iYear->isEnabled() )
+            if( year != item->tags->year && iYear->isEnabled() )
             {
                 iYear->setEnabled( false );
                 iYear->setValue( QDate::currentDate().year() );
                 pYearEdit->show();
             }
-            if( genre != (*it)->tags->genre && cGenre->isEnabled() )
+            if( genre != item->tags->genre && cGenre->isEnabled() )
             {
                 cGenre->setEnabled( false );
                 cGenre->setEditText( "" );
                 pGenreEdit->show();
             }
-            if( comment != (*it)->tags->comment && tComment->isEnabled() )
+            if( comment != item->tags->comment && tComment->isEnabled() )
             {
                 tComment->setEnabled( false );
                 tComment->setReadOnly( true );
                 tComment->setText( "" );
                 pCommentEdit->show();
             }
-            it++;
         }
 
         if( options->isEnabled() )
         {
-            // HACK ...but seems to work...
-            // FIXME directory does get set properly
-//             disconnect( options, SIGNAL(optionsChanged()), 0, 0 );
-//             options->setCurrentOptions( items.first()->options );
-//             connect( options, SIGNAL(optionsChanged()), this, SLOT(optionsChanged()) );
             const bool success = options->setCurrentConversionOptions( config->conversionOptionsManager()->getConversionOptions(conversionOptionsId) );
             options->setEnabled( success );
+            // TODO show error message if !success
         }
 
         if( lTitle->isEnabled() )
@@ -600,13 +591,6 @@ void OptionsEditor::setNextEnabled( bool enabled )
     enableButton( User1, enabled );
 }
 
-void OptionsEditor::itemRemoved( FileListItem *item )
-{
-    selectedItems.removeAll( item );
-
-    itemsSelected( selectedItems );
-}
-
 void OptionsEditor::applyChanges()
 {
     ConversionOptions *newConversionOptions = options->currentConversionOptions();
@@ -614,10 +598,7 @@ void OptionsEditor::applyChanges()
     for( int i=0; i<selectedItems.count(); i++ )
     {
         if( !selectedItems.at(i) )
-        {
-            // FIXME error message, null pointer for file list item
             continue;
-        }
 
         if( newConversionOptions && options->isEnabled() )
         {
@@ -687,8 +668,6 @@ void OptionsEditor::editTagsClicked()
     {
         selectedItems.at(i)->tags = new TagData();
     }
-
-//     itemsSelected( selectedItems );
 
     editTitleClicked();
     editNumberClicked();

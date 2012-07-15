@@ -131,7 +131,7 @@ int soundkonverter_codec_twolame::convert( const KUrl& inputFile, const KUrl& ou
     newItem->process->setShellCommand( command.join(" ") );
     newItem->process->start();
 
-    emit log( newItem->id, command.join(" ") );
+    logCommand( newItem->id, command.join(" ") );
 
     backendItems.append( newItem );
     return newItem->id;
@@ -237,13 +237,6 @@ float soundkonverter_codec_twolame::parseOutput( const QString& output )
     }*/
 
     return -1;
-}
-
-ConversionOptions *soundkonverter_codec_twolame::conversionOptionsFromXml( QDomElement conversionOptions )
-{
-    ConversionOptions *options = new ConversionOptions();
-    options->fromXml( conversionOptions );
-    return options;
 }
 
 

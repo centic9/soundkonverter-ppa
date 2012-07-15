@@ -18,7 +18,7 @@ Config::Config( Logger *_logger, QObject *parent )
     connect( this, SIGNAL(updateWriteLogFilesSetting(bool)), logger, SLOT(updateWriteSetting(bool)) );
 
     pPluginLoader = new PluginLoader( logger, this );
-    pTagEngine = new TagEngine();
+    pTagEngine = new TagEngine( this );
     pConversionOptionsManager = new ConversionOptionsManager( pPluginLoader );
 
     data.general.updateDelay = 100;
@@ -75,6 +75,10 @@ void Config::load()
     data.general.replayGainGrouping = (Config::Data::General::ReplayGainGrouping)group.readEntry( "replayGainGrouping", 0 );
     data.general.preferredOggVorbisExtension = group.readEntry( "preferredOggVorbisExtension", "ogg" );
 
+    // due to a bug lastNormalOutputDirectoryPaths could have more than 5 items
+    while( data.general.lastNormalOutputDirectoryPaths.count() > 5 )
+        data.general.lastNormalOutputDirectoryPaths.takeLast();
+
     group = conf->group( "Advanced" );
     data.advanced.useSharedMemoryForTempFiles = group.readEntry( "useSharedMemoryForTempFiles", false );
     data.advanced.sharedMemorySize = 0;
@@ -100,6 +104,8 @@ void Config::load()
 
     group = conf->group( "CoverArt" );
     data.coverArt.writeCovers = group.readEntry( "writeCovers", 1 );
+    data.coverArt.writeCoverName = group.readEntry( "writeCoverName", 0 );
+    data.coverArt.writeCoverDefaultName = group.readEntry( "writeCoverDefaultName", i18nc("cover file name","cover") );
 
     group = conf->group( "Backends" );
     data.backends.rippers = group.readEntry( "rippers", QStringList() );
@@ -465,6 +471,8 @@ void Config::save()
 
     group = conf->group( "CoverArt" );
     group.writeEntry( "writeCovers", data.coverArt.writeCovers );
+    group.writeEntry( "writeCoverName", data.coverArt.writeCoverName );
+    group.writeEntry( "writeCoverDefaultName", data.coverArt.writeCoverDefaultName );
 
     group = conf->group( "Backends" );
     group.writeEntry( "rippers", data.backends.rippers );

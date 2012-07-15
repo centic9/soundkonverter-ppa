@@ -165,7 +165,7 @@ int soundkonverter_codec_lame::convert( const KUrl& inputFile, const KUrl& outpu
     newItem->process->setShellCommand( command.join(" ") );
     newItem->process->start();
 
-    emit log( newItem->id, command.join(" ") );
+    logCommand( newItem->id, command.join(" ") );
 
     backendItems.append( newItem );
     return newItem->id;
@@ -178,6 +178,9 @@ QStringList soundkonverter_codec_lame::convertCommand( const KUrl& inputFile, co
     Q_UNUSED(replayGain)
 
     if( !_conversionOptions )
+        return QStringList();
+
+    if( inputFile.isEmpty() )
         return QStringList();
 
     QStringList command;

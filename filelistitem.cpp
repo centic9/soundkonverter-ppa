@@ -20,6 +20,7 @@ FileListItem::FileListItem( QTreeWidget *parent, QTreeWidgetItem *after )
     state = WaitingForConversion;
     length = 0;
     tags = 0;
+    logId = 0;
 }
 
 FileListItem::FileListItem( QTreeWidget *parent )
@@ -28,12 +29,16 @@ FileListItem::FileListItem( QTreeWidget *parent )
     state = WaitingForConversion;
     length = 0;
     tags = 0;
+    logId = 0;
 }
 
 FileListItem::~FileListItem()
 {
     if( tags )
         delete tags;
+
+    if( lInfo )
+        delete lInfo;
 }
 
 FileListItemDelegate::FileListItemDelegate( QObject *parent )
@@ -80,6 +85,8 @@ void FileListItemDelegate::paint( QPainter *painter, const QStyleOptionViewItem&
                 break;
             case FileListItem::DiscFull:
                 isFailed = true;
+                break;
+            case FileListItem::Skipped:
                 break;
             case FileListItem::Failed:
                 isFailed = true;
