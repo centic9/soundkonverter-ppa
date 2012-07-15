@@ -152,7 +152,7 @@ int soundkonverter_codec_musepack::convert( const KUrl& inputFile, const KUrl& o
     newItem->process->setShellCommand( command.join(" ") );
     newItem->process->start();
 
-    emit log( newItem->id, command.join(" ") );
+    logCommand( newItem->id, command.join(" ") );
 
     backendItems.append( newItem );
     return newItem->id;
@@ -242,6 +242,13 @@ float soundkonverter_codec_musepack::parseOutput( const QString& output )
     }
 
     return -1;
+}
+
+ConversionOptions *soundkonverter_codec_musepack::conversionOptionsFromXml( QDomElement conversionOptions )
+{
+    MusePackConversionOptions *options = new MusePackConversionOptions();
+    options->fromXml( conversionOptions );
+    return options;
 }
 
 

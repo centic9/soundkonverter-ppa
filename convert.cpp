@@ -231,7 +231,15 @@ void Convert::convert( ConvertItem *item )
 
     if( item->outputUrl.isEmpty() )
     {
-        item->outputUrl = ( !item->fileListItem->outputUrl.url().isEmpty() ) ? OutputDirectory::makePath(item->fileListItem->outputUrl) : OutputDirectory::makePath(OutputDirectory::uniqueFileName(OutputDirectory::calcPath(item->fileListItem,config,"",false),usedOutputNames.values()) );
+        item->outputUrl = !item->fileListItem->outputUrl.url().isEmpty() ? item->fileListItem->outputUrl : OutputDirectory::calcPath( item->fileListItem, config, usedOutputNames.values() );
+        if( QFile::exists(item->outputUrl.toLocalFile()) )
+        {
+            logger->log( item->logID, "\tOutput file already exists" );
+            item->outputUrl = KUrl();
+            remove( item, 103 );
+            return;
+        }
+        OutputDirectory::makePath( item->outputUrl );
         item->fileListItem->outputUrl = item->outputUrl;
         fileList->updateItem( item->fileListItem );
     }
@@ -290,7 +298,7 @@ void Convert::convert( ConvertItem *item )
             // both plugins support pipes
             logger->log( item->logID, i18n("Converting") );
             item->state = ConvertItem::convert;
-            logger->log( item->logID, "\t" + command1.join(" ") + " | " + command2.join(" ") );
+            logger->log( item->logID, "<pre>\t<span style=\"color:#DC6300\">" + command1.join(" ") + " | " + command2.join(" ") + "</span></pre>" );
             item->process = new KProcess();
             item->process.data()->setOutputChannelMode( KProcess::MergedChannels );
             connect( item->process.data(), SIGNAL(readyRead()), this, SLOT(processOutput()) );
@@ -457,7 +465,7 @@ void Convert::writeTags( ConvertItem *item )
     const bool success = config->tagEngine()->writeCovers( item->outputUrl, item->fileListItem->tags->covers );
     if( config->data.coverArt.writeCovers == 0 || ( config->data.coverArt.writeCovers == 1 && !success ) )
     {
-        config->tagEngine()->writeCoversToDirectory( item->outputUrl.directory(), item->fileListItem->tags->covers );
+        config->tagEngine()->writeCoversToDirectory( item->outputUrl.directory(), item->fileListItem->tags );
     }
 }
 
@@ -495,7 +503,7 @@ void Convert::executeUserScript( ConvertItem *item )
 
 void Convert::executeNextStep( ConvertItem *item )
 {
-    logger->log( item->logID, i18n("Executing next step") );
+    logger->log( item->logID, "<br>" +  i18n("Executing next step") );
 
     item->lastTake = item->take;
     item->take = 0;
@@ -667,10 +675,16 @@ void Convert::processOutput()
             {
                 BackendPlugin *plugin1;
                 plugin1 = items.at(i)->conversionPipes.at(items.at(i)->take).trunks.at(0).plugin;
+
                 output = items.at(i)->process.data()->readAllStandardOutput().data();
+
                 progress1 = plugin1->parseOutput( output );
-                if( progress1 > items.at(i)->progress ) items[i]->progress = progress1;
-                if( progress1 == -1 && !output.simplified().isEmpty() ) logger->log( items.at(i)->logID, "\t" + output.trimmed() );
+
+                if( progress1 > items.at(i)->progress )
+                    items[i]->progress = progress1;
+
+                if( progress1 == -1 && !output.simplified().isEmpty() )
+                    logger->log( items.at(i)->logID, "<pre>\t<span style=\"color:#C00000\">" + output.trimmed().replace("\n","<br>\t") + "</span></pre>" );
             }
             else if( items.at(i)->conversionPipes.at(items.at(i)->take).trunks.count() == 2 )
             {
@@ -678,11 +692,17 @@ void Convert::processOutput()
                 BackendPlugin *plugin1, *plugin2;
                 plugin1 = items.at(i)->conversionPipes.at(items.at(i)->take).trunks.at(0).plugin;
                 plugin2 = items.at(i)->conversionPipes.at(items.at(i)->take).trunks.at(1).plugin;
+
                 output = items.at(i)->process.data()->readAllStandardOutput().data();
+
                 progress1 = plugin1->parseOutput( output );
                 progress2 = plugin2->parseOutput( output );
-                if( progress1 > items.at(i)->progress ) items[i]->progress = progress1;
-                if( progress1 == -1 && progress2 == -1 && !output.simplified().isEmpty() ) logger->log( items.at(i)->logID, "\t" + output.trimmed() );
+
+                if( progress1 > items.at(i)->progress )
+                    items[i]->progress = progress1;
+
+                if( progress1 == -1 && progress2 == -1 && !output.simplified().isEmpty() )
+                    logger->log( items.at(i)->logID, "<pre>\t<span style=\"color:#C00000\">" + output.trimmed().replace("\n","<br>\t") + "</span></pre>" );
             }
 
             return;
@@ -876,7 +896,7 @@ void Convert::pluginLog( int id, const QString& message )
             {
                 for( int k=0; k<pluginLogQueue.at(i).messages.size(); k++ )
                 {
-                    logger->log( items.at(j)->logID, "\t" + pluginLogQueue.at(i).messages.at(k).trimmed().replace("\n","\n\t") );
+                    logger->log( items.at(j)->logID, pluginLogQueue.at(i).messages.at(k) );
                 }
                 pluginLogQueue.removeAt(i);
                 i--;
@@ -894,7 +914,7 @@ void Convert::pluginLog( int id, const QString& message )
         if( ( items.at(i)->convertPlugin && items.at(i)->convertPlugin == QObject::sender() && items.at(i)->convertID == id ) ||
             ( items.at(i)->replaygainPlugin && items.at(i)->replaygainPlugin == QObject::sender() && items.at(i)->replaygainID == id ) )
         {
-            logger->log( items.at(i)->logID, "\t" + message.trimmed().replace("\n","\n\t") );
+            logger->log( items.at(i)->logID, message );
             return;
         }
     }
@@ -946,6 +966,9 @@ void Convert::add( FileListItem* item )
     newItem->logID = logger->registerProcess( fileName );
     logger->log( 1000, "\t" + i18n("Got log ID: %1",newItem->logID) );
 
+    // TODO remove redundancy, logID is needed in the fileListItem
+    newItem->fileListItem->logId = newItem->logID;
+
 //     logger->log( newItem->logID, "Mime Type: " + newItem->fileListItem->mimeType );
 //     if( newItem->fileListItem->tags ) logger->log( newItem->logID, i18n("Tags successfully read") );
 //     else logger->log( newItem->logID, i18n("Reading tags failed") );
@@ -990,7 +1013,8 @@ void Convert::add( FileListItem* item )
         logger->log( newItem->logID, "\t\t" + pipe_str.join(", ") );
     }
 
-    logger->log( newItem->logID, i18n("File system type: %1",conversionOptions->outputFilesystem) );
+    if( conversionOptions->outputDirectoryMode != OutputDirectory::Source )
+        logger->log( newItem->logID, i18n("File system type: %1",conversionOptions->outputFilesystem) );
 
     newItem->mode = ConvertItem::Mode( newItem->mode | ConvertItem::convert );
 
@@ -1065,6 +1089,8 @@ void Convert::remove( ConvertItem *item, int state )
         exitMessage = i18nc("Conversion exit status","Aborted by the user");
     else if( state == 100 )
         exitMessage = i18nc("Conversion exit status","Backend needs configuration");
+    else if( state == 103 )
+        exitMessage = i18nc("Conversion exit status","File already exists");
     else
         exitMessage = i18nc("Conversion exit status","An error occured");
 
@@ -1102,7 +1128,7 @@ void Convert::remove( ConvertItem *item, int state )
     {
         QFile::remove(item->tempConvertUrl.toLocalFile());
     }
-    if( state != 0 && config->data.general.removeFailedFiles && QFile::exists(item->outputUrl.toLocalFile()) )
+    if( state != 0 && state != 103 && config->data.general.removeFailedFiles && QFile::exists(item->outputUrl.toLocalFile()) )
     {
         QFile::remove(item->outputUrl.toLocalFile());
         logger->log( item->logID, i18n("Removing partially converted output file") );
@@ -1110,7 +1136,7 @@ void Convert::remove( ConvertItem *item, int state )
 
     usedOutputNames.remove( item->logID );
 
-    logger->log( item->logID, i18n("Removing file from conversion list. Exit code %1 (%2)",state,exitMessage) );
+    logger->log( item->logID, "<br>" +  i18n("Removing file from conversion list. Exit code %1 (%2)",state,exitMessage) );
 
     logger->log( item->logID, "\t" + i18n("Conversion time") + ": " + Global::prettyNumber(item->progressedTime.elapsed(),"ms") );
     logger->log( item->logID, "\t" + i18n("Output file size") + ": " + Global::prettyNumber(outputFileInfo.size(),"B") );
@@ -1199,7 +1225,7 @@ void Convert::itemRemoved( FileListItem *item )
 
 void Convert::updateProgress()
 {
-    float time = 0;
+    float time = 0.0f;
     float fileTime;
     float fileProgress;
     QString fileProgressString;
@@ -1232,33 +1258,54 @@ void Convert::updateProgress()
             fileProgress = 0; // make it a valid value so the calculations below work
         }
 
+        fileTime = 0.0f;
         switch( items.at(i)->state )
         {
             case ConvertItem::get:
+            {
                 fileTime = items.at(i)->getTime;
                 items.at(i)->fileListItem->setText( 0, i18n("Getting file")+"... "+fileProgressString );
                 break;
+            }
             case ConvertItem::convert:
+            {
                 fileTime = items.at(i)->convertTime;
                 items.at(i)->fileListItem->setText( 0, i18n("Converting")+"... "+fileProgressString );
                 break;
+            }
             case ConvertItem::decode:
+            {
                 fileTime = items.at(i)->decodeTime;
-                if( items.at(i)->convertPlugin->type() == "convert" ) items.at(i)->fileListItem->setText( 0, i18n("Decoding")+"... "+fileProgressString );
-                else if( items.at(i)->convertPlugin->type() == "ripper" ) items.at(i)->fileListItem->setText( 0, i18n("Ripping")+"... "+fileProgressString );
+                if( items.at(i)->convertPlugin->type() == "codec" )
+                    items.at(i)->fileListItem->setText( 0, i18n("Decoding")+"... "+fileProgressString );
+                else if( items.at(i)->convertPlugin->type() == "ripper" )
+                    items.at(i)->fileListItem->setText( 0, i18n("Ripping")+"... "+fileProgressString );
                 break;
+            }
             case ConvertItem::encode:
+            {
                 fileTime = items.at(i)->encodeTime;
                 items.at(i)->fileListItem->setText( 0, i18n("Encoding")+"... "+fileProgressString );
                 break;
+            }
             case ConvertItem::replaygain:
-                fileTime = items.at(i)->replaygainTime;
+            {
+                const QString albumName = items.at(i)->fileListItem->tags ? items.at(i)->fileListItem->tags->album : "";
+                QList<ConvertItem*> albumItems;
+                if( !albumName.isEmpty() )
+                    albumItems = albumGainItems[albumName];
+                if( !albumItems.contains(items.at(i)) )
+                    albumItems.append( items.at(i) );
+                for( int j=0; j<albumItems.count(); j++ )
+                {
+                    fileTime += albumItems.at(j)->replaygainTime;
+                }
                 items.at(i)->fileListItem->setText( 0, i18n("Replay Gain")+"... "+fileProgressString );
                 break;
-            default: fileTime = 0.0f;
+            }
         }
         time += items.at(i)->finishedTime + fileProgress * fileTime / 100.0f;
-        logger->log( items.at(i)->logID, i18n("Progress: %1",fileProgress) );
+        logger->log( items.at(i)->logID, "<pre>\t<span style=\"color:#585858\">" + i18n("Progress: %1",fileProgress) + "</span></pre>" );
     }
 
     emit updateTime( time );

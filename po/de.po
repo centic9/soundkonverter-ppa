@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: soundkonverter\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/ubuntu/%2Bsource/"
 "soundkonverter/\n"
-"POT-Creation-Date: 2012-05-09 17:18+0200\n"
-"PO-Revision-Date: 2012-04-29 10:26+0000\n"
+"POT-Creation-Date: 2012-06-08 10:44+0200\n"
+"PO-Revision-Date: 2012-06-03 14:39+0000\n"
 "Last-Translator: HessiJames <hessijames@gmail.com>\n"
 "Language-Team: German (http://www.transifex.net/projects/p/soundkonverter/"
 "language/de/)\n"
@@ -115,14 +115,14 @@ msgstr "Beheben"
 #: codecproblems.cpp:28
 msgid ""
 "soundKonverter couldn't find any missing packages.\n"
-"Maybe you need to install an additional plugin via the package manager of "
-"your distribution."
+"If you are missing some file formats you might need to install an additional "
+"plugin via the package manager of your distribution."
 msgstr ""
 "soundKonverter konnte keine fehlenden Pakete erkennen.\n"
-"Möglicherweise müssen Sie ein zusätzliches Plugin mit dem Paketmanager ihrer "
-"Distribution installieren."
+"Falls Sie einige Dateiformate vermissen, müssen Sie möglicherweise ein "
+"zusätzliches Plugin mit dem Paketmanager ihrer Distribution installieren."
 
-#: codecproblems.cpp:33
+#: codecproblems.cpp:32
 msgid ""
 "Some of the installed plugins aren't working.\n"
 "Possible solutions are listed below."
@@ -130,7 +130,7 @@ msgstr ""
 "Einige der installierten Plugins funktionieren nicht.\n"
 "Mögliche Lösungen sind unten aufgeführt."
 
-#: codecproblems.cpp:38
+#: codecproblems.cpp:37
 msgid ""
 "Some files can't be decoded.\n"
 "Possible solutions are listed below."
@@ -138,7 +138,7 @@ msgstr ""
 "Einige Dateien können nicht Dekodiert werden.\n"
 "Mögliche Lösungen sind hierunter aufgelistet."
 
-#: codecproblems.cpp:42
+#: codecproblems.cpp:41
 msgid ""
 "Replay Gain isn't supported for some files.\n"
 "Possible solutions are listed below."
@@ -146,7 +146,7 @@ msgstr ""
 "Replay Gain wird für einige Dateien nicht unterstützt.\n"
 "Mögliche Lösungen sind hierunter aufgelistet."
 
-#: codecproblems.cpp:48
+#: codecproblems.cpp:47
 msgid ""
 "Ripping audio CDs is not supported by any installed plugin.\n"
 "Please have a look at your distributions package manager in order to get a "
@@ -156,7 +156,7 @@ msgstr ""
 "Bitte schauen sie im Paketmanager ihrer Distribution nach einem CD-Ripper "
 "Plugin für soundKonverter."
 
-#: codecproblems.cpp:52
+#: codecproblems.cpp:51
 msgid ""
 "Ripping audio CDs is currently not supported because of missing backends.\n"
 "Possible solutions are listed below."
@@ -165,34 +165,34 @@ msgstr ""
 "Zusatzprogrammen nicht unterstützt.\n"
 "Mögliche Lösungen sind hierunter aufgelistet."
 
-#: codecproblems.cpp:68 codecproblems.cpp:72
+#: codecproblems.cpp:67 codecproblems.cpp:71
 msgid "Possible solutions for %1"
 msgstr "Mögliche Lösungen für %1"
 
-#: codecproblems.cpp:68 codecproblems.cpp:72
+#: codecproblems.cpp:67 codecproblems.cpp:71
 #: plugins/soundkonverter_codec_ffmpeg/soundkonverter_codec_ffmpeg.cpp:308
 msgctxt "like in either or"
 msgid "or"
 msgstr "oder"
 
-#: codecproblems.cpp:72
+#: codecproblems.cpp:71
 msgid "Affected files:"
 msgstr "Betroffene Dateien:"
 
-#: config.cpp:48 config.cpp:50 config.cpp:345 config.cpp:390
+#: config.cpp:48 config.cpp:50 config.cpp:351 config.cpp:396
 #: configdialog/configgeneralpage.cpp:43 configdialog/configgeneralpage.cpp:58
-#: configdialog/configgeneralpage.cpp:202
-#: configdialog/configgeneralpage.cpp:204
-#: configdialog/configgeneralpage.cpp:208
-#: configdialog/configgeneralpage.cpp:213
-#: configdialog/configgeneralpage.cpp:218 options.cpp:50 options.cpp:71
+#: configdialog/configgeneralpage.cpp:216
+#: configdialog/configgeneralpage.cpp:218
+#: configdialog/configgeneralpage.cpp:222
+#: configdialog/configgeneralpage.cpp:227
+#: configdialog/configgeneralpage.cpp:232 options.cpp:50 options.cpp:71
 #: options.cpp:91 optionsdetailed.cpp:375
 msgid "Last used"
 msgstr "Zuletzt benutzt"
 
-#: config.cpp:49 config.cpp:349 config.cpp:356 config.cpp:362
+#: config.cpp:49 config.cpp:355 config.cpp:362 config.cpp:368
 #: configdialog/configgeneralpage.cpp:62
-#: configdialog/configgeneralpage.cpp:206 options.cpp:80
+#: configdialog/configgeneralpage.cpp:220 options.cpp:80
 #: optionsdetailed.cpp:371 optionssimple.cpp:158 optionssimple.cpp:198
 #: optionssimple.cpp:285
 #: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:173
@@ -216,16 +216,21 @@ msgstr "Zuletzt benutzt"
 #: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:267
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:207
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:254
-#: soundkonverterview.cpp:435 soundkonverterview.cpp:437
+#: soundkonverterview.cpp:442 soundkonverterview.cpp:444
 msgid "High"
 msgstr "Hoch"
 
-#: config.cpp:259 config.cpp:282 config.cpp:284
+#: config.cpp:108 configdialog/configcoverartpage.cpp:130
+msgctxt "cover file name"
+msgid "cover"
+msgstr "cover"
+
+#: config.cpp:265 config.cpp:288 config.cpp:290
 msgid "Try internal"
 msgstr "Intern probieren"
 
-#: config.cpp:346 config.cpp:362 configdialog/configgeneralpage.cpp:59
-#: configdialog/configgeneralpage.cpp:206 optionsdetailed.cpp:368
+#: config.cpp:352 config.cpp:368 configdialog/configgeneralpage.cpp:59
+#: configdialog/configgeneralpage.cpp:220 optionsdetailed.cpp:368
 #: optionssimple.cpp:155 optionssimple.cpp:180 optionssimple.cpp:285
 #: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:161
 #: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:186
@@ -248,12 +253,12 @@ msgstr "Intern probieren"
 #: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:231
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:195
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:219
-#: soundkonverterview.cpp:420 soundkonverterview.cpp:422
+#: soundkonverterview.cpp:427 soundkonverterview.cpp:429
 msgid "Very low"
 msgstr "Sehr niedrig"
 
-#: config.cpp:347 config.cpp:362 configdialog/configgeneralpage.cpp:60
-#: configdialog/configgeneralpage.cpp:206 optionsdetailed.cpp:369
+#: config.cpp:353 config.cpp:368 configdialog/configgeneralpage.cpp:60
+#: configdialog/configgeneralpage.cpp:220 optionsdetailed.cpp:369
 #: optionssimple.cpp:156 optionssimple.cpp:186 optionssimple.cpp:285
 #: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:165
 #: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:194
@@ -276,12 +281,12 @@ msgstr "Sehr niedrig"
 #: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:244
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:199
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:231
-#: soundkonverterview.cpp:425 soundkonverterview.cpp:427
+#: soundkonverterview.cpp:432 soundkonverterview.cpp:434
 msgid "Low"
 msgstr "Niedrig"
 
-#: config.cpp:348 config.cpp:362 configdialog/configgeneralpage.cpp:61
-#: configdialog/configgeneralpage.cpp:206 optionsdetailed.cpp:370
+#: config.cpp:354 config.cpp:368 configdialog/configgeneralpage.cpp:61
+#: configdialog/configgeneralpage.cpp:220 optionsdetailed.cpp:370
 #: optionssimple.cpp:157 optionssimple.cpp:192 optionssimple.cpp:285
 #: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:169
 #: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:202
@@ -304,12 +309,12 @@ msgstr "Niedrig"
 #: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:256
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:203
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:243
-#: soundkonverterview.cpp:430 soundkonverterview.cpp:432
+#: soundkonverterview.cpp:437 soundkonverterview.cpp:439
 msgid "Medium"
 msgstr "Mittel"
 
-#: config.cpp:350 config.cpp:362 configdialog/configgeneralpage.cpp:63
-#: configdialog/configgeneralpage.cpp:206 optionsdetailed.cpp:372
+#: config.cpp:356 config.cpp:368 configdialog/configgeneralpage.cpp:63
+#: configdialog/configgeneralpage.cpp:220 optionsdetailed.cpp:372
 #: optionssimple.cpp:159 optionssimple.cpp:204 optionssimple.cpp:285
 #: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:177
 #: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:218
@@ -332,12 +337,12 @@ msgstr "Mittel"
 #: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:278
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:211
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:265
-#: soundkonverterview.cpp:440 soundkonverterview.cpp:442
+#: soundkonverterview.cpp:447 soundkonverterview.cpp:449
 msgid "Very high"
 msgstr "Sehr hoch"
 
-#: config.cpp:351 config.cpp:366 configdialog/configgeneralpage.cpp:64
-#: configdialog/configgeneralpage.cpp:211 optionsdetailed.cpp:373
+#: config.cpp:357 config.cpp:372 configdialog/configgeneralpage.cpp:64
+#: configdialog/configgeneralpage.cpp:225 optionsdetailed.cpp:373
 #: optionssimple.cpp:160 optionssimple.cpp:210 optionssimple.cpp:289
 #: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:157
 #: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:164
@@ -365,17 +370,17 @@ msgstr "Sehr hoch"
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:191
 #: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:92
 #: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:97
-#: soundkonverterview.cpp:445 soundkonverterview.cpp:447
+#: soundkonverterview.cpp:452 soundkonverterview.cpp:454
 msgid "Lossless"
 msgstr "Verlustfrei"
 
-#: config.cpp:352 config.cpp:370 configdialog/configgeneralpage.cpp:216
+#: config.cpp:358 config.cpp:376 configdialog/configgeneralpage.cpp:230
 #: optionsdetailed.cpp:374 optionssimple.cpp:216 optionssimple.cpp:293
-#: soundkonverterview.cpp:450 soundkonverterview.cpp:452
+#: soundkonverterview.cpp:457 soundkonverterview.cpp:459
 msgid "Hybrid"
 msgstr "Hybrid"
 
-#: config.cpp:374 optionsdetailed.cpp:377 optionssimple.cpp:163
+#: config.cpp:380 optionsdetailed.cpp:377 optionssimple.cpp:163
 #: optionssimple.cpp:222 optionssimple.cpp:297 optionssimple.cpp:362
 #: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:180
 #: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:187
@@ -392,11 +397,11 @@ msgstr "Hybrid"
 msgid "User defined"
 msgstr "Benutzerdefiniert"
 
-#: config.cpp:536
+#: config.cpp:544
 msgid "Convert with soundKonverter"
 msgstr "Mit soundKonverter konvertieren"
 
-#: config.cpp:570
+#: config.cpp:578
 msgid "Add Replay Gain with soundKonverter"
 msgstr "Replay Gain mit soundKonverter hinzufügen"
 
@@ -436,7 +441,7 @@ msgstr ""
 
 #: configdialog/configadvancedpage.cpp:74
 msgid "Write log files to disc"
-msgstr "Log-Dateien auf die Festplatte schreiben"
+msgstr "Protokoll-Dateien auf die Festplatte schreiben"
 
 #: configdialog/configadvancedpage.cpp:75
 msgid ""
@@ -445,10 +450,10 @@ msgid ""
 "the log viewer.\n"
 "Log files will be written to %1"
 msgstr ""
-"Log-Dateien während der Konvertierung auf die Festplatte schreiben.\n"
-"Dies kann nützlich sein, wenn es zu einem Absturz kommt und Sie die Log-"
-"Dateien daher nicht durch den Log Betrachter einsehen können.\n"
-"Log-Dateien werden unter %1 gespeichert."
+"Protokoll-Dateien während der Konvertierung auf die Festplatte schreiben.\n"
+"Dies kann nützlich sein, wenn es zu einem Absturz kommt und Sie die "
+"Protokolle daher nicht durch den Protokoll-Betrachter einsehen können.\n"
+"Protokoll-Dateien werden unter %1 gespeichert."
 
 #: configdialog/configadvancedpage.cpp:84
 msgid "Remove partially converted files if a conversion fails"
@@ -487,11 +492,11 @@ msgstr "MiB"
 msgid "It seems there's no filesystem mounted on /dev/shm"
 msgstr "Es scheint kein Dateisystem auf /dev/shm eingehängt zu sein"
 
-#: configdialog/configadvancedpage.cpp:118
+#: configdialog/configadvancedpage.cpp:119
 msgid "Use pipes when possible"
 msgstr "Benutze Pipes wenn möglich"
 
-#: configdialog/configadvancedpage.cpp:119
+#: configdialog/configadvancedpage.cpp:120
 msgid ""
 "Pipes make it unnecessary to use temporary files, therefore increasing the "
 "performance.\n"
@@ -516,8 +521,8 @@ msgstr "Kodierer"
 
 #: configdialog/configbackendspage.cpp:135
 #: configdialog/configbackendspage.cpp:174
-#: configdialog/configbackendspage.cpp:239 convert.cpp:1256 filelist.cpp:498
-#: filelist.cpp:508
+#: configdialog/configbackendspage.cpp:239 convert.cpp:1273 filelist.cpp:515
+#: filelist.cpp:525
 msgid "Replay Gain"
 msgstr "Replay Gain"
 
@@ -553,44 +558,78 @@ msgstr "Einstellungen geändert"
 msgid "%1 settings"
 msgstr "%1-Einstellungen"
 
-#: configdialog/configbackendspage.cpp:386
+#: configdialog/configbackendspage.cpp:390
 msgid "All backend settings seem to be optimal, there is nothing to do."
 msgstr ""
 "Alle Backend-Einstellungen scheinen optimal zu sein, es gibt nichts zu tun."
 
-#: configdialog/configcoverartpage.cpp:30
+#: configdialog/configcoverartpage.cpp:31
 msgid "Save embedded covers to output directory"
 msgstr "Eingebette Cover im Ausgabeverzeichnis speichern"
 
-#: configdialog/configcoverartpage.cpp:32
+#: configdialog/configcoverartpage.cpp:33
 msgid "Always"
 msgstr "Immer"
 
-#: configdialog/configcoverartpage.cpp:34
+#: configdialog/configcoverartpage.cpp:35
 msgid "Only if embedding the covers into the output files is not possible"
-msgstr "Nur, wenn das Einbetten der Cover nicht möglich ist"
+msgstr "Nur wenn das Einbetten der Cover nicht möglich ist"
 
-#: configdialog/configcoverartpage.cpp:36
+#: configdialog/configcoverartpage.cpp:37
 msgid "Never"
 msgstr "Niemals"
+
+#: configdialog/configcoverartpage.cpp:57
+msgid "File name for the cover"
+msgstr "Dateiname für das Cover"
+
+#: configdialog/configcoverartpage.cpp:59
+msgid "The embedded cover description"
+msgstr "Die eingebettete Cover-Beschreibung"
+
+#: configdialog/configcoverartpage.cpp:61
+msgid "The default cover file name"
+msgstr "Der Standard Cover-Dateiname"
+
+#: configdialog/configcoverartpage.cpp:65
+msgid "Default cover file name:"
+msgstr "Standard Cover-Dateiname:"
+
+#: configdialog/configcoverartpage.cpp:68
+msgid ""
+"The following strings are wildcards that will be replaced\n"
+"by the information in the meta data:\n"
+"\n"
+"%a - Artist\n"
+"%b - Album\n"
+"%d - Cover description\n"
+"%r - Cover role"
+msgstr ""
+"Die folgenden Zeichenketten sind Platzhalter, sie werden durch die "
+"Informationen in den Metadaten ersetzt:\n"
+"\n"
+"%a - Interpret\n"
+"%b - Album\n"
+"%d - Cover-Beschreibung\n"
+"%r - Cover-Rolle"
 
 #: configdialog/configdialog.cpp:29
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: configdialog/configdialog.cpp:37
+#: configdialog/configdialog.cpp:42
 msgid "General"
 msgstr "Grundlagen"
 
-#: configdialog/configdialog.cpp:42
+#: configdialog/configdialog.cpp:47
 msgid "Advanced"
 msgstr "Erweitert"
 
-#: configdialog/configdialog.cpp:47
+#: configdialog/configdialog.cpp:52
 msgid "Cover art"
 msgstr "Cover-Bilder"
 
-#: configdialog/configdialog.cpp:52 main.cpp:29
+#: configdialog/configdialog.cpp:57 main.cpp:28
 msgid "Backends"
 msgstr "Backends"
 
@@ -688,7 +727,7 @@ msgctxt "Group files in the Replay Gain tool by"
 msgid "Directories only"
 msgstr "Nur Verzeichnissen"
 
-#: convert.cpp:180 convert.cpp:1239
+#: convert.cpp:180 convert.cpp:1254
 msgid "Getting file"
 msgstr "Hole Datei"
 
@@ -700,13 +739,13 @@ msgstr "Kopiere \"%1\" nach \"%2\""
 msgid "No more backends left to try :("
 msgstr "Keine weiteren Backends zum Ausprobieren übrig :("
 
-#: convert.cpp:252 convert.cpp:291 convert.cpp:1243 filelist.cpp:518
-#: soundkonverter.cpp:270 soundkonverter.cpp:272 soundkonverter.cpp:299
-#: soundkonverter.cpp:301
+#: convert.cpp:252 convert.cpp:291 convert.cpp:1258 filelist.cpp:535
+#: soundkonverter.cpp:281 soundkonverter.cpp:283 soundkonverter.cpp:310
+#: soundkonverter.cpp:312
 msgid "Converting"
 msgstr "Konvertiere"
 
-#: convert.cpp:306 convert.cpp:1247
+#: convert.cpp:306 convert.cpp:1263
 msgid "Decoding"
 msgstr "Dekodiere"
 
@@ -718,7 +757,7 @@ msgstr ""
 "Konvertierung fehlgeschlagen. Mindestens ein Backend muss erst noch "
 "eingerichtet werden."
 
-#: convert.cpp:374 convert.cpp:1252
+#: convert.cpp:374 convert.cpp:1269
 msgid "Encoding"
 msgstr "Kodiere"
 
@@ -763,41 +802,41 @@ msgstr "Entferne: %1"
 msgid "An error accured. Error code: %1 (%2)"
 msgstr "Es trat ein Fehler auf. Fehlercode: %1 (%2)"
 
-#: convert.cpp:780 convert.cpp:860
+#: convert.cpp:792 convert.cpp:872
 msgid "Conversion failed. Exit code: %1"
 msgstr "Konvertierung fehlgeschlagen. Beendigungscode: %1"
 
-#: convert.cpp:929
+#: convert.cpp:941
 msgctxt "identificator for the logger"
 msgid "CD track %1: %2 - %3"
 msgstr "CD Stück %1: %2 - %3"
 
-#: convert.cpp:933
+#: convert.cpp:945
 msgctxt "identificator for the logger"
 msgid "CD track %1"
 msgstr "CD Stück %1"
 
-#: convert.cpp:940
+#: convert.cpp:952
 msgid "Adding new item to conversion list: '%1'"
 msgstr "Füge neues Element zur Konvertierungsliste hinzu: '%1'"
 
-#: convert.cpp:947
+#: convert.cpp:959
 msgid "Got log ID: %1"
-msgstr "Log-ID: %1"
+msgstr "Protokoll-ID: %1"
 
-#: convert.cpp:975
+#: convert.cpp:990
 msgid "Track number: %1, device: %2"
 msgstr "Stücknummer: %1, Gerät: %2"
 
-#: convert.cpp:980 optionseditor.cpp:368
+#: convert.cpp:995
 msgid "Possible conversion strategies:"
 msgstr "Mögliche Konvertierungsstrategien:"
 
-#: convert.cpp:993
+#: convert.cpp:1008
 msgid "File system type: %1"
 msgstr "Dateisystem-Typ: %1"
 
-#: convert.cpp:1050
+#: convert.cpp:1065
 msgid ""
 "An error occured, the output file size is less than one percent of the input "
 "file size"
@@ -805,65 +844,65 @@ msgstr ""
 "Es trat ein Fehler auf, die Ausgabedatei ist weniger als ein Prozent der "
 "Eingabedatei groß"
 
-#: convert.cpp:1054
+#: convert.cpp:1069
 msgid "Conversion failed, trying again. Exit code: -2 (%1)"
 msgstr ""
 "Konvertierung fehlgeschlagen, versuche es erneut. Beendigungscode: -2 (%1)"
 
-#: convert.cpp:1063
+#: convert.cpp:1078
 msgctxt "Conversion exit status"
 msgid "Normal exit"
 msgstr "Normale Beendigung"
 
-#: convert.cpp:1065
+#: convert.cpp:1080
 msgctxt "Conversion exit status"
 msgid "Aborted by the user"
 msgstr "Vom Benutzer abgebrochen"
 
-#: convert.cpp:1067
+#: convert.cpp:1082
 msgctxt "Conversion exit status"
 msgid "Backend needs configuration"
 msgstr "Backend muss konfiguriert werden"
 
-#: convert.cpp:1069
+#: convert.cpp:1084
 msgctxt "Conversion exit status"
 msgid "An error occured"
 msgstr "Es trat ein Fehler auf"
 
-#: convert.cpp:1090
+#: convert.cpp:1105
 msgid "Executing command: \"%1\""
 msgstr "Führe Befehl aus: \"%1\""
 
-#: convert.cpp:1108
+#: convert.cpp:1123
 msgid "Removing partially converted output file"
 msgstr "Entferne teilweise konvertierte Ausgabedateien"
 
-#: convert.cpp:1113
+#: convert.cpp:1128
 msgid "Removing file from conversion list. Exit code %1 (%2)"
 msgstr "Entferne Datei von der Konvertierungsliste. Beendigungscode %1 (%2)"
 
-#: convert.cpp:1115
+#: convert.cpp:1130
 msgid "Conversion time"
 msgstr "Konvertierungszeit"
 
-#: convert.cpp:1116
+#: convert.cpp:1131
 msgid "Output file size"
 msgstr "Ausgabe-Dateigröße"
 
-#: convert.cpp:1117
+#: convert.cpp:1132
 msgid "File size ratio"
 msgstr "Dateigrößen-Quotient"
 
-#: convert.cpp:1231
+#: convert.cpp:1246
 msgctxt "The conversion progress can't be determined"
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: convert.cpp:1248 filelist.cpp:513
+#: convert.cpp:1265 filelist.cpp:530
 msgid "Ripping"
 msgstr "Rippe"
 
-#: convert.cpp:1261
+#: convert.cpp:1279
 msgid "Progress: %1"
 msgstr "Fortschritt: %1"
 
@@ -1111,7 +1150,7 @@ msgstr "Qualität"
 
 #: filelist.cpp:80
 msgid "Edit options..."
-msgstr "Optionen bearbeiten..."
+msgstr "Optionen bearbeiten ..."
 
 #: filelist.cpp:82
 msgid "Start conversion"
@@ -1126,8 +1165,8 @@ msgstr "Konvertierung stoppen"
 msgid "Remove"
 msgstr "Entfernen"
 
-#: filelist.cpp:170 opener/fileopener.cpp:117 opener/playlistopener.cpp:121
-#: replaygainscanner/replaygainfilelist.cpp:223 soundkonverterview.cpp:356
+#: filelist.cpp:175 opener/fileopener.cpp:123 opener/playlistopener.cpp:127
+#: replaygainscanner/replaygainfilelist.cpp:229 soundkonverterview.cpp:363
 msgid ""
 "This file type is unknown to soundKonverter.\n"
 "Maybe you need to install an additional soundKonverter plugin.\n"
@@ -1137,45 +1176,53 @@ msgstr ""
 "Vielleicht müssen Sie noch zusätzliches Plugin installieren.\n"
 "Dazu sollten Sie im Paketmanager ihrer Distribution nachschauen."
 
-#: filelist.cpp:208 opener/fileopener.cpp:157 opener/playlistopener.cpp:161
-#: opener/playlistopener.cpp:193 replaygainscanner/replaygainfilelist.cpp:261
-#: soundkonverterview.cpp:394
+#: filelist.cpp:213 opener/fileopener.cpp:163 opener/playlistopener.cpp:167
+#: opener/playlistopener.cpp:199 replaygainscanner/replaygainfilelist.cpp:267
+#: soundkonverterview.cpp:401
 msgid "... and %1 more files"
 msgstr "... und %1 weitere Dateien"
 
-#: filelist.cpp:488
+#: filelist.cpp:505
 msgid "Will be skipped"
 msgstr "Wird übersprungen"
 
-#: filelist.cpp:492 soundkonverter.cpp:134 soundkonverter.cpp:138
+#: filelist.cpp:509 soundkonverter.cpp:142 soundkonverter.cpp:146
 msgid "Waiting"
 msgstr "Warte"
 
-#: filelist.cpp:503
+#: filelist.cpp:520
 msgid "Waiting for Replay Gain"
 msgstr "Warte auf Replay Gain"
 
-#: filelist.cpp:523
+#: filelist.cpp:540
 msgid "Stopped"
 msgstr "Gestoppt"
 
-#: filelist.cpp:528
+#: filelist.cpp:545
 msgid "Backend not configured"
 msgstr "Backend nicht konfiguriert"
 
-#: filelist.cpp:533
+#: filelist.cpp:550
 msgid "Disc full"
 msgstr "Datenträger voll"
 
-#: filelist.cpp:538
+#: filelist.cpp:555
 msgid "Failed"
 msgstr "Fehlgeschlagen"
 
-#: filelist.cpp:555
+#: filelist.cpp:558
+msgid ""
+"The conversion has failed.\n"
+"See the log for more information."
+msgstr ""
+"Die Konvertierung ist fehlgeschlagen.\n"
+"Schauen Sie ins Protokoll für weitere Information."
+
+#: filelist.cpp:579
 msgid "CD track %1"
 msgstr "CD-Stück %1"
 
-#: filelist.cpp:1264
+#: filelist.cpp:1314
 msgid ""
 "Do you want to overwrite the current file list?\n"
 "\n"
@@ -1213,41 +1260,41 @@ msgstr "Dateiname"
 
 #: logger.cpp:91
 msgid "Log ID"
-msgstr "Log ID"
+msgstr "Protokoll-ID"
 
 #: logger.cpp:183 logger.cpp:186
 msgid "Finished logging"
-msgstr "Loggen beendet"
+msgstr "Protokollieren beendet"
 
-#: logviewer.cpp:24
+#: logviewer.cpp:25
 msgid "Log Viewer"
-msgstr "Log Betrachter"
+msgstr "Protokoll-Betrachter"
 
-#: logviewer.cpp:27
+#: logviewer.cpp:28
 msgid "Update"
 msgstr "Aktualisieren"
 
-#: logviewer.cpp:30
+#: logviewer.cpp:31
 msgid "Save to file..."
-msgstr "In Datei speichern..."
+msgstr "In Datei speichern ..."
 
-#: logviewer.cpp:42
+#: logviewer.cpp:43
 msgid "Log file:"
-msgstr "Log-Datei:"
+msgstr "Protokoll-Datei:"
 
-#: logviewer.cpp:76
+#: logviewer.cpp:77
 msgid "soundKonverter application log"
 msgstr "soundKonverter Protokoll"
 
-#: logviewer.cpp:116
+#: logviewer.cpp:120
 msgid "Save log file"
-msgstr "Log-Datei speichern"
+msgstr "Protokoll-Datei speichern"
 
-#: logviewer.cpp:123
+#: logviewer.cpp:127
 msgid "File already exists. Do you really want to overwrite it?"
 msgstr "Datei existiert bereits. Möchten Sie diese wirklich überschreiben?"
 
-#: logviewer.cpp:128
+#: logviewer.cpp:132
 msgid ""
 "Writing to file failed.\n"
 "Maybe you haven't got write permission."
@@ -1255,7 +1302,7 @@ msgstr ""
 "Speichern fehlgeschlagen.\n"
 "Vielleicht haben Sie keine Schreibberechtigungen."
 
-#: main.cpp:17
+#: main.cpp:16
 msgid ""
 "soundKonverter is a frontend to various audio converters, Replay Gain tools "
 "and CD rippers.\n"
@@ -1270,85 +1317,85 @@ msgstr ""
 "soundkonverter\n"
 "oder senden Sie mir einfach eine E-Mail an hessijames@gmail.com"
 
-#: main.cpp:23
+#: main.cpp:22
 msgid "soundKonverter"
 msgstr "soundKonverter"
 
-#: main.cpp:23
+#: main.cpp:22
 msgid "(C) 2005-2012 Daniel Faust"
 msgstr "(C) 2005-2012 Daniel Faust"
 
-#: main.cpp:24
+#: main.cpp:23
 msgid "Daniel Faust"
 msgstr "Daniel Faust"
 
-#: main.cpp:25
+#: main.cpp:24
 msgid "David Vignoni"
 msgstr "David Vignoni"
 
-#: main.cpp:25
+#: main.cpp:24
 msgid "Nuvola icon theme"
 msgstr "Nuvola Icon Thema"
 
-#: main.cpp:26
+#: main.cpp:25
 msgid "Scott Wheeler"
 msgstr "Scott Wheeler"
 
-#: main.cpp:26
+#: main.cpp:25
 msgid "TagLib"
 msgstr "TagLib"
 
-#: main.cpp:27
+#: main.cpp:26
 msgid "Marco Nelles"
 msgstr "Marco Nelles"
 
-#: main.cpp:27
+#: main.cpp:26
 msgid "Audex"
 msgstr "Audex"
 
-#: main.cpp:28
+#: main.cpp:27
 msgid "Amarok developers"
 msgstr "Amarok Entwickler"
 
-#: main.cpp:28
+#: main.cpp:27
 msgid "Amarok"
 msgstr "Amarok"
 
-#: main.cpp:29
+#: main.cpp:28
 msgid "All programmers of audio converters"
 msgstr "Alle Programmierer von Audio-Konvertern"
 
-#: main.cpp:33
+#: main.cpp:32
 msgid "Open the Replay Gain tool an add all given files"
 msgstr "Öffne das Replay Gain Werkzeug und füge alle gegeben Dateien hinzu"
 
-#: main.cpp:35
+#: main.cpp:33
 msgid "List all tracks on the cd drive <device>, 'auto' will search for a cd"
 msgstr ""
 "Liste alle Stücke auf CD Laufwerk <device> auf, 'auto' sucht nach einer CD"
 
-#: main.cpp:36
+#: main.cpp:34
 msgid "Add all files using the given profile"
 msgstr "Füge alle Dateien mit dem gegebenen Profil hinzu"
 
-#: main.cpp:37
+#: main.cpp:35
 msgid "Add all files using the given format"
 msgstr "Füge alle Dateien mit dem gegebenen Format hinzu"
 
-#: main.cpp:38
+#: main.cpp:36
 msgid "Output all files to <directory>"
 msgstr "Gebe alle Dateien ins Verzeichnis <directory> aus"
 
-#: main.cpp:39
+#: main.cpp:37
 msgid "Start soundKonverter invisible"
 msgstr "Starte soundKonverter unsichtbar"
 
-#: main.cpp:40
+#: main.cpp:38
 msgid "Start the conversion immediately (enabled when using '--invisible')"
 msgstr ""
 "Fange sofort an zu konvertieren (aktiviert wenn '--invisible' benutzt wird)"
 
-#: main.cpp:41
+#: main.cpp:39
 msgid ""
 "Close soundKonverter after all files are converted (enabled when using '--"
 "invisible')"
@@ -1356,7 +1403,7 @@ msgstr ""
 "Schließe soundKonverter, sobald alle Dateien konvertiert wurden (aktiviert "
 "wenn '--invisible' benutzt wird)"
 
-#: main.cpp:42
+#: main.cpp:40
 #, c-format
 msgid ""
 "Execute <command> after each file has been converted (%i=input file, "
@@ -1365,119 +1412,114 @@ msgstr ""
 "Führe <command> nach jeder Konvertierung aus (%i=Eingabedatei, "
 "%o=Ausgabedatei)"
 
-#: main.cpp:43
+#: main.cpp:41
 msgid "Audio file(s) to append to the file list"
 msgstr "Audio Datei(en) zum Hinzufügen an die Dateiliste"
 
-#: metadata/tagengine.cpp:63
+#: metadata/tagengine.cpp:61
 msgctxt "cover type"
 msgid "Unclassified"
 msgstr "Nicht eingeordnet"
 
-#: metadata/tagengine.cpp:65
+#: metadata/tagengine.cpp:63
 msgctxt "cover type"
 msgid "32x32 PNG file icon"
 msgstr "32x32 PNG Datei Icon"
 
-#: metadata/tagengine.cpp:67
+#: metadata/tagengine.cpp:65
 msgctxt "cover type"
 msgid "File icon"
 msgstr "Datei Icon"
 
-#: metadata/tagengine.cpp:69
+#: metadata/tagengine.cpp:67
 msgctxt "cover type"
 msgid "Front cover"
 msgstr "Frontseitencover"
 
-#: metadata/tagengine.cpp:71
+#: metadata/tagengine.cpp:69
 msgctxt "cover type"
 msgid "Back cover"
 msgstr "Rückseitencover"
 
-#: metadata/tagengine.cpp:73
+#: metadata/tagengine.cpp:71
 msgctxt "cover type"
 msgid "Leaflet page"
 msgstr "Broschürenseite"
 
-#: metadata/tagengine.cpp:75
+#: metadata/tagengine.cpp:73
 msgctxt "cover type"
 msgid "CD photo"
 msgstr "CD Photo"
 
-#: metadata/tagengine.cpp:77
+#: metadata/tagengine.cpp:75
 msgctxt "cover type"
 msgid "Lead artist picture"
 msgstr "Hauptinterpretenbild"
 
-#: metadata/tagengine.cpp:79
+#: metadata/tagengine.cpp:77
 msgctxt "cover type"
 msgid "Artist picture"
 msgstr "Interpretenbild"
 
-#: metadata/tagengine.cpp:81
+#: metadata/tagengine.cpp:79
 msgctxt "cover type"
 msgid "Conductor picture"
 msgstr "Dirigentenbild"
 
-#: metadata/tagengine.cpp:83
+#: metadata/tagengine.cpp:81
 msgctxt "cover type"
 msgid "Band picture"
 msgstr "Bandbild"
 
-#: metadata/tagengine.cpp:85
+#: metadata/tagengine.cpp:83
 msgctxt "cover type"
 msgid "Composer picture"
 msgstr "Komponistenbild"
 
-#: metadata/tagengine.cpp:87
+#: metadata/tagengine.cpp:85
 msgctxt "cover type"
 msgid "Lyricist picture"
 msgstr "Lyrikerbild"
 
-#: metadata/tagengine.cpp:89
+#: metadata/tagengine.cpp:87
 msgctxt "cover type"
 msgid "Picture of the recording location"
 msgstr "Bild des Aufnahmeortes"
 
-#: metadata/tagengine.cpp:91
+#: metadata/tagengine.cpp:89
 msgctxt "cover type"
 msgid "Picture of the artists during recording"
 msgstr "Bild des Interprten während der Aufnahme"
 
-#: metadata/tagengine.cpp:93
+#: metadata/tagengine.cpp:91
 msgctxt "cover type"
 msgid "Picture of the artists during performance"
 msgstr "Bild des Interprten während einer Aufführung"
 
-#: metadata/tagengine.cpp:95
+#: metadata/tagengine.cpp:93
 msgctxt "cover type"
 msgid "Picture from a video"
 msgstr "Bild aus einem Video"
 
-#: metadata/tagengine.cpp:97
+#: metadata/tagengine.cpp:95
 msgctxt "cover type"
 msgid "Picture of a large, coloured fish"
 msgstr "Bild eines großen, eingefärbten Fisches"
 
-#: metadata/tagengine.cpp:99
+#: metadata/tagengine.cpp:97
 msgctxt "cover type"
 msgid "Illustration related to the track"
 msgstr "Illustration im Zusammenhang mit dem Lied"
 
-#: metadata/tagengine.cpp:101
+#: metadata/tagengine.cpp:99
 msgctxt "cover type"
 msgid "Band logo"
 msgstr "Bandlogo"
 
-#: metadata/tagengine.cpp:103
+#: metadata/tagengine.cpp:101
 msgctxt "cover type"
 msgid "Publisher logo"
 msgstr "Herausgeberlogo"
-
-#: metadata/tagengine.cpp:883
-msgctxt "cover file name"
-msgid "cover"
-msgstr "cover"
 
 #: opener/cdopener.cpp:114
 msgid "Add CD tracks"
@@ -1576,7 +1618,7 @@ msgstr "Wählen Sie die gewünschten Ausgabe-Optionen und klicken Sie auf \"Ok\"
 
 #: opener/cdopener.cpp:388
 msgid "Save cue sheet..."
-msgstr "Cuesheet speichern..."
+msgstr "Cuesheet speichern ..."
 
 #: opener/cdopener.cpp:393
 msgid "Request CDDB"
@@ -1681,8 +1723,8 @@ msgstr "Stücke"
 msgid "Please select at least one track in order to proceed."
 msgstr "Bitte wählen Sie mindestens ein Stück, um fortzufahren."
 
-#: opener/cdopener.cpp:1271 opener/diropener.cpp:199 opener/fileopener.cpp:183
-#: opener/playlistopener.cpp:218 opener/urlopener.cpp:138 optionslayer.cpp:140
+#: opener/cdopener.cpp:1271 opener/diropener.cpp:199 opener/fileopener.cpp:189
+#: opener/playlistopener.cpp:224 opener/urlopener.cpp:138 optionslayer.cpp:140
 msgid "No conversion options selected."
 msgstr "Keine Konvertierungsoptionen ausgewählt."
 
@@ -1759,11 +1801,11 @@ msgstr "Alle Dateien"
 msgid "Add playlist"
 msgstr "Wiedergabeliste hinzufügen"
 
-#: opener/playlistopener.cpp:195
+#: opener/playlistopener.cpp:201
 msgid "The following files couldn't be found:\n"
 msgstr "Die folgenden Dateien konnten nicht gefunden werden:\n"
 
-#: opener/playlistopener.cpp:198
+#: opener/playlistopener.cpp:204
 msgid "Files not found"
 msgstr "Dateien nicht gefunden"
 
@@ -1804,7 +1846,7 @@ msgid ""
 "Replay Gain is not supported for the %1 file format.\n"
 "Possible solutions are listed below."
 msgstr ""
-"Replay Gain wird für das %1 Dateiformat nicht unterstützt\n"
+"Replay Gain wird für das %1 Dateiformat nicht unterstützt.\n"
 "Mögliche Lösungen sind hierunter aufgelistet."
 
 #: optionsdetailed.cpp:262
@@ -1813,7 +1855,7 @@ msgid ""
 "Please check your distribution's package manager in order to install an "
 "additional Replay Gain plugin."
 msgstr ""
-"Replay Gain wird für das %1 Dateiformat nicht unterstützt\n"
+"Replay Gain wird für das %1 Dateiformat nicht unterstützt.\n"
 "Bitte schauen Sie im Paketmanager ihrer Distribution nach einem zusätzlichen "
 "Replay Gain Plugin."
 
@@ -1903,15 +1945,11 @@ msgstr "von"
 msgid "Edit tags"
 msgstr "Metadaten bearbeiten"
 
-#: optionseditor.cpp:248
-msgid "Infos"
-msgstr "Infos"
-
-#: optionseditor.cpp:333
+#: optionseditor.cpp:349
 msgid "No file selected"
 msgstr "Keine Datei ausgewählt"
 
-#: optionseditor.cpp:388
+#: optionseditor.cpp:380
 msgid ""
 "The tags could not be read, because this is not a local file.\n"
 "soundKonverter will try to read the tags, when it is about to convert the "
@@ -1928,7 +1966,7 @@ msgstr ""
 "Aber dann wird soundKonverter nichtmehr versuchen die Metadaten nach dem "
 "Herunterladen einzulesen."
 
-#: optionseditor.cpp:398
+#: optionseditor.cpp:390
 msgid ""
 "Reading the tags of this file failed.\n"
 "soundKonverter will try to read the tags a second time, when it is about to "
@@ -1945,36 +1983,36 @@ msgstr ""
 "Aber dann wird soundKonverter nichtmehr versuchen die Metadaten erneut "
 "einzulesen."
 
-#: optionseditor.cpp:422
+#: optionseditor.cpp:414
 msgctxt "cover tooltip"
 msgid "Cover type:"
 msgstr "Cover-Typ:"
 
-#: optionseditor.cpp:424
+#: optionseditor.cpp:416
 msgctxt "cover tooltip"
 msgid "Description:"
 msgstr "Beschreibung:"
 
-#: optionseditor.cpp:425
+#: optionseditor.cpp:417
 msgctxt "cover tooltip"
 msgid "Size:"
 msgstr "Größe:"
 
-#: optionseditor.cpp:425
+#: optionseditor.cpp:417
 msgctxt "cover tooltip"
 msgid "%1 x %2 pixels (%3)"
 msgstr "%1 x %2 Pixel (%3)"
 
-#: optionseditor.cpp:427
+#: optionseditor.cpp:419
 msgctxt "cover tooltip"
 msgid "Mime type:"
 msgstr "Mime-Typ:"
 
-#: optionseditor.cpp:450
+#: optionseditor.cpp:442
 msgid "%1 Files"
 msgstr "%1 Dateien"
 
-#: optionseditor.cpp:468
+#: optionseditor.cpp:462
 msgid ""
 "You have selected multiple files with different conversion options.\n"
 "You can change the options of all files by hitting the button below."
@@ -1984,7 +2022,7 @@ msgstr ""
 "Sie können die Konvertierungsoptionen von allen Dateien bearbeiten, indem "
 "Sie den Button unten anklicken."
 
-#: optionseditor.cpp:476
+#: optionseditor.cpp:470
 msgid ""
 "Reading the tags of one or more files failed.\n"
 "soundKonverter will try to read the tags a second time, when it is about to "
@@ -2143,7 +2181,7 @@ msgstr "Ordner angeben"
 msgid "Copy directory structure"
 msgstr "Kopiere Ordnerstruktur"
 
-#: outputdirectory.cpp:58 outputdirectory.cpp:475
+#: outputdirectory.cpp:58 outputdirectory.cpp:482
 msgid "Choose an output directory"
 msgstr "Wähle ein Ausgabeverzeichnis"
 
@@ -2151,43 +2189,43 @@ msgstr "Wähle ein Ausgabeverzeichnis"
 msgid "Open the output directory with Dolphin"
 msgstr "Öffne das Augabeverzeichnis mit Dolphin"
 
-#: outputdirectory.cpp:230
+#: outputdirectory.cpp:237
 msgid "Unknown Artist"
 msgstr "Unbekannter Interpret"
 
-#: outputdirectory.cpp:234
+#: outputdirectory.cpp:241
 msgid "Unknown Album"
 msgstr "Unbekanntes Album"
 
-#: outputdirectory.cpp:238
+#: outputdirectory.cpp:245
 msgid "No Comment"
 msgstr "Kein Kommentar"
 
-#: outputdirectory.cpp:245
+#: outputdirectory.cpp:252
 msgid "Unknown Genre"
 msgstr "Unbekanntes Genre"
 
-#: outputdirectory.cpp:252
+#: outputdirectory.cpp:259
 msgid "Unknown Composer"
 msgstr "Unbekannter Komponist"
 
-#: outputdirectory.cpp:256
+#: outputdirectory.cpp:263
 msgid "Unknown Title"
 msgstr "Unbekannter Titel"
 
-#: outputdirectory.cpp:345
+#: outputdirectory.cpp:352
 msgctxt ""
 "will be appended to the filename if a file with the same name already exists"
 msgid "new"
 msgstr "neu"
 
-#: outputdirectory.cpp:525
+#: outputdirectory.cpp:532
 msgid "Name all converted files according to the specified pattern"
 msgstr "Benenne alle konvertierten Dateien mit Hilfe der Platzhalter"
 
-#: outputdirectory.cpp:527
+#: outputdirectory.cpp:533
 msgid ""
-"The following strings are wildcards, that will be replaced\n"
+"The following strings are wildcards that will be replaced\n"
 "by the information in the meta data:\n"
 "\n"
 "%a - Artist\n"
@@ -2199,10 +2237,16 @@ msgid ""
 "%p - Composer\n"
 "%t - Title\n"
 "%y - Year\n"
-"%f - Original file name"
+"%f - Original file name\n"
+"\n"
+"You may parenthesize these wildcards and surrounding characters with squared "
+"brackets ('[' and ']')\n"
+"so they will be ignored if the replacement value is empty.\n"
+"In order to use squared brackets you will have to escape them with a "
+"backslash ('\\[' and '\\]')."
 msgstr ""
 "Die folgenden Zeichenketten sind Platzhalter, sie werden durch die "
-"nformationen in den Metadaten ersetzt:\n"
+"Informationen in den Metadaten ersetzt:\n"
 "\n"
 "%a - Interpret\n"
 "%b - Album\n"
@@ -2213,19 +2257,25 @@ msgstr ""
 "%p - Komponist\n"
 "%t - Titel\n"
 "%y - Jahr\n"
-"%f - Original Dateiname"
+"%f - Original Dateiname\n"
+"\n"
+"Sie können diese Platzhalter und umgebende Zeichen auch mit eckigen Klammern "
+"('[' und ']')\n"
+"einklammern, dann werden sie ignoriert falls der Ersetzungswert leer ist.\n"
+"Um eckige Klammern zu verwenden müssen Sie ein Backslash vorranstellen "
+"('\\[' und '\\]')."
 
-#: outputdirectory.cpp:536
+#: outputdirectory.cpp:545
 msgid ""
 "Output all converted files into the same directory as the original files"
 msgstr ""
 "Gebe alle Dateien in das selbe Verzeichnis, wie die Originaldateien aus"
 
-#: outputdirectory.cpp:548
+#: outputdirectory.cpp:557
 msgid "Output all converted files into the specified output directory"
 msgstr "Gebe alle Dateien in das angegebene Verzeichnis aus"
 
-#: outputdirectory.cpp:560
+#: outputdirectory.cpp:569
 msgid "Copy the whole directory structure for all converted files"
 msgstr ""
 "Kopiere die komplette Verzeichnisstruktur für alle konvertierten Dateien"
@@ -2447,7 +2497,7 @@ msgstr "Variabel"
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:140
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:170
 #: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:384
-msgid "Avarage"
+msgid "Average"
 msgstr "Durchschnitt"
 
 #: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:114
@@ -2685,7 +2735,7 @@ msgid "Remaining time"
 msgstr "Verbleibende Zeit"
 
 #: progressindicator.cpp:77 replaygainscanner/replaygainscanner.cpp:222
-#: soundkonverter.cpp:285 soundkonverter.cpp:287
+#: soundkonverter.cpp:296 soundkonverter.cpp:298
 msgid "Finished"
 msgstr "Beendet"
 
@@ -2705,7 +2755,7 @@ msgstr "Alle zuklappen"
 msgid "Expand all"
 msgstr "Alle aufklappen"
 
-#: replaygainscanner/replaygainfilelist.cpp:462
+#: replaygainscanner/replaygainfilelist.cpp:468
 msgid "The following files could not be added:"
 msgstr "Die folgenden Dateien konnten nicht hinzugefügt werden:"
 
@@ -2715,15 +2765,15 @@ msgstr "Die folgenden Dateien konnten nicht hinzugefügt werden:"
 msgid "Replay Gain tool"
 msgstr "Replay Gain Werkzeug"
 
-#: replaygainscanner/replaygainscanner.cpp:50 soundkonverter.cpp:186
-#: soundkonverterview.cpp:82
+#: replaygainscanner/replaygainscanner.cpp:50 soundkonverter.cpp:194
+#: soundkonverterview.cpp:83
 msgid "Add folder..."
-msgstr "Verzeichnis hinzufügen..."
+msgstr "Verzeichnis hinzufügen ..."
 
-#: replaygainscanner/replaygainscanner.cpp:51 soundkonverter.cpp:181
-#: soundkonverterview.cpp:81
+#: replaygainscanner/replaygainscanner.cpp:51 soundkonverter.cpp:189
+#: soundkonverterview.cpp:82
 msgid "Add files..."
-msgstr "Dateien hinzufügen..."
+msgstr "Dateien hinzufügen ..."
 
 #: replaygainscanner/replaygainscanner.cpp:57
 msgid "Force recalculation"
@@ -2741,67 +2791,79 @@ msgstr "Replay Gain entfernen"
 msgid "Close"
 msgstr "Schließen"
 
-#: soundkonverter.cpp:43
+#: soundkonverter.cpp:45
 msgid "This is soundKonverter %1"
 msgstr "Dies ist soundKonverter %1"
 
-#: soundkonverter.cpp:72 soundkonverter.cpp:77 soundkonverter.cpp:92
+#: soundkonverter.cpp:47
+msgid "Compiled with TagLib %1.%2.%3"
+msgstr "Kompiliert mit TagLib %1.%2.%3"
+
+#: soundkonverter.cpp:49
+msgid ""
+"Reading/writing covers is not supported for flac and asf/wma files. TagLib "
+"1.7 is needed for that."
+msgstr ""
+"Das Lesen/Schreiben von Covern wird für flac und asf/wma Dateien nicht "
+"unterstützt. TagLib 1.7 wäre dazu nötig."
+
+#: soundkonverter.cpp:80 soundkonverter.cpp:85 soundkonverter.cpp:100
 msgid "Removing old file: %1"
 msgstr "Lösche alte Datei: %1"
 
-#: soundkonverter.cpp:166
+#: soundkonverter.cpp:174
 msgid "View logs..."
-msgstr "Logs anzeigen..."
+msgstr "Protokolle anzeigen ..."
 
-#: soundkonverter.cpp:171
+#: soundkonverter.cpp:179
 msgid "Replay Gain tool..."
-msgstr "Replay Gain Werkzeug..."
+msgstr "Replay Gain Werkzeug ..."
 
-#: soundkonverter.cpp:176
+#: soundkonverter.cpp:184
 msgid "About plugins..."
-msgstr "Über Plugins..."
+msgstr "Über Plugins ..."
 
-#: soundkonverter.cpp:191 soundkonverterview.cpp:83
+#: soundkonverter.cpp:199 soundkonverterview.cpp:84
 msgid "Add CD tracks..."
-msgstr "CD-Stücke hinzufügen..."
+msgstr "CD-Stücke hinzufügen ..."
 
-#: soundkonverter.cpp:196 soundkonverterview.cpp:84
+#: soundkonverter.cpp:204 soundkonverterview.cpp:85
 msgid "Add url..."
-msgstr "Url hinzufügen..."
+msgstr "Url hinzufügen ..."
 
-#: soundkonverter.cpp:201 soundkonverterview.cpp:85
+#: soundkonverter.cpp:209 soundkonverterview.cpp:86
 msgid "Add playlist..."
-msgstr "Wiedergabeliste hinzufügen..."
+msgstr "Wiedergabeliste hinzufügen ..."
 
-#: soundkonverter.cpp:206
+#: soundkonverter.cpp:214
 msgid "Load file list"
 msgstr "Dateiliste laden"
 
-#: soundkonverter.cpp:211
+#: soundkonverter.cpp:219
 msgid "Save file list"
 msgstr "Dateiliste speichern"
 
-#: soundkonverterview.cpp:93 soundkonverterview.cpp:96
+#: soundkonverterview.cpp:94 soundkonverterview.cpp:97
 msgid "Start"
 msgstr "Start"
 
-#: soundkonverterview.cpp:103 soundkonverterview.cpp:115
+#: soundkonverterview.cpp:104 soundkonverterview.cpp:116
 msgid "Stop"
 msgstr "Anhalten"
 
-#: soundkonverterview.cpp:104
+#: soundkonverterview.cpp:105
 msgid "Stop imediatelly"
 msgstr "Sofort anhalten"
 
-#: soundkonverterview.cpp:107
+#: soundkonverterview.cpp:108
 msgid "Stop after current conversions are completed"
 msgstr "Anhalten, nachdem aktuelle Konvertierungen fertig sind"
 
-#: soundkonverterview.cpp:110
+#: soundkonverterview.cpp:111
 msgid "Continue after current conversions are completed"
 msgstr "Fortsetzen, nachdem aktuelle Konvertierungen fertig sind"
 
-#: soundkonverterview.cpp:280
+#: soundkonverterview.cpp:281
 msgid "No CD device found"
 msgstr "Kein CD-Gerät gefunden"
 

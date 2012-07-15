@@ -129,32 +129,37 @@ void FileList::dropEvent( QDropEvent *event )
 
     for( int i=0; i<q_urls.size(); i++ )
     {
-        QString codecName = config->pluginLoader()->getCodecFromFile( q_urls.at(i) );
+        QString mimeType;
+        QString codecName = config->pluginLoader()->getCodecFromFile( q_urls.at(i), &mimeType );
 
-        if( codecName == "inode/directory" || config->pluginLoader()->canDecode(codecName,&errorList) )
+        if( mimeType == "inode/directory" || config->pluginLoader()->canDecode(codecName,&errorList) )
         {
             k_urls += q_urls.at(i);
         }
         else
         {
-            if( !codecName.startsWith("audio") && !codecName.startsWith("video") && !codecName.startsWith("application") )
+            if( codecName.isEmpty() && !mimeType.startsWith("audio") && !mimeType.startsWith("video") && !mimeType.startsWith("application") )
                 continue;
 
-            if( codecName == "application/x-ole-storage" || // Thumbs.db
-                codecName == "application/x-wine-extension-ini" ||
-                codecName == "application/x-cue" ||
-                codecName == "application/x-k3b" ||
-                codecName == "application/pdf" ||
-                codecName == "application/x-trash" ||
-                codecName.startsWith("application/vnd.oasis.opendocument") ||
-                codecName.startsWith("application/vnd.openxmlformats-officedocument") ||
-                codecName.startsWith("application/vnd.sun.xml")
+            if( mimeType == "application/x-ole-storage" || // Thumbs.db
+                mimeType == "application/x-wine-extension-ini" ||
+                mimeType == "application/x-cue" ||
+                mimeType == "application/x-k3b" ||
+                mimeType == "application/pdf" ||
+                mimeType == "application/x-trash" ||
+                mimeType.startsWith("application/vnd.oasis.opendocument") ||
+                mimeType.startsWith("application/vnd.openxmlformats-officedocument") ||
+                mimeType.startsWith("application/vnd.sun.xml")
             )
                 continue;
 
             fileName = KUrl(q_urls.at(i)).pathOrUrl();
+
+            if( codecName.isEmpty() )
+                codecName = mimeType;
             if( codecName.isEmpty() )
                 codecName = fileName.right(fileName.length()-fileName.lastIndexOf(".")-1);
+
             if( problems.value(codecName).count() < 2 )
             {
                 problems[codecName] += QStringList();
@@ -461,7 +466,6 @@ void FileList::updateItem( FileListItem *item )
         return;
 
     KUrl outputUrl;
-
     if( !item->outputUrl.toLocalFile().isEmpty() )
     {
         outputUrl = item->outputUrl;
@@ -470,14 +474,19 @@ void FileList::updateItem( FileListItem *item )
     {
         outputUrl = OutputDirectory::calcPath( item, config );
     }
-//     if( QFile::exists(outputUrl.toLocalFile()) )
-//     {
-//         if( config->data.general.conflictHandling == Config::Data::General::ConflictHandling::NewFileName )
-//         {
-//             outputUrl = OutputDirectory::uniqueFileName( outputUrl );
-//         }
-//     }
     item->setText( Column_Output, outputUrl.toLocalFile() );
+
+    removeItemWidget( item, Column_State );
+    if( item->lInfo )
+    {
+        disconnect( item->lInfo, SIGNAL(linkActivated(const QString&)), this, 0 );
+        delete item->lInfo;
+    }
+    item->setText( Column_State, "" );
+    item->setToolTip( Column_State, "" );
+    item->setToolTip( Column_Input, "" );
+    item->setToolTip( Column_Output, "" );
+    item->setToolTip( Column_Quality, "" );
 
     switch( item->state )
     {
@@ -533,9 +542,21 @@ void FileList::updateItem( FileListItem *item )
             item->setText( Column_State, i18n("Disc full") );
             break;
         }
+        case FileListItem::Skipped:
+        {
+            item->setText( Column_State, i18n("Will be skipped") );
+            break;
+        }
         case FileListItem::Failed:
         {
-            item->setText( Column_State, i18n("Failed") );
+            item->lInfo = new QLabel( "<a href=\"" + QString::number(item->logId) + "\">" + i18n("Failed") + "</a>" );
+            connect( item->lInfo, SIGNAL(linkActivated(const QString&)), this, SLOT(showLogClicked(const QString&)) );
+            setItemWidget( item, Column_State, item->lInfo );
+            const QString toolTip = i18n("The conversion has failed.\nSee the log for more information.");
+            item->setToolTip( Column_State, toolTip );
+            item->setToolTip( Column_Input, toolTip );
+            item->setToolTip( Column_Output, toolTip );
+            item->setToolTip( Column_Quality, toolTip );
             break;
         }
     }
@@ -558,13 +579,22 @@ void FileList::updateItem( FileListItem *item )
     else
     {
         item->setText( Column_Input, item->url.pathOrUrl() );
-        //if( options ) item->setToolTip( 0, i18n("The file %1 will be converted from %2 to %3 using the %4 profile.\nIt will be saved to: %5").arg(item->url.pathOrUrl()).arg(item->codecName).arg(options->codecName).arg(options->profile).arg(outputUrl.toLocalFile()) );
     }
 
     update( indexFromItem( item, 0 ) );
     update( indexFromItem( item, 1 ) );
     update( indexFromItem( item, 2 ) );
     update( indexFromItem( item, 3 ) );
+}
+
+void FileList::showLogClicked( const QString& logIdString )
+{
+    const int logId = logIdString.toInt();
+
+    if( !logId )
+        return;
+
+    emit showLog( logId );
 }
 
 void FileList::updateItems( QList<FileListItem*> items )
@@ -614,6 +644,9 @@ void FileList::startConversion()
                     isStopped = true;
                     break;
                 case FileListItem::DiscFull:
+                    isStopped = true;
+                    break;
+                case FileListItem::Skipped:
                     isStopped = true;
                     break;
                 case FileListItem::Failed:
@@ -669,6 +702,8 @@ void FileList::killConversion()
                     break;
                 case FileListItem::DiscFull:
                     break;
+                case FileListItem::Skipped:
+                    break;
                 case FileListItem::Failed:
                     break;
             }
@@ -698,6 +733,7 @@ void FileList::convertNextItem()
         return;
 
     int count = convertingCount();
+    bool callItemsSelected = false;
     QStringList devices;
     FileListItem *item;
 
@@ -722,16 +758,21 @@ void FileList::convertNextItem()
                 count++;
                 devices += item->device;
                 emit convertItem( item );
+                if( selectedFiles.contains(item) )
+                    callItemsSelected = true;
             }
             else if( item->track < 0 )
             {
                 count++;
                 emit convertItem( item );
+                if( selectedFiles.contains(item) )
+                    callItemsSelected = true;
             }
         }
     }
 
-//     itemsSelected();
+    if( callItemsSelected )
+        itemsSelected();
 
     if( count == 0 )
         itemFinished( 0, 0 );
@@ -785,6 +826,8 @@ int FileList::convertingCount()
                 break;
             case FileListItem::DiscFull:
                 break;
+            case FileListItem::Skipped:
+                break;
             case FileListItem::Failed:
                 break;
         }
@@ -821,7 +864,8 @@ void FileList::itemFinished( FileListItem *item, int state )
         if( state == 0 )
         {
             config->conversionOptionsManager()->removeConversionOptions( item->conversionOptionsId );
-            emit itemRemoved( item );
+            if( selectedFiles.contains(item) )
+                itemsSelected();
             delete item;
             item = 0;
         }
@@ -840,6 +884,10 @@ void FileList::itemFinished( FileListItem *item, int state )
         else if( state == 102 )
         {
             item->state = FileListItem::WaitingForAlbumGain;
+        }
+        else if( state == 103 )
+        {
+            item->state = FileListItem::Skipped;
         }
         else
         {
@@ -938,6 +986,8 @@ void FileList::rippingFinished( const QString& device )
                 if( item->track >= 0 && item->device == device )
                 {
                     emit convertItem( item );
+                    if( selectedFiles.contains(item) )
+                        itemsSelected();
                     return;
                 }
             }
@@ -986,6 +1036,8 @@ void FileList::showContextMenu( const QPoint& point )
             case FileListItem::BackendNeedsConfiguration:
                 break;
             case FileListItem::DiscFull:
+                break;
+            case FileListItem::Skipped:
                 break;
             case FileListItem::Failed:
                 break;
@@ -1119,6 +1171,9 @@ void FileList::removeSelectedItems()
                 case FileListItem::DiscFull:
                     canRemove = true;
                     break;
+                case FileListItem::Skipped:
+                    canRemove = true;
+                    break;
                 case FileListItem::Failed:
                     canRemove = true;
                     break;
@@ -1127,7 +1182,6 @@ void FileList::removeSelectedItems()
             {
                 emit timeChanged( -item->length );
                 config->conversionOptionsManager()->removeConversionOptions( item->conversionOptionsId );
-                emit itemRemoved( item );
                 delete item;
             }
         }
@@ -1140,6 +1194,7 @@ void FileList::removeSelectedItems()
 void FileList::convertSelectedItems()
 {
     bool started = false;
+    bool callItemsSelected = false;
     FileListItem *item;
     QList<QTreeWidgetItem*> items = selectedItems();
     for( int i=0; i<items.size(); i++ )
@@ -1172,6 +1227,9 @@ void FileList::convertSelectedItems()
                 case FileListItem::DiscFull:
                     canConvert = true;
                     break;
+                case FileListItem::Skipped:
+                    canConvert = true;
+                    break;
                 case FileListItem::Failed:
                     canConvert = true;
                     break;
@@ -1185,10 +1243,17 @@ void FileList::convertSelectedItems()
             if( !started )
                 emit conversionStarted();
 
-            emit convertItem( (FileListItem*)items.at(i) );
+            emit convertItem( item );
+
+            if( selectedFiles.contains(item) )
+                callItemsSelected = true;
+
             started = true;
         }
     }
+
+    if( callItemsSelected )
+        itemsSelected();
 }
 
 void FileList::killSelectedItems()
@@ -1224,6 +1289,8 @@ void FileList::killSelectedItems()
                     break;
                 case FileListItem::DiscFull:
                     break;
+                case FileListItem::Skipped:
+                    break;
                 case FileListItem::Failed:
                     break;
             }
@@ -1238,9 +1305,9 @@ void FileList::itemsSelected()
     selectedFiles.clear();
 
     QList<QTreeWidgetItem*> items = selectedItems();
-    for( int i=0; i<items.size(); i++ )
+    foreach( QTreeWidgetItem* item, items )
     {
-        selectedFiles.append( (FileListItem*)items.at(i) );
+        selectedFiles.append( (FileListItem*)item );
     }
 
     if( selectedFiles.count() > 0 )
@@ -1295,6 +1362,9 @@ void FileList::load( bool user )
                         case FileListItem::DiscFull:
                             canRemove = true;
                             break;
+                        case FileListItem::Skipped:
+                            canRemove = true;
+                            break;
                         case FileListItem::Failed:
                             canRemove = true;
                             break;
@@ -1303,11 +1373,12 @@ void FileList::load( bool user )
                 if( canRemove )
                 {
                     config->conversionOptionsManager()->removeConversionOptions( item->conversionOptionsId );
-                    emit itemRemoved( item );
                     delete item;
                     i--;
                 }
             }
+
+            itemsSelected();
         }
     }
 
@@ -1322,14 +1393,22 @@ void FileList::load( bool user )
             QDomElement root = list.documentElement();
             if( root.nodeName() == "soundkonverter" && root.attribute("type") == "filelist" )
             {
-                QDomNodeList conversionOptions = root.elementsByTagName("conversionOptions");
-                for( int i=0; i<conversionOptions.count(); i++ )
+                QDomNodeList conversionOptionsElements = root.elementsByTagName("conversionOptions");
+                for( int i=0; i<conversionOptionsElements.count(); i++ )
                 {
-                    CodecPlugin *plugin = (CodecPlugin*)config->pluginLoader()->backendPluginByName( conversionOptions.at(i).toElement().attribute("pluginName") );
-                    if( !plugin )
-                        continue;
-
-                    conversionOptionsIds[conversionOptions.at(i).toElement().attribute("id").toInt()] = config->conversionOptionsManager()->addConversionOptions( plugin->conversionOptionsFromXml(conversionOptions.at(i).toElement()) );
+                    ConversionOptions *conversionOptions = 0;
+                    const QString pluginName = conversionOptionsElements.at(i).toElement().attribute("pluginName");
+                    CodecPlugin *plugin = (CodecPlugin*)config->pluginLoader()->backendPluginByName( pluginName );
+                    if( plugin )
+                    {
+                        conversionOptions = plugin->conversionOptionsFromXml( conversionOptionsElements.at(i).toElement() );
+                    }
+                    else
+                    {
+                        conversionOptions = CodecPlugin::conversionOptionsFromXmlDefault( conversionOptionsElements.at(i).toElement() );
+                    }
+                    const int id = conversionOptionsElements.at(i).toElement().attribute("id").toInt();
+                    conversionOptionsIds[id] = config->conversionOptionsManager()->addConversionOptions( conversionOptions );
                 }
                 QDomNodeList files = root.elementsByTagName("file");
                 pScanStatus->setRange( 0, files.count() );

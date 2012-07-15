@@ -13,6 +13,8 @@
 #include "replaygainscanner/replaygainscanner.h"
 #include "aboutplugins.h"
 
+#include <taglib.h>
+
 #include <KActionCollection>
 #include <KApplication>
 #include <KActionMenu>
@@ -42,6 +44,11 @@ soundKonverter::soundKonverter()
     logger = new Logger( this );
     logger->log( 1000, i18n("This is soundKonverter %1").arg(SOUNDKONVERTER_VERSION_STRING) );
 
+    logger->log( 1000, "\n" + i18n("Compiled with TagLib %1.%2.%3").arg(TAGLIB_MAJOR_VERSION).arg(TAGLIB_MINOR_VERSION).arg(TAGLIB_PATCH_VERSION) );
+    #if (TAGLIB_MAJOR_VERSION == 1 && TAGLIB_MINOR_VERSION < 7)
+    logger->log( 1000, "<span style=\"color:red;\">" + i18n("Reading/writing covers is not supported for flac and asf/wma files. TagLib 1.7 is needed for that.") + "</span>" );
+    #endif
+
     config = new Config( logger, this );
     config->load();
 
@@ -49,6 +56,7 @@ soundKonverter::soundKonverter()
     connect( m_view, SIGNAL(signalConversionStarted()), this, SLOT(conversionStarted()) );
     connect( m_view, SIGNAL(signalConversionStopped(int)), this, SLOT(conversionStopped(int)) );
     connect( m_view, SIGNAL(progressChanged(const QString&)), this, SLOT(progressChanged(QString)) );
+    connect( m_view, SIGNAL(showLog(int)), this, SLOT(showLogViewer(int)) );
 
     // tell the KXmlGuiWindow that this is indeed the main widget
     setCentralWidget( m_view );
@@ -227,10 +235,13 @@ void soundKonverter::showConfigDialog()
     delete dialog;
 }
 
-void soundKonverter::showLogViewer()
+void soundKonverter::showLogViewer( const int logId )
 {
     if( !logViewer )
         logViewer = new LogViewer( logger, 0 );
+
+    if( logId )
+        logViewer->showLog( logId );
 
     logViewer->show();
     logViewer->raise();
