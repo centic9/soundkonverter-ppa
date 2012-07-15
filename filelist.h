@@ -50,9 +50,10 @@ public:
     void setOptionsLayer( OptionsLayer *_optionsLayer ) { optionsLayer = _optionsLayer; }
 
     void load( bool user = false );
-    void save( bool user = false );
     void updateAllItems();
     void updateItem( FileListItem *item );
+
+    bool waitForAlbumGain( FileListItem *item );
 
 private:
     /** Lists all file in a directory and adds them to the file list, if fast is false. The number of listed files is returned */
@@ -116,7 +117,7 @@ private slots:
     void selectPreviousItem();
     void selectNextItem();
 
-    bool checkWaitingForAlbumGain();
+//     bool checkWaitingForAlbumGain();
 
 public slots:
     // connected to soundKonverterView
@@ -129,6 +130,8 @@ public slots:
     void stopConversion();
     void continueConversion();
 
+    void save( bool user = false );
+
     // connected to Convert
     /**
      * The conversion of an item has finished and the state is reported:
@@ -137,9 +140,10 @@ public slots:
      * 1   = aborted
      * 100 = backend needs configuration
      * 101 = disc is full
+     * 102 = waiting for album gain
      */
     void itemFinished( FileListItem*, int );
-    void replaygainFinished( QList<FileListItem*>, int );
+//     void replaygainFinished( QList<FileListItem*>, int );
     /** The ripping of a track has finished, so the device is free for ripping the next track */
     void rippingFinished( const QString& device );
 

@@ -1,9 +1,15 @@
 ### Prio 1 ###
 
+
+getCodecFromFile liefert nur dann einen mimetype wenn der codec nicht bekannt ist,
+ dies wird nicht berücksichtigt, wenn der benutzer versucht nicht unterstützte dateien hinzuzufügen (z.b. wma beim replay gain tool)
+
+
 flac piping
 filelist progress bar translucent background
-bug: filelist progress bar sometimes scans multiple times - parent directory is scanned
+bug: filelist progress bar sometimes scans multiple times - parent directory is scanned - not reproduceable
 
+logs einfärben -> backend fehler hervorheben
 cdtext
 user scripts
 edit ripper parameters
@@ -131,4 +137,24 @@ m_type[device.udi()] = MediaDeviceCache::SolidAudioCdType;
 m_name[device.udi()] = device.vendor() + " - " + device.product();
 }
 }
+
+
+### debug
+
+FileList::load
+                    switch(qrand()%4)
+                    {
+                        case 0:
+                            item->state = FileListItem::WaitingForConversion;
+                            break;
+                        case 1:
+                            item->state = FileListItem::Converting;
+                            break;
+                        case 2:
+                            item->state = FileListItem::Failed;
+                            break;
+                        case 3:
+                            item->state = FileListItem::WaitingForAlbumGain;
+                            break;
+                    }
 

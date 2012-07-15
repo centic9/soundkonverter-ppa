@@ -22,41 +22,13 @@
 #include <oggfile.h>
 #include <vorbisfile.h>
 #include <flacfile.h>
+#include <asffile.h>
 #include <textidentificationframe.h>
 #include <attachedpictureframe.h>
 #include <xiphcomment.h>
 #include <mpcfile.h>
 #include <mp4tag.h>
 #include <mp4file.h>
-
-
-/*//#include <taglib/attachedpictureframe.h>
-#include <taglib/fileref.h>
-#include <taglib/id3v1genres.h> //used to load genre list
-#include <taglib/mpegfile.h>
-#include <taglib/tag.h>
-#include <taglib/tstring.h>
-#include <taglib/id3v2tag.h>
-#include <taglib/id3v1tag.h>
-#include <taglib/apetag.h>
-#include <taglib/xiphcomment.h>
-#include <taglib/mpegfile.h>
-#include <taglib/oggfile.h>
-#include <taglib/vorbisfile.h>
-#include <taglib/flacfile.h>
-#include <taglib/textidentificationframe.h>
-#include <taglib/xiphcomment.h>
-#include <taglib/mpcfile.h>
-// #include "wavpack/wvfile.h"
-// // #include "trueaudio/ttafile.h"
-*/
-// #ifdef HAVE_MP4V2
-// #include "metadata/mp4/mp4file.h"
-// #include "metadata/mp4/mp4tag.h"
-// #else
-// #include "metadata/m4a/mp4file.h"
-// #include "metadata/m4a/mp4itunestag.h"
-// #endif
 
 // TODO COMPILATION tag
 // FIXME BPM tag
@@ -67,6 +39,7 @@
 // Taglib added support for FLAC pictures in 1.7.0
 #if (TAGLIB_MAJOR_VERSION > 1) || (TAGLIB_MAJOR_VERSION == 1 && TAGLIB_MINOR_VERSION >= 7)
 # define TAGLIB_HAS_FLAC_PICTURELIST
+# define TAGLIB_HAS_ASF_PICTURE
 #endif
 
 
@@ -363,6 +336,28 @@ TagData* TagEngine::readTags( const KUrl& fileName ) // TagLib
                 }
             }
         }
+        else if ( TagLib::ASF::File *file = dynamic_cast<TagLib::ASF::File *>( fileref.file() ) )
+        {
+            // WM/Composer : Composer
+            // WM/AlbumTitle : Album artist
+            // WM/BeatsPerMinute : BPM
+
+            TagLib::ASF::Tag *asftag = dynamic_cast< TagLib::ASF::Tag * >( file->tag() );
+            if( asftag )
+            {
+                TagLib::ASF::AttributeListMap map = asftag->attributeListMap();
+                for( TagLib::ASF::AttributeListMap::ConstIterator it = map.begin(); it != map.end(); ++it )
+                {
+                    if( !it->second.size() )
+                        continue;
+
+                    if( it->first == "WM/Composer" )
+                    {
+                        tagData->composer = TStringToQString( it->second[0].toString() );
+                    }
+                }
+            }
+        }
         /*else if ( TagLib::MPC::File *file = dynamic_cast<TagLib::MPC::File *>( fileref.file() ) )
         {
             if ( file->APETag() )
@@ -572,6 +567,19 @@ bool TagEngine::writeTags( const KUrl& fileName, TagData *tagData )
                     mp4tag->itemListMap()["disk"] = TagLib::MP4::Item( tagData->disc, tagData->discTotal );
             }
         }
+        else if ( TagLib::ASF::File *file = dynamic_cast<TagLib::ASF::File *>( fileref.file() ) )
+        {
+            // WM/Composer : Composer
+            // WM/AlbumTitle : Album artist
+            // WM/BeatsPerMinute : BPM
+
+            TagLib::ASF::Tag *asftag = dynamic_cast< TagLib::ASF::Tag * >( file->tag() );
+            if( asftag )
+            {
+                if( !tagData->composer.isEmpty() )
+                    asftag->addAttribute( TagLib::String("WM/Composer"), TagLib::String(tagData->composer.toUtf8().data(), TagLib::String::UTF8) );
+            }
+        }
         /*if ( TagLib::TTA::File *file = dynamic_cast<TagLib::TTA::File *>( fileref.file() ) ) // NOTE writing works, but reading not
         {
             if ( file->ID3v2Tag() )
@@ -682,17 +690,6 @@ QList<CoverData*> TagEngine::readCovers( const KUrl& fileName ) // TagLib
                     CoverData *newCover = new CoverData( image_data, TStringToQString(mimeTypeValue[i]), CoverData::FrontCover, TStringToQString(descriptionValue[i]) );
                     covers.append( newCover );
                 }
-
-//                 if( map.contains("COVERART") )//COVERARTMIME,COVERARTDESCRIPTION
-//                 {
-//                     QByteArray image_data_b64(map["COVERART"].toString().toCString());
-//                     QByteArray image_data = QByteArray::fromBase64(image_data_b64);
-//
-// //                     if( !tagData->cover.loadFromData( image_data ) )
-// //                         tagData->cover.loadFromData( image_data_b64 );
-//                     CoverData *newCover = new CoverData( image_data, QString(), CoverData::FrontCover );
-//                     covers.append( newCover );
-//                 }
             }
         }
         else if ( TagLib::FLAC::File *file = dynamic_cast<TagLib::FLAC::File *>( fileref.file() ) )
@@ -732,6 +729,36 @@ QList<CoverData*> TagEngine::readCovers( const KUrl& fileName ) // TagLib
                         }
                     }
                 }
+            }
+        }
+        else if ( TagLib::ASF::File *file = dynamic_cast<TagLib::ASF::File *>( fileref.file() ) )
+        {
+            TagLib::ASF::Tag *asftag = dynamic_cast< TagLib::ASF::Tag * >( file->tag() );
+            if( asftag )
+            {
+                #ifdef TAGLIB_HAS_ASF_PICTURE
+                TagLib::ASF::AttributeListMap map = asftag->attributeListMap();
+                for( TagLib::ASF::AttributeListMap::ConstIterator it = map.begin(); it != map.end(); ++it )
+                {
+                    if( !it->second.size() )
+                        continue;
+
+                    if( it->first == "WM/Picture" )
+                    {
+                        TagLib::ASF::AttributeList coverList = it->second;
+                        for( TagLib::ASF::AttributeList::ConstIterator cover = coverList.begin(); cover != coverList.end(); ++cover )
+                        {
+                            if( cover->type() != TagLib::ASF::Attribute::BytesType )
+                                continue;
+
+                            TagLib::ASF::Picture pic = cover->toPicture();
+                            QByteArray image_data( pic.picture().data(), pic.picture().size() );
+                            CoverData *newCover = new CoverData( image_data, TStringToQString(pic.mimeType()), CoverData::Role(pic.type()), TStringToQString(pic.description()) );
+                            covers.append( newCover );
+                        }
+                    }
+                }
+                #endif // TAGLIB_HAS_ASF_PICTURE
             }
         }
     }
@@ -803,6 +830,29 @@ bool TagEngine::writeCovers( const KUrl& fileName, QList<CoverData*> covers )
                     coversList.append( TagLib::MP4::CoverArt( format, TagLib::ByteVector( cover->data.data(), cover->data.size() ) ) );
                 }
                 mp4tag->itemListMap()["covr"] = TagLib::MP4::Item( coversList );
+            }
+
+            return fileref.save();
+        }
+        else if ( TagLib::ASF::File *file = dynamic_cast<TagLib::ASF::File *>( fileref.file() ) )
+        {
+            TagLib::ASF::Tag *asftag = dynamic_cast< TagLib::ASF::Tag * >( file->tag() );
+            if( asftag )
+            {
+                #ifdef TAGLIB_HAS_ASF_PICTURE
+                foreach( CoverData *cover, covers )
+                {
+                    TagLib::ASF::Picture *newPicture = new TagLib::ASF::Picture();
+                    newPicture->setPicture( TagLib::ByteVector( cover->data.data(), cover->data.size() ) );
+                    newPicture->setType( TagLib::ASF::Picture::Type( cover->role ) );
+                    if( !cover->mimeType.isEmpty() )
+                        newPicture->setMimeType( TagLib::ByteVector(cover->mimeType.toUtf8().data()) );
+                    if( !cover->description.isEmpty() )
+                        newPicture->setDescription( TagLib::ByteVector(cover->description.toUtf8().data()) );
+
+                    asftag->addAttribute( TagLib::String("WM/Picture"), TagLib::ASF::Attribute( newPicture->render() ) );
+                }
+                #endif // TAGLIB_HAS_ASF_PICTURE
             }
 
             return fileref.save();
