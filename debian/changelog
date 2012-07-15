@@ -1,11 +1,11 @@
-soundkonverter (1.6.2-0ubuntu0~ppa1) precise; urgency=low
+soundkonverter (1:1.6.2-0ubuntu0~ppa1) precise; urgency=low
 
   * Imported Upstream version 1.6.2
   * Remaining change: Add dependeny on aften
 
  -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 15 Jul 2012 20:33:09 +0200
 
-soundkonverter (1.5.0-1) unstable; urgency=low
+soundkonverter (1:1.5.0-1) unstable; urgency=low
 
   * Imported Upstream version 1.5.0
   * Bumped Standards-Version to 3.9.3, no changes needed.
