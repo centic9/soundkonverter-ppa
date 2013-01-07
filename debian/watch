@@ -1,0 +1,3 @@
+version=3
+http://qa.debian.org/cgi-bin/fakeupstream.cgi?upstream=kdeapps/29024 .*=(?:\d+-)?soundkonverter-(\d.*)\.(?:tgz|tbz2|txz|tar\.(?:gz|bz2|xz))
+# Bart Martens <bartm@debian.org>  Fri, 04 Jan 2013 20:44:55 +0000

@@ -2,6 +2,7 @@
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/cmake.mk
+include /usr/share/dpkg/buildflags.mk
 
 install/soundkonverter::
 	install -D -p -m0644 debian/soundkonverter.lintian-overrides \

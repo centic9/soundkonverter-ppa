@@ -1,3 +1,13 @@
+soundkonverter (1.6.4-1) unstable; urgency=low
+
+  * Imported Upstream version 1.6.4
+  * Added working watch file.
+    Thanks to Bart Martens <bartm@debian.org>
+  * Use dpkg-buildflags for package hardening.
+  * Added dpkg-dev build dependency needed for dpkg-buildflags inclusion.
+
+ -- Michael Meskes <meskes@debian.org>  Mon, 07 Jan 2013 12:09:22 +0100
+
 soundkonverter (1.5.0-1) unstable; urgency=low
 
   * Imported Upstream version 1.5.0
