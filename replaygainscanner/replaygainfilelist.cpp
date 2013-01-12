@@ -182,7 +182,7 @@ void ReplayGainFileList::dropEvent( QDropEvent *event )
             QString mimeType;
             QString codecName = config->pluginLoader()->getCodecFromFile( q_urls.at(i), &mimeType );
 
-            if( codecName == "inode/directory" )
+            if( mimeType == "inode/directory" )
             {
                 k_urls_dirs += q_urls.at(i);
             }
@@ -457,7 +457,7 @@ void ReplayGainFileList::addFiles( const KUrl::List& fileList, const QString& _c
 
         totalTime += newItem->time;
 
-        updateItem( newItem );
+        updateItem( newItem, true );
 
 //         emit timeChanged( newItem->time );
     }
@@ -515,7 +515,7 @@ void ReplayGainFileList::removeSelectedItems()
     }
 }
 
-void ReplayGainFileList::updateItem( ReplayGainFileListItem *item )
+void ReplayGainFileList::updateItem( ReplayGainFileListItem *item, bool initialUpdate )
 {
     if( !item )
         return;
@@ -545,9 +545,13 @@ void ReplayGainFileList::updateItem( ReplayGainFileListItem *item )
             item->setText( Column_Album, "?" );
         }
     }
-    update( indexFromItem( item, 0 ) );
-    update( indexFromItem( item, 1 ) );
-    update( indexFromItem( item, 2 ) );
+
+    if( !initialUpdate )
+    {
+        update( indexFromItem( item, 0 ) );
+        update( indexFromItem( item, 1 ) );
+        update( indexFromItem( item, 2 ) );
+    }
 }
 
 void ReplayGainFileList::processItems( const QList<ReplayGainFileListItem*>& itemList )
@@ -582,6 +586,22 @@ void ReplayGainFileList::processItems( const QList<ReplayGainFileListItem*>& ite
     }
 
     currentId = currentPlugin->apply( urls, mode );
+    if( currentId < 0 )
+    {
+        for( int i=0; i<itemList.count(); i++ )
+        {
+            itemList.at(i)->state = ReplayGainFileListItem::Failed;
+            updateItem( itemList.at(i) );
+            parent = (ReplayGainFileListItem*)itemList.at(i)->parent();
+            if( parent )
+            {
+                parent->state = ReplayGainFileListItem::Failed;
+                updateItem( parent );
+            }
+        }
+        processNextFile();
+        return;
+    }
 
     currentTime = 0;
     for( int i=0; i<itemList.count(); i++ )
