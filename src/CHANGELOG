@@ -1,0 +1,240 @@
+1.9.80 (2.0.0 beta1):
+-Add: Parallel Replay Gain calculation in the Replay Gain tool
+-Add: Move tracks to new Album via context menu in the Replay Gain tool
+-Add: sox plugin with support for some new file formats (8svx, aiff, amr wb)
+-Add: Convert sample rate and sample size, downmix and apply effects (normalize, bass and treble) using sox
+-Add: Copy embedded covers for ogg files using METADATA_BLOCK_PICTURE
+-Add: Option to switch between COMMENT and DESCRIPTION as preferred comment field for ogg vorbis and flac files
+-Add: Option to select preferred total tracks/discs number fields for ogg vorbis and flac files
+-Add: Copy the tags total tracks/discs number, MusicBrainz Track Id and MusicBrainz Release Id
+-Add: Compression level option for the lame plugin
+-Add: Opus support (via opus-tools)
+-Change: Remember dimensions of the sub-windows and dialogs
+-Change: Sampling rate and number of channels can as of now only be changed through a filter plugin (currently only sox)
+-Change: Immediately start converting a file after adding it to the file list if the conversion is running in queue mode
+-Change: Quit soundKonverter when canceling the CD ripper dialog if soundKonverter was started with the --rip option
+-Change: Quit the Replay Gain tool when it gets closed
+-Change: Rename the m4a format to m4a/aac and alac to m4a/alac
+-Fix: Handle internal Replay Gain calculation properly
+-Fix: Don't accept dropping tracks onto albums with different codec or sampling rate in the Replay Gain tool
+-Fix: Better file type recognition
+-Fix: Output options control via command line parameters when ripping audio cds
+-Fix: User defined parameters for mpcenc when using a preset
+
+1.6.4:
+-Fix: Don't stall when Replay Gain plugin returns error code (e.g. when trying to remove musepack gain)
+-Fix: Some memory leaks
+-Fix: Performance improvements when adding large directories
+-Fix: Recognize file type correctly if extension is upper case
+-Fix: Dropping directories on the Replay Gain tool wouldn't work
+
+1.6.3:
+-Add: Brazilian Portuguese translation (by André Marcelo Alvarenga)
+-Fix: Make sure the file chooser dialog won't get overlayed by the options dialog in non-KDE environments
+
+1.6.2:
+-Fix: Skip files that ought to be skipped instead of generating a new file name
+-Fix: Make saving custom profiles work again
+-Fix: Don't mix up the output directory history for metadata and normal mode
+-Fix: Show proper progress when applying album gain
+
+1.6.1:
+-Fix: Don't try to restore the file list when calling soundKonverter while it is running
+
+1.6.0:
+-Add: Update translations
+-Fix: When loading file lists some options were ignored
+
+1.5.90 (1.6.0 rc1):
+-Add: Make the 'Failed' status click-able and open the log if clicked
+-Add: Make the file name of covers written to the output directory configureble
+-Change: Remove the info tab from the options editor
+-Change: Discard changes in the options editor when selecting a different file in file list
+-Fix: Problem dialog wasn't shown when dropping unsupported files on the soundKonverter or ReplayGain tool window
+-Fix: Show progress when decoding properly
+-Fix: Crash when in options editor opened items finished
+-Fix: Crash with ogg files containing covers but no mime type or description
+
+1.5.0:
+-Add: Update translations
+
+1.4.90 (1.5.0 rc1):
+-Add: Copy embedded covers for wma files
+-Add: Calculate Album Gain for albums in the conversion list
+-Add: Russian translation
+-Change: Replace Spanish Argentinan translation (es_AR) with Spanish (es) since KDE isn't able to use es_AR translations
+-Fix: Cdrom drive detection would fail with Ubuntu 12.04 (patch by Eike Thaden)
+-Fix: Musicbrainz lookup not working if data track present (patch by Eike Thaden)
+-Fix: Don't show data tracks in the CD ripper UI (patch by Eike Thaden)
+-Fix: Musicbrainz lookup would only work through the freedb gateway (patch by Eike Thaden)
+
+1.4.0:
+-Add: Show progress bar when loading file lists
+
+1.3.90 (1.4.0 rc1):
+-Add: TTA Enc plugin
+-Add: sad (Black & White audio file) support
+-Add: Improved saving of the last used conversion profile
+-Change: Reduce amount of alerts when dropping unsupported file types (like images) on the file list
+-Fix: Files added with "add directory" could fail
+
+1.3.3:
+-Change: Piping is disabled by default, it can be activated in the config dialog though
+-Fix: Some piping bugs with vorbistools and ffmpeg
+-Fix: Crash when adding a directory
+
+1.3.2:
+-Fix: Crash when trying to write covers (attempt #2)
+
+1.3.1:
+-Add: Update translations
+-Fix: Crash when trying to write covers
+
+1.3.0:
+-Add: Update translations
+
+1.2.90 (1.3.0 rc1):
+-Add: Copy embedded covers for ogg (only reading), mp3, mp4 and flac files
+-Add: Option to copy embedded covers to the output directory
+-Add: Honor total disc numbers
+-Add: Session management
+-Change: By default log files won't be written to the hard drive anymore, it can be activated in the config dialog though
+-Fix: Conversion problems when using pipes with newer KDE/Qt versions
+-Fix: Don't write empty tags
+-Fix: Initial loading of conversion profiles
+
+1.2.1:
+-Add: French translation
+-Fix: Make mplayer log less when decoding videos
+-Fix: Remove old log files on start up
+
+1.2.0:
+-Add: Update translations
+-Remove: French, Serbian, Russian and Brazilian Portuguese translations since they are less than 80% complete
+
+1.1.90 (1.2.0 rc1):
+-Add: Aften plugin
+-Add: Speex plugin
+-Add: Plugin info dialog
+-Add: Make it possible to use experimental codecs with ffmpeg
+-Add: Make it possible to use user defined arguments with ffmpeg
+-Add: Re-add aac/m4a encoding to the ffmpeg plugin
+-Change: Query ffmpeg for supported codecs
+
+1.1.0:
+-Add: Estonian translation (by Mihkel Tõnnov)
+-Add: Serbian translation (by Slobodan Terzić)
+-Add: Spanish (Argentinian) translation (by akana_sfe)
+-Change: Only use wav as temp codec
+
+1.0.90 (1.1.0 rc1):
+-Add: Portuguese translation (by Sérgio Marques)
+-Add: Brazilian Portuguese translation (by Tex Weissffudder)
+-Add: Russian translation (by Alexey Ivanov)
+-Add: Inform the user if there is a better backend available for a given format (e.g. prefer lame over ffmpeg)
+-Add: Make it possible to choose the preferred extension for ogg vorbis files
+-Add: Playing CD tracks before ripping them
+-Add: Fluidsynth plugin
+-Add: Possibility to write temporary files to /dev/shm
+-Change: Prevent options dialogs from getting too wide
+-Change: Automatically remove FAT incompatible characters if output directory is on a FAT volume
+-Change: MusePack: Find mpenc, mpcdec and mpcgain backends, too
+-Fix: CDDB requests
+-Fix: Handle files with dollar signs and backticks (`) correctly
+-Fix: Filnames wouldn't be FAT compatible if output mode was copy directory structure
+-Fix: Display correct progress when applying Replay Gain to multiple ogg vorbis files
+-Fix: Replay Gain Scanner wouldn't work properly with files of different format
+
+1.0.0:
+-Add: Option to choose between APE and ID3v2  tags for mp3gain and aacgain
+-Add: Hungarian translation (by Dr. Orosz Tamás)
+-Add: French translation (by Yannick Ernult)
+-Change: Make it possible to overwrite hidden lame parameters with the additional parameters option
+-Change: Distinguish between aac and m4a files, where aac is the transport stream and m4a an mp4 container with aac data; mp4 is the video container
+-Fix: Call neroAacEnc with the correct bitrate
+-Fix: Undo mp3gain and aacgain changes correctly
+-Fix: Load the right Replay Gain plugin
+
+0.9.95 (1.0.0 rc3):
+-Add: Updated czech translation (by Pavel Fric)
+-Add: Read Replay Gain in more formats
+-Add: Save last 5 output directory paths (accessible through the directory combobox)
+-Add: Option to specify how the Replay Gain scanner should group files
+-Change: Close soundkonverter if --autoclose was passed, even if the main window is visible
+-Change: Remove internal Replay Gain calculation from lame plugin since it's not writing tags
+-Change: Use PATH variable to find backends
+-Change: Activate Replay Gain tool when adding files
+-Fix: Display correct conversion options in the conversion options editor with multiple files selected
+-Fix: Apply output directory to the conversion options input widget
+-Fix: Don't update conversion options or tags in the conversion options editor with multiple files selected if they don't match
+-Fix: Make edit conversion options/tags buttons in the conversion options editor work
+-Fix: Fix possible crash in the log viewer
+-Fix: Handle files with quotation characters (") correctly
+-Fix: When adding multiple files of different formats, the formats wouldn't be recognized correctly
+
+0.9.94 (1.0.0 rc2):
+-Add: Updated czech translation (by Pavel Fric)
+-Fix: Tint items in the Replay Gain scanner red while calculating Replay Gain
+-Fix: Make the Replay Gain scanner skip file with calculated tags
+-Fix: Ensure items in the file list and Replay Gain file list get redrawn after an update
+-Fix: Hide open directory dialog before scanning the directory to show the progressbar
+-Fix: Don't crash when deleting file list items
+-Fix: Don't recognize vorbis files as flac
+-Fix: Call lame with correct --abr and --cbr parameters
+
+0.9.93 (1.0.0 rc1):
+-Add: Video formats for ffmpeg and mplayer
+-Add: German translation
+-Change: Re-enable the CD ripper (using paranoia again)
+-Change: Save frames properly when generating cuesheet files
+-Fix: Retry conversion if file output size is too small
+-Fix: Delete temp files properly if a conversion pipe failed
+-Fix: alac extensions
+-Fix: Some bugs in the CD ripper dialog
+-Fix: Drag'n'drop directories wouldn't work
+-Fix: Make shortcuts work
+
+0.9.92 (1.0.0 beta3):
+-Add: User defined command line arguments for lame and some new plugins
+-Add: User defined command to execute after a file has been converted
+-Add: Create action menus for the file manager
+-Add: Flake plugin
+-Add: TwoLame plugin (Warning: Corrupted a file while testing)
+-Add: Monkey's Audio Compressor plugin
+-Add: WavPack and Wv Gain plugin
+-Add: shorten plugin
+-Add: MusePack codec and replaygain plugins
+-Change: Disable CD ripper, due to some incompatibilitys with kde (still accessible through the command line though)
+-Change: Create temp files in the kde-user temp dir
+-Change: Remove partially converted files on abort or fail
+-Change: Remove old KDE4 action menus created by soundKonverter 0.3
+-Fix: Remove audio/mpeg mime type from mp1 and mp2 codecs in the ffmpeg and mplayer plugins because it would conflict with mp3
+-Fix: soundKonverter would get stuck when trying to add replaygain (add argument for mp3gain/aacgain to lower gain to avoid clipping)
+-Fix: soundkonverter would crash when trying to rip a cd or add files if the options widget can't be initialized correctly
+-Fix: The options widget wasn't initialized correctly causing some crashes
+-Fix: Don't truncate text in the combo button (add files, etc.)
+-Fix: Try the plugin selected by the user in the detailed tab at first
+-Fix: The options editor dialog would show wrong data
+
+0.9.91 (1.0.0 beta2):
+-Add: flac and metaflac plugins
+-Add: faac, neroaac and aacgain plugins
+-Add: timidity plugin
+-Add: Enclosing %x space holders in the output directory with "[]" will only activate the space holder if the tag is not empty
+-Add: Czech translation (by Pavel Fric)
+-Change: use input file name as output file name if output mode is set to "metadata" and the file name can't be filled with either the track number or title
+-Change: added message box to warn the user when trying to rip audio cds with kde < 4.4.0
+-Change: don't close soundkonverter when started invisible but the conversion was aborted by the user
+-Change: don't save file list after each succeeded conversion because it was slowing down the conversion when converting a lot of files
+-Fix: File conflict handling
+-Fix: Update file list if configuration changed
+-Fix: Rip CDs by passing parameters to soundkonverter
+-Fix: Replay Gain tool would only process one file/album
+-Fix: Downloading files from remote locations
+-Fix: Options editor wouldn't save modified tags
+-Fix: Hitting the button "edit tags" in the options editor wouldn't work
+-Fix: The options editor would cause a crash when files where removed from the file list
+-Fix: Race condition when trying to convert multiple files having the same output file name simultaneously
+
+0.9.90 (1.0.0 beta1):
+First usable release of the soundKonverter 1.0 series

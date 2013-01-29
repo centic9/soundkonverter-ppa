@@ -4,7 +4,6 @@ soundkonverter for Debian
 Due to patents problems, many decoders/encoders aren't available on Debian.
 
 At the moment you can find on Debian:
- * cdda2wav (provides cdda2wav)
  * cdparanoia (provides cdparanoia)
  * faad (provides faad)
  * ffmpeg (provides ffmpeg)

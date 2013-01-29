@@ -1,3 +1,11 @@
+soundkonverter (1.9.80-1) unstable; urgency=low
+
+  * Imported Upstream version 1.9.80
+  * Bumped Standards-Version to 3.9.4, no changes needed.
+  * Don't mention cdda2wav anymore.
+
+ -- Michael Meskes <meskes@debian.org>  Tue, 29 Jan 2013 10:45:26 +0100
+
 soundkonverter (1.6.4-1) unstable; urgency=low
 
   * Imported Upstream version 1.6.4
