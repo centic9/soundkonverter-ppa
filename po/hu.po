@@ -1,0 +1,3316 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Orosz Tamás, 2011.
+# Tamas Orosz <orosz.tamaas@gmail.com>, 2011-2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: soundkonverter\n"
+"Report-Msgid-Bugs-To: https://bugs.launchpad.net/ubuntu/%2Bsource/"
+"soundkonverter/\n"
+"POT-Creation-Date: 2013-04-14 12:43+0200\n"
+"PO-Revision-Date: 2013-02-13 10:33+0000\n"
+"Last-Translator: otomi <orosz.tamaas@gmail.com>\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/soundkonverter/"
+"language/hu/)\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: aboutplugins.cpp:19
+msgid "About plugins"
+msgstr "A bővítményekről"
+
+#: aboutplugins.cpp:31
+msgid "Installed plugins:"
+msgstr "Telepített bővítmények:"
+
+#: aboutplugins.cpp:128
+msgid "About plugin %1:"
+msgstr "Bővítmény névjegye: %1"
+
+#: aboutplugins.cpp:130
+msgid "Plugin type: %1"
+msgstr "Bővítmény típusa: %1"
+
+#: aboutplugins.cpp:136
+msgid "Backend binaries:"
+msgstr "Háttérprogramok"
+
+#: aboutplugins.cpp:141
+msgid "%1 (found at: %2)"
+msgstr "%1 (itt található: %2)"
+
+#: aboutplugins.cpp:143
+msgid "%1 (not found)"
+msgstr "%1 (nem található)"
+
+#: aboutplugins.cpp:164 aboutplugins.cpp:199 aboutplugins.cpp:230
+msgid "Supported codecs:"
+msgstr "Támogatott kodekek:"
+
+#: aboutplugins.cpp:169 aboutplugins.cpp:177 aboutplugins.cpp:204
+#: aboutplugins.cpp:212 aboutplugins.cpp:227
+msgid "Currently deactivated."
+msgstr "Pillanatnyilag kikapcsolva."
+
+#: aboutplugins.cpp:172 aboutplugins.cpp:207
+msgid "Encode: %1"
+msgstr "Kódolás: %1"
+
+#: aboutplugins.cpp:180 aboutplugins.cpp:215
+msgid "Decode: %1"
+msgstr "Dekódolás: %1"
+
+#: aboutplugins.cpp:240 configdialog/configbackendspage.cpp:163
+#: configdialog/configbackendspage.cpp:303
+#: configdialog/configbackendspage.cpp:382 optionsdetailed.cpp:296
+msgid "Configure %1 ..."
+msgstr "Beállítás %1 ..."
+
+#: codecoptimizations.cpp:17 codecproblems.cpp:14
+msgid "Solutions for backend problems"
+msgstr "Háttérprogram-problémák megoldásai"
+
+#: codecoptimizations.cpp:27
+msgid ""
+"You have installed or removed backends and your soundKonverter settings can "
+"be optimized."
+msgstr ""
+"Háttérprogramokat telepített vagy távolított el, a soundKonverter "
+"beállításai optimalizálhatók."
+
+#: codecoptimizations.cpp:51
+msgid "For encoding %1 files the backend '%2' can be replaced with '%3'."
+msgstr ""
+"A(z) %1 fáljok kódolásához a(z) '%2' háttérprogram lecserélhető erre: '%3'. "
+
+#: codecoptimizations.cpp:55
+msgid "For ripping audio CDs the backend '%1' can be replaced with '%2'."
+msgstr ""
+
+#: codecoptimizations.cpp:59
+msgid "For decoding %1 files the backend '%2' can be replaced with '%3'."
+msgstr ""
+"A(z) %1 fáljok dekódolásához a(z) '%2' háttérprogram lecserélhető erre: "
+"'%3'. "
+
+#: codecoptimizations.cpp:63
+msgid ""
+"For applying Replay Gain to %1 files the backend '%2' can be replaced with "
+"'%3'."
+msgstr ""
+"A(z) %1 fáljok hangerő-korrekciójához a(z) '%2' háttérprogram lecserélhető "
+"erre: '%3'. "
+
+#: codecoptimizations.cpp:66
+msgid "Ignore"
+msgstr "Mellőzés"
+
+#: codecoptimizations.cpp:71
+msgid "Fix"
+msgstr "Rögzítés"
+
+#: codecproblems.cpp:28
+msgid ""
+"soundKonverter couldn't find any missing packages.\n"
+"If you are missing some file formats you might need to install an additional "
+"plugin via the package manager of your distribution."
+msgstr ""
+"A soundKonverter nem talált hiányzó csomagokat.\n"
+"Amennyiben hiányol néhány fájlformátumot, kiegészítő bővítményeket kell "
+"telepítenie a csomagkezelője segítségével."
+
+#: codecproblems.cpp:32
+msgid ""
+"Some of the installed plugins aren't working.\n"
+"Possible solutions are listed below."
+msgstr ""
+"Valamelyik bővítmény nem működik.\n"
+"A lehetséges megoldások lentebb láthatók."
+
+#: codecproblems.cpp:37
+msgid ""
+"Some files can't be decoded.\n"
+"Possible solutions are listed below."
+msgstr ""
+"Némelyik fájl nem dekódolható.\n"
+"A lehetséges megoldások lentebb láthatók."
+
+#: codecproblems.cpp:41
+msgid ""
+"Replay Gain isn't supported for some files.\n"
+"Possible solutions are listed below."
+msgstr ""
+"A hangerő-korrekció nem támogat néhány fájlt.\n"
+"A lehetséges megoldások lentebb láthatók."
+
+#: codecproblems.cpp:47
+msgid ""
+"Ripping audio CDs is not supported by any installed plugin.\n"
+"Please have a look at your distributions package manager in order to get a "
+"cd ripper plugin for soundKonverter."
+msgstr ""
+"Valamelyik telepített bővítmény nem támogatja az Audio CD beolvasását.\n"
+"CD-beolvasó bővítmény beszerzéséhez nézzen körül a csomagkezelőben."
+
+#: codecproblems.cpp:51
+msgid ""
+"Ripping audio CDs is currently not supported because of missing backends.\n"
+"Possible solutions are listed below."
+msgstr ""
+"Hiányzó háttérprogramok miatt az Audio CD beolvasása nem támogatott.\n"
+"A lehetséges megoldások lentebb láthatók."
+
+#: codecproblems.cpp:67 codecproblems.cpp:71
+msgid "Possible solutions for %1"
+msgstr "Lehetséges megoldások ehhez: %1"
+
+#: codecproblems.cpp:67 codecproblems.cpp:71
+#: plugins/soundkonverter_codec_ffmpeg/soundkonverter_codec_ffmpeg.cpp:333
+#: plugins/soundkonverter_codec_libav/soundkonverter_codec_libav.cpp:333
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:214
+msgctxt "like in either or"
+msgid "or"
+msgstr "vagy"
+
+#: codecproblems.cpp:71
+msgid "Affected files:"
+msgstr "Érintett fájlok:"
+
+#: config.cpp:51 config.cpp:53 config.cpp:428 config.cpp:469
+#: configdialog/configgeneralpage.cpp:55 configdialog/configgeneralpage.cpp:71
+#: configdialog/configgeneralpage.cpp:252
+#: configdialog/configgeneralpage.cpp:254
+#: configdialog/configgeneralpage.cpp:258
+#: configdialog/configgeneralpage.cpp:263
+#: configdialog/configgeneralpage.cpp:268 options.cpp:43 options.cpp:64
+#: optionsdetailed.cpp:469
+msgid "Last used"
+msgstr "Utoljára használt"
+
+#: config.cpp:52 config.cpp:432 config.cpp:439 config.cpp:445
+#: configdialog/configgeneralpage.cpp:75
+#: configdialog/configgeneralpage.cpp:256 options.cpp:73
+#: optionsdetailed.cpp:465 optionssimple.cpp:163 optionssimple.cpp:199
+#: optionssimple.cpp:297
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:169
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:206
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:144
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:180
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:211
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:234
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:289
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:268
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:316
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:211
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:234
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:289
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:174
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:213
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:165
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:212
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:150
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:183
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:163
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:202
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:161
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:200
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:251
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:393
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:416
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:439
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:525
+#: soundkonverterview.cpp:544 soundkonverterview.cpp:546
+msgid "High"
+msgstr "Jó"
+
+#: config.cpp:118 configdialog/configcoverartpage.cpp:135
+msgctxt "cover file name"
+msgid "cover"
+msgstr "borító"
+
+#: config.cpp:276 config.cpp:302 config.cpp:304 convert.cpp:147
+#: convert.cpp:219 convert.cpp:386
+msgid "Try internal"
+msgstr "Próbálja a belsőt"
+
+#: config.cpp:429 config.cpp:445 configdialog/configgeneralpage.cpp:72
+#: configdialog/configgeneralpage.cpp:256 optionsdetailed.cpp:462
+#: optionssimple.cpp:160 optionssimple.cpp:187 optionssimple.cpp:297
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:157
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:182
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:132
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:156
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:199
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:222
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:247
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:256
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:283
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:199
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:222
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:247
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:162
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:186
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:153
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:177
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:138
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:162
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:151
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:175
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:149
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:173
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:381
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:404
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:427
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:456
+#: soundkonverterview.cpp:529 soundkonverterview.cpp:531
+msgid "Very low"
+msgstr "Nagyon gyenge"
+
+#: config.cpp:430 config.cpp:445 configdialog/configgeneralpage.cpp:73
+#: configdialog/configgeneralpage.cpp:256 optionsdetailed.cpp:463
+#: optionssimple.cpp:161 optionssimple.cpp:191 optionssimple.cpp:297
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:161
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:190
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:136
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:164
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:203
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:226
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:261
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:260
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:294
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:203
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:226
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:261
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:166
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:195
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:157
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:189
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:142
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:169
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:155
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:184
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:153
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:182
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:249
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:385
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:408
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:431
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:479
+#: soundkonverterview.cpp:534 soundkonverterview.cpp:536
+msgid "Low"
+msgstr "Gyenge"
+
+#: config.cpp:431 config.cpp:445 configdialog/configgeneralpage.cpp:74
+#: configdialog/configgeneralpage.cpp:256 optionsdetailed.cpp:464
+#: optionssimple.cpp:162 optionssimple.cpp:195 optionssimple.cpp:297
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:165
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:198
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:140
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:172
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:207
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:230
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:275
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:264
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:305
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:207
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:230
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:275
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:170
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:204
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:161
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:201
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:146
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:176
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:159
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:193
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:157
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:191
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:250
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:389
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:412
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:435
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:502
+#: soundkonverterview.cpp:539 soundkonverterview.cpp:541
+msgid "Medium"
+msgstr "Megfelelő"
+
+#: config.cpp:433 config.cpp:445 configdialog/configgeneralpage.cpp:76
+#: configdialog/configgeneralpage.cpp:256 optionsdetailed.cpp:466
+#: optionssimple.cpp:164 optionssimple.cpp:203 optionssimple.cpp:297
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:173
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:214
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:148
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:188
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:215
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:238
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:303
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:272
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:327
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:215
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:238
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:303
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:178
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:222
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:169
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:223
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:154
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:190
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:167
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:211
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:165
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:209
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:252
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:397
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:420
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:443
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:548
+#: soundkonverterview.cpp:549 soundkonverterview.cpp:551
+msgid "Very high"
+msgstr "Nagyon jó"
+
+#: config.cpp:434 config.cpp:449 configdialog/configgeneralpage.cpp:77
+#: configdialog/configgeneralpage.cpp:261 optionsdetailed.cpp:467
+#: optionssimple.cpp:165 optionssimple.cpp:207 optionssimple.cpp:301
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:153
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:128
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:189
+#: plugins/soundkonverter_codec_flac/flaccodecwidget.cpp:87
+#: plugins/soundkonverter_codec_flac/flaccodecwidget.cpp:92
+#: plugins/soundkonverter_codec_flake/flakecodecwidget.cpp:144
+#: plugins/soundkonverter_codec_flake/flakecodecwidget.cpp:149
+#: plugins/soundkonverter_codec_fluidsynth/fluidsynthcodecwidget.cpp:43
+#: plugins/soundkonverter_codec_fluidsynth/fluidsynthcodecwidget.cpp:48
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:252
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:189
+#: plugins/soundkonverter_codec_mac/maccodecwidget.cpp:90
+#: plugins/soundkonverter_codec_mac/maccodecwidget.cpp:95
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:158
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:149
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:134
+#: plugins/soundkonverter_codec_shorten/shortencodecwidget.cpp:75
+#: plugins/soundkonverter_codec_shorten/shortencodecwidget.cpp:80
+#: plugins/soundkonverter_codec_timidity/timiditycodecwidget.cpp:43
+#: plugins/soundkonverter_codec_timidity/timiditycodecwidget.cpp:48
+#: plugins/soundkonverter_codec_ttaenc/ttaenccodecwidget.cpp:75
+#: plugins/soundkonverter_codec_ttaenc/ttaenccodecwidget.cpp:80
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:147
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:145
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:92
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:97
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:375
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:571
+#: soundkonverterview.cpp:554 soundkonverterview.cpp:556
+msgid "Lossless"
+msgstr "Veszteségmentes"
+
+#: config.cpp:435 config.cpp:453 configdialog/configgeneralpage.cpp:266
+#: optionsdetailed.cpp:468 optionssimple.cpp:211 optionssimple.cpp:305
+#: soundkonverterview.cpp:559 soundkonverterview.cpp:561
+msgid "Hybrid"
+msgstr "Keverék"
+
+#: config.cpp:457 optionsdetailed.cpp:471 optionssimple.cpp:168
+#: optionssimple.cpp:215 optionssimple.cpp:309 optionssimple.cpp:372
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:176
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:151
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:193
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:242
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:39
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:275
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:193
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:242
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:43
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:181
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:172
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:157
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:137
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:142
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:170
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:168
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:448
+msgid "User defined"
+msgstr "Egyéni"
+
+#: config.cpp:620
+msgid "Convert with soundKonverter"
+msgstr "Konvertálás a soundKonverterrel"
+
+#: config.cpp:656
+msgid "Add Replay Gain with soundKonverter"
+msgstr "A hangerő-korrekció hozzáadása a soundKonverterhez"
+
+#: configdialog/configadvancedpage.cpp:36 configdialog/configdialog.cpp:48
+msgid "Advanced"
+msgstr "Speciális"
+
+#: configdialog/configadvancedpage.cpp:45
+msgid "Preferred file name extension for ogg vorbis files:"
+msgstr "Alapértelmezett kiterjesztés az ogg vorbis fájlokhoz:"
+
+#: configdialog/configadvancedpage.cpp:61
+msgid "Preferred comment tag field for ogg vorbis and flac files:"
+msgstr "Alapértelmezett megjegyzés mező az ogg vorbis és flac fájlokhoz:"
+
+#: configdialog/configadvancedpage.cpp:62
+#: configdialog/configadvancedpage.cpp:65
+msgid ""
+"Some applications use the field DESCRIPTION even though the field COMMENT is "
+"the correct one.\n"
+"Comments will be written to the selected field, when reading tags the "
+"selected field will be preferred."
+msgstr ""
+"Egyes alkalmazások a LEÍRÁS mezőt használják, holott a MEGJEGYZÉS lenne a "
+"helyes.\n"
+"A hozzászólások a kiválasztott mezőbe lesznek írva."
+
+#: configdialog/configadvancedpage.cpp:79
+msgid "Preferred total tracks number tag field for ogg vorbis and flac files:"
+msgstr "Alapértelmezett 'összes szám' mező az ogg vorbis és flac fájlokhoz:"
+
+#: configdialog/configadvancedpage.cpp:80
+#: configdialog/configadvancedpage.cpp:83
+msgid ""
+"Total tracks number will be written to the selected field, when reading tags "
+"the selected field will be preferred.\n"
+"When using the field TRACKNUMBER, the track number and the total tracks "
+"number will be written to the same field separated by a slash ('/')."
+msgstr ""
+
+#: configdialog/configadvancedpage.cpp:98
+msgid "Preferred total discs number tag field for ogg vorbis and flac files:"
+msgstr "Alapértelmezett 'összes lemez' mező az ogg vorbis és flac fájlokhoz:"
+
+#: configdialog/configadvancedpage.cpp:99
+#: configdialog/configadvancedpage.cpp:102
+msgid ""
+"Total discs number will be written to the selected field, when reading tags "
+"the selected field will be preferred.\n"
+"When using the field DISCNUMBER, the disc number and the total discs number "
+"will be written to the same field separated by a slash ('/')."
+msgstr ""
+
+#: configdialog/configadvancedpage.cpp:117
+msgid "Always use FAT compatible output file names"
+msgstr "Használjon FAT-kompatibilis kimeneti fájlneveket"
+
+#: configdialog/configadvancedpage.cpp:118
+msgid ""
+"Replaces some special characters like '?' by '_'.\n"
+"If the output directory is on a FAT file system FAT compatible file names "
+"will automatically be used independently from this option."
+msgstr ""
+"Speciális karakterek (pl. '?' vagy '_') helyettesítése.\n"
+"Ha a kimeneti könyvtár egy FAT fájlrendszeren helyezkedik el, akkor a "
+"program automatikusan FAT-kompatibilis fájlneveket alkalmaz, ettől a "
+"beállítástól függetlenül."
+
+#: configdialog/configadvancedpage.cpp:125
+msgid "Debug"
+msgstr "Hibakeresés"
+
+#: configdialog/configadvancedpage.cpp:134
+msgid "Write log files to disc"
+msgstr "Naplófájlok lemezre írása"
+
+#: configdialog/configadvancedpage.cpp:135
+msgid ""
+"Write log files to the hard drive while converting.\n"
+"This can be useful if a crash occurs and you can't access the log file using "
+"the log viewer.\n"
+"Log files will be written to %1"
+msgstr ""
+"Naplófájlok írása a merevlemezre konvertálás közben.\n"
+"Akkor lehet hasznos, ha valamilyen hiba folytán nem fér hozzá a naplófájlhoz "
+"a megjelenítőben.\n"
+"A naplófájlok ide kerülnek: %1"
+
+#: configdialog/configadvancedpage.cpp:142
+msgid "Experimental"
+msgstr "Kísérleti"
+
+#: configdialog/configadvancedpage.cpp:151
+msgid "Store temporary files in memory unless the estimated size is more than:"
+msgstr ""
+"Az ideiglenes fájlokat tárolja a memóriában, ha a becsült méretük nem "
+"nagyobb, mint:"
+
+#: configdialog/configadvancedpage.cpp:152
+#: configdialog/configadvancedpage.cpp:156
+msgid ""
+"Don't store files that are expected to be bigger than this value in memory "
+"to avoid swapping"
+msgstr ""
+"Ne tárolja az itt megadott értéknél nagyobb fájlokat a memóriában (a "
+"swapping elkerülése végett)"
+
+#: configdialog/configadvancedpage.cpp:157
+msgctxt "mega in bytes"
+msgid "MiB"
+msgstr "MB"
+
+#: configdialog/configadvancedpage.cpp:164
+msgid "It seems there's no filesystem mounted on /dev/shm"
+msgstr "Úgy látszik nincsen fájlrendszer csatolva itt: /dev/shm"
+
+#: configdialog/configadvancedpage.cpp:178
+msgid "Use pipes when possible"
+msgstr "Adatcsatornák használata, ha lehetséges"
+
+#: configdialog/configadvancedpage.cpp:179
+msgid ""
+"Pipes make it unnecessary to use temporary files, therefore increasing the "
+"performance.\n"
+"But some backends cause errors in this mode so be cautious."
+msgstr ""
+"Az adatcsatornák használatával nélkülözhetők az ideiglenes fájlok, így "
+"növelhető a teljesítmény.\n"
+"Néhány háttérprogram hibát okozhat ebben a módban. Legyen óvatos!"
+
+#: configdialog/configbackendspage.cpp:136
+#: configdialog/configbackendspage.cpp:197
+#: configdialog/configbackendspage.cpp:339
+msgid "Decoder"
+msgstr "Dekóder"
+
+#: configdialog/configbackendspage.cpp:138
+#: configdialog/configbackendspage.cpp:199
+#: configdialog/configbackendspage.cpp:342
+msgid "Encoder"
+msgstr "Kóder"
+
+#: configdialog/configbackendspage.cpp:140
+#: configdialog/configbackendspage.cpp:201
+#: configdialog/configbackendspage.cpp:345 convert.cpp:1346 filelist.cpp:549
+#: filelist.cpp:559
+msgid "Replay Gain"
+msgstr "Hangerő-korrekció"
+
+#: configdialog/configbackendspage.cpp:148
+msgid "Move %1 one position up"
+msgstr "%1 léptetése eggyel feljebb"
+
+#: configdialog/configbackendspage.cpp:153
+msgid "Move %1 one position down"
+msgstr "%1 léptetése eggyel lejjebb"
+
+#: configdialog/configbackendspage.cpp:158
+msgid "About %1 ..."
+msgstr "Névjegy: %1 ..."
+
+#: configdialog/configbackendspage.cpp:232
+msgid "CD ripper"
+msgstr "CD-beolvasás"
+
+#: configdialog/configbackendspage.cpp:241
+msgid "Use plugin:"
+msgstr "Bővítmény használata:"
+
+#: configdialog/configbackendspage.cpp:259
+msgid "Filters"
+msgstr "Szűrők"
+
+#: configdialog/configbackendspage.cpp:275
+msgid "Enable plugins:"
+msgstr "Engedélyezett bővítmények:"
+
+#: configdialog/configbackendspage.cpp:314
+msgid "Priorities"
+msgstr "Prioritások"
+
+#: configdialog/configbackendspage.cpp:326
+msgid "Configure plugin priorities for format:"
+msgstr "Bővítmény-prioritások beállítása a formátumhoz:"
+
+#: configdialog/configbackendspage.cpp:353
+msgid "Show possible optimizations"
+msgstr "Mutassa a lehetséges optimalizálásokat"
+
+#: configdialog/configbackendspage.cpp:393
+msgid ""
+"You have changed the current settings.\n"
+"Do you want to save them?"
+msgstr ""
+"Megváltoztatta a jelenlegi beállításokat.\n"
+"El szeretné menteni az újakat?"
+
+#: configdialog/configbackendspage.cpp:393
+msgid "Settings changed"
+msgstr "A beállítások megváltoztak"
+
+#: configdialog/configbackendspage.cpp:450
+msgid ""
+"This will choose the best backends for all formats and save the new "
+"preferences immediately.\n"
+"\n"
+"Do you want to continue?"
+msgstr ""
+"Ki fogja választani a legjobb háttérprogramot az összes formátumhoz és "
+"azonnal elmenti az új beállításokat.\n"
+"\n"
+"Folytatja?"
+
+#: configdialog/configbackendspage.cpp:572
+msgid "All backend settings seem to be optimal, there is nothing to do."
+msgstr "Minden háttérprogram beállítása jónak tűnik, nincs teendője."
+
+#: configdialog/configcoverartpage.cpp:24
+msgid "Saving covers to output directory"
+msgstr "A borítók mentése a kimeneti könyvtárba"
+
+#: configdialog/configcoverartpage.cpp:36
+msgid "Save embedded covers to output directory"
+msgstr "A beágyazott borítók mentése a kimeneti könyvtárba"
+
+#: configdialog/configcoverartpage.cpp:38
+msgid "Always"
+msgstr "Mindig"
+
+#: configdialog/configcoverartpage.cpp:40
+msgid "Only if embedding the covers into the output files is not possible"
+msgstr "Csak ha nem sikerül beágyazni a borítót a kimeneti fájlba"
+
+#: configdialog/configcoverartpage.cpp:42
+msgid "Never"
+msgstr "Soha"
+
+#: configdialog/configcoverartpage.cpp:62
+msgid "File name for the cover (when saving to output directory)"
+msgstr "A borító fájlneve (ha menti a kimeneti könyvtárba)"
+
+#: configdialog/configcoverartpage.cpp:64
+msgid "The embedded cover description"
+msgstr "A beágyazott borító leírása"
+
+#: configdialog/configcoverartpage.cpp:66
+msgid "The default cover file name"
+msgstr "Az alapértelmezett borító fájlneve"
+
+#: configdialog/configcoverartpage.cpp:70
+msgid "Default cover file name:"
+msgstr "Az alapértelmezett borító fájlneve:"
+
+#: configdialog/configcoverartpage.cpp:73
+msgid ""
+"The following strings are wildcards that will be replaced\n"
+"by the information in the meta data:\n"
+"\n"
+"%a - Artist\n"
+"%b - Album\n"
+"%d - Cover description\n"
+"%r - Cover role"
+msgstr ""
+"Az alábbi karakterláncok helyettesítő karakterek a metaadatban:\n"
+"\n"
+"%a - előadó\n"
+"%b - album\n"
+"%d - borító leírása\n"
+"%r - cover role"
+
+#: configdialog/configdialog.cpp:29
+msgid "Settings"
+msgstr "Beállítások"
+
+#: configdialog/configdialog.cpp:42
+msgid "General"
+msgstr "Általános"
+
+#: configdialog/configdialog.cpp:54
+msgid "Cover art"
+msgstr "Borító"
+
+#: configdialog/configdialog.cpp:60 main.cpp:28
+msgid "Backends"
+msgstr "Háttérprogramok"
+
+#: configdialog/configgeneralpage.cpp:43
+msgid "User interface"
+msgstr "Felhasználói felület"
+
+#: configdialog/configgeneralpage.cpp:52
+msgid "Start in Mode:"
+msgstr "Indítási mód:"
+
+#: configdialog/configgeneralpage.cpp:56 options.cpp:79
+msgid "Simple"
+msgstr "Egyszerű"
+
+#: configdialog/configgeneralpage.cpp:57 options.cpp:80
+msgid "Detailed"
+msgstr "Részletes"
+
+#: configdialog/configgeneralpage.cpp:67
+msgid "Default profile:"
+msgstr "Alapértelmezett profil:"
+
+#: configdialog/configgeneralpage.cpp:85
+msgid "Default format:"
+msgstr "Alapértelmezett formátum:"
+
+#. i18n: file: soundkonverterui.rc:14
+#. i18n: ectx: Menu (conversion)
+#: configdialog/configgeneralpage.cpp:95 optionseditor.cpp:51 rc.cpp:3
+msgid "Conversion"
+msgstr "Konvertálás"
+
+#: configdialog/configgeneralpage.cpp:118
+msgid "Conflict handling:"
+msgstr "Konfliktuskezelés:"
+
+#: configdialog/configgeneralpage.cpp:121
+msgid "Generate new file name"
+msgstr "Új fájlnév előállítása"
+
+#: configdialog/configgeneralpage.cpp:122
+msgid "Skip file"
+msgstr "Fájl kihagyása"
+
+#: configdialog/configgeneralpage.cpp:124
+msgid "Do that if the output file already exists"
+msgstr "Ha a kimeneti fájl már létezik, tegye ezt"
+
+#: configdialog/configgeneralpage.cpp:134
+msgid "Number of files to convert at once:"
+msgstr "Egyszerre konvertálandó fájlok száma:"
+
+#: configdialog/configgeneralpage.cpp:137
+#: configdialog/configgeneralpage.cpp:185
+msgid ""
+"You shouldn't set this number higher than the amount of installed processor "
+"cores.\n"
+"There have been %1 processor cores detected."
+msgstr ""
+"Ez a szám nem lehet nagyobb, mint a telepített processzormagok száma.\n"
+"Az Ön gépében %1 processzormag található."
+
+#: configdialog/configgeneralpage.cpp:150
+msgid "Apply album gain to converted files"
+msgstr "Hangerő-korrekció alkalmazása a konvertált fájlokra"
+
+#: configdialog/configgeneralpage.cpp:151
+msgid ""
+"Keep songs of the same album waiting in file list in order to apply album "
+"gain to all files."
+msgstr ""
+"Az azonos albumhoz tartozó számok várólistán tartása hangerő-korrekció "
+"céljából"
+
+#: configdialog/configgeneralpage.cpp:158
+#: replaygainscanner/replaygainscanner.cpp:33
+#: replaygainscanner/replaygainscanner.cpp:344
+msgid "Replay Gain tool"
+msgstr "Hangerő-korrekciós eszköz"
+
+#: configdialog/configgeneralpage.cpp:167
+msgid "Group files in the Replay Gain tool by:"
+msgstr "Fájlok csoportosítása a hangerő-korrekciónál ez alapján:"
+
+#: configdialog/configgeneralpage.cpp:170
+msgctxt "Group files in the Replay Gain tool by"
+msgid "Album tags and directories"
+msgstr "Albumcímkék és könyvtárak"
+
+#: configdialog/configgeneralpage.cpp:171
+msgctxt "Group files in the Replay Gain tool by"
+msgid "Album tags only"
+msgstr "Csak albumcímkék"
+
+#: configdialog/configgeneralpage.cpp:172
+msgctxt "Group files in the Replay Gain tool by"
+msgid "Directories only"
+msgstr "Csak könyvtárak"
+
+#: configdialog/configgeneralpage.cpp:182
+msgid "Number of items to process at once:"
+msgstr "Egyszerre feldolgozandó elemek száma:"
+
+#: convert.cpp:68 convert.cpp:1301
+msgid "Getting file"
+msgstr "Fájl megszerzése"
+
+#: convert.cpp:76
+msgid "Copying \"%1\" to \"%2\""
+msgstr "\"%1\" másolása ide: \"%2\""
+
+#: convert.cpp:119 convert.cpp:462
+#: replaygainscanner/replaygainprocessor.cpp:60
+msgid "No more backends left to try :("
+msgstr "Nincs több kipróbálható háttérprogram :("
+
+#: convert.cpp:134 convert.cpp:249 convert.cpp:1307 filelist.cpp:569
+#: soundkonverter.cpp:282 soundkonverter.cpp:284 soundkonverter.cpp:311
+#: soundkonverter.cpp:313
+msgid "Converting"
+msgstr "Konvertálás"
+
+#: convert.cpp:171 convert.cpp:410 convert.cpp:487
+msgid ""
+"Conversion failed. At least one of the used backends needs to be configured "
+"properly."
+msgstr ""
+"A konvertálás meghiúsult. A használt háttérprogramok közül legalább egyet "
+"megfelelően be kell állítani."
+
+#: convert.cpp:177 convert.cpp:416 convert.cpp:493
+msgid ""
+"Conversion failed. The preferred plugin lacks support for a necessary "
+"feature."
+msgstr ""
+"A konvertálás meghiúsult. Az alapértelmezett bővítmény nem támogat egy "
+"szükséges funkciót."
+
+#: convert.cpp:183 convert.cpp:422 convert.cpp:499
+msgid "Conversion failed. Unknown Error."
+msgstr "A konvertálás meghiúsult. Ismeretlen hiba."
+
+#: convert.cpp:344 convert.cpp:1313 filelist.cpp:564
+msgid "Ripping"
+msgstr "Beolvasás"
+
+#: convert.cpp:349 convert.cpp:1319
+msgid "Decoding"
+msgstr "Dekódolás"
+
+#: convert.cpp:354 convert.cpp:367 convert.cpp:373
+msgid "Applying filter"
+msgstr "Szűrő alkalmazása"
+
+#: convert.cpp:362 convert.cpp:1331
+msgid "Encoding"
+msgstr "Kódolás"
+
+#: convert.cpp:443
+msgid "Skipping Replay Gain, Album Gain will be calculated later"
+msgstr ""
+"Hangerő-korrekció kihagyása, az album hangereje később lesz meghatározva"
+
+#: convert.cpp:458 replaygainscanner/replaygainprocessor.cpp:56
+msgid "Applying Replay Gain"
+msgstr "Hangerő-korrekció alkalmazása"
+
+#: convert.cpp:515
+msgid "Writing tags"
+msgstr "Címkék írása"
+
+#: convert.cpp:542
+msgid "Running user script"
+msgstr "Felhasználói szkript futtatása"
+
+#: convert.cpp:567
+msgid "Executing next step"
+msgstr "A következő lépés végrehajtása"
+
+#: convert.cpp:711
+msgid "Read tags successfully"
+msgstr "A címkék beolvasása sikerült"
+
+#: convert.cpp:715
+msgid "Unable to read tags"
+msgstr "A címkék beolvasása nem sikerült"
+
+#: convert.cpp:728 convert.cpp:733
+msgctxt "removing file"
+msgid "Removing: %1"
+msgstr "Eltávolítás: %1"
+
+#: convert.cpp:742
+msgid "An error occurred. Error code: %1 (%2)"
+msgstr "Hiba történt. Hibakód: %1 (%2)"
+
+#: convert.cpp:846 convert.cpp:909
+msgid "Conversion failed. Exit code: %1"
+msgstr "A konvertálás meghiúsult. Hibakód: %1"
+
+#: convert.cpp:976
+msgctxt "identificator for the logger"
+msgid "CD track %1: %2 - %3"
+msgstr "CD-szám %1: %2 - %3"
+
+#: convert.cpp:980
+msgctxt "identificator for the logger"
+msgid "CD track %1"
+msgstr "CD-szám %1"
+
+#: convert.cpp:987
+msgid "Adding new item to conversion list: '%1'"
+msgstr "Új elem hozzáadása a konvertálási listához: '%1'"
+
+#: convert.cpp:994 replaygainscanner/replaygainprocessor.cpp:223
+msgid "Got log ID: %1"
+msgstr "Napló azonosító: %1"
+
+#: convert.cpp:1019
+msgid "Track number: %1, device: %2"
+msgstr "Szám: %1, eszköz: %2"
+
+#: convert.cpp:1024
+msgid "Possible conversion strategies:"
+msgstr "Lehetséges konvertálási stratégiák:"
+
+#: convert.cpp:1038
+msgid "File system type: %1"
+msgstr "A fájlrendszer típusa: %1"
+
+#: convert.cpp:1096
+msgid ""
+"An error occurred, the output file size is less than one percent of the "
+"input file size"
+msgstr ""
+"Hiba történt, a kimeneti fájl mérete kevesebb mint egy százaléka a bemeneti "
+"fájl méretének"
+
+#: convert.cpp:1100
+msgid "Conversion failed, trying again. Exit code: -2 (%1)"
+msgstr "A konvertálás meghiúsult. Próbálja újra. Hibakód: -2 (%1)"
+
+#: convert.cpp:1102 convert.cpp:1174
+msgid "Removing partially converted output file"
+msgstr "A részben konvertált kimeneti fájl eltávolítása"
+
+#: convert.cpp:1115 replaygainscanner/replaygainprocessor.cpp:265
+msgctxt "Conversion exit status"
+msgid "Normal exit"
+msgstr "Normál kilépés"
+
+#: convert.cpp:1118 replaygainscanner/replaygainprocessor.cpp:268
+msgctxt "Conversion exit status"
+msgid "Succeeded but problems occurred"
+msgstr ""
+
+#: convert.cpp:1121 replaygainscanner/replaygainprocessor.cpp:271
+msgctxt "Conversion exit status"
+msgid "Aborted by the user"
+msgstr "Felhasználó által megszakítva"
+
+#: convert.cpp:1124 replaygainscanner/replaygainprocessor.cpp:274
+msgctxt "Conversion exit status"
+msgid "Backend needs configuration"
+msgstr "Be kell állítani a háttérprogramot"
+
+#: convert.cpp:1127
+msgctxt "Conversion exit status"
+msgid "Not enough space on the output device"
+msgstr "Nincs elég hely a kimeneti eszközön"
+
+#: convert.cpp:1130
+msgctxt "Conversion exit status"
+msgid "File already exists"
+msgstr "A fájl már létezik"
+
+#: convert.cpp:1133 replaygainscanner/replaygainprocessor.cpp:280
+msgctxt "Conversion exit status"
+msgid "An error occurred"
+msgstr "Hiba történt"
+
+#: convert.cpp:1154
+msgid "Executing command: \"%1\""
+msgstr "Parancs futtatása: \"%1\""
+
+#: convert.cpp:1180 replaygainscanner/replaygainprocessor.cpp:284
+msgid "Removing file from conversion list. Exit code %1 (%2)"
+msgstr "Fájl eltávolítása a konvertálási listából. Hibakód: %1 (%2)"
+
+#: convert.cpp:1182
+msgid "Conversion time"
+msgstr "Konvertálási idő"
+
+#: convert.cpp:1183
+msgid "Output file size"
+msgstr "Kimeneti fájl mérete"
+
+#: convert.cpp:1184
+msgid "File size ratio"
+msgstr "Fájlméret aránya"
+
+#: convert.cpp:1291
+msgctxt "The conversion progress can't be determined"
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+#: convert.cpp:1325
+msgid "Filter"
+msgstr "Szűrő"
+
+#: convert.cpp:1351 replaygainscanner/replaygainprocessor.cpp:331
+msgid "Progress: %1"
+msgstr "Folyamat: %1"
+
+#: core/backendplugin.cpp:40
+msgid ""
+"Wave is a very simple audio format that doesn't compress the audio stream so "
+"it's lossless but the file size is very big and it doesn't support advanced "
+"features like tags.<br>It is supported by virtually any software or device."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/WAV\">http://en.wikipedia.org/"
+"wiki/WAV</a>"
+msgstr ""
+"A Wave egy nagyon egyszerű audioformátum, ami nem tömöríti a hang "
+"adatfolyamot, így veszteségmentes, de a fájl mérete nagyon nagy és nem "
+"támogat olyan haladó megoldásokat, mint a címkék.<br> Gyakorlatilag minden "
+"szoftver vagy eszköz támogatja. <br><br><a href=\"http://en.wikipedia.org/"
+"wiki/WAV\">http://en.wikipedia.org/wiki/WAV</a>"
+
+#: core/backendplugin.cpp:47
+msgid ""
+"Advanced Audio Coding (AAC) is a lossy and popular audio format. It is "
+"widely used by Apple Inc.<br>In soundKonverter \"aac\" refers to only the "
+"codec. In order to get a file with tagging capabilities use \"m4a/aac\"."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/Advanced_Audio_Coding"
+"\">http://en.wikipedia.org/wiki/Advanced Audio Coding</a>"
+msgstr ""
+"Az Advanced Audio Coding (AAC) egy veszteségesen tömörítő, népszerű "
+"audioformátum. Az Apple széles körben használja.<br> A soundKonverterben az "
+"\"aac\" csak a kodeket jelöli. Címkézhető fájlok kódolásához válassza az "
+"\"m4a/aac\"-t. <br><br><a href=\"http://en.wikipedia.org/wiki/"
+"Advanced_Audio_Coding\">http://en.wikipedia.org/wiki/Advanced Audio Coding</"
+"a>"
+
+#: core/backendplugin.cpp:54
+msgid ""
+"Advanced Audio Coding (AAC) is a lossy and popular audio format. It is "
+"widely used by Apple Inc.<br>In soundKonverter \"m4a/aac\" refers to a "
+"MPEG-4 audio file encoded with AAC.<br><br><a href=\"http://en.wikipedia.org/"
+"wiki/Advanced_Audio_Coding\">http://en.wikipedia.org/wiki/Advanced Audio "
+"Coding</a>"
+msgstr ""
+"Az Advanced Audio Coding (AAC) egy veszteségesen tömörítő, népszerű "
+"audioformátum. Az Apple széles körben használja.<br> A soundKonverterben az "
+"\"mp4/aac\" olyan MPEG-4 audiofájlt jelent, amit AAC-vel kódoltak. "
+"<br><br><a href=\"http://en.wikipedia.org/wiki/Advanced_Audio_Coding"
+"\">http://en.wikipedia.org/wiki/Advanced Audio Coding</a>"
+
+#: core/backendplugin.cpp:66
+msgid ""
+"Apple Lossless Audio Codec (ALAC) is a lossless audio format. It is widely "
+"used by Apple Inc.<br>In soundKonverter \"m4a/alac\" refers to a MPEG-4 "
+"audio file encoded with ALAC.<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"Apple_Lossless\">http://en.wikipedia.org/wiki/Apple Lossless</a>"
+msgstr ""
+"Az Apple Lossless Audio Codec (ALAC) egy veszteségmentesen tömörítő "
+"audioformátum. Az Apple széles körben használja.<br> A soundKonverterben az "
+"\"mp4/alac\" olyan MPEG-4 audiofájlt jelent, amit ALAC-kel kódoltak. "
+"<br><br><a href=\"http://en.wikipedia.org/wiki/Apple_Lossless\">http://en."
+"wikipedia.org/wiki/Apple Lossless</a>"
+
+#: core/backendplugin.cpp:84
+msgid ""
+"Ogg Vorbis is a lossy and popular audio format.<br>It is free of any legal "
+"restrictions.<br><br><a href=\"http://en.wikipedia.org/wiki/Vorbis\">http://"
+"en.wikipedia.org/wiki/Vorbis</a>"
+msgstr ""
+"Az Ogg Vorbis egy veszteségesen tömörítő, népszerű audioformátum. "
+"<br>Mindenféle törvényi szabályozástól mentes.<br><br><a href=\"http://en."
+"wikipedia.org/wiki/Vorbis\">http://en.wikipedia.org/wiki/Vorbis</a>"
+
+#: core/backendplugin.cpp:95
+msgid ""
+"Opus is a lossy audio format designed for real time communication over the "
+"internet.<br>It can cover a wide range of bitrates with a high quality and "
+"it is free of any legal restrictions.<br><br><a href=\"http://en.wikipedia."
+"org/wiki/Opus_(audio_format)\">http://en.wikipedia.org/wiki/Opus (audio "
+"format)</a>"
+msgstr ""
+"Az Opus egy veszteségesen tömörítő audioformátum, valósidejű internetes "
+"kommunikációhoz kifejlesztve.<br>Széles bitráta tartományt lefed jó "
+"minőségben és mindenféle törvényi szabályozástól mentes.<br><br><a href="
+"\"http://en.wikipedia.org/wiki/Opus_(audio_format)\">http://en.wikipedia.org/"
+"wiki/Opus (audio format)</a>"
+
+#: core/backendplugin.cpp:103
+msgid ""
+"MPEG-1 or MPEG-2 Audio Layer III (MP3) is the most popular lossy audio "
+"format.<br>It is supported by virtually all audio players even though it has "
+"some legal restrictions.<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"MP3\">http://en.wikipedia.org/wiki/MP3</a>"
+msgstr ""
+"Az MPEG-1 or MPEG-2 Audio Layer III (MP3) a legnépszerűbb, veszteségesen "
+"tömörítő audioformátum.<br> Gyakorlatilag minden lejátszó támogatja, habár "
+"törvényi szabályozás alatt áll. <br><br><a href=\"http://en.wikipedia.org/"
+"wiki/MP3\">http://en.wikipedia.org/wiki/MP3</a>"
+
+#: core/backendplugin.cpp:112
+msgid ""
+"Free Lossless Audio Codec (FLAC) is a lossless audio format.<br>It is free "
+"of any legal restrictions.<br><br><a href=\"http://en.wikipedia.org/wiki/FLAC"
+"\">http://en.wikipedia.org/wiki/FLAC</a>"
+msgstr ""
+"A Free Lossless Audio Codec (FLAC) egy veszteségmentesen tömörítő "
+"audioformátum. <br>Mindenféle törvényi szabályozástól mentes.<br><br><a href="
+"\"http://en.wikipedia.org/wiki/FLAC\">http://en.wikipedia.org/wiki/FLAC</a>"
+
+#: core/backendplugin.cpp:122
+msgid ""
+"Windows Media Audio (WMA) is a lossy audio format developed by Microsoft."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/Windows_Media_Audio\">http://"
+"en.wikipedia.org/wiki/Windows Media Audio</a>"
+msgstr ""
+"A Windows Media Audio (WMA) egy veszteségesen tömörítő audioformátum, amit a "
+"Microsoft fejlesztett ki.<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"Windows_Media_Audio\">http://en.wikipedia.org/wiki/Windows Media Audio</a>"
+
+#: core/backendplugin.cpp:128
+msgid ""
+"AC3 or AC-3 is part of the Dolby Digital format family.<br>It was designed "
+"to be used for movies (e.g. DVDs) and supports surround sound.<br><br><a "
+"href=\"http://en.wikipedia.org/wiki/Dolby_Digital\">http://en.wikipedia.org/"
+"wiki/Dolby Digital</a>"
+msgstr ""
+
+#: core/backendplugin.cpp:141
+msgid ""
+"MPEG-1 or MPEG-2 Audio Layer II (MP2) is an old lossy audio format."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/MPEG-1_Audio_Layer_II"
+"\">http://en.wikipedia.org/wiki/MPEG-1 Audio Layer II</a>"
+msgstr ""
+"Az MPEG-1 vagy MPEG-2 Audio Layer II (MP2) egy régi, veszteségesen tömörítő "
+"audioformátum.<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"MPEG-1_Audio_Layer_II\">http://en.wikipedia.org/wiki/MPEG-1 Audio Layer II</"
+"a>"
+
+#: core/backendplugin.cpp:166
+msgid ""
+"Adaptive Multi-Rate Narrow-Band (AMR NB) is mainly used for speech "
+"compression for mobile communication.<br><br><a href=\"http://en.wikipedia."
+"org/wiki/Adaptive_Multi-Rate_audio_codec\">http://en.wikipedia.org/wiki/"
+"Adaptive Multi-Rate audio codec</a>"
+msgstr ""
+"Az Adaptive Multi-Rate Narrow-Band (AMR NB)-ot főként a mobilkommunikációs "
+"beszédtömörítésnél használják.<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"Adaptive_Multi-Rate_audio_codec\">http://en.wikipedia.org/wiki/Adaptive "
+"Multi-Rate audio codec</a>"
+
+#: core/backendplugin.cpp:175
+msgid ""
+"Adaptive Multi-Rate Wide-Band (AMR WB) is an advanced version of AMR NB "
+"which uses a higher data rate resulting in a higher quality.<br>Still it "
+"should be used only for speech compression.<br><br><a href=\"http://en."
+"wikipedia.org/wiki/Adaptive_Multi-Rate_Wideband\">http://en.wikipedia.org/"
+"wiki/Adaptive Multi-Rate Wideband</a>"
+msgstr ""
+"Az Adaptive Multi-Rate Wide-Band (AMR WB) egy továbbfejlesztett változata az "
+"AMR NB-nek, ami a nagyobb adatsebesség miatt jobb minőségű.<br>Csak "
+"beszédtömörítéshez javasolt..<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"Adaptive_Multi-Rate_Wideband\">http://en.wikipedia.org/wiki/Adaptive Multi-"
+"Rate Wideband</a>"
+
+#: core/backendplugin.cpp:183
+msgid ""
+"Monkey's Audio is a lossless audio format.<br><br><a href=\"http://en."
+"wikipedia.org/wiki/Monkey's_Audio\">http://en.wikipedia.org/wiki/Monkey's "
+"Audio</a>"
+msgstr ""
+"A Monkey's Audio egy veszteségmentesen tömörítő audioformátum.<br><br><a "
+"href=\"http://en.wikipedia.org/wiki/Monkey's_Audio\">http://en.wikipedia.org/"
+"wiki/Monkey's Audio</a>"
+
+#: core/backendplugin.cpp:192
+msgid ""
+"Speex is a lossy audio format designed for speech encoding.<br>It is free of "
+"any legal restrictions. Since the release of Opus, Speex is considered "
+"obsolete.<br><br><a href=\"http://en.wikipedia.org/wiki/Speex\">http://en."
+"wikipedia.org/wiki/Speex<a/>"
+msgstr ""
+"A Speex egy veszteségesen tömörítő, beszéd kódolásához kifejlesztett "
+"audioformátum.<br>Minden törvényi szabályozástól mentes.Az Opus megjelenése "
+"óta a Speex elavultnak számít.<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"Speex\">http://en.wikipedia.org/wiki/Speex<a/>"
+
+#: core/backendplugin.cpp:206
+msgid ""
+"Musepack (MPC) is a free and lossy file format based on mp2 and optimized "
+"for high quality.<br><br><a href=\"http://en.wikipedia.org/wiki/Musepack"
+"\">http://en.wikipedia.org/wiki/Musepack<a/>"
+msgstr ""
+"A Musepack egy ingyenes és veszteségesen tömörítő, az mp2-re alapuló "
+"fájlformátum, kiváló minőségre optimalizálva.<br><br><a href=\"http://en."
+"wikipedia.org/wiki/Musepack\">http://en.wikipedia.org/wiki/Musepack<a/>"
+
+#: core/backendplugin.cpp:216
+msgid ""
+"Shorten (SHN) is a free and lossless audio format.<br><br><a href=\"http://"
+"en.wikipedia.org/wiki/Shorten\">http://en.wikipedia.org/wiki/Shorten</a>"
+msgstr ""
+"A Shorten (SHN) egy ingyenes és veszteségmentesen tömörítő audioformátum."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/Shorten\">http://en.wikipedia."
+"org/wiki/Shorten</a>"
+
+#: core/backendplugin.cpp:238
+msgid ""
+"True Audio (TTA) is a free and lossless audio format.<br><br><a href="
+"\"http://en.wikipedia.org/wiki/TTA_(codec)\">http://en.wikipedia.org/wiki/"
+"TTA (codec)<a/>"
+msgstr ""
+"A True Audio (TTA) egy ingyenes és veszteségmentesen tömörítő audioformátum."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/TTA_(codec)\">http://en."
+"wikipedia.org/wiki/TTA (codec)<a/>"
+
+#: core/backendplugin.cpp:245
+msgid ""
+"WavPack (WV) is a free and lossless audio format.<br><br><a href=\"http://en."
+"wikipedia.org/wiki/WavPack\">http://en.wikipedia.org/wiki/WavPack<a/>"
+msgstr ""
+"A WavPack (WV) egy ingyenes és veszteségmentesen tömörítő audioformátum."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/WavPack\">http://en.wikipedia."
+"org/wiki/WavPack<a/>"
+
+#: core/backendplugin.cpp:370
+msgid ""
+"8-Bit Sampled Voice (8SVX) is an audio file format standard developed by "
+"Electronic Arts for the Commodore-Amiga computer series.<br><br><a href="
+"\"http://en.wikipedia.org/wiki/8SVX\">http://en.wikipedia.org/wiki/8SVX</a>"
+msgstr ""
+"A 8-Bit Sampled Voice (8SVX) egy audiofájl-formátum, amit az Electronic Arts "
+"fejlesztett ki a Commodore-Amiga számítógép-sorozathoz.<br><br><a href="
+"\"http://en.wikipedia.org/wiki/8SVX\">http://en.wikipedia.org/wiki/8SVX</a>"
+
+#: core/backendplugin.cpp:381
+msgid ""
+"Audio Interchange File Format (AIFF) is a very simple audio format that "
+"doesn't compress the audio stream so it's lossless but the file size is very "
+"big and it doesn't support advanced features like tags.<br><br><a href="
+"\"http://en.wikipedia.org/wiki/Audio_Interchange_File_Format\">http://en."
+"wikipedia.org/wiki/Audio Interchange File Format</a>"
+msgstr ""
+"Az Audio Interchange File Format (AIFF) egy nagyon egyszerű audioformátum, "
+"ami nem tömöríti a hang-adatfolyamot, tehát veszteségmentes, de a fájlméret "
+"nagyon nagy és nem támogat olyan haladó megoldásokat, mint a címkék."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/Audio_Interchange_File_Format"
+"\">http://en.wikipedia.org/wiki/Audio Interchange File Format</a>"
+
+#: core/backendplugin.cpp:449
+msgid "Killing process on user request"
+msgstr "A folyamat a felhasználó kérésére megszakítva"
+
+#: core/backendplugin.cpp:524
+msgid "In order to encode %1 files, you need to install '%2'."
+msgstr "A(z) %1 fájlok kódolásához telepítenie kell a(z) '%2'-t."
+
+#: core/backendplugin.cpp:531
+msgid "In order to decode %1 files, you need to install '%2'."
+msgstr "A(z) %1 fájlok kódolásához telepítenie kell a(z) '%2'-t."
+
+#: core/backendplugin.cpp:538
+msgid "In order to transcode %1 files, you need to install '%2'."
+msgstr "A(z) %2 fájlok kódolásához telepítenie kell a(z) '%2'-t."
+
+#: core/backendplugin.cpp:545
+msgid ""
+"In order to calculate Replay Gain tags for %1 files, you need to install "
+"'%2'."
+msgstr ""
+"Ahhoz, hogy hangerő-korrekciós adatokat számoljon '%1' fájlokhoz, "
+"telepítenie kell a(z) '%2'-t."
+
+#: core/backendplugin.cpp:552
+msgid "'%1' should be shipped with your distribution."
+msgstr "A(z) '%1' rendszerint megtalálható a disztribúciójában."
+
+#: core/backendplugin.cpp:559
+msgid ""
+"Since '%1' includes patented codecs, it may not be included in the default "
+"installation of your distribution. Many distributions offer '%1' in an "
+"additional software repository."
+msgstr ""
+"Mivel a(z) '%1' szabadalommal védett kodekeket tartalmaz, valószínűleg nincs "
+"telepítve a rendszerén.\n"
+"Bizonyos disztribúcióknál lehetőség van a(z) '%1' kiegészítő "
+"szoftvertárolókból történő telepítésére. "
+
+#: core/backendplugin.cpp:566
+msgid "You can download '%1' at %2"
+msgstr "A(z) '%1'-t innen töltheti le: %2"
+
+#: core/backendplugin.cpp:575
+msgid "In order to use the filter %1, you need to install '%2'."
+msgstr "A(z) %1 szűrő használatához telepítenie kell a(z) '%2'-t."
+
+#: core/backendplugin.cpp:579
+msgid "In order to use the filters %1, you need to install '%2'."
+msgstr "A(z) %1 szűrők használatához telepítenie kell a(z) '%2'-t."
+
+#: filelist.cpp:48
+msgid "State"
+msgstr "Állapot"
+
+#: filelist.cpp:49
+msgid "Input"
+msgstr "Bemenet"
+
+#: filelist.cpp:50
+msgid "Output"
+msgstr "Kimenet"
+
+#: filelist.cpp:51 plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:31
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:100
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:125
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:31
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:76
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:101
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:84
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:182
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:214
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:498
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:510
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:65
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:35
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:95
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:121
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:35
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:85
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:112
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:37
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:94
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:120
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:34
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:91
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:117
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:63
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:136
+msgid "Quality"
+msgstr "Minőség"
+
+#: filelist.cpp:79
+msgid "Edit options..."
+msgstr "Beállítások szerkesztése..."
+
+#: filelist.cpp:81
+msgid "Start conversion"
+msgstr "Konvertálás indítása"
+
+#: filelist.cpp:83
+msgid "Stop conversion"
+msgstr "Konvertálás leállítása"
+
+#: filelist.cpp:85 optionssimple.cpp:44
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:101
+#: replaygainscanner/replaygainfilelist.cpp:75
+msgid "Remove"
+msgstr "Eltávolítás"
+
+#: filelist.cpp:178 opener/fileopener.cpp:139 opener/playlistopener.cpp:141
+#: replaygainscanner/replaygainfilelist.cpp:215
+#: replaygainscanner/replaygainscanner.cpp:199 soundkonverterview.cpp:344
+msgid ""
+"This file type is unknown to soundKonverter.\n"
+"Maybe you need to install an additional soundKonverter plugin.\n"
+"You should have a look at your distribution's package manager for this."
+msgstr ""
+"A soundKonverter nem ismeri ezt a fájlformátumot.\n"
+"Lehet, hogy kiegészítő bővítményeket kell telepítenie.\n"
+"Nézzen körül disztribúciója csomagkezelőjében."
+
+#: filelist.cpp:216 opener/fileopener.cpp:179 opener/playlistopener.cpp:181
+#: opener/playlistopener.cpp:213 replaygainscanner/replaygainfilelist.cpp:253
+#: replaygainscanner/replaygainscanner.cpp:239 soundkonverterview.cpp:382
+msgid "... and %1 more files"
+msgstr "... és %1 fájl"
+
+#: filelist.cpp:539 filelist.cpp:598
+msgid "Will be skipped"
+msgstr "Ki lesz hagyva"
+
+#: filelist.cpp:543 soundkonverter.cpp:141 soundkonverter.cpp:145
+msgid "Waiting"
+msgstr "Várakozás"
+
+#: filelist.cpp:554
+msgid "Waiting for Replay Gain"
+msgstr "Várakozás a hangerő-korrekcióra"
+
+#: filelist.cpp:583
+msgid "Stopped"
+msgstr "Leállítva"
+
+#: filelist.cpp:588
+msgid "Backend not configured"
+msgstr "A háttérprogram nincs beállítva"
+
+#: filelist.cpp:593
+msgid "Disc full"
+msgstr "A lemez megtelt"
+
+#: filelist.cpp:603
+msgid "Failed"
+msgstr "Meghiúsult"
+
+#: filelist.cpp:606
+msgid ""
+"The conversion has failed.\n"
+"See the log for more information."
+msgstr ""
+"A konvertálás meghiúsult.\n"
+"További részletek a naplófájlban."
+
+#: filelist.cpp:630
+msgid "CD track %1"
+msgstr "CD-szám %1"
+
+#: filelist.cpp:1297
+msgid ""
+"Do you want to overwrite the current file list?\n"
+"\n"
+"If not, the saved file list will be appended."
+msgstr ""
+"Felül kívánja írni a jelenlegi fájllistát?\n"
+"\n"
+"Ha nem, a mentett fájllista lesz csatolva."
+
+#: global.cpp:97 global.cpp:99 global.cpp:123 global.cpp:125
+msgctxt "days"
+msgid "d"
+msgstr "nap"
+
+#: global.cpp:99 global.cpp:101 global.cpp:125 global.cpp:127
+msgctxt "hours"
+msgid "h"
+msgstr "ó"
+
+#: global.cpp:101 global.cpp:103 global.cpp:105 global.cpp:127 global.cpp:129
+#: global.cpp:131
+msgctxt "minutes"
+msgid "m"
+msgstr "p"
+
+#: global.cpp:103 global.cpp:105 global.cpp:107 global.cpp:109 global.cpp:111
+#: global.cpp:129 global.cpp:131 global.cpp:133
+msgctxt "seconds"
+msgid "s"
+msgstr "mp"
+
+#: global.cpp:107 global.cpp:109 global.cpp:111 global.cpp:113
+msgctxt "milliseconds"
+msgid "ms"
+msgstr "ms"
+
+#: logger.cpp:90
+msgid "Identifier"
+msgstr "Azonosító"
+
+#: logger.cpp:91
+msgid "Log ID"
+msgstr "Napló azonosító"
+
+#: logger.cpp:185 logger.cpp:188
+msgid "Finished logging"
+msgstr "Naplózás befejezve"
+
+#: logviewer.cpp:25
+msgid "Log Viewer"
+msgstr "Napló megjelenítő"
+
+#: logviewer.cpp:28
+msgid "Update"
+msgstr "Frissítés"
+
+#: logviewer.cpp:31
+msgid "Save to file..."
+msgstr "Mentés fájlba..."
+
+#: logviewer.cpp:42
+msgid "Log file:"
+msgstr "Naplófájl:"
+
+#: logviewer.cpp:84
+msgid "soundKonverter application log"
+msgstr "soundKonverter alkalmazásnapló"
+
+#: logviewer.cpp:127
+msgid "Save log file"
+msgstr "Naplófájl mentése"
+
+#: logviewer.cpp:134
+msgid "File already exists. Do you really want to overwrite it?"
+msgstr "A fájl már létezik. Tényleg felül szeretné írni?"
+
+#: logviewer.cpp:139
+msgid ""
+"Writing to file failed.\n"
+"Maybe you haven't got write permission."
+msgstr ""
+"A fájl írása meghiúsult.\n"
+"Lehet, hogy nem adott jogosultságot az íráshoz."
+
+#: main.cpp:16
+msgid ""
+"soundKonverter is a frontend to various audio converters, Replay Gain tools "
+"and CD rippers.\n"
+"\n"
+"Please file bug reports at https://bugs.launchpad.net/soundkonverter\n"
+"or simply send me a mail to hessijames@gmail.com"
+msgstr ""
+"A soundKonverter audiokonverterek, hangerő-korrekciós eszközök és CD-másolók "
+"felülete.\n"
+"\n"
+"Hibabejelentés a https://bugs.launchpad.net/soundkonverter weboldalon vagy a "
+"hessijames@gmail.com e-mail címen."
+
+#: main.cpp:22
+msgid "soundKonverter"
+msgstr "soundKonverter"
+
+#: main.cpp:22
+msgid "(C) 2005-2012 Daniel Faust"
+msgstr "(C) 2005-2012 Daniel Faust"
+
+#: main.cpp:23
+msgid "Daniel Faust"
+msgstr "Daniel Faust"
+
+#: main.cpp:24
+msgid "David Vignoni"
+msgstr "David Vignoni"
+
+#: main.cpp:24
+msgid "Nuvola icon theme"
+msgstr "Nuvola ikontéma"
+
+#: main.cpp:25
+msgid "Scott Wheeler"
+msgstr "Scott Wheeler"
+
+#: main.cpp:25
+msgid "TagLib"
+msgstr "Címkekönyvtár"
+
+#: main.cpp:26
+msgid "Marco Nelles"
+msgstr "Marco Nelles"
+
+#: main.cpp:26
+msgid "Audex"
+msgstr "Audex"
+
+#: main.cpp:27
+msgid "Amarok developers"
+msgstr "Amarok fejlesztők"
+
+#: main.cpp:27
+msgid "Amarok"
+msgstr "Amarok"
+
+#: main.cpp:28
+msgid "All programmers of audio converters"
+msgstr "Az audiokonvertálók összes programozója"
+
+#: main.cpp:32
+msgid "Open the Replay Gain tool an add all given files"
+msgstr "A hangerő-korrekció megnyitása és az összes adott fájl hozzáadása"
+
+#: main.cpp:33
+msgid "List all tracks on the cd drive <device>, 'auto' will search for a cd"
+msgstr ""
+"A(z) <device> CD-meghajtó számainak listázása, az 'auto' mód CD-t keres"
+
+#: main.cpp:34
+msgid "Add all files using the given profile"
+msgstr "Az összes fájl hozzáadása az adott profil szerint"
+
+#: main.cpp:35
+msgid "Add all files using the given format"
+msgstr "Az összes fájl hozzáadása az adott formátum szerint"
+
+#: main.cpp:36
+msgid "Output all files to <directory>"
+msgstr "Minden fájl kimenete: <directory>"
+
+#: main.cpp:37
+msgid "Start soundKonverter invisible"
+msgstr "A soundKonverter láthatatlan indítása"
+
+#: main.cpp:38
+msgid "Start the conversion immediately (enabled when using '--invisible')"
+msgstr "A konvertálás azonnali indítása (elérhető az '--invisible' módban)"
+
+#: main.cpp:39
+msgid ""
+"Close soundKonverter after all files are converted (enabled when using '--"
+"invisible')"
+msgstr ""
+"A soundKonverter bezárása a konvertálás befejezése után (elérhető az '--"
+"invisible' módban)"
+
+#: main.cpp:40
+#, c-format
+msgid ""
+"Execute <command> after each file has been converted (%i=input file, "
+"%o=output file)"
+msgstr ""
+"A(z) <command> parancs futtatása az összes fájl konvertálása után "
+"(%i=bemeneti fájl, %o=kimeneti fájl)"
+
+#: main.cpp:41
+msgid "Audio file(s) to append to the file list"
+msgstr "Audiofájlok hozzáfűzése a fájllistához"
+
+#: metadata/tagengine.cpp:59
+msgctxt "cover type"
+msgid "Unclassified"
+msgstr "Vegyes"
+
+#: metadata/tagengine.cpp:61
+msgctxt "cover type"
+msgid "32x32 PNG file icon"
+msgstr "32x32 PNG ikon"
+
+#: metadata/tagengine.cpp:63
+msgctxt "cover type"
+msgid "File icon"
+msgstr "Fájl ikon"
+
+#: metadata/tagengine.cpp:65
+msgctxt "cover type"
+msgid "Front cover"
+msgstr "Első borító"
+
+#: metadata/tagengine.cpp:67
+msgctxt "cover type"
+msgid "Back cover"
+msgstr "Hátsó borító"
+
+#: metadata/tagengine.cpp:69
+msgctxt "cover type"
+msgid "Leaflet page"
+msgstr "Ismertető"
+
+#: metadata/tagengine.cpp:71
+msgctxt "cover type"
+msgid "CD photo"
+msgstr "CD fotó"
+
+#: metadata/tagengine.cpp:73
+msgctxt "cover type"
+msgid "Lead artist picture"
+msgstr "A főszereplő fotója"
+
+#: metadata/tagengine.cpp:75
+msgctxt "cover type"
+msgid "Artist picture"
+msgstr "A művész fotója"
+
+#: metadata/tagengine.cpp:77
+msgctxt "cover type"
+msgid "Conductor picture"
+msgstr "A karmester fotója"
+
+#: metadata/tagengine.cpp:79
+msgctxt "cover type"
+msgid "Band picture"
+msgstr "A zenekar fotója"
+
+#: metadata/tagengine.cpp:81
+msgctxt "cover type"
+msgid "Composer picture"
+msgstr "A zeneszerző fotója"
+
+#: metadata/tagengine.cpp:83
+msgctxt "cover type"
+msgid "Lyricist picture"
+msgstr "A szövegíró fotója"
+
+#: metadata/tagengine.cpp:85
+msgctxt "cover type"
+msgid "Picture of the recording location"
+msgstr "A felvételi helyszín fotója"
+
+#: metadata/tagengine.cpp:87
+msgctxt "cover type"
+msgid "Picture of the artists during recording"
+msgstr "Kép a felvételről"
+
+#: metadata/tagengine.cpp:89
+msgctxt "cover type"
+msgid "Picture of the artists during performance"
+msgstr "Kép az előadásról"
+
+#: metadata/tagengine.cpp:91
+msgctxt "cover type"
+msgid "Picture from a video"
+msgstr "Kép egy videóból"
+
+#: metadata/tagengine.cpp:93
+msgctxt "cover type"
+msgid "Picture of a large, coloured fish"
+msgstr "Egy nagy, színes hal képe"
+
+#: metadata/tagengine.cpp:95
+msgctxt "cover type"
+msgid "Illustration related to the track"
+msgstr "A számhoz tartozó ábra"
+
+#: metadata/tagengine.cpp:97
+msgctxt "cover type"
+msgid "Band logo"
+msgstr "Zenekar logója"
+
+#: metadata/tagengine.cpp:99
+msgctxt "cover type"
+msgid "Publisher logo"
+msgstr "Kiadó logója"
+
+#: opener/cdopener.cpp:117
+msgid "Add CD tracks"
+msgstr "CD-számok hozzáadása"
+
+#: opener/cdopener.cpp:126
+msgid "1. Select CD tracks"
+msgstr "1. CD-számok kiválasztása"
+
+#: opener/cdopener.cpp:131 opener/diropener.cpp:57 opener/urlopener.cpp:53
+msgid "2. Set conversion options"
+msgstr "2. Konvertálási beállítások "
+
+#: opener/cdopener.cpp:164 opener/cdopener.cpp:300 optionseditor.cpp:133
+msgid "Artist:"
+msgstr "Előadó:"
+
+#: opener/cdopener.cpp:169 opener/cdopener.cpp:854 opener/cdopener.cpp:1037
+#: opener/cdopener.cpp:1043 opener/cdopener.cpp:1108 opener/cdopener.cpp:1143
+#: opener/cdopener.cpp:1357
+msgid "Various Artists"
+msgstr "Különféle előadók"
+
+#: opener/cdopener.cpp:176 opener/cdopener.cpp:311 optionseditor.cpp:144
+msgid "Composer:"
+msgstr "Zeneszerző:"
+
+#: opener/cdopener.cpp:182 opener/cdopener.cpp:859 opener/cdopener.cpp:1056
+#: opener/cdopener.cpp:1062 opener/cdopener.cpp:1121 opener/cdopener.cpp:1149
+#: opener/cdopener.cpp:1359
+msgid "Various Composer"
+msgstr "Különféle zeneszerzők"
+
+#: opener/cdopener.cpp:189 optionseditor.cpp:160
+msgid "Album:"
+msgstr "Album:"
+
+#: opener/cdopener.cpp:197 optionseditor.cpp:176
+msgid "Disc No.:"
+msgstr "Lemez száma:"
+
+#: opener/cdopener.cpp:203 optionseditor.cpp:117 optionseditor.cpp:187
+msgctxt "Track/Disc No. x of y"
+msgid "of"
+msgstr "ennyiből"
+
+#: opener/cdopener.cpp:211 optionseditor.cpp:199
+msgid "Year:"
+msgstr "Év:"
+
+#: opener/cdopener.cpp:219 optionseditor.cpp:211
+msgid "Genre:"
+msgstr "Műfaj:"
+
+#: opener/cdopener.cpp:240
+msgctxt "column title"
+msgid "Rip"
+msgstr "Beolvasás"
+
+#: opener/cdopener.cpp:241 opener/cdopener.cpp:1102
+#: replaygainscanner/replaygainfilelist.cpp:36
+msgid "Track"
+msgstr "Szám"
+
+#: opener/cdopener.cpp:242
+msgid "Artist"
+msgstr "Előadó"
+
+#: opener/cdopener.cpp:243
+msgid "Composer"
+msgstr "Zeneszerző"
+
+#: opener/cdopener.cpp:244
+msgid "Title"
+msgstr "Cím"
+
+#: opener/cdopener.cpp:245
+msgid "Length"
+msgstr "Hossz"
+
+#: opener/cdopener.cpp:246
+msgid "Player"
+msgstr "Lejátszó"
+
+#: opener/cdopener.cpp:262
+msgid "No track selected"
+msgstr "Nincs szám kiválasztva"
+
+#: opener/cdopener.cpp:285 optionseditor.cpp:95
+msgid "Title:"
+msgstr "Cím:"
+
+#: opener/cdopener.cpp:326 optionseditor.cpp:232
+msgid "Comment:"
+msgstr "Megjegyzés:"
+
+#: opener/cdopener.cpp:373 opener/diropener.cpp:144 opener/fileopener.cpp:56
+#: opener/playlistopener.cpp:40 opener/urlopener.cpp:70 optionseditor.cpp:57
+#: optionslayer.cpp:42
+msgid "Select your desired output options and click on \"Ok\"."
+msgstr "Válassza ki a kívánt kimeneti beállításokat és nyomjon \"OK\"-t."
+
+#: opener/cdopener.cpp:394
+msgid "Save cue sheet..."
+msgstr "Zeneművek jegyzékének (cue sheet) mentése.."
+
+#: opener/cdopener.cpp:399
+msgid "Request CDDB"
+msgstr "CDDB kérés"
+
+#: opener/cdopener.cpp:404
+msgid "Rip entire CD to one file"
+msgstr "Az egész CD beolvasása egy fájlba"
+
+#: opener/cdopener.cpp:414
+msgid ""
+"Ripping an entire cd to a single file is not supported by the installed "
+"backends.\n"
+"Possible solutions are listed below.\n"
+msgstr ""
+"Az egész CD egy fájlba történő beolvasását nem támogatják a telepített "
+"háttérprogramok.\n"
+"A lehetséges megoldások lentebb láthatók.\n"
+
+#: opener/cdopener.cpp:418
+msgid ""
+"Ripping an entire cd to a single file is not supported by the installed "
+"backends.\n"
+"Please check your distribution's package manager in order to install an "
+"additional ripper plugin which supports ripping to one file."
+msgstr ""
+"Az egész CD egy fájlba történő beolvasását nem támogatják a telepített "
+"háttérprogramok.\n"
+"Nézzen körül disztribúciója csomagkezelőjében olyan kiegészítő bővítményért, "
+"ami támogatja a CD-k egy fájlba történő beolvasását."
+
+#: opener/cdopener.cpp:425 opener/diropener.cpp:38 opener/urlopener.cpp:81
+msgid "Proceed"
+msgstr "Folytatás"
+
+#: opener/cdopener.cpp:428 opener/fileopener.cpp:64
+#: opener/playlistopener.cpp:48 opener/urlopener.cpp:84 optionslayer.cpp:50
+msgid "Ok"
+msgstr "Ok"
+
+#: opener/cdopener.cpp:432 opener/fileopener.cpp:67
+#: opener/playlistopener.cpp:51 opener/urlopener.cpp:88 optionslayer.cpp:53
+#: replaygainscanner/replaygainscanner.cpp:84
+msgid "Cancel"
+msgstr "Mégse"
+
+#: opener/cdopener.cpp:473
+msgid "Select CD-ROM drive"
+msgstr "CD-meghajtó kiválasztása"
+
+#: opener/cdopener.cpp:473
+msgid "Multiple CD-ROM drives where found. Please select one:"
+msgstr "Több CD-olvasó található. Válasszon egyet:"
+
+#: opener/cdopener.cpp:618
+msgid "DVD Recorder"
+msgstr "DVD-író"
+
+#: opener/cdopener.cpp:620 opener/cdopener.cpp:624
+msgid "CD Recorder"
+msgstr "CD-író"
+
+#: opener/cdopener.cpp:620 opener/cdopener.cpp:622
+msgid "DVD Player"
+msgstr "DVD-lejátszó"
+
+#: opener/cdopener.cpp:626
+msgid "CD Player"
+msgstr "CD-lejátszó"
+
+#: opener/cdopener.cpp:627
+msgid "%1 (%2): Audio CD with %3 tracks"
+msgstr "%1 (%2): audio CD %3 számmal"
+
+#: opener/cdopener.cpp:691 opener/cdopener.cpp:692 opener/cdopener.cpp:698
+#: opener/cdopener.cpp:707 opener/cdopener.cpp:708
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+#: opener/cdopener.cpp:756
+msgid "Please wait, trying to download CDDB data ..."
+msgstr "Kérem, várjon, kísérlet a CDDB-adatok letöltésére..."
+
+#: opener/cdopener.cpp:805
+msgid "Select CDDB Entry"
+msgstr "CDDB-bejegyzés kiválasztása"
+
+#: opener/cdopener.cpp:805
+msgid "Multiple CDDB entries where found. Please select one:"
+msgstr "Több CDDB-bejegyzést találtam. Kérem, válasszon egyet:"
+
+#: opener/cdopener.cpp:992
+msgid "All tracks"
+msgstr "Minden szám"
+
+#: opener/cdopener.cpp:996
+msgid "Tracks"
+msgstr "Számok"
+
+#: opener/cdopener.cpp:1302
+msgid "Please select at least one track in order to proceed."
+msgstr "Válasszon ki legalább egy fájlt a folytatáshoz."
+
+#: opener/cdopener.cpp:1383 opener/diropener.cpp:208 opener/fileopener.cpp:206
+#: opener/playlistopener.cpp:238 opener/urlopener.cpp:146 optionslayer.cpp:140
+msgid "No conversion options selected."
+msgstr "Nincsenek konvertálási beállítások kiválasztva."
+
+#: opener/cdopener.cpp:1397
+msgid ""
+"A file with this name already exists.\n"
+"\n"
+"Do you want to overwrite the existing one?"
+msgstr ""
+"Ezzel a névvel már létezik fájl.\n"
+"\n"
+"Szeretné felülírni a meglévőt?"
+
+#: opener/cdopener.cpp:1398
+msgid "File already exists"
+msgstr "A fájl már létezik"
+
+#: opener/diropener.cpp:26
+msgid "Add folder"
+msgstr "Mappa hozzáadása"
+
+#: opener/diropener.cpp:52
+msgid "1. Select directory"
+msgstr "1. Könyvtár kiválasztása"
+
+#: opener/diropener.cpp:83
+msgid "Directory:"
+msgstr "Könyvtár:"
+
+#: opener/diropener.cpp:90
+msgid "Only add selected file formats:"
+msgstr "Csak az alábbi fájlformátumok hozzáadása:"
+
+#: opener/diropener.cpp:118 opener/fileopener.cpp:72
+#: replaygainscanner/replaygainscanner.cpp:150
+msgid "Are you missing some file formats?"
+msgstr "Hiányol néhány fájlformátumot?"
+
+#: opener/diropener.cpp:126
+msgid "Select all"
+msgstr "Mind kijelölése"
+
+#: opener/diropener.cpp:130
+msgid "Select none"
+msgstr "Kijelölés törlése"
+
+#: opener/diropener.cpp:134
+msgid "Recursive"
+msgstr "Rekurzív"
+
+#: opener/diropener.cpp:136
+msgid "If checked, files from subdirectories will be added, too."
+msgstr "Ha be van jelölve, az alkönyvtárak fájljai is hozzá lesznek adva."
+
+#: opener/fileopener.cpp:32 opener/fileopener.cpp:76
+#: opener/playlistopener.cpp:56 replaygainscanner/replaygainscanner.cpp:154
+msgid "Add Files"
+msgstr "Fájlok hozzáadása"
+
+#: opener/fileopener.cpp:51 replaygainscanner/replaygainscanner.cpp:144
+msgid "%1 files"
+msgstr "%1 fájl"
+
+#: opener/fileopener.cpp:53 replaygainscanner/replaygainscanner.cpp:146
+msgid "All supported files"
+msgstr "Minden támogatott fájl"
+
+#: opener/fileopener.cpp:54 replaygainscanner/replaygainscanner.cpp:147
+msgid "All files"
+msgstr "Minden fájl"
+
+#: opener/playlistopener.cpp:31
+msgid "Add playlist"
+msgstr "Lejátszólista hozzáadása"
+
+#: opener/playlistopener.cpp:215
+msgid "The following files couldn't be found:\n"
+msgstr "A következő fájlokat nem találtam:\n"
+
+#: opener/playlistopener.cpp:218
+msgid "Files not found"
+msgstr "A fájlok nem találhatók"
+
+#: opener/urlopener.cpp:35
+msgid "Add url"
+msgstr "url hozzáadása"
+
+#: opener/urlopener.cpp:48
+msgid "1. Enter url"
+msgstr "1. Url beírása"
+
+#: opener/urlopener.cpp:114
+msgid "The Url you entered is invalid. Please try again."
+msgstr "A beírt url érvénytelen. Próbálja újra."
+
+#: optionsdetailed.cpp:41 optionssimple.cpp:58
+msgid "Format:"
+msgstr "Formátum:"
+
+#: optionsdetailed.cpp:51
+msgid "Use Plugin:"
+msgstr "Bővítmény használata:"
+
+#: optionsdetailed.cpp:117 optionssimple.cpp:79
+msgid "Destination:"
+msgstr "Leírás:"
+
+#: optionsdetailed.cpp:125 optionssimple.cpp:101
+msgid "Calculate Replay Gain tags"
+msgstr "Hangerő-korrekciós adatok generálása"
+
+#: optionsdetailed.cpp:135
+msgid "Save current options as a profile"
+msgstr "A jelenlegi beállítások mentése profilként"
+
+#: optionsdetailed.cpp:142
+msgid "Load saved profiles"
+msgstr "Mentett profilok betöltése"
+
+#: optionsdetailed.cpp:253
+msgid ""
+"Replay Gain is not supported for the %1 file format.\n"
+"Possible solutions are listed below."
+msgstr ""
+"A hangerő-korrekció nem támogatja az alábbi fájlformátumot: %1.\n"
+"A lehetséges megoldások lentebb láthatók."
+
+#: optionsdetailed.cpp:257
+msgid ""
+"Replay Gain is not supported for the %1 file format.\n"
+"Please check your distribution's package manager in order to install an "
+"additional Replay Gain plugin."
+msgstr ""
+"A hangerő-korrekció nem támogatja az alábbi fájlformátumot: %1.\n"
+"Ellenőrizze disztribúciójában a csomagkezelőt hangerő-korrekciós bővítmény "
+"telepítéséért."
+
+#: optionsdetailed.cpp:263
+msgid ""
+"Replay Gain tags can tell your music player how loud a track is\n"
+"so it can adjust the volume to play all tracks with equal loudness."
+msgstr ""
+"A hangerő-korrekciós adat megadja a zenelejátszónak, hogy milyen hangos a "
+"szám.\n"
+"Így az úgy állítja be a hangerőt, hogy minden szám egyforma hangos legyen."
+
+#: optionsdetailed.cpp:312 optionssimple.cpp:389
+msgid ""
+"Using the current conversion options will create files with approximately %1 "
+"per minute."
+msgstr "A jelenlegi konvertálási beállításokkal percenként %1 fájl készül el."
+
+#: optionsdetailed.cpp:450
+msgid "New profile"
+msgstr "Új profil"
+
+#: optionsdetailed.cpp:450
+msgid "Enter a name for the new profile:"
+msgstr "Írjon be egy nevet az új profilnak:"
+
+#: optionsdetailed.cpp:457
+msgid "You cannot save a profile without a name."
+msgstr "Nem mentheti a profilt név nélkül."
+
+#: optionsdetailed.cpp:457
+msgid "Profile name is empty"
+msgstr "A profilnév üres"
+
+#: optionsdetailed.cpp:477
+msgid "You cannot overwrite the built-in profiles."
+msgstr "A beépített profilokat nem írhatja felül."
+
+#: optionsdetailed.cpp:477 optionsdetailed.cpp:502
+msgid "Profile already exists"
+msgstr "A profil már létezik"
+
+#: optionsdetailed.cpp:502
+msgid ""
+"A profile with this name already exists.\n"
+"\n"
+"Do you want to overwrite the existing one?"
+msgstr ""
+"Ezzel a névvel már létezik profil.\n"
+"\n"
+"Szeretné felülírni a meglévőt?"
+
+#: optionseditor.cpp:40
+msgid "Previous"
+msgstr "Előző"
+
+#: optionseditor.cpp:42
+msgid "Next"
+msgstr "Következő"
+
+#: optionseditor.cpp:65
+msgid "Edit conversion options"
+msgstr "Konvertálási beállítások szerkesztése"
+
+#: optionseditor.cpp:74
+msgid "Tags"
+msgstr "Címkék"
+
+#: optionseditor.cpp:85
+msgid "Covers:"
+msgstr "Borítók:"
+
+#: optionseditor.cpp:102 optionseditor.cpp:113 optionseditor.cpp:124
+#: optionseditor.cpp:140 optionseditor.cpp:151 optionseditor.cpp:167
+#: optionseditor.cpp:183 optionseditor.cpp:194 optionseditor.cpp:206
+#: optionseditor.cpp:223 optionseditor.cpp:239
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: optionseditor.cpp:106
+msgid "Track No.:"
+msgstr "Szám:"
+
+#: optionseditor.cpp:249
+msgid "Edit tags"
+msgstr "Címkék szerkesztése"
+
+#: optionseditor.cpp:353
+msgid "No file selected"
+msgstr "Nincs fájl kiválasztva"
+
+#: optionseditor.cpp:384
+msgid ""
+"The tags could not be read, because this is not a local file.\n"
+"soundKonverter will try to read the tags, when it is about to convert the "
+"file.\n"
+"If you want to edit the tags, you can hit the button below but then "
+"soundKonverter will not try\n"
+"to read the tags after downloading."
+msgstr ""
+"A címkék nem olvashatók, mivel ez nem egy helyi fájl.\n"
+"A soundKonverter megpróbálja beolvasni a címkéket a konvertálás során.\n"
+"Ha Ön szeretné szerkeszteni a címkéket, nyomja meg az alábbi gombot, de "
+"ekkor\n"
+" a soundKonverter nem próbálja meg beolvasni a címkéket a letöltés után."
+
+#: optionseditor.cpp:394
+msgid ""
+"Reading the tags of this file failed.\n"
+"soundKonverter will try to read the tags a second time, when it is about to "
+"convert the file.\n"
+"If you want to edit the tags, you can hit the button below but then "
+"soundKonverter will not try\n"
+"to read the tags a second time."
+msgstr ""
+"A címkék beolvasása közben hiba történt.\n"
+"A soundKonverter megpróbálja újból beolvasni a címkéket a konvertálás "
+"során.\n"
+"Ha Ön szeretné szerkeszteni a címkéket, nyomja meg az alábbi gombot, de "
+"ekkor\n"
+" a soundKonverter nem próbálja újból beolvasni a címkéket."
+
+#: optionseditor.cpp:418
+msgctxt "cover tooltip"
+msgid "Cover type:"
+msgstr "Borítótípus:"
+
+#: optionseditor.cpp:420
+msgctxt "cover tooltip"
+msgid "Description:"
+msgstr "Leírás:"
+
+#: optionseditor.cpp:421
+msgctxt "cover tooltip"
+msgid "Size:"
+msgstr "Méret:"
+
+#: optionseditor.cpp:421
+msgctxt "cover tooltip"
+msgid "%1 x %2 pixels (%3)"
+msgstr "%1 x %2 képpont (%3)"
+
+#: optionseditor.cpp:423
+msgctxt "cover tooltip"
+msgid "Mime type:"
+msgstr "MIME típus:"
+
+#: optionseditor.cpp:447
+msgid "%1 Files"
+msgstr "%1 Fájl"
+
+#: optionseditor.cpp:468
+msgid ""
+"You have selected multiple files with different conversion options.\n"
+"You can change the options of all files by hitting the button below."
+msgstr ""
+"Több fájlt választott ki eltérő konvertálási beállításokkal.\n"
+"Az alábbi gomb megnyomásával megváltoztathatja az összes fájl beállítását."
+
+#: optionseditor.cpp:476
+msgid ""
+"Reading the tags of one or more files failed.\n"
+"soundKonverter will try to read the tags a second time, when it is about to "
+"convert the files.\n"
+"If you want to edit the tags, you can hit the button below but then "
+"soundKonverter will not try\n"
+"to read the tags a second time."
+msgstr ""
+"A címkék beolvasása közben hiba történt.\n"
+"A soundKonverter megpróbálja újból beolvasni a címkéket a konvertálás "
+"során.\n"
+"Ha Ön szeretné szerkeszteni a címkéket, nyomja meg az alábbi gombot, de "
+"ekkor\n"
+" a soundKonverter nem próbálja újból beolvasni a címkéket."
+
+#: optionssimple.cpp:35
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:69
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:286
+msgid "Quality:"
+msgstr "Minőség:"
+
+#: optionssimple.cpp:46
+msgid "Remove the selected profile"
+msgstr "A kiválasztott profil eltávolítása"
+
+#: optionssimple.cpp:49 optionssimple.cpp:68
+msgid "Info"
+msgstr "Információ"
+
+#: optionssimple.cpp:51
+msgid "Information about the selected profile"
+msgstr "Információ a kiválasztott profilról"
+
+#: optionssimple.cpp:70
+msgid "Information about the selected file format"
+msgstr "Információ a kiválasztott fájlformátumról"
+
+#: optionssimple.cpp:74
+msgid "More formats..."
+msgstr "Több formátum..."
+
+#: optionssimple.cpp:96
+msgid "Optional:"
+msgstr "Tetszőleges:"
+
+#: optionssimple.cpp:189
+msgid ""
+"Encoding files with a very low quality can be useful if you have a mobile "
+"device where your storage space is limited.\n"
+"It is not recommended to save your music in this quality without a copy of "
+"higher quality."
+msgstr ""
+"Nagyon gyenge minőségű hangfájlok készülnek.\n"
+"Ez hasznos lehet egy hordozható eszköz esetén, ahol korlátozott a "
+"tárkapacitás.\n"
+"Nem ajánlott ilyen gyenge minőségű hangfájl készítése egy jobb minőségű "
+"másolat nélkül."
+
+#: optionssimple.cpp:193
+msgid ""
+"Encoding files with a low quality can be useful if you have a mobile device "
+"where your storage space is limited.\n"
+"It is not recommended to save your music in this quality without a copy of "
+"higher quality."
+msgstr ""
+"Gyenge minőségű hangfájlok készülnek.\n"
+"Ez hasznos lehet egy hordozható eszköz esetén, ahol korlátozott a "
+"tárkapacitás.\n"
+"Nem ajánlott ilyen gyenge minőségű hangfájl készítése egy jobb minőségű "
+"másolat nélkül."
+
+#: optionssimple.cpp:197
+msgid ""
+"Encoding files with a medium quality is a compromise between quality and "
+"file size.\n"
+"Most people might not hear much of a difference to the original files but "
+"you should only use it to save music if your storage space is limited."
+msgstr ""
+"A fájlok közepes minőségű kódolása kompromisszum a minőség és a fájlméret "
+"között.\n"
+"A legtöbb ember nem hallja a különbséget az eredeti és a kódolt fájl között, "
+"de ezt csak akkor érdemes használni, ha korlátozott méretű tárhely áll "
+"rendelkezésre."
+
+#: optionssimple.cpp:201
+msgid ""
+"Encoding files with a high quality is a good choice if you have enough "
+"storage space available. You can use this to save your music."
+msgstr ""
+"Kiváló minőségű hangfájlok készülnek.\n"
+"Használja ezt, ha van elég hely a lemezen."
+
+#: optionssimple.cpp:205
+msgid ""
+"Encoding files with a very high quality is fine if you have enough storage "
+"space."
+msgstr ""
+"Kiváló minőségű hangfájlok készülnek. Használja ezt, ha van elég hely a "
+"lemezen."
+
+#: optionssimple.cpp:209
+msgid ""
+"Encoding files lossless will preserve the quality of the original file.\n"
+"It is only then useful if the original file has a good quality (e.g. audio "
+"CD).\n"
+"The file size will be big, so you should only use it if you have enough "
+"storage space."
+msgstr ""
+"A fájlok tömörítés nélküli kódolása megtartja azok eredeti minőségét.\n"
+"Csak akkor érdemes használni, ha az eredeti fájl jó minőségű (pl. audio "
+"CD).\n"
+"A fájlméret nagy lesz, csak akkor érdemes használni, ha elegendő tárhely áll "
+"rendelkezésre."
+
+#: optionssimple.cpp:217
+msgid "You can define your own profile in the \"Detailed\" tab."
+msgstr "Létrehozhatja saját profilját a \"Részletek\" fül alatt."
+
+#: optionssimple.cpp:221
+msgid "This is a user defined profile."
+msgstr "Ez egy felhasználói profil."
+
+#: optionssimple.cpp:224
+msgid "Profile info for %1"
+msgstr "%1 profilinformáció"
+
+#: optionssimple.cpp:231
+msgid "Do you really want to remove the profile: %1"
+msgstr "Tényleg el kívánja távolítani a profilt: %1"
+
+#: optionssimple.cpp:231
+msgid "Remove profile?"
+msgstr "A profil eltávolítása?"
+
+#: optionssimple.cpp:280
+msgid "Format info for %1"
+msgstr "%1 formátuminformáció"
+
+#: optionssimple.cpp:284
+msgid "Sorry, no format information available."
+msgstr "Sajnálom, nem érhető el formátuminformáció."
+
+#: outputdirectory.cpp:36
+msgid "By meta data"
+msgstr "Metaadat szerint"
+
+#: outputdirectory.cpp:37
+msgid "Source directory"
+msgstr "Forráskönyvtár"
+
+#: outputdirectory.cpp:38
+msgid "Specify output directory"
+msgstr "Célkönyvtár megadása"
+
+#: outputdirectory.cpp:39
+msgid "Copy directory structure"
+msgstr "Könyvtárszerkezet másolása"
+
+#: outputdirectory.cpp:50 outputdirectory.cpp:461
+msgid "Choose an output directory"
+msgstr "A kimeneti könyvtár kiválasztása"
+
+#: outputdirectory.cpp:55
+msgid "Open the output directory with Dolphin"
+msgstr "A kimeneti könyvtár megnyitása a Dolphin fájlkezelővel"
+
+#: outputdirectory.cpp:224
+msgid "Unknown Artist"
+msgstr "Ismeretlen előadó"
+
+#: outputdirectory.cpp:228
+msgid "Unknown Album"
+msgstr "Ismeretlen album"
+
+#: outputdirectory.cpp:232
+msgid "No Comment"
+msgstr "Nincs megjegyzés"
+
+#: outputdirectory.cpp:239
+msgid "Unknown Genre"
+msgstr "Ismeretlen műfaj"
+
+#: outputdirectory.cpp:246
+msgid "Unknown Composer"
+msgstr "Ismeretlen zeneszerző"
+
+#: outputdirectory.cpp:250
+msgid "Unknown Title"
+msgstr "Ismeretlen cím"
+
+#: outputdirectory.cpp:331
+msgctxt ""
+"will be appended to the filename if a file with the same name already exists"
+msgid "new"
+msgstr "új"
+
+#: outputdirectory.cpp:512
+msgid "Name all converted files according to the specified pattern"
+msgstr "Minden konvertált fájl átnevezése a megadott minta alapján"
+
+#: outputdirectory.cpp:513
+msgid ""
+"The following strings are wildcards that will be replaced\n"
+"by the information in the meta data:\n"
+"\n"
+"%a - Artist\n"
+"%b - Album\n"
+"%c - Comment\n"
+"%d - Disc number\n"
+"%g - Genre\n"
+"%n - Track number\n"
+"%p - Composer\n"
+"%t - Title\n"
+"%y - Year\n"
+"%f - Original file name\n"
+"\n"
+"You may parenthesize these wildcards and surrounding characters with squared "
+"brackets ('[' and ']')\n"
+"so they will be ignored if the replacement value is empty.\n"
+"In order to use squared brackets you will have to escape them with a "
+"backslash ('\\[' and '\\]')."
+msgstr ""
+"Az alábbi karakterláncok helyettesítő karakterek a metaadatban:\n"
+"\n"
+"%a - előadó\n"
+"%b - album\n"
+"%c - megjegyzés\n"
+"%d - lemez száma\n"
+"%g - műfaj\n"
+"%n - szám\n"
+"%p - szerző\n"
+"%t - cím\n"
+"%y - év\n"
+"%f - eredeti fájlnév\n"
+"\n"
+"A helyettesítő karaktereket szögletes zárójelbe teheti ('['és ']')\n"
+"így mellőzve lesznek, ha a mező üres.\n"
+"Szögletes zárójel írásához használja a backslash-t ('\\[' and '\\]')."
+
+#: outputdirectory.cpp:525
+msgid ""
+"Output all converted files into the same directory as the original files"
+msgstr "Minden konvertált fájl az eredeti fájl könyvtárába kerüljön"
+
+#: outputdirectory.cpp:536
+msgid "Output all converted files into the specified output directory"
+msgstr "Minden konvertált fájl a megadott kimeneti könyvtárba kerüljön"
+
+#: outputdirectory.cpp:547
+msgid "Copy the whole directory structure for all converted files"
+msgstr "Az egész könyvtárszerkezet másolása minden konvertált fájlnál"
+
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:28
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:28
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:80
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:32
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:32
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:33
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:31
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:60
+msgid "Mode:"
+msgstr "Mód:"
+
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:32
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:131
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:32
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:107
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:85
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:221
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:487
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:36
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:128
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:36
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:118
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:38
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:126
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:269
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:35
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:124
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:64
+msgid "Bitrate"
+msgstr "Bitráta"
+
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:31
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:31
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:88
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:246
+msgid "Bitrate:"
+msgstr "Bitráta:"
+
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:82
+#: plugins/soundkonverter_codec_flake/flakecodecwidget.cpp:60
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:146
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:82
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:94
+#: plugins/soundkonverter_codec_shorten/shortencodecwidget.cpp:26
+#: plugins/soundkonverter_codec_ttaenc/ttaenccodecwidget.cpp:26
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:64
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:47
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:102
+msgid "Additional encoder arguments:"
+msgstr "További kódolási paraméterek:"
+
+#: plugins/soundkonverter_codec_ffmpeg/soundkonverter_codec_ffmpeg.cpp:301
+msgid "Enable experimental codecs in the ffmpeg configuration dialog."
+msgstr "Kísérleti kodekek engedélyezése az ffmpeg beállítási ablakában."
+
+#: plugins/soundkonverter_codec_ffmpeg/soundkonverter_codec_ffmpeg.cpp:305
+msgid "Compile ffmpeg with %1 support."
+msgstr "ffmpeg-fordítás %1 támogatással."
+
+#: plugins/soundkonverter_codec_ffmpeg/soundkonverter_codec_ffmpeg.cpp:365
+#: plugins/soundkonverter_codec_fluidsynth/soundkonverter_codec_fluidsynth.cpp:80
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:111
+#: plugins/soundkonverter_codec_libav/soundkonverter_codec_libav.cpp:365
+#: plugins/soundkonverter_codec_opustools/soundkonverter_codec_opustools.cpp:81
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:240
+#: plugins/soundkonverter_replaygain_aacgain/soundkonverter_replaygain_aacgain.cpp:83
+#: plugins/soundkonverter_replaygain_mp3gain/soundkonverter_replaygain_mp3gain.cpp:76
+msgid "Configure %1"
+msgstr "Beállítás %1"
+
+#: plugins/soundkonverter_codec_ffmpeg/soundkonverter_codec_ffmpeg.cpp:370
+#: plugins/soundkonverter_codec_libav/soundkonverter_codec_libav.cpp:370
+msgid "Enable experimental codecs"
+msgstr "Kísérleti kodekek engedélyezése"
+
+#: plugins/soundkonverter_codec_ffmpeg/soundkonverter_codec_ffmpeg.cpp:396
+#: plugins/soundkonverter_codec_libav/soundkonverter_codec_libav.cpp:396
+msgid "Please restart soundKonverter in order to activate the changes."
+msgstr "Indítsa újra a soundKonvertert a változtatások alkalmazásához."
+
+#: plugins/soundkonverter_codec_flac/flaccodecwidget.cpp:29
+#: plugins/soundkonverter_codec_flake/flakecodecwidget.cpp:31
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:123
+#: plugins/soundkonverter_codec_mac/maccodecwidget.cpp:31
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:30
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:36
+msgid "Compression level:"
+msgstr "Tömörítési szint:"
+
+#: plugins/soundkonverter_codec_fluidsynth/soundkonverter_codec_fluidsynth.cpp:85
+msgid "Use SoundFont file:"
+msgstr "SoundFont fájl használata:"
+
+#: plugins/soundkonverter_codec_fluidsynth/soundkonverter_codec_fluidsynth.cpp:86
+msgid ""
+"In order to convert the midi data to a wave form you need a SoundFont which "
+"maps the midi data to sound effects.\n"
+"Have a look at %1 in order to get SoundFont files."
+msgstr ""
+"Midi adat hangfájllá konvertálásához egy SoundFont fájlra van szüksége, ami "
+"a midi adatot hangefektekké képzi le.\n"
+"A SoundFont fájlok beszerzéséhez nézzen szét itt: %1 ."
+
+#: plugins/soundkonverter_codec_fluidsynth/soundkonverter_codec_fluidsynth.cpp:141
+msgid "FluidSynth is not configured, yet. You need to set a SoundFont file."
+msgstr ""
+"A FluidSynth még nincs konfigurálva. Előbb be kell állítani egy SoundFont "
+"fájlt."
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:31
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:33
+msgid "Preset:"
+msgstr "Előre beállított:"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:34
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:396
+msgctxt "Backend profile"
+msgid "Medium"
+msgstr "Megfelelő"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:35
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:403
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:39
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:273
+msgctxt "Backend profile"
+msgid "Standard"
+msgstr "Szabványos"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:36
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:410
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:40
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:278
+msgctxt "Backend profile"
+msgid "Extreme"
+msgstr "Rendkívüli"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:37
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:417
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:41
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:283
+msgctxt "Backend profile"
+msgid "Insane"
+msgstr "Őrületes"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:38
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:424
+msgid "Specify bitrate"
+msgstr "Bitráta megadása"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:53
+msgid "cbr"
+msgstr "Konstans bitráta"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:56
+msgid ""
+"Encode using a constant bitrate.\n"
+"Only works with 80, 96, 112, 128, 160, 192, 224, 256 and 320 kbps"
+msgstr ""
+"Kódolás konstans bitrátával.\n"
+"Csak 80, 96, 112, 128, 160, 192, 224 és 320 kbps esetén használható."
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:60
+msgid "Fast encoding"
+msgstr "Gyors kódolás"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:63
+msgid ""
+"Use a faster encoding algorithm (results in a slightly lower output quality)."
+msgstr ""
+"Használjon egy gyorsabb kódolási algoritmust (alig gyengébb minőséget "
+"eredményez)."
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:106
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:59
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:53
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:55
+msgid "Bitrate mode:"
+msgstr "Bitráta mód:"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:109
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:217
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:472
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:62
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:124
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:288
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:58
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:120
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:263
+msgid "Variable"
+msgstr "Változó"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:110
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:193
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:225
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:490
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:63
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:107
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:131
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:305
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:56
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:91
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:114
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:59
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:103
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:127
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:280
+msgid "Average"
+msgstr "Átlagos"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:111
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:227
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:491
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:64
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:132
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:306
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:57
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:116
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:60
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:128
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:281
+msgid "Constant"
+msgstr "Konstans"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:133
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:142
+msgid ""
+"Compression level from 9 to 0 where 0 is the highest quality.\n"
+"(The higher the quality, the slower the conversion and vice versa.)\n"
+"A value of 2 is recommended."
+msgstr ""
+"A tömörítés szintje 9 és 0 között lehet, ahol 0 a legjobb minőség.\n"
+"(Minél jobb a minőség, annál lassabb a konverzió, és fordítva.) A 2-es szint "
+"ajánlott."
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:401
+msgid ""
+"This preset should provide near transparency to most people on most music "
+"(~150 kbps abr)."
+msgstr ""
+"Ez a beállítás a legtöbb embernek a legtöbb zenéhez megfelelő (~150 kbps "
+"átlagos bitráta)"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:408
+msgid ""
+"This preset should generally be transparent to most people on most music\n"
+"and is already quite high in quality (~230 kbps abr)."
+msgstr ""
+"Ez a beállítás a legtöbb embernek a legtöbb zenéhez megfelelő\n"
+"és elég jó minőségű (~230 kbps átlagos bitráta)"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:415
+msgid ""
+"If you have extremely good hearing and similar equipment, this preset will "
+"generally provide\n"
+"slightly higher quality than the standard mode (~280 kbps abr)."
+msgstr ""
+"Ha nagyon jó hallása van és a berendezései is jók, ez a beállítás alig jobb "
+"minőséget nyújt,\n"
+"mint az átlagos (~280 kbps átlagos bitráta)"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:422
+msgid ""
+"This preset will usually be overkill for most people and most situations, "
+"but if you must have\n"
+"the absolute highest quality with no regard to filesize, this is the way to "
+"go (320 kbps cbr)."
+msgstr ""
+"A legtöbb esetben ez a beállítás nem szükséges, de amennyiben Önnek\n"
+"a legjobb minőség szükséges és nem számít a fájl mérete, válassza ezt(320 "
+"kbps konstans bitráta)."
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:468
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:469
+msgid ""
+"Quality level from 9 to 0 where 0 is the highest quality.\n"
+"(The higher the quality, the bigger the file size and vice versa.)"
+msgstr ""
+"A minőség szintje 9 és 0 között lehet, ahol 0 a legjobb minőség.\n"
+"(Minél jobb a minőség, annál nagyobb a fájlméret, és fordítva.)"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:116
+msgid "Stereo mode:"
+msgstr "Sztereó:"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:119
+msgid "Automatic"
+msgstr "Automatikus"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:120
+msgid "Joint Stereo"
+msgstr "Álsztereó"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:121
+msgid "Simple Stereo"
+msgstr "Egyszerű sztereó"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:122
+msgid "Forced Joint Stereo"
+msgstr "Kényszerített álsztereó"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:123
+msgid "Dual Mono"
+msgstr "Duál monó"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:166
+#: plugins/soundkonverter_codec_twolame/soundkonverter_codec_twolame.cpp:92
+msgid "About %1"
+msgstr "Névjegy: %1"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:171
+msgid ""
+"LAME is a free high quality MP3 encoder.\n"
+"You can get it at: http://lame.sourceforge.net"
+msgstr ""
+"A LAME egy ingyenes kiváló minőségű MP3 kóder.\n"
+"Letöltheti a http://lame.sourceforge.net weboldalról."
+
+#: plugins/soundkonverter_codec_libav/soundkonverter_codec_libav.cpp:301
+msgid "Enable experimental codecs in the libav configuration dialog."
+msgstr ""
+
+#: plugins/soundkonverter_codec_libav/soundkonverter_codec_libav.cpp:305
+msgid "Compile libav with %1 support."
+msgstr ""
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:36
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:258
+msgctxt "Backend profile"
+msgid "Telephone"
+msgstr "Telefon"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:37
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:263
+msgctxt "Backend profile"
+msgid "Thumb"
+msgstr "Bélyegkép"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:38
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:268
+msgctxt "Backend profile"
+msgid "Radio"
+msgstr "Rádió"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:42
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:288
+msgctxt "Backend profile"
+msgid "Braindead"
+msgstr "Agyhalott"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:45
+msgid "Either use one of MusePacks's presets or your own settings."
+msgstr "Használja valamelyik MusePacks beállítást vagy a sajátját."
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:261
+msgid "low quality (~60 kbps abr)."
+msgstr "gyenge minőség (~60 kbps átlagos bitráta)"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:266
+msgid "low/medium quality (~90 kbps abr)."
+msgstr "gyenge/megfelelő minőség (~90 kbps átlagos bitráta)"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:271
+msgid "medium quality (~130 kbps abr)."
+msgstr "megfelelő minőség (~130 kbps átlagos bitráta)"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:276
+msgid "high quality (~180 kbps abr)."
+msgstr "jó minőség (~180 kbps átlagos bitráta)"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:281
+msgid "excellent quality (~210 kbps abr)."
+msgstr "kiváló minőség (~210 kbps átlagos bitráta)"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:286
+msgid "excellent quality (~240 kbps abr)."
+msgstr "kiváló minőség (~240 kbps átlagos bitráta)"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:291
+msgid "excellent quality (~270 kbps abr)."
+msgstr "kiváló minőség (~270 kbps átlagos bitráta)"
+
+#: plugins/soundkonverter_codec_neroaac/soundkonverter_codec_neroaac.cpp:42
+#: plugins/soundkonverter_codec_neroaac/soundkonverter_codec_neroaac.cpp:50
+#: plugins/soundkonverter_codec_neroaac/soundkonverter_codec_neroaac.cpp:58
+msgid "You can download '%1' at '%2' after entering an email address."
+msgstr ""
+"A(z) '%1'-t egy érvényes e-mail cím megadása után innen töltheti le: %2 "
+
+#: plugins/soundkonverter_codec_opustools/soundkonverter_codec_opustools.cpp:50
+#: plugins/soundkonverter_codec_opustools/soundkonverter_codec_opustools.cpp:58
+#: plugins/soundkonverter_codec_vorbistools/soundkonverter_codec_vorbistools.cpp:38
+#: plugins/soundkonverter_codec_vorbistools/soundkonverter_codec_vorbistools.cpp:46
+#: plugins/soundkonverter_replaygain_metaflac/soundkonverter_replaygain_metaflac.cpp:33
+msgid ""
+"'%1' is usually in the package '%2' which should be shipped with your "
+"distribution."
+msgstr ""
+"A(z) '%1' rendszerint a '%2' csomag része, ami megtalálható a "
+"disztribúciójában."
+
+#: plugins/soundkonverter_codec_opustools/soundkonverter_codec_opustools.cpp:86
+msgid "Uncoupled channels"
+msgstr "Nem párosított csatornák"
+
+#: plugins/soundkonverter_codec_opustools/soundkonverter_codec_opustools.cpp:87
+msgid "Use one mono stream per channel"
+msgstr "Egy mono adatfolyam használata csatornánként"
+
+#: plugins/soundkonverter_codec_twolame/soundkonverter_codec_twolame.cpp:97
+msgid ""
+"TwoLame is a free MP2 encoder.\n"
+"You can get it at: http://www.twolame.org"
+msgstr ""
+"A TwoLame egy ingyenes MP2 dekóder.\n"
+"Beszerezheti a http://www.twolane.org címen."
+
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:258
+msgid "Quality level from -50 to 50."
+msgstr "A minőség szintje -50 és 50 között."
+
+#: plugins/soundkonverter_codec_wavpack/soundkonverter_codec_wavpack.cpp:46
+#: plugins/soundkonverter_replaygain_wvgain/soundkonverter_replaygain_wvgain.cpp:33
+msgid "'%1' is usually in the package '%2' which you can download at %3"
+msgstr "A(z) '%1' rendszerint a '%2' csomag része, ami innen tölthető le: %3"
+
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:34
+msgid "Fast"
+msgstr "Gyors"
+
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:35
+msgid "Normal"
+msgstr "Normál"
+
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:36
+msgid "High quality"
+msgstr "Jó minőség"
+
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:37
+msgid "Very high quality"
+msgstr "Nagyon jó minőség"
+
+#: plugins/soundkonverter_filter_normalize/normalizefilterwidget.cpp:23
+msgid "Normalize"
+msgstr "Normalizálás"
+
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:186
+msgid "Enable experimental codecs in the sox configuration dialog."
+msgstr "Kísérleti kodekek engedélyezése a sox beállítási ablakában."
+
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:190
+msgid "Compile sox with %1 support."
+msgstr "sox-fordítás %1 támogatással."
+
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:245
+msgid "Sample rate change quality:"
+msgstr "Mintavételezési ráta megváltoztatása:"
+
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:248
+msgid "Quick"
+msgstr "Gyors"
+
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:624
+msgid "Quality level from 9 to 0 where 0 is the highest quality."
+msgstr ""
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:22
+msgid "Effect:"
+msgstr "Effekt:"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:27
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:189
+#: plugins/soundkonverter_filter_sox/soxfilteroptions.cpp:82
+#: plugins/soundkonverter_filter_sox/soxfilterwidget.cpp:132
+msgid "Disabled"
+msgstr "Letiltva"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:102
+msgid "Remove this effect"
+msgstr "A kiválasztott effekt eltávolítása"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:106
+msgid "Add"
+msgstr "Hozzáadás"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:107
+msgid "Add another effect"
+msgstr "Más effekt hozzáadása"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:146
+msgid ""
+"Normalize:\n"
+"Change the volume so all files have the same loudness"
+msgstr ""
+"Normalizálás:\n"
+"Hangerő változtatása úgy, hogy a fájlok egyformán hangosak legyenek."
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:150
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:166
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:180
+msgctxt "decibel"
+msgid "dB"
+msgstr "dB"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:162
+msgid ""
+"Bass:\n"
+"Amplify the low frequencies"
+msgstr ""
+"Mély:\n"
+"A mély frekvenciák felerősítése"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:176
+msgid ""
+"Treble:\n"
+"Amplify the high frequencies"
+msgstr ""
+"Magas:\n"
+"A magas frekvenciák felerősítése"
+
+#: plugins/soundkonverter_filter_sox/soxfilterwidget.cpp:28
+msgid "Sample rate:"
+msgstr "Mintavételezési ráta:"
+
+#: plugins/soundkonverter_filter_sox/soxfilterwidget.cpp:50
+msgid "Sample size:"
+msgstr "Mintavételezési méret:"
+
+#: plugins/soundkonverter_filter_sox/soxfilterwidget.cpp:66
+msgid "Channels:"
+msgstr "Csatornák:"
+
+#: plugins/soundkonverter_filter_sox/soxfilterwidget.cpp:70
+msgid "Mono"
+msgstr "Monó"
+
+#: plugins/soundkonverter_filter_sox/soxfilterwidget.cpp:71
+msgid "Stereo"
+msgstr "Sztereó"
+
+#: plugins/soundkonverter_replaygain_aacgain/soundkonverter_replaygain_aacgain.cpp:90
+#: plugins/soundkonverter_replaygain_mp3gain/soundkonverter_replaygain_mp3gain.cpp:83
+msgid "Use tag format:"
+msgstr "Címkeformátum használata:"
+
+#: plugins/soundkonverter_replaygain_aacgain/soundkonverter_replaygain_aacgain.cpp:99
+#: plugins/soundkonverter_replaygain_mp3gain/soundkonverter_replaygain_mp3gain.cpp:92
+msgid "Modify audio stream"
+msgstr "Az audio adatfolyam módosítása"
+
+#: plugins/soundkonverter_replaygain_aacgain/soundkonverter_replaygain_aacgain.cpp:100
+#: plugins/soundkonverter_replaygain_mp3gain/soundkonverter_replaygain_mp3gain.cpp:93
+msgid ""
+"Write gain adjustments directly into the encoded data. That way the "
+"adjustment works with all mp3 players.\n"
+"Undoing the changes is still possible since correction data will be written "
+"as well."
+msgstr ""
+"Hangerő-beállítások írása közvetlenül a kódolt adatba. A beállítások így "
+"minden mp3-lejátszóval működnek.\n"
+"A változtatások visszavonása lehetséges, mert a korrekciós adatok is a "
+"fájlba íródnak."
+
+#: plugins/soundkonverter_ripper_cdparanoia/soundkonverter_ripper_cdparanoia.cpp:42
+msgid ""
+"In order to rip audio cds per track or to a single file, you need to install "
+"'cdparanoia'.\n"
+"'cdparanoia' is usually shipped with your distribution, the package name can "
+"vary."
+msgstr ""
+"Ahhoz, hogy audio CD-t írjon számonként vagy egy fájlba, telepítenie kell a "
+"cdparanoia-t. A cdparanoia rendszerint a disztribúció része, a csomag neve "
+"eltérhet."
+
+#: progressindicator.cpp:85
+msgid "Speed:"
+msgstr "Sebesség:"
+
+#: progressindicator.cpp:98
+msgid "Remaining time:"
+msgstr "Hátralévő idő:"
+
+#: progressindicator.cpp:162 soundkonverter.cpp:297 soundkonverter.cpp:299
+msgid "Finished"
+msgstr "Befejezve"
+
+#: replaygainscanner/replaygainfilelist.cpp:35
+msgid "File"
+msgstr "Fájl"
+
+#: replaygainscanner/replaygainfilelist.cpp:37
+msgid "Album"
+msgstr "Album"
+
+#: replaygainscanner/replaygainfilelist.cpp:59
+msgid "Collapse all"
+msgstr "Az összes összecsukása"
+
+#: replaygainscanner/replaygainfilelist.cpp:63
+msgid "Expand all"
+msgstr "Az összes kibontása"
+
+#: replaygainscanner/replaygainfilelist.cpp:73
+msgid "Move to new Album"
+msgstr "Áthelyezés új albumba"
+
+#: replaygainscanner/replaygainfilelist.cpp:142
+msgid ""
+"Some tracks can't be added to the album because either the codec or the "
+"sampling rate is different."
+msgstr ""
+"Néhány szám nem adható az albumhoz, mert a kodek vagy a mintavételezési "
+"frekvencia eltérő."
+
+#: replaygainscanner/replaygainfilelist.cpp:1050
+msgid "New album"
+msgstr "Új album"
+
+#: replaygainscanner/replaygainprocessor.cpp:89
+msgid "Replay Gain failed. The used backend needs to be configured properly."
+msgstr ""
+"A konvertálás meghiúsult. A használt háttérprogramokat megfelelően be kell "
+"állítani."
+
+#: replaygainscanner/replaygainprocessor.cpp:95
+msgid ""
+"Replay Gain failed. The preferred plugin lacks support for a necessary "
+"feature."
+msgstr ""
+"A hangerő-korrekció meghiúsult. Az alapértelmezett bővítmény nem támogat egy "
+"szükséges funkciót."
+
+#: replaygainscanner/replaygainprocessor.cpp:102
+msgid "Replay Gain failed. Unknown Error."
+msgstr "A hangerő-korrekció meghiúsult. Ismeretlen hiba történt."
+
+#: replaygainscanner/replaygainprocessor.cpp:142
+msgid "Replay Gain failed. Exit code: %1"
+msgstr "A hangerő-korrekció meghiúsult. Hibakód: %1"
+
+#: replaygainscanner/replaygainprocessor.cpp:214
+msgid "Adding new item to Replay Gain processing list: '%1'"
+msgstr "Új elem hozzáadása a hangerő-korrekciós listához: '%1'"
+
+#: replaygainscanner/replaygainprocessor.cpp:222
+msgid "Replay Gain for %1"
+msgstr "Hangerő-korrekció ehhez: %1"
+
+#: replaygainscanner/replaygainprocessor.cpp:240
+msgid "Possible Replay Gain backends:"
+msgstr "Lehetséges hangerő-korrekciós háttérprogramok:"
+
+#: replaygainscanner/replaygainprocessor.cpp:277
+msgctxt "Conversion exit status"
+msgid "Skipped"
+msgstr "Mellőzve"
+
+#: replaygainscanner/replaygainscanner.cpp:45 soundkonverter.cpp:192
+#: soundkonverterview.cpp:80
+msgid "Add folder..."
+msgstr "Mappa hozzáadása..."
+
+#: replaygainscanner/replaygainscanner.cpp:46 soundkonverter.cpp:187
+#: soundkonverterview.cpp:79
+msgid "Add files..."
+msgstr "Fájlok hozzáadása..."
+
+#: replaygainscanner/replaygainscanner.cpp:52
+msgid "Force recalculation"
+msgstr "Az újraszámítás kényszerítése"
+
+#: replaygainscanner/replaygainscanner.cpp:53
+msgid ""
+"Recalculate Replay Gain tags for files that already have Replay Gain tags "
+"set."
+msgstr "Hangerő-korrekciós adatok újragenerálása."
+
+#: replaygainscanner/replaygainscanner.cpp:74
+msgid "Tag untagged"
+msgstr "A jelöletlen megjelölése"
+
+#: replaygainscanner/replaygainscanner.cpp:75
+msgid ""
+"Calculate Replay Gain tags for all files in the file list without Replay "
+"Gain tags."
+msgstr ""
+"Hangerő-korrekciós adatok generálása a lista minden olyan fájljához, ahol "
+"hiányzik."
+
+#: replaygainscanner/replaygainscanner.cpp:79
+msgid "Untag tagged"
+msgstr "A megjelölés törlése"
+
+#: replaygainscanner/replaygainscanner.cpp:80
+msgid "Remove the Replay Gain tags from all files in the file list."
+msgstr "A hangerő-korrekció megnyitása és az összes adott fájl hozzáadása"
+
+#: replaygainscanner/replaygainscanner.cpp:91
+msgid "Close"
+msgstr "Bezárás"
+
+#: replaygainscanner/replaygainscanner.cpp:314
+msgid ""
+"There are still Replay Gain jobs running.\n"
+"Do you really want to cancel them?"
+msgstr ""
+"Fut a hangerő-korrekció.\n"
+"Megszakítja?"
+
+#: soundkonverter.cpp:44
+msgid "This is soundKonverter %1"
+msgstr "Ez a soundKonverter %1"
+
+#: soundkonverter.cpp:46
+msgid "Compiled with TagLib %1.%2.%3"
+msgstr "TagLib-bel fordítva %1.%2.%3"
+
+#: soundkonverter.cpp:48
+msgid ""
+"Reading/writing covers is not supported for ogg/METADATA_BLOCK_PICTURE, flac "
+"and asf/wma files. TagLib 1.7 is needed for that."
+msgstr ""
+"A borítók olvasása/írása nem támogatott az ogg/METADATA_BLOCK_PICTURE, a "
+"flac\n"
+"és az asf/wma fájlok esetén. Ehhez a TagLib 1.7 szükséges."
+
+#: soundkonverter.cpp:79 soundkonverter.cpp:84 soundkonverter.cpp:99
+msgid "Removing old file: %1"
+msgstr "Régi fájl eltávolítása: %1"
+
+#: soundkonverter.cpp:172
+msgid "View logs..."
+msgstr "Naplók megtekintése..."
+
+#: soundkonverter.cpp:177
+msgid "Replay Gain tool..."
+msgstr "Hangerő-korrekciós eszköz..."
+
+#: soundkonverter.cpp:182
+msgid "About plugins..."
+msgstr "A bővítményekről..."
+
+#: soundkonverter.cpp:197 soundkonverterview.cpp:81
+msgid "Add CD tracks..."
+msgstr "CD-számok hozzáadása..."
+
+#: soundkonverter.cpp:202 soundkonverterview.cpp:82
+msgid "Add url..."
+msgstr "Url hozzáadása..."
+
+#: soundkonverter.cpp:207 soundkonverterview.cpp:83
+msgid "Add playlist..."
+msgstr "Lejátszólista hozzáadása..."
+
+#: soundkonverter.cpp:212
+msgid "Load file list"
+msgstr "Fájllista betöltése"
+
+#: soundkonverter.cpp:217
+msgid "Save file list"
+msgstr "Fájllista mentése"
+
+#: soundkonverterview.cpp:91 soundkonverterview.cpp:94
+msgid "Start"
+msgstr "Indítás"
+
+#: soundkonverterview.cpp:101 soundkonverterview.cpp:114
+msgid "Stop"
+msgstr "Leállítás"
+
+#: soundkonverterview.cpp:103
+msgid "Stop immediatelly"
+msgstr ""
+
+#: soundkonverterview.cpp:106
+msgid "Stop after current conversions are completed"
+msgstr "Leállítás a jelenlegi konvertálások után"
+
+#: soundkonverterview.cpp:109
+msgid "Continue after current conversions are completed"
+msgstr "Folytatás a jelenlegi konvertálások után"
+
+#: soundkonverterview.cpp:260
+msgid "No CD device found"
+msgstr "Nem található CD-meghajtó"
+
+#. i18n: file: soundkonverterui.rc:20
+#. i18n: ectx: Menu (tools)
+#: rc.cpp:6
+msgid "Tools"
+msgstr "Eszközök"
+
+#: rc.cpp:7
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Név"
+
+#: rc.cpp:8
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "E-mail"
+
+#: rc.cpp:9
+msgid "Audio file converter, CD ripper and Replay Gain tool"
+msgstr "Audiofájl-konverter, CD-beolvasó és hangerő-korrekciós eszköz"
+
+#: rc.cpp:10
+msgid "Rip Audio CD with soundKonverter"
+msgstr "Audio CD beolvasása a soundKonverterrel"

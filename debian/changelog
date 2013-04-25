@@ -1,3 +1,23 @@
+soundkonverter (2.0.1-1) unstable; urgency=low
+
+  * Imported Upstream version 2.0.1
+
+ -- Michael Meskes <meskes@debian.org>  Thu, 25 Apr 2013 12:56:10 +0200
+
+soundkonverter (2.0.0-1) unstable; urgency=low
+
+  * Updated watchfile to the latest version, courtesy of Bart Martens
+    <bartm@debian.org>.
+  * Imported Upstream version 2.0.0
+
+ -- Michael Meskes <meskes@debian.org>  Sat, 23 Mar 2013 20:55:06 +0100
+
+soundkonverter (1.9.90-1) unstable; urgency=low
+
+  * Imported Upstream version 1.9.90
+
+ -- Michael Meskes <meskes@debian.org>  Tue, 26 Feb 2013 14:25:14 +0100
+
 soundkonverter (1.9.80-1) unstable; urgency=low
 
   * Imported Upstream version 1.9.80
