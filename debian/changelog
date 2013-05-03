@@ -1,3 +1,10 @@
+soundkonverter (2.0.1-1ubuntu0~ppa1) precise; urgency=low
+
+  * Backport to Precise.
+  * Remaining change: Add dependency on aften
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Fri, 03 May 2013 11:13:35 +0200
+
 soundkonverter (2.0.1-1) unstable; urgency=low
 
   * Imported Upstream version 2.0.1
