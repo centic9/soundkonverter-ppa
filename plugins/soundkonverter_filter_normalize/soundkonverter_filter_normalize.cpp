@@ -14,7 +14,7 @@ soundkonverter_filter_normalize::soundkonverter_filter_normalize( QObject *paren
 {
     Q_UNUSED(args)
 
-    binaries["normalize1"] = "";
+    binaries["normalize"] = "";
 
     allCodecs += "wav";
 }
@@ -164,6 +164,13 @@ float soundkonverter_filter_normalize::parseOutput( const QString& output )
 //     }
 //
     return -1;
+}
+
+FilterOptions *soundkonverter_filter_normalize::filterOptionsFromXml( QDomElement filterOptions )
+{
+    NormalizeFilterOptions *options = new NormalizeFilterOptions();
+    options->fromXml( filterOptions );
+    return options;
 }
 
 
