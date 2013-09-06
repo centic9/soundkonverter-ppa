@@ -1,0 +1,52 @@
+.\" Process this file with
+.\" groff -man -Tascii foo.1
+.\"
+.TH soundkonverter 1 "JUNE 2013" soundKonverter
+
+.SH NAME
+soundKonverter
+.SH SYNOPSIS
+.B soundkonverter [
+.I OPTIONS
+.B ]
+.I files
+
+.SH DESCRIPTION
+.B soundKonverter
+is a frontend to various audio converters.
+
+The key features are:
+- Audio conversion
+- ReplayGain calculation
+- CD ripping
+
+Reading and writing tags and covers is supported for many formats, so they are preserved when converting files.
+.SH OPTIONS
+.IP --replaygain
+.IP "--rip [DEVICE]"
+.IP "--profile PROFILE"
+.IP "--format FORMAT"
+.IP "--output DIRECTORY"
+.IP --invisible
+.IP --autostart
+.IP --autoclose
+.IP "--command COMMAND"
+
+.SH EXAMPLES
+soundkonverter files
+
+soundkonverter --rip --autostart files
+
+soundkonverter --replaygain files
+
+soundkonverter --profile High --format mp3 --output /home/user --invisible --command /home/user/bin/post_process.sh files
+
+.SH BUGS
+Reporting bugs: https://github.com/HessiJames/soundkonverter/wiki/Reporting%20bugs
+
+.SH AUTHOR
+Daniel Faust <hessijames at gmail dot com>
+
+.SH "SEE ALSO"
+.BR flac (1),
+.BR lame (1),
