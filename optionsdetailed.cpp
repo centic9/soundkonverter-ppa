@@ -6,6 +6,7 @@
 #include "outputdirectory.h"
 #include "global.h"
 
+#include <QApplication>
 #include <QLayout>
 #include <QBoxLayout>
 #include <QLabel>
@@ -32,6 +33,8 @@ OptionsDetailed::OptionsDetailed( Config* _config, QWidget* parent )
     : QWidget( parent ),
     config( _config )
 {
+    const int fontHeight = QFontMetrics(QApplication::font()).boundingRect("M").size().height();
+
     int gridRow = 0;
     grid = new QGridLayout( this );
 
@@ -66,7 +69,7 @@ OptionsDetailed::OptionsDetailed( Config* _config, QWidget* parent )
     QFrame *lineFrame = new QFrame( this );
     lineFrame->setFrameShape( QFrame::HLine );
     lineFrame->setFrameShadow( QFrame::Sunken );
-    lineFrame->setFixedHeight( 10 );
+    lineFrame->setFixedHeight( fontHeight );
     grid->addWidget( lineFrame, 1, 0 );
 
     // prepare the plugin widget
@@ -79,7 +82,7 @@ OptionsDetailed::OptionsDetailed( Config* _config, QWidget* parent )
     lineFrame = new QFrame( this );
     lineFrame->setFrameShape( QFrame::HLine );
     lineFrame->setFrameShadow( QFrame::Sunken );
-    lineFrame->setFixedHeight( 10 );
+    lineFrame->setFixedHeight( fontHeight );
     grid->addWidget( lineFrame, gridRow++, 0 );
 
     int filterCount = 0;
@@ -105,7 +108,7 @@ OptionsDetailed::OptionsDetailed( Config* _config, QWidget* parent )
         lineFrame = new QFrame( this );
         lineFrame->setFrameShape( QFrame::HLine );
         lineFrame->setFrameShadow( QFrame::Sunken );
-        lineFrame->setFixedHeight( 10 );
+        lineFrame->setFixedHeight( fontHeight );
         grid->addWidget( lineFrame, gridRow++, 0 );
     }
 
@@ -274,18 +277,24 @@ void OptionsDetailed::encoderChanged( const QString& encoder )
 //         KMessageBox::error( this, i18n("Sorry, this shouldn't happen.\n\nPlease report this bug and attach the following error message:\n\nOptionsDetailed::encoderChanged; PluginLoader::codecPluginByName returned 0 for encoder: '%1'").arg(encoder), i18n("Internal error") );
         return;
     }
-    currentPlugin = plugin;
     if( wPlugin )
     {
         grid->removeWidget( wPlugin );
         disconnect( wPlugin, SIGNAL(optionsChanged()), 0, 0 );
-        wPlugin = plugin->deleteCodecWidget( wPlugin );
+        wPlugin = currentPlugin->deleteCodecWidget( wPlugin );
     }
+    currentPlugin = plugin;
     wPlugin = plugin->newCodecWidget();
     if( wPlugin )
     {
         connect( wPlugin, SIGNAL(optionsChanged()), this, SLOT(somethingChanged()) );
         qobject_cast<CodecWidget*>(wPlugin)->setCurrentFormat( cFormat->currentText() );
+        if( plugin->lastUsedConversionOptions )
+        {
+            wPlugin->setCurrentConversionOptions( plugin->lastUsedConversionOptions );
+            delete plugin->lastUsedConversionOptions;
+            plugin->lastUsedConversionOptions = 0;
+        }
         grid->addWidget( wPlugin, 2, 0 );
     }
 

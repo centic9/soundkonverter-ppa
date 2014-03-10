@@ -23,6 +23,7 @@
 #include <KIcon>
 #include <KStandardDirs>
 #include <KMenu>
+#include <KMessageBox>
 #include <QDir>
 
 #if KDE_IS_VERSION(4,4,0)
@@ -40,12 +41,18 @@ soundKonverter::soundKonverter()
     // accept dnd
     setAcceptDrops(true);
 
+    const int fontHeight = QFontMetrics(QApplication::font()).boundingRect("M").size().height();
+
     logger = new Logger( this );
     logger->log( 1000, i18n("This is soundKonverter %1").arg(SOUNDKONVERTER_VERSION_STRING) );
 
     logger->log( 1000, "\n" + i18n("Compiled with TagLib %1.%2.%3").arg(TAGLIB_MAJOR_VERSION).arg(TAGLIB_MINOR_VERSION).arg(TAGLIB_PATCH_VERSION) );
     #if (TAGLIB_MAJOR_VERSION == 1 && TAGLIB_MINOR_VERSION < 7)
-    logger->log( 1000, "<span style=\"color:red;\">" + i18n("Reading/writing covers is not supported for ogg/METADATA_BLOCK_PICTURE, flac and asf/wma files. TagLib 1.7 is needed for that.") + "</span>" );
+    logger->log( 1000, "<span style=\"color:red;\">" + i18n("Support for cover art in FLAC picture format for Xiph tags requires taglib 1.7 or later.") + "</span>" );
+    logger->log( 1000, "<span style=\"color:red;\">" + i18n("Support for cover art for ASF/WMA tags requires taglib 1.7 or later.") + "</span>" );
+    #endif
+    #if (TAGLIB_MAJOR_VERSION == 1 && TAGLIB_MINOR_VERSION < 9)
+    logger->log( 1000, "<span style=\"color:red;\">" + i18n("Support for tags for Ogg Opus files requires taglib 1.9 or later.") + "</span>" );
     #endif
 
     config = new Config( logger, this );
@@ -68,46 +75,7 @@ soundKonverter::soundKonverter()
     // It also applies the saved mainwindow settings, if any, and ask the
     // mainwindow to automatically save settings if changed: window size,
     // toolbar position, icon size, etc.
-    setupGUI( QSize(700,400), ToolBar | Keys | Save | Create );
-
-    // clean up old files from previous soundKonverter versions
-    if( config->data.app.configVersion < 1001 )
-    {
-        if( QFile::exists(QDir::homePath()+"/.kde4/share/kde4/services/ServiceMenus/convert_with_soundkonverter.desktop") )
-        {
-            QFile::remove(QDir::homePath()+"/.kde4/share/kde4/services/ServiceMenus/convert_with_soundkonverter.desktop");
-            logger->log( 1000, i18n("Removing old file: %1").arg(QDir::homePath()+"/.kde4/share/kde4/services/ServiceMenus/convert_with_soundkonverter.desktop") );
-        }
-        if( QFile::exists(QDir::homePath()+"/.kde4/share/kde4/services/ServiceMenus/add_replaygain_with_soundkonverter.desktop") )
-        {
-            QFile::remove(QDir::homePath()+"/.kde4/share/kde4/services/ServiceMenus/add_replaygain_with_soundkonverter.desktop");
-            logger->log( 1000, i18n("Removing old file: %1").arg(QDir::homePath()+"/.kde4/share/kde4/services/ServiceMenus/add_replaygain_with_soundkonverter.desktop") );
-        }
-    }
-
-    // clean up log directory
-    QDir dir( KStandardDirs::locateLocal("data","soundkonverter/log/") );
-    dir.setFilter( QDir::Files | QDir::Writable );
-
-    QStringList list = dir.entryList();
-
-    for( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
-    {
-        if( *it != "1000.log" && (*it).endsWith(".log") )
-        {
-            QFile::remove( dir.absolutePath() + "/" + (*it) );
-            logger->log( 1000, i18n("Removing old file: %1").arg(dir.absolutePath()+"/"+(*it)) );
-        }
-    }
-
-    // Check if new backends got installed and the backend settings can be optimized
-    QList<CodecOptimizations::Optimization> optimizationList = config->getOptimizations();
-    if( !optimizationList.isEmpty() )
-    {
-        CodecOptimizations *optimizationsDialog = new CodecOptimizations( optimizationList, this );
-        connect( optimizationsDialog, SIGNAL(solutions(const QList<CodecOptimizations::Optimization>&)), config, SLOT(doOptimizations(const QList<CodecOptimizations::Optimization>&)) );
-        optimizationsDialog->open();
-    }
+    setupGUI( QSize(70*fontHeight,45*fontHeight), ToolBar | Keys | Save | Create );
 }
 
 soundKonverter::~soundKonverter()
@@ -248,13 +216,28 @@ void soundKonverter::showLogViewer( const int logId )
 void soundKonverter::showReplayGainScanner()
 {
     if( !replayGainScanner )
-        replayGainScanner = new ReplayGainScanner( config, logger, 0 );
+    {
+        replayGainScanner = new ReplayGainScanner( config, logger, !isVisible(), 0 );
+        connect( replayGainScanner.data(), SIGNAL(finished()), this, SLOT(replayGainScannerClosed()) );
+        connect( replayGainScanner.data(), SIGNAL(showMainWindow()), this, SLOT(showMainWindow()) );
+    }
 
     replayGainScanner.data()->setAttribute( Qt::WA_DeleteOnClose );
 
     replayGainScanner.data()->show();
     replayGainScanner.data()->raise();
     replayGainScanner.data()->activateWindow();
+}
+
+void soundKonverter::replayGainScannerClosed()
+{
+    if( !isVisible() )
+        KApplication::kApplication()->quit();
+}
+
+void soundKonverter::showMainWindow()
+{
+    show();
 }
 
 void soundKonverter::showAboutPlugins()
@@ -272,6 +255,54 @@ void soundKonverter::startConversion()
 void soundKonverter::loadAutosaveFileList()
 {
     m_view->loadAutosaveFileList();
+}
+
+void soundKonverter::startupChecks()
+{
+    // check if codec plugins could be loaded
+    if( config->pluginLoader()->getAllCodecPlugins().count() == 0 )
+    {
+        KMessageBox::error(this, i18n("No codec plugins could be loaded. Without codec plugins soundKonverter can't work.\nThis problem can have two causes:\n1. You just installed soundKonverter and the KDE System Configuration Cache is not up-to-date, yet.\nIn this case, run kbuildsycoca4 and restart soundKonverter to fix the problem.\n2. Your installation is broken.\nIn this case try reinstalling soundKonverter."));
+    }
+
+    // remove old KDE4 action menus created by soundKonverter 0.3 - don't change the paths, it's what soundKonverter 0.3 used
+    if( config->data.app.configVersion < 1001 )
+    {
+        if( QFile::exists(QDir::homePath()+"/.kde4/share/kde4/services/ServiceMenus/convert_with_soundkonverter.desktop") )
+        {
+            QFile::remove(QDir::homePath()+"/.kde4/share/kde4/services/ServiceMenus/convert_with_soundkonverter.desktop");
+            logger->log( 1000, i18n("Removing old file: %1").arg(QDir::homePath()+"/.kde4/share/kde4/services/ServiceMenus/convert_with_soundkonverter.desktop") );
+        }
+        if( QFile::exists(QDir::homePath()+"/.kde4/share/kde4/services/ServiceMenus/add_replaygain_with_soundkonverter.desktop") )
+        {
+            QFile::remove(QDir::homePath()+"/.kde4/share/kde4/services/ServiceMenus/add_replaygain_with_soundkonverter.desktop");
+            logger->log( 1000, i18n("Removing old file: %1").arg(QDir::homePath()+"/.kde4/share/kde4/services/ServiceMenus/add_replaygain_with_soundkonverter.desktop") );
+        }
+    }
+
+    // clean up log directory
+    QDir dir( KStandardDirs::locateLocal("data","soundkonverter/log/") );
+    dir.setFilter( QDir::Files | QDir::Writable );
+
+    QStringList list = dir.entryList();
+
+    for( QStringList::Iterator it = list.begin(); it != list.end(); ++it )
+    {
+        if( *it != "1000.log" && (*it).endsWith(".log") )
+        {
+            QFile::remove( dir.absolutePath() + "/" + (*it) );
+            logger->log( 1000, i18n("Removing old file: %1").arg(dir.absolutePath()+"/"+(*it)) );
+        }
+    }
+
+    // check if new backends got installed and the backend settings can be optimized
+    QList<CodecOptimizations::Optimization> optimizationList = config->getOptimizations();
+    if( !optimizationList.isEmpty() )
+    {
+        CodecOptimizations *optimizationsDialog = new CodecOptimizations( optimizationList, this );
+        connect( optimizationsDialog, SIGNAL(solutions(const QList<CodecOptimizations::Optimization>&)), config, SLOT(doOptimizations(const QList<CodecOptimizations::Optimization>&)) );
+        optimizationsDialog->open();
+    }
 }
 
 void soundKonverter::conversionStarted()

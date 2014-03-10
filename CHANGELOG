@@ -1,3 +1,29 @@
+2.1.0:
+-Add: Update translations
+
+2.0.91 (2.1.0 rc2):
+-Add: Full GUI support for album artist tags including the CD ripper
+-Add: Chinese translation
+-Change: Replace uses of fixed pixel metrics with sizes based on the default font size
+-Fix: CD ripper layout
+
+2.0.90 (2.1.0 rc1):
+-Add: Hide main window when started with --replaygain argument
+-Add: Option to eject CD after ripping has been completed (enabled by default)
+-Add: New space holder for the "meta data" naming mode that contains the source directory
+-Add: Configuration options for cdparanoia
+-Add: icedax ripper plugin
+-Add: Copy album artist tags
+-Change: Remember last folder for add files/directory/playlist dialogs
+-Change: Add symlinked files to file list
+
+2.0.5:
+-Add: Catalan translation
+-Add: Swedish translation
+-Add: Chinese (Taiwan) translation
+-Add: Romanian translation
+-Fix: Don't mix up total tracks and total discs when reading vorbis comments
+
 2.0.4:
 -Add: Slovenian translation
 

@@ -14,10 +14,12 @@
 #include "../config.h"
 #include "../codecproblems.h"
 
+#include <QApplication>
 #include <KLocale>
 #include <KPushButton>
 #include <QLabel>
 #include <QLayout>
+#include <QHBoxLayout>
 #include <KMessageBox>
 #include <KFileDialog>
 #include <QDir>
@@ -31,6 +33,8 @@ PlaylistOpener::PlaylistOpener( Config *_config, QWidget *parent, Qt::WFlags f )
     setCaption( i18n("Add playlist") );
     setWindowIcon( KIcon("view-media-playlist") );
     setButtons( 0 );
+
+    const int fontHeight = QFontMetrics(QApplication::font()).boundingRect("M").size().height();
 
     QWidget *widget = new QWidget();
     setMainWidget( widget );
@@ -52,7 +56,7 @@ PlaylistOpener::PlaylistOpener( Config *_config, QWidget *parent, Qt::WFlags f )
     controlBox->addWidget( pCancel );
     connect( pCancel, SIGNAL(clicked()), this, SLOT(reject()) );
 
-    fileDialog = new KFileDialog( KUrl(QDir::homePath()), "*.m3u", this );
+    fileDialog = new KFileDialog( KUrl("kfiledialog:///soundkonverter-add-media"), "*.m3u", this );
     fileDialog->setWindowTitle( i18n("Add Files") );
     fileDialog->setMode( KFile::File | KFile::ExistingOnly );
     connect( fileDialog, SIGNAL(accepted()), this, SLOT(fileDialogAccepted()) );
@@ -63,7 +67,7 @@ PlaylistOpener::PlaylistOpener( Config *_config, QWidget *parent, Qt::WFlags f )
 
         // Prevent the dialog from beeing too wide because of the directory history
     if( parent && width() > parent->width() )
-        setInitialSize( QSize(parent->width()-10,sizeHint().height()) );
+        setInitialSize( QSize(parent->width()-fontHeight,sizeHint().height()) );
     KSharedConfig::Ptr conf = KGlobal::config();
     KConfigGroup group = conf->group( "PlaylistOpener" );
     restoreDialogSize( group );

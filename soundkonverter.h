@@ -54,11 +54,14 @@ public:
     void setAutoClose( bool enabled ) { autoclose = enabled; }
     void startConversion();
     void loadAutosaveFileList();
+    void startupChecks();
 
 private slots:
     void showConfigDialog();
     void showLogViewer( const int logId = 0 );
     void showReplayGainScanner();
+    void replayGainScannerClosed();
+    void showMainWindow();
     void showAboutPlugins();
     void progressChanged( const QString& progress );
 

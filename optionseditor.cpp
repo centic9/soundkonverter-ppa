@@ -16,6 +16,7 @@
 
 #include "global.h"
 
+#include <QApplication>
 #include <QBoxLayout>
 #include <KComboBox>
 #include <KIcon>
@@ -154,11 +155,27 @@ OptionsEditor::OptionsEditor( Config *_config, QWidget *parent )
     connect( pComposerEdit, SIGNAL(clicked()), this, SLOT(editComposerClicked()) );
 
     // add a horizontal box layout for the album
+    QHBoxLayout *albumArtistBox = new QHBoxLayout();
+    tagsGridLayout->addLayout( albumArtistBox, 3, 1 );
+    // and fill it up
+    lAlbumArtistLabel = new QLabel( i18n("Album artist:"), tagsWidget );
+    tagsGridLayout->addWidget( lAlbumArtistLabel, 3, 0 );
+    lAlbumArtist = new KLineEdit( tagsWidget );
+    albumArtistBox->addWidget( lAlbumArtist );
+    pAlbumArtistEdit = new KPushButton( KIcon("edit-rename"), " ", tagsWidget );
+    pAlbumArtistEdit->setFixedSize( pAlbumArtistEdit->sizeHint().height(), lAlbumArtist->sizeHint().height() );
+    pAlbumArtistEdit->setFlat( true );
+    pAlbumArtistEdit->setToolTip( i18n("Edit") );
+    pAlbumArtistEdit->hide();
+    albumArtistBox->addWidget( pAlbumArtistEdit );
+    connect( pAlbumArtistEdit, SIGNAL(clicked()), this, SLOT(editAlbumArtistClicked()) );
+
+    // add a horizontal box layout for the album
     QHBoxLayout *albumBox = new QHBoxLayout();
-    tagsGridLayout->addLayout( albumBox, 3, 1 );
+    tagsGridLayout->addLayout( albumBox, 4, 1 );
     // and fill it up
     lAlbumLabel = new QLabel( i18n("Album:"), tagsWidget );
-    tagsGridLayout->addWidget( lAlbumLabel, 3, 0 );
+    tagsGridLayout->addWidget( lAlbumLabel, 4, 0 );
     lAlbum = new KLineEdit( tagsWidget );
     albumBox->addWidget( lAlbum );
     pAlbumEdit = new KPushButton( KIcon("edit-rename"), " ", tagsWidget );
@@ -171,10 +188,10 @@ OptionsEditor::OptionsEditor( Config *_config, QWidget *parent )
 
     // add a horizontal box layout for the disc number, year and genre
     QHBoxLayout *albumdataBox = new QHBoxLayout();
-    tagsGridLayout->addLayout( albumdataBox, 4, 1 );
+    tagsGridLayout->addLayout( albumdataBox, 5, 1 );
     // and fill it up
     lDiscLabel = new QLabel( i18n("Disc No.:"), tagsWidget );
-    tagsGridLayout->addWidget( lDiscLabel, 4, 0 );
+    tagsGridLayout->addWidget( lDiscLabel, 5, 0 );
     iDisc = new KIntSpinBox( 0, 99, 1, 1, tagsWidget );
     albumdataBox->addWidget( iDisc );
     pDiscEdit = new KPushButton( KIcon("edit-rename"), " ", tagsWidget );
@@ -227,10 +244,10 @@ OptionsEditor::OptionsEditor( Config *_config, QWidget *parent )
 
     // add a horizontal box layout for the comment
     QHBoxLayout *commentBox = new QHBoxLayout();
-    tagsGridLayout->addLayout( commentBox, 5, 1 );
+    tagsGridLayout->addLayout( commentBox, 6, 1 );
     // and fill it up
     lCommentLabel = new QLabel( i18n("Comment:"), tagsWidget );
-    tagsGridLayout->addWidget( lCommentLabel, 5, 0 );
+    tagsGridLayout->addWidget( lCommentLabel, 6, 0 );
     tComment = new KTextEdit( tagsWidget );
     commentBox->addWidget( tComment );
     pCommentEdit = new KPushButton( KIcon("edit-rename"), " ", tagsWidget );
@@ -240,15 +257,15 @@ OptionsEditor::OptionsEditor( Config *_config, QWidget *parent )
     pCommentEdit->hide();
     commentBox->addWidget( pCommentEdit );
     connect( pCommentEdit, SIGNAL(clicked()), this, SLOT(editCommentClicked()) );
-    tagsGridLayout->setRowStretch( 5, 1 );
+    tagsGridLayout->setRowStretch( 6, 1 );
 
     lEditTags = new QLabel( "", tagsWidget );
-    tagsGridLayout->addWidget( lEditTags, 6, 1 );
+    tagsGridLayout->addWidget( lEditTags, 7, 1 );
     lEditTags->setAlignment( Qt::AlignHCenter );
     lEditTags->hide();
     pEditTags = new KPushButton( i18n("Edit tags"), tagsWidget );
     pEditTags->setFixedWidth( pEditTags->sizeHint().width() );
-    tagsGridLayout->addWidget( pEditTags, 7, 1, Qt::AlignHCenter );
+    tagsGridLayout->addWidget( pEditTags, 8, 1, Qt::AlignHCenter );
     pEditTags->hide();
     connect( pEditTags, SIGNAL(clicked()), this, SLOT(editTagsClicked()) );
 }
@@ -272,6 +289,9 @@ void OptionsEditor::setTagInputEnabled( bool enabled )
     lComposerLabel->setEnabled( enabled );
     lComposer->setEnabled( enabled );
     pComposerEdit->hide();
+    lAlbumArtistLabel->setEnabled( enabled );
+    lAlbumArtist->setEnabled( enabled );
+    pAlbumArtistEdit->hide();
     lAlbumLabel->setEnabled( enabled );
     lAlbum->setEnabled( enabled );
     pAlbumEdit->hide();
@@ -298,6 +318,7 @@ void OptionsEditor::setTagInputEnabled( bool enabled )
         iTrackTotal->setValue( 0 );
         lArtist->setText( "" );
         lComposer->setText( "" );
+        lAlbumArtist->setText( "" );
         lAlbum->setText( "" );
         iDisc->setValue( 0 );
         iDiscTotal->setValue( 0 );
@@ -400,6 +421,8 @@ void OptionsEditor::itemsSelected( QList<FileListItem*> items )
         }
         else
         {
+            const int fontHeight = QFontMetrics(QApplication::font()).boundingRect("M").size().height();
+
             if( !(item->tags->tagsRead & TagData::Covers) )
             {
                 item->tags->covers = tagEngine->readCovers( item->url );
@@ -426,7 +449,7 @@ void OptionsEditor::itemsSelected( QList<FileListItem*> items )
                 bCovers->addWidget( label );
                 lCovers.append( label );
 
-                label->setPixmap( pixmap.scaledToHeight( 48, Qt::SmoothTransformation ) );
+                label->setPixmap( pixmap.scaledToHeight( 4.5*fontHeight, Qt::SmoothTransformation ) );
             }
             lCoversLabel->setEnabled( item->tags->covers.count() > 0 );
             lTitle->setText( item->tags->title );
@@ -434,6 +457,7 @@ void OptionsEditor::itemsSelected( QList<FileListItem*> items )
             iTrackTotal->setValue( item->tags->trackTotal );
             lArtist->setText( item->tags->artist );
             lComposer->setText( item->tags->composer );
+            lAlbumArtist->setText( item->tags->albumArtist );
             lAlbum->setText( item->tags->album );
             iDisc->setValue( item->tags->disc );
             iDiscTotal->setValue( item->tags->discTotal );
@@ -453,6 +477,7 @@ void OptionsEditor::itemsSelected( QList<FileListItem*> items )
         const int     trackTotal          = ( firstItem->tags == 0 ) ? 0  : firstItem->tags->trackTotal;
         const QString artist              = ( firstItem->tags == 0 ) ? "" : firstItem->tags->artist;
         const QString composer            = ( firstItem->tags == 0 ) ? "" : firstItem->tags->composer;
+        const QString albumArtist         = ( firstItem->tags == 0 ) ? "" : firstItem->tags->albumArtist;
         const QString album               = ( firstItem->tags == 0 ) ? "" : firstItem->tags->album;
         const int     disc                = ( firstItem->tags == 0 ) ? 0  : firstItem->tags->disc;
         const int     discTotal           = ( firstItem->tags == 0 ) ? 0  : firstItem->tags->discTotal;
@@ -511,6 +536,12 @@ void OptionsEditor::itemsSelected( QList<FileListItem*> items )
                 lComposer->setEnabled( false );
                 lComposer->setText( "" );
                 pComposerEdit->show();
+            }
+            if( albumArtist != item->tags->albumArtist && lAlbumArtist->isEnabled() )
+            {
+                lAlbumArtist->setEnabled( false );
+                lAlbumArtist->setText( "" );
+                pAlbumArtistEdit->show();
             }
             if( album != item->tags->album && lAlbum->isEnabled() )
             {
@@ -572,6 +603,9 @@ void OptionsEditor::itemsSelected( QList<FileListItem*> items )
 
         if( lComposer->isEnabled() )
             lComposer->setText( composer );
+
+        if( lAlbumArtist->isEnabled() )
+            lAlbumArtist->setText( albumArtist );
 
         if( lAlbum->isEnabled() )
             lAlbum->setText( album );
@@ -637,6 +671,9 @@ void OptionsEditor::applyChanges()
 
             if( lComposer->isEnabled() )
                 selectedItems.at(i)->tags->composer = lComposer->text();
+
+            if( lAlbumArtist->isEnabled() )
+                selectedItems.at(i)->tags->albumArtist = lAlbumArtist->text();
 
             if( lAlbum->isEnabled() )
                 selectedItems.at(i)->tags->album = lAlbum->text();
@@ -754,6 +791,18 @@ void OptionsEditor::editComposerClicked()
     if( selectedItems.count() > 0 && selectedItems.first() && selectedItems.first()->tags )
     {
         lComposer->setText( selectedItems.first()->tags->composer );
+    }
+}
+
+void OptionsEditor::editAlbumArtistClicked()
+{
+    lAlbumArtist->setEnabled( true );
+    lAlbumArtist->setFocus();
+    pAlbumArtistEdit->hide();
+
+    if( selectedItems.count() > 0 && selectedItems.first() && selectedItems.first()->tags )
+    {
+        lAlbumArtist->setText( selectedItems.first()->tags->albumArtist );
     }
 }
 

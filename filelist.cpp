@@ -18,6 +18,9 @@
 // #include <KDiskFreeSpaceInfo>
 #include <kmountpoint.h>
 // #include <KIO/Job>
+#include <solid/device.h>
+#include <solid/block.h>
+#include <solid/opticaldrive.h>
 
 #include <QLayout>
 #include <QGridLayout>
@@ -58,8 +61,6 @@ FileList::FileList( Logger *_logger, Config *_config, QWidget *parent )
 
     setRootIsDecorated( false );
     setDragDropMode( QAbstractItemView::InternalMove );
-
-    setMinimumHeight( 200 );
 
     QGridLayout *grid = new QGridLayout( this );
     grid->setRowStretch( 0, 1 );
@@ -251,14 +252,14 @@ void FileList::resizeEvent( QResizeEvent *event )
 int FileList::countDir( const QString& directory, bool recursive, int count )
 {
     QDir dir( directory );
-    dir.setFilter( QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Readable );
+    dir.setFilter( QDir::Files | QDir::NoDotAndDotDot | QDir::Readable );
     dir.setSorting( QDir::Unsorted );
 
     count += dir.count();
 
     if( recursive )
     {
-        dir.setFilter( QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Readable );
+        dir.setFilter( QDir::Dirs | QDir::NoDotAndDotDot | QDir::Readable );
 
         const QStringList list = dir.entryList();
 
@@ -283,7 +284,7 @@ int FileList::listDir( const QString& directory, const QStringList& filter, bool
     QString codecName;
 
     QDir dir( directory );
-    dir.setFilter( QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks | QDir::Readable );
+    dir.setFilter( QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot | QDir::Readable );
     dir.setSorting( QDir::LocaleAware );
 
     const QStringList list = dir.entryList();
@@ -991,10 +992,30 @@ void FileList::rippingFinished( const QString& device )
             {
                 if( item->track >= 0 && item->device == device )
                 {
+                    // rip next track
                     emit convertItem( item );
                     if( selectedFiles.contains(item) )
                         itemsSelected();
                     return;
+                }
+            }
+        }
+    }
+
+    // no more track from that device found
+    if( config->data.advanced.ejectCdAfterRip )
+    {
+        QList<Solid::Device> solidDevices = Solid::Device::listFromType(Solid::DeviceInterface::OpticalDrive, QString());
+        foreach( Solid::Device solidDevice, solidDevices )
+        {
+            Solid::OpticalDrive *opticalDrive = solidDevice.as<Solid::OpticalDrive>();
+            if( opticalDrive )
+            {
+                Solid::Block *block = solidDevice.as<Solid::Block>();
+                if( block && block->device() == device )
+                {
+                    opticalDrive->eject();
+                    break;
                 }
             }
         }
