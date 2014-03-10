@@ -233,16 +233,22 @@ ConfigBackendsPage::ConfigBackendsPage( Config *_config, QWidget *parent )
     lCdRipper->setFont( groupFont );
     box->addWidget( lCdRipper );
 
-    box->addSpacing( ConfigDialogSpacingSmall );
+    box->addSpacing( spacingSmall );
 
     QHBoxLayout *ripperBox = new QHBoxLayout();
-    ripperBox->addSpacing( ConfigDialogOffset );
+    ripperBox->addSpacing( spacingOffset );
     box->addLayout( ripperBox );
     QLabel *lSelectorRipper = new QLabel( i18n("Use plugin:"), this );
     ripperBox->addWidget( lSelectorRipper );
     ripperBox->setStretchFactor( lSelectorRipper, 2 );
     cSelectorRipper = new KComboBox( this );
-    cSelectorRipper->addItems( config->data.backends.rippers );
+    foreach( const Config::CodecData& codec, config->data.backends.codecs )
+    {
+        if( codec.codecName == "audio cd" )
+        {
+            cSelectorRipper->addItems( codec.decoders );
+        }
+    }
     ripperBox->addWidget( cSelectorRipper );
     ripperBox->setStretchFactor( cSelectorRipper, 1 );
     connect( cSelectorRipper, SIGNAL(activated(int)), this, SLOT(somethingChanged()) );
@@ -254,16 +260,16 @@ ConfigBackendsPage::ConfigBackendsPage( Config *_config, QWidget *parent )
     ripperBox->setStretchFactor( pConfigureRipper, 1 );
     connect( pConfigureRipper, SIGNAL(clicked()), this, SLOT(configureRipper()) );
 
-    box->addSpacing( ConfigDialogSpacingBig );
+    box->addSpacing( spacingBig );
 
     QLabel *lFilters = new QLabel( i18n("Filters"), this );
     lFilters->setFont( groupFont );
     box->addWidget( lFilters );
 
-    box->addSpacing( ConfigDialogSpacingSmall );
+    box->addSpacing( spacingSmall );
 
     QHBoxLayout *filterBox = new QHBoxLayout();
-    filterBox->addSpacing( ConfigDialogOffset );
+    filterBox->addSpacing( spacingOffset );
     box->addLayout( filterBox );
     QGridLayout *filterGrid = new QGridLayout();
 
@@ -309,19 +315,19 @@ ConfigBackendsPage::ConfigBackendsPage( Config *_config, QWidget *parent )
     filterGrid->setColumnStretch( 1, 1 );
     filterBox->addLayout( filterGrid );
 
-    box->addSpacing( ConfigDialogSpacingBig );
+    box->addSpacing( spacingBig );
 
     QLabel *lPriorities = new QLabel( i18n("Priorities"), this );
     lPriorities->setFont( groupFont );
     box->addWidget( lPriorities );
 
-    box->addSpacing( ConfigDialogSpacingSmall );
+    box->addSpacing( spacingSmall );
 
     QVBoxLayout *formatBox = new QVBoxLayout();
     box->addLayout( formatBox, 1 );
 
     QHBoxLayout *formatSelectorBox = new QHBoxLayout();
-    formatSelectorBox->addSpacing( ConfigDialogOffset );
+    formatSelectorBox->addSpacing( spacingOffset );
     formatBox->addLayout( formatSelectorBox );
     QLabel *lSelectorFormat = new QLabel( i18n("Configure plugin priorities for format:"), this );
     formatSelectorBox->addWidget( lSelectorFormat );
@@ -334,7 +340,7 @@ ConfigBackendsPage::ConfigBackendsPage( Config *_config, QWidget *parent )
     formatSelectorBox->addStretch();
 
     QHBoxLayout *formatBackendsBox = new QHBoxLayout();
-    formatBackendsBox->addSpacing( ConfigDialogOffset );
+    formatBackendsBox->addSpacing( spacingOffset );
     formatBox->addLayout( formatBackendsBox );
     decoderList = new BackendsListWidget( i18n("Decoder"), config, this );
     formatBackendsBox->addWidget( decoderList );
@@ -347,7 +353,7 @@ ConfigBackendsPage::ConfigBackendsPage( Config *_config, QWidget *parent )
     connect( replaygainList, SIGNAL(orderChanged()), this, SLOT(somethingChanged()) );
 
     QHBoxLayout *optimizationsBox = new QHBoxLayout();
-    optimizationsBox->addSpacing( ConfigDialogOffset );
+    optimizationsBox->addSpacing( spacingOffset );
     formatBox->addLayout( optimizationsBox );
     optimizationsBox->addStretch();
     pShowOptimizations = new KPushButton( KIcon("games-solve"), i18n("Show possible optimizations"), this );
@@ -435,7 +441,26 @@ void ConfigBackendsPage::formatChanged( const QString& format, bool ignoreChange
 
 void ConfigBackendsPage::resetDefaults()
 {
-    // TODO reset rippers
+    // rippers
+    QStringList allPlugins;
+    foreach( RipperPlugin *plugin, config->pluginLoader()->getAllRipperPlugins() )
+    {
+        const QString pluginName = plugin->name();
+        foreach( const ConversionPipeTrunk trunk, plugin->codecTable() )
+        {
+            if( trunk.enabled && allPlugins.filter(QRegExp("[0-9]{8,8}"+pluginName)).count() == 0 )
+            {
+                allPlugins += QString::number(trunk.rating).rightJustified(8,'0') + pluginName;
+                break;
+            }
+        }
+    }
+    allPlugins.sort();
+    if( allPlugins.count() > 0 )
+    {
+        const QString defaultRipper = allPlugins.first().right(allPlugins.first().length()-8);
+        cSelectorRipper->setCurrentIndex( cSelectorRipper->findText(defaultRipper) );
+    }
 
     int i = 0;
     foreach( QCheckBox *checkBox, filterCheckBoxes )
@@ -466,7 +491,17 @@ void ConfigBackendsPage::resetDefaults()
 
 void ConfigBackendsPage::saveSettings()
 {
-    // TODO save rippers
+    for( int i=0; i<config->data.backends.codecs.count(); i++ )
+    {
+        if( config->data.backends.codecs.at(i).codecName == "audio cd" )
+        {
+            const QString currentRipper = cSelectorRipper->currentText();
+            QStringList rippers = config->data.backends.codecs[i].decoders;
+            rippers.removeAll( currentRipper );
+            rippers.prepend( currentRipper );
+            config->data.backends.codecs[i].decoders = rippers;
+        }
+    }
 
     config->data.backends.enabledFilters.clear();
     int i = 0;

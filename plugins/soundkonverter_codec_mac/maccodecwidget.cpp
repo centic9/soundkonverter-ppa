@@ -21,7 +21,6 @@ MacCodecWidget::MacCodecWidget()
 {
     QGridLayout *grid = new QGridLayout( this );
     grid->setContentsMargins( 0, 0, 0, 0 );
-    grid->setSpacing( 6 );
 
     // set up encoding options selection
 
@@ -40,6 +39,7 @@ MacCodecWidget::MacCodecWidget()
     connect( sCompressionLevel, SIGNAL(valueChanged(int)), this, SLOT(compressionLevelSliderChanged(int)) );
     connect( sCompressionLevel, SIGNAL(valueChanged(int)), SIGNAL(optionsChanged()) );
     topBox->addWidget( sCompressionLevel );
+    sCompressionLevel->setToolTip( i18n("Compression level from %1 to %2 where %2 is the best compression.\nThe better the compression, the slower the conversion but the smaller the file size and vice versa.", 1000, 5000) );
 
     iCompressionLevel = new QSpinBox( this );
     iCompressionLevel->setRange( 1, 5 );
@@ -50,6 +50,7 @@ MacCodecWidget::MacCodecWidget()
     connect( iCompressionLevel, SIGNAL(valueChanged(int)), this, SLOT(compressionLevelSpinBoxChanged(int)) );
     connect( iCompressionLevel, SIGNAL(valueChanged(int)), SIGNAL(optionsChanged()) );
     topBox->addWidget( iCompressionLevel );
+    iCompressionLevel->setToolTip( i18n("Compression level from %1 to %2 where %2 is the best compression.\nThe better the compression, the slower the conversion but the smaller the file size and vice versa.", 1000, 5000) );
 
     topBox->addStretch();
 

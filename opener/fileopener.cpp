@@ -14,6 +14,7 @@
 #include "../config.h"
 #include "../codecproblems.h"
 
+#include <QApplication>
 #include <KLocale>
 #include <KPushButton>
 #include <QLabel>
@@ -32,6 +33,8 @@ FileOpener::FileOpener( Config *_config, QWidget *parent, Qt::WFlags f )
     setCaption( i18n("Add Files") );
     setWindowIcon( KIcon("audio-x-generic") );
     setButtons( 0 );
+
+    const int fontHeight = QFontMetrics(QApplication::font()).boundingRect("M").size().height();
 
     QWidget *widget = new QWidget();
     setMainWidget( widget );
@@ -72,7 +75,7 @@ FileOpener::FileOpener( Config *_config, QWidget *parent, Qt::WFlags f )
     formatHelp = new QLabel( "<a href=\"format-help\">" + i18n("Are you missing some file formats?") + "</a>", widget );
     connect( formatHelp, SIGNAL(linkActivated(const QString&)), this, SLOT(showHelp()) );
 
-    fileDialog = new KFileDialog( KUrl(QDir::homePath()), filterList.join("\n"), this, formatHelp );
+    fileDialog = new KFileDialog( KUrl("kfiledialog:///soundkonverter-add-media"), filterList.join("\n"), this, formatHelp );
     fileDialog->setWindowTitle( i18n("Add Files") );
     fileDialog->setMode( KFile::Files | KFile::ExistingOnly );
     connect( fileDialog, SIGNAL(accepted()), this, SLOT(fileDialogAccepted()) );
@@ -83,7 +86,7 @@ FileOpener::FileOpener( Config *_config, QWidget *parent, Qt::WFlags f )
 
     // Prevent the dialog from beeing too wide because of the directory history
     if( parent && width() > parent->width() )
-        setInitialSize( QSize(parent->width()-10,sizeHint().height()) );
+        setInitialSize( QSize(parent->width()-fontHeight,sizeHint().height()) );
     KSharedConfig::Ptr conf = KGlobal::config();
     KConfigGroup group = conf->group( "FileOpener" );
     restoreDialogSize( group );

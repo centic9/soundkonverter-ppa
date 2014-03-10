@@ -6,6 +6,7 @@
 
 #include <math.h>
 
+#include <QApplication>
 #include <KLocale>
 #include <KComboBox>
 #include <QLayout>
@@ -19,9 +20,10 @@ VorbisToolsCodecWidget::VorbisToolsCodecWidget()
     : CodecWidget(),
     currentFormat( "ogg vorbis" )
 {
+    const int fontHeight = QFontMetrics(QApplication::font()).boundingRect("M").size().height();
+
     QGridLayout *grid = new QGridLayout( this );
     grid->setContentsMargins( 0, 0, 0, 0 );
-    grid->setSpacing( 6 );
 
     // set up encoding options selection
 
@@ -50,7 +52,7 @@ VorbisToolsCodecWidget::VorbisToolsCodecWidget()
     connect( dQuality, SIGNAL(valueChanged(double)), SIGNAL(optionsChanged()) );
     topBox->addWidget( dQuality );
 
-    topBox->addSpacing( 12 );
+    topBox->addSpacing( fontHeight );
 
     QLabel *lBitrateMode = new QLabel( i18n("Bitrate mode:"), this );
     topBox->addWidget( lBitrateMode );
@@ -258,6 +260,8 @@ void VorbisToolsCodecWidget::modeChanged( int mode )
         dQuality->setValue( 4.0 );
 //         dQuality->setValue( qualityForBitrate(dQuality->value()) );
 //         qualitySpinBoxChanged( dQuality->value() );
+        sQuality->setToolTip( i18n("Quality level from %1 to %2 where %2 is the highest quality.\nThe higher the quality, the bigger the file size and vice versa.", -1, 10) );
+        dQuality->setToolTip( i18n("Quality level from %1 to %2 where %2 is the highest quality.\nThe higher the quality, the bigger the file size and vice versa.", -1, 10) );
 
         cBitrateMode->clear();
         cBitrateMode->addItem( i18n("Variable") );
@@ -275,6 +279,8 @@ void VorbisToolsCodecWidget::modeChanged( int mode )
         dQuality->setValue( 160 );
 //         dQuality->setValue( bitrateForQuality(dQuality->value()) );
 //         qualitySpinBoxChanged( dQuality->value() );
+        sQuality->setToolTip( "" );
+        dQuality->setToolTip( "" );
 
         cBitrateMode->clear();
         cBitrateMode->addItem( i18n("Average") );

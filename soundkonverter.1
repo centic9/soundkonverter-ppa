@@ -1,10 +1,11 @@
 .\" Process this file with
-.\" groff -man -Tascii foo.1
+.\" groff -man -Tascii soundkonverter.1
 .\"
-.TH soundkonverter 1 "JUNE 2013" soundKonverter
+.TH soundkonverter 1 "FEBRUARY 2014" soundKonverter
 
 .SH NAME
 soundKonverter
+
 .SH SYNOPSIS
 .B soundkonverter [
 .I OPTIONS
@@ -16,33 +17,52 @@ soundKonverter
 is a frontend to various audio converters.
 
 The key features are:
+
 - Audio conversion
+
 - ReplayGain calculation
+
 - CD ripping
 
 Reading and writing tags and covers is supported for many formats, so they are preserved when converting files.
+
+For more information visit:
+.UR https://github.com/HessiJames/soundkonverter/wiki
+.UE
+
 .SH OPTIONS
 .IP --replaygain
-.IP "--rip [DEVICE]"
-.IP "--profile PROFILE"
-.IP "--format FORMAT"
-.IP "--output DIRECTORY"
+Open the Replay Gain tool and add all given files.
+.IP "--rip [\fIDEVICE\fR]"
+List all tracks on the CD drive \fIDEVICE\fR, 'auto' will search for a CD.
+.IP "--profile \fIPROFILE\fR"
+Add all files using the given \fIPROFILE\fR.
+Use either a default profile 'Very low', 'Low', 'Medium', 'High', 'Very high', 'Lossless' or a user defined profile that was previously saved.
+Default profiles are case insensitive and spaces can be replaced by underscores.
+.IP "--format \fIFORMAT\fR"
+Add all files using the given \fIFORMAT\fR.
+.IP "--output \fIDIRECTORY\fR"
+Output all files to \fIDIRECTORY\fR.
 .IP --invisible
+Start soundKonverter invisible.
 .IP --autostart
+Start the conversion immediately (enabled when using '--invisible').
 .IP --autoclose
-.IP "--command COMMAND"
+Close soundKonverter after all files are converted (enabled when using '--invisible').
+.IP "--command \fICOMMAND\fR"
+Execute \fICOMMAND\fR after each file has been converted (%i=input file, %o=output file).
 
 .SH EXAMPLES
 soundkonverter files
-
-soundkonverter --rip --autostart files
 
 soundkonverter --replaygain files
 
 soundkonverter --profile High --format mp3 --output /home/user --invisible --command /home/user/bin/post_process.sh files
 
 .SH BUGS
-Reporting bugs: https://github.com/HessiJames/soundkonverter/wiki/Reporting%20bugs
+Reporting bugs:
+.UR https://github.com/HessiJames/soundkonverter/wiki/Reporting%20bugs
+.UE
 
 .SH AUTHOR
 Daniel Faust <hessijames at gmail dot com>
