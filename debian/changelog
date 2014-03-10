@@ -1,3 +1,10 @@
+soundkonverter (2.1.0-0ubuntu0~ppa1) precise; urgency=low
+
+  * New upstream release
+  * Add aacgain
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Mon, 10 Mar 2014 21:04:39 +0100
+
 soundkonverter (2.0.4-1ubuntu0~ppa1) precise; urgency=low
 
   * Backport to precise
