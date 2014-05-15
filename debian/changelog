@@ -1,3 +1,9 @@
+soundkonverter (2.1.1-1ubuntu0~ppa1) precise; urgency=low
+
+  * Backport to precise.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Thu, 15 May 2014 21:34:57 +0200
+
 soundkonverter (2.1.1-1) unstable; urgency=medium
 
   * Imported Upstream version 2.1.1
