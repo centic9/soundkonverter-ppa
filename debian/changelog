@@ -1,3 +1,10 @@
+soundkonverter (2.1.2-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.1.2
+  * Bumped Standards-Version to 3.9.6, no changes needed.
+
+ -- Michael Meskes <meskes@debian.org>  Fri, 27 Feb 2015 13:53:15 +0100
+
 soundkonverter (2.1.1-1) unstable; urgency=medium
 
   * Imported Upstream version 2.1.1
