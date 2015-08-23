@@ -1,3 +1,9 @@
+soundkonverter (2.1.2-1build1) wily; urgency=medium
+
+  * No change rebuild for libtag1v5
+
+ -- Micah Gersten <micahg@ubuntu.com>  Sun, 23 Aug 2015 18:58:51 -0500
+
 soundkonverter (2.1.2-1) unstable; urgency=medium
 
   * Imported Upstream version 2.1.2
