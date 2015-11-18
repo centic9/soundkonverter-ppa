@@ -1,3 +1,9 @@
+soundkonverter (2.1.2-1ubuntu0~ppa1) trusty; urgency=medium
+
+  * Backport latest version to trusty.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 18 Nov 2015 21:04:59 +0100
+
 soundkonverter (2.1.2-1build1) wily; urgency=medium
 
   * No change rebuild for libtag1v5
