@@ -22,7 +22,7 @@ soundkonverter_filter_normalize::soundkonverter_filter_normalize( QObject *paren
 soundkonverter_filter_normalize::~soundkonverter_filter_normalize()
 {}
 
-QString soundkonverter_filter_normalize::name()
+QString soundkonverter_filter_normalize::name() const
 {
     return global_plugin_name;
 }
@@ -74,8 +74,6 @@ FilterWidget *soundkonverter_filter_normalize::newFilterWidget()
     if( lastUsedFilterOptions )
     {
         widget->setCurrentFilterOptions( lastUsedFilterOptions );
-        delete lastUsedFilterOptions;
-        lastUsedFilterOptions = 0;
     }
     return qobject_cast<FilterWidget*>(widget);
 }
@@ -87,7 +85,7 @@ CodecWidget *soundkonverter_filter_normalize::newCodecWidget()
 return 0;
 }
 
-unsigned int soundkonverter_filter_normalize::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+int soundkonverter_filter_normalize::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     QStringList command = convertCommand( inputFile, outputFile, inputCodec, outputCodec, _conversionOptions, tags, replayGain );
     if( command.isEmpty() )
@@ -110,7 +108,7 @@ unsigned int soundkonverter_filter_normalize::convert( const KUrl& inputFile, co
     return newItem->id;
 }
 
-QStringList soundkonverter_filter_normalize::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+QStringList soundkonverter_filter_normalize::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     Q_UNUSED( inputCodec );
     Q_UNUSED( outputCodec );
@@ -125,11 +123,11 @@ QStringList soundkonverter_filter_normalize::convertCommand( const KUrl& inputFi
 
     QStringList command;
 
-    foreach( FilterOptions *_filterOptions,_conversionOptions->filterOptions )
+    foreach( const FilterOptions *_filterOptions,_conversionOptions->filterOptions )
     {
         if( _filterOptions->pluginName == global_plugin_name )
         {
-            NormalizeFilterOptions *filterOptions = dynamic_cast<NormalizeFilterOptions*>(_filterOptions);
+            const NormalizeFilterOptions *filterOptions = dynamic_cast<const NormalizeFilterOptions*>(_filterOptions);
             if( filterOptions->data.normalize )
             {
                 command += binaries["normalize"];

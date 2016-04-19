@@ -17,7 +17,7 @@
 class LoggerItem
 {
 public:
-    LoggerItem();
+    LoggerItem( int logId, const QString& logIdentifier );
     ~LoggerItem();
 
     QString identifier;
@@ -39,7 +39,7 @@ class Logger : public QObject
 {
     Q_OBJECT
 public:
-    Logger( QObject *parent );
+    explicit Logger( QObject *parent );
     ~Logger();
 
     /** Creates a new logger item and returns the id of it, @p filename is added to the new logger item */
@@ -52,14 +52,14 @@ public:
 //     QList<LoggerItem*> getLogOverview();
 
     /** Returns the logger item with id @p id */
-    LoggerItem* getLog( int id );
+    const LoggerItem* getLog( int id ) const;
 
     /** Returns a list of all logger items */
-    QList<LoggerItem*> getLogs();
+    QList< QPair<int, QString> > getLogs() const;
 
 private:
     /** the list of all logger items */
-    QList<LoggerItem*> processes;
+    QHash<int, LoggerItem*> processes;
 
     bool writeLogFiles;
 

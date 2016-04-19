@@ -38,18 +38,17 @@ public:
     };
 
     /** Constructor */
-    FileList( Logger *_logger, Config *_config, QWidget *parent = 0 );
+    FileList( Logger *_logger, Config *_config, QWidget *parent );
 
     /** Destructor */
     ~FileList();
 
     FileListItem *topLevelItem( int index ) const { return static_cast<FileListItem*>( QTreeWidget::topLevelItem(index) ); }
-//     FileListItem *itemAbove( FileListItem* item ) const { return static_cast<FileListItem*>( QTreeWidget::itemAbove(item) ); }
-//     FileListItem *itemBelow( FileListItem* item ) const { return static_cast<FileListItem*>( QTreeWidget::itemBelow(item) ); }
 
     void setOptionsLayer( OptionsLayer *_optionsLayer ) { optionsLayer = _optionsLayer; }
 
     void load( bool user = false );
+    void load( const QString& fileListPath );
     void updateAllItems(); // Gets triggered if the configuration changes and the file list needs to be updated
     void updateItem( FileListItem *item );
 

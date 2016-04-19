@@ -16,18 +16,17 @@ class soundkonverter_codec_ffmpeg : public CodecPlugin
 {
     Q_OBJECT
 public:
-    struct FFmpegCodecData
+    struct FFmpegEncoderData
     {
         QString name;
-        bool external;
-        bool experimental;
+        bool experimental = false;
     };
 
     struct CodecData
     {
         QString codecName;
-        QList<FFmpegCodecData> ffmpegCodecList;
-        FFmpegCodecData currentFFmpegCodec;
+        QList<FFmpegEncoderData> ffmpegEnoderList;
+        FFmpegEncoderData currentFFmpegEncoder;
     };
 
     /** Default Constructor */
@@ -36,7 +35,7 @@ public:
     /** Default Destructor */
     ~soundkonverter_codec_ffmpeg();
 
-    QString name();
+    QString name() const;
     int version();
 
     QList<ConversionPipeTrunk> codecTable();
@@ -48,8 +47,8 @@ public:
 
     CodecWidget *newCodecWidget();
 
-    unsigned int convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false );
-    QStringList convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false );
+    int convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false );
+    QStringList convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false );
     float parseOutput( const QString& output, int *length );
     float parseOutput( const QString& output );
 

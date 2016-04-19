@@ -17,6 +17,8 @@ soundkonverter_codec_fluidsynth::soundkonverter_codec_fluidsynth( QObject *paren
 {
     Q_UNUSED(args)
 
+    configDialogSoundFontUrlRequester = 0;
+
     binaries["fluidsynth"] = "";
 
     allCodecs += "midi";
@@ -33,7 +35,7 @@ soundkonverter_codec_fluidsynth::soundkonverter_codec_fluidsynth( QObject *paren
 soundkonverter_codec_fluidsynth::~soundkonverter_codec_fluidsynth()
 {}
 
-QString soundkonverter_codec_fluidsynth::name()
+QString soundkonverter_codec_fluidsynth::name() const
 {
     return global_plugin_name;
 }
@@ -131,7 +133,7 @@ CodecWidget *soundkonverter_codec_fluidsynth::newCodecWidget()
     return qobject_cast<CodecWidget*>(widget);
 }
 
-unsigned int soundkonverter_codec_fluidsynth::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+int soundkonverter_codec_fluidsynth::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     if( soundFontFile.isEmpty() )
     {
@@ -162,7 +164,7 @@ unsigned int soundkonverter_codec_fluidsynth::convert( const KUrl& inputFile, co
     return newItem->id;
 }
 
-QStringList soundkonverter_codec_fluidsynth::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+QStringList soundkonverter_codec_fluidsynth::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     Q_UNUSED(inputCodec)
     Q_UNUSED(_conversionOptions)

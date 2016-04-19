@@ -68,12 +68,12 @@ ConversionOptions *WavPackCodecWidget::currentConversionOptions()
     return options;
 }
 
-bool WavPackCodecWidget::setCurrentConversionOptions( ConversionOptions *_options )
+bool WavPackCodecWidget::setCurrentConversionOptions( const ConversionOptions *_options )
 {
     if( !_options || _options->pluginName != global_plugin_name ) return false;
 
-    ConversionOptions *options = _options;
-    cCompressionLevel->setCurrentIndex( options->compressionLevel );
+    const ConversionOptions *options = _options;
+    cCompressionLevel->setCurrentIndex( (int)options->compressionLevel );
     cCmdArguments->setChecked( !options->cmdArguments.isEmpty() );
     if( !options->cmdArguments.isEmpty() ) lCmdArguments->setText( options->cmdArguments );
     return true;

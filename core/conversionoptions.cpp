@@ -27,7 +27,7 @@ bool FilterOptions::equalsBasics( FilterOptions *_other )
              cmdArguments ==_other->cmdArguments );
 }
 
-QDomElement FilterOptions::toXml( QDomDocument document, const QString elementName )
+QDomElement FilterOptions::toXml( QDomDocument document, const QString& elementName ) const
 {
     QDomElement filterOptions = document.createElement(elementName);
 
@@ -41,6 +41,14 @@ bool FilterOptions::fromXml( QDomElement filterOptions )
 {
     pluginName = filterOptions.attribute("pluginName");
     return true;
+}
+
+FilterOptions* FilterOptions::copy() const
+{
+    FilterOptions* c = new FilterOptions();
+    c->pluginName = pluginName;
+    c->cmdArguments = cmdArguments;
+    return c;
 }
 
 
@@ -142,7 +150,7 @@ bool ConversionOptions::equalsBasics( ConversionOptions *_other )
              cmdArguments ==_other->cmdArguments );
 }
 
-QDomElement ConversionOptions::toXml( QDomDocument document )
+QDomElement ConversionOptions::toXml( QDomDocument document ) const
 {
     QDomElement conversionOptions = document.createElement("conversionOptions");
     conversionOptions.setAttribute("pluginName",pluginName);
@@ -166,7 +174,7 @@ QDomElement ConversionOptions::toXml( QDomDocument document )
     conversionOptions.appendChild(features);
 
     int i = 0;
-    foreach( FilterOptions *filter, filterOptions )
+    foreach( const FilterOptions *filter, filterOptions )
     {
         QDomElement filterOptionsElement = filter->toXml(document,"filterOptions"+QString::number(i++));
         conversionOptions.appendChild(filterOptionsElement);
@@ -206,3 +214,27 @@ bool ConversionOptions::fromXml( QDomElement conversionOptions, QList<QDomElemen
     return true;
 }
 
+ConversionOptions* ConversionOptions::copy() const
+{
+    ConversionOptions* c = new ConversionOptions();
+    c->pluginName = pluginName;
+    c->qualityMode = qualityMode;
+    c->quality = quality;
+    c->bitrate = bitrate;
+    c->bitrateMode = bitrateMode;
+    c->cmdArguments = cmdArguments;
+    c->compressionLevel = compressionLevel;
+    c->profile = profile;
+    c->codecName = codecName;
+    c->outputDirectoryMode = outputDirectoryMode;
+    c->outputDirectory = outputDirectory;
+    c->outputFilesystem = outputFilesystem;
+    c->replaygain = replaygain;
+
+    foreach( const FilterOptions* f, filterOptions )
+    {
+        c->filterOptions.append(f->copy());
+    }
+
+    return c;
+}

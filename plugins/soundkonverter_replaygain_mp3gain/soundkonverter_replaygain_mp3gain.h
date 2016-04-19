@@ -11,13 +11,14 @@ class ConversionOptions;
 class KDialog;
 class QComboBox;
 class QCheckBox;
+class QDoubleSpinBox;
 
 
 class Mp3GainPluginItem : public ReplayGainPluginItem
 {
     Q_OBJECT
 public:
-    Mp3GainPluginItem( QObject *parent=0 );
+    explicit Mp3GainPluginItem( QObject *parent );
     ~Mp3GainPluginItem();
 
     KUrl::List undoFileList;
@@ -34,7 +35,7 @@ public:
     /** Default Destructor */
     ~soundkonverter_replaygain_mp3gain();
 
-    QString name();
+    QString name() const;
 
     QList<ReplayGainPipe> codecTable();
 
@@ -43,16 +44,18 @@ public:
     bool hasInfo();
     void showInfo( QWidget *parent );
 
-    unsigned int apply( const KUrl::List& fileList, ApplyMode mode = Add );
+    int apply( const KUrl::List& fileList, ApplyMode mode = Add );
     float parseOutput( const QString& output );
 
 private:
     QWeakPointer<KDialog> configDialog;
     QComboBox *configDialogTagModeComboBox;
     QCheckBox *configDialogModifyAudioStreamCheckBox;
+    QDoubleSpinBox *configDialogGainAdjustmentSpinBox;
 
     int tagMode;
     bool modifyAudioStream;
+    double gainAdjustment;
 
 private slots:
     /** The undo process has exited */

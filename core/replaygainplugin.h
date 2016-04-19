@@ -25,7 +25,7 @@ class KDE_EXPORT ReplayGainPluginItem : public BackendPluginItem
 {
     Q_OBJECT
 public:
-    ReplayGainPluginItem( QObject *parent=0 );
+    explicit ReplayGainPluginItem( QObject *parent );
     virtual ~ReplayGainPluginItem();
 
     struct Data // additional data
@@ -48,15 +48,15 @@ public:
         Force = 2
     };
 
-    ReplayGainPlugin( QObject *parent=0 );
+    explicit ReplayGainPlugin( QObject *parent );
     virtual ~ReplayGainPlugin();
 
-    virtual QString type();
+    virtual QString type() const;
 
     virtual QList<ReplayGainPipe> codecTable() = 0;
 
     /** adds replaygain to one or more files */
-    virtual unsigned int apply( const KUrl::List& fileList, ApplyMode mode = Add ) = 0;
+    virtual int apply( const KUrl::List& fileList, ApplyMode mode = Add ) = 0;
 };
 
 #define K_EXPORT_SOUNDKONVERTER_REPLAYGAIN(libname, classname) \

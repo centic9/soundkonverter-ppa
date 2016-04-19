@@ -25,7 +25,7 @@ soundkonverter_codec_neroaac::soundkonverter_codec_neroaac( QObject *parent, con
 soundkonverter_codec_neroaac::~soundkonverter_codec_neroaac()
 {}
 
-QString soundkonverter_codec_neroaac::name()
+QString soundkonverter_codec_neroaac::name() const
 {
     return global_plugin_name;
 }
@@ -93,7 +93,7 @@ CodecWidget *soundkonverter_codec_neroaac::newCodecWidget()
     return qobject_cast<CodecWidget*>(widget);
 }
 
-unsigned int soundkonverter_codec_neroaac::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+int soundkonverter_codec_neroaac::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     QStringList command = convertCommand( inputFile, outputFile, inputCodec, outputCodec, _conversionOptions, tags, replayGain );
     if( command.isEmpty() )
@@ -117,7 +117,7 @@ unsigned int soundkonverter_codec_neroaac::convert( const KUrl& inputFile, const
     return newItem->id;
 }
 
-QStringList soundkonverter_codec_neroaac::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+QStringList soundkonverter_codec_neroaac::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     Q_UNUSED(inputCodec)
     Q_UNUSED(tags)
@@ -127,7 +127,7 @@ QStringList soundkonverter_codec_neroaac::convertCommand( const KUrl& inputFile,
         return QStringList();
 
     QStringList command;
-    ConversionOptions *conversionOptions = _conversionOptions;
+    const ConversionOptions *conversionOptions = _conversionOptions;
 
     if( outputCodec == "m4a/aac" )
     {
@@ -177,7 +177,7 @@ float soundkonverter_codec_neroaac::parseOutput( const QString& output, int leng
     QRegExp regEnc("Processed (\\d+) seconds");
     if( output.contains(regEnc) )
     {
-        return (float)regEnc.cap(1).toInt()*100/length;
+        return (float)regEnc.cap(1).toInt() * 100 / (float)length;
     }
 
     // no output when decoding

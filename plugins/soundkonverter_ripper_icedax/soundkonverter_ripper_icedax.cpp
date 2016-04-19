@@ -16,7 +16,7 @@ soundkonverter_ripper_icedax::soundkonverter_ripper_icedax( QObject *parent, con
 soundkonverter_ripper_icedax::~soundkonverter_ripper_icedax()
 {}
 
-QString soundkonverter_ripper_icedax::name()
+QString soundkonverter_ripper_icedax::name() const
 {
     return global_plugin_name;
 }
@@ -62,12 +62,13 @@ void soundkonverter_ripper_icedax::showInfo( QWidget *parent )
     Q_UNUSED(parent)
 }
 
-unsigned int soundkonverter_ripper_icedax::rip( const QString& device, int track, int tracks, const KUrl& outputFile )
+int soundkonverter_ripper_icedax::rip( const QString& device, int track, int tracks, const KUrl& outputFile )
 {
     QStringList command;
 
     command += binaries["icedax"];
     command += "-g";
+    command += "-H";
     command += "-D";
     command += device;
     if( track > 0 )
@@ -133,7 +134,7 @@ float soundkonverter_ripper_icedax::parseOutput( const QString& output, RipperPl
     if( progress > 90 )
         processedFiles--;
 
-    return float( processedFiles * 100 + progress ) / ripperItem->data.fileCount;
+    return ((float)processedFiles * 100 + progress) / (float)ripperItem->data.fileCount;
 }
 
 float soundkonverter_ripper_icedax::parseOutput( const QString& output)

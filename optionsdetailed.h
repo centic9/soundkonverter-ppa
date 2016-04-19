@@ -29,7 +29,7 @@ class OptionsDetailed : public QWidget
 {
     Q_OBJECT
 public:
-    OptionsDetailed( Config *_config, QWidget *parent=0 );
+    OptionsDetailed( Config *_config, QWidget *parent );
     ~OptionsDetailed();
 
     void init();
@@ -37,7 +37,7 @@ public:
     /** Return the current options */
     ConversionOptions *currentConversionOptions( bool saveLastUsed = true );
     /** Set the current options */
-    bool setCurrentConversionOptions( ConversionOptions *options );
+    bool setCurrentConversionOptions( const ConversionOptions *conversionOptions );
 
     QString currentProfile();
     bool setCurrentProfile( const QString& profile );

@@ -25,7 +25,7 @@ public:
     /** Default Destructor */
     ~soundkonverter_ripper_cdparanoia();
 
-    QString name();
+    QString name() const;
 
     QList<ConversionPipeTrunk> codecTable();
 
@@ -34,7 +34,7 @@ public:
     bool hasInfo();
     void showInfo( QWidget *parent );
 
-    unsigned int rip( const QString& device, int track, int tracks, const KUrl& outputFile );
+    int rip( const QString& device, int track, int tracks, const KUrl& outputFile );
     QStringList ripCommand( const QString& device, int track, int tracks, const KUrl& outputFile );
     float parseOutput( const QString& output, int *fromSector, int *toSector );
     float parseOutput( const QString& output );
@@ -52,7 +52,6 @@ private:
     QCheckBox *configDialogEnableParanoiaCheckBox;
     QCheckBox *configDialogEnableExtraParanoiaCheckBox;
 
-    int configVersion;
     int forceReadSpeed;
     int forceEndianness;
     int maximumRetries;

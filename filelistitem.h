@@ -34,12 +34,14 @@ public:
         SucceededWithProblems           = 1,
         StoppedByUser                   = 2,
         Skipped                         = 3,
+        Encrypted                       = 7,
         BackendNeedsConfiguration       = 4,
         DiscFull                        = 5,
+        CantWriteOutput                 = 8,
         Failed                          = 6
     };
 
-    FileListItem( QTreeWidget *parent );
+    explicit FileListItem( QTreeWidget *parent );
     FileListItem( QTreeWidget *parent, QTreeWidgetItem *after );
     ~FileListItem();
 
@@ -68,7 +70,7 @@ public:
 class FileListItemDelegate : public QItemDelegate
 {
 public:
-    FileListItemDelegate( QObject *parent = 0 );
+    explicit FileListItemDelegate( QObject *parent );
 
     virtual void paint( QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
 };

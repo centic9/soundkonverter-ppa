@@ -10,6 +10,12 @@
 # define TAGLIB_HAS_ASF_PICTURE
 #endif
 
+// Taglib added support for DRM detection in 1.8.0
+#if (TAGLIB_MAJOR_VERSION > 1) || (TAGLIB_MAJOR_VERSION == 1 && TAGLIB_MINOR_VERSION >= 8)
+# define TAGLIB_HAS_MP4_DRM
+# define TAGLIB_HAS_ASF_DRM
+#endif
+
 // Taglib added support for opus in 1.9.0
 #if (TAGLIB_MAJOR_VERSION > 1) || (TAGLIB_MAJOR_VERSION == 1 && TAGLIB_MINOR_VERSION >= 9)
 # define TAGLIB_HAS_OPUS
@@ -49,8 +55,7 @@
 #endif
 
 
-CoverData::CoverData( const QByteArray& _data, const QString& _mimyType, Role _role, const QString& _description, QObject *parent )
-        : QObject( parent )
+CoverData::CoverData( const QByteArray& _data, const QString& _mimyType, Role _role, const QString& _description )
 {
     data = _data;
     mimeType = _mimyType;
@@ -127,6 +132,7 @@ TagData::TagData()
 
     length = 0;
     samplingRate = 0;
+    isEncrypted = false;
 }
 
 TagData::~TagData()
@@ -136,7 +142,8 @@ TagData::~TagData()
 
 
 TagEngine::TagEngine( Config *_config )
-    : config( _config )
+    : QObject( _config ),
+    config( _config )
 {
     TagLib::StringList genres = TagLib::ID3v1::genreList();
     for( TagLib::StringList::ConstIterator it = genres.begin(), end = genres.end(); it != end; ++it )
@@ -417,6 +424,10 @@ TagData* TagEngine::readTags( const KUrl& fileName )
                     }
                 }
             }
+
+            #ifdef TAGLIB_HAS_MP4_DRM
+            tagData->isEncrypted = file->audioProperties()->isEncrypted();
+            #endif // TAGLIB_HAS_MP4_DRM
         }
         else if( TagLib::ASF::File *file = dynamic_cast<TagLib::ASF::File*>(fileref.file()) )
         {
@@ -454,6 +465,10 @@ TagData* TagEngine::readTags( const KUrl& fileName )
                     }
                 }
             }
+
+            #ifdef TAGLIB_HAS_ASF_DRM
+            tagData->isEncrypted = file->audioProperties()->isEncrypted();
+            #endif // TAGLIB_HAS_ASF_DRM
         }
         /*else if( TagLib::MPC::File *file = dynamic_cast<TagLib::MPC::File *>( fileref.file() ) )
         {

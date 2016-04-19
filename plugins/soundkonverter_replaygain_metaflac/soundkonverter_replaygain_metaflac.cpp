@@ -17,7 +17,7 @@ soundkonverter_replaygain_metaflac::soundkonverter_replaygain_metaflac( QObject 
 soundkonverter_replaygain_metaflac::~soundkonverter_replaygain_metaflac()
 {}
 
-QString soundkonverter_replaygain_metaflac::name()
+QString soundkonverter_replaygain_metaflac::name() const
 {
     return global_plugin_name;
 }
@@ -61,7 +61,7 @@ void soundkonverter_replaygain_metaflac::showInfo( QWidget *parent )
     Q_UNUSED(parent)
 }
 
-unsigned int soundkonverter_replaygain_metaflac::apply( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
+int soundkonverter_replaygain_metaflac::apply( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
 {
     if( fileList.count() <= 0 )
         return BackendPlugin::UnknownError;
@@ -83,7 +83,7 @@ unsigned int soundkonverter_replaygain_metaflac::apply( const KUrl::List& fileLi
     {
         command += "--remove-replay-gain";
     }
-    foreach( const KUrl file, fileList )
+    foreach( const KUrl& file, fileList )
     {
         command += "\"" + escapeUrl(file) + "\"";
     }

@@ -1,3 +1,26 @@
+2.2.0:
+-Add: Decode webm audio stream
+-Add: --file-list argument
+-Change: Remove both APE and ID3 Replay Gain tags with mp3gain and aacgain
+-Change: Disable "modify audio stream" option by default in mp3gain and aacgain
+-Change: Don't write icedax info file
+-Change: Set so-version for libsoundkonvertercore
+-Fix: Don't require an output path when using a user defined profile as command line argument
+-Fix: Don't crash when tags can't be read
+-Fix: Error message when trying to write to a directory without permissions
+-Fix: Store album artist information to file list files
+-Fix: Some crashes
+-Fix: Handle newer ffmpeg versions
+-Fix: Don't wait with Replay Gain calculation for items with same album name but no Replay Gain conversion option set
+-Fix: Don't convert all files at once if the conversion starts with copying files with the same input an output codec
+-Fix: Infinite loop when waiting for album gain for a failed item
+
+2.1.90 (2.2.0 rc1):
+-Add: Detect (DRM)-encrypted wma and m4a files
+-Add: Adjust gain for mp3 files
+-Add: Option to copy files instead of re-encoding them if input and output codec are the same
+-Change: Fall-back from album artist to artist in "meta data" naming mode if album artist is empty
+
 2.1.2:
 -Fix: False error detection in the Replay Gain tool
 -Fix: Properly re-paint conversion file list on status change

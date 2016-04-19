@@ -8,6 +8,10 @@
 SoxFilterOptions::SoxFilterOptions()
 {
     pluginName = global_plugin_name;
+
+    data.sampleRate = 0;
+    data.sampleSize = 0;
+    data.channels = 0;
 }
 
 SoxFilterOptions::~SoxFilterOptions()
@@ -33,14 +37,14 @@ bool SoxFilterOptions::equals( FilterOptions *_other )
         return false;
 
     QStringList effects;
-    foreach( EffectData effectData, data.effects )
+    foreach( const EffectData& effectData, data.effects )
     {
         effects.append( effectData.effectName );
     }
     effects.sort();
 
     QStringList other_effects;
-    foreach( EffectData otherEffectData, other->data.effects )
+    foreach( const EffectData& otherEffectData, other->data.effects )
     {
         other_effects.append( otherEffectData.effectName );
     }
@@ -48,9 +52,9 @@ bool SoxFilterOptions::equals( FilterOptions *_other )
 
     if( effects == other_effects )
     {
-        foreach( const EffectData effectData, data.effects )
+        foreach( const EffectData& effectData, data.effects )
         {
-            foreach( const EffectData otherEffectData, other->data.effects )
+            foreach( const EffectData& otherEffectData, other->data.effects )
             {
                 if( otherEffectData.effectName == effectData.effectName )
                 {
@@ -69,7 +73,7 @@ bool SoxFilterOptions::equals( FilterOptions *_other )
     return true;
 }
 
-QDomElement SoxFilterOptions::toXml( QDomDocument document, const QString elementName )
+QDomElement SoxFilterOptions::toXml( QDomDocument document, const QString& elementName ) const
 {
     QDomElement filterOptions = FilterOptions::toXml( document, elementName );
     filterOptions.setAttribute("sampleRate",data.sampleRate);
@@ -77,7 +81,7 @@ QDomElement SoxFilterOptions::toXml( QDomDocument document, const QString elemen
     filterOptions.setAttribute("channels",data.channels);
 
     int i = 0;
-    foreach( const EffectData effectData, data.effects )
+    foreach( const EffectData& effectData, data.effects )
     {
         if( effectData.effectName == i18n("Disabled") )
             continue;
@@ -138,4 +142,18 @@ bool SoxFilterOptions::fromXml( QDomElement filterOptions )
     }
 
     return true;
+}
+
+FilterOptions* SoxFilterOptions::copy() const
+{
+    SoxFilterOptions* c = new SoxFilterOptions();
+    c->pluginName = pluginName;
+    c->cmdArguments = cmdArguments;
+
+    c->data.sampleRate = data.sampleRate;
+    c->data.sampleSize = data.sampleSize;
+    c->data.channels = data.channels;
+    c->data.effects = data.effects;
+
+    return static_cast<FilterOptions*>(c);
 }

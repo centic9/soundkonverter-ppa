@@ -75,7 +75,7 @@ void Convert::get( ConvertItem *item )
 
     logger->log( item->logID, i18n("Copying \"%1\" to \"%2\"",item->inputUrl.pathOrUrl(),item->tempInputUrl.toLocalFile()) );
 
-    item->kioCopyJob = KIO::file_copy( item->inputUrl, item->tempInputUrl, 0700 , KIO::HideProgressInfo );
+    item->kioCopyJob = KIO::file_copy( item->inputUrl, item->tempInputUrl, -1 , KIO::HideProgressInfo );
     connect( item->kioCopyJob.data(), SIGNAL(result(KJob*)), this, SLOT(kioJobFinished(KJob*)) );
     connect( item->kioCopyJob.data(), SIGNAL(percent(KJob*,unsigned long)), this, SLOT(kioJobProgress(KJob*,unsigned long)) );
 }
@@ -85,7 +85,7 @@ void Convert::convert( ConvertItem *item )
     if( !item )
         return;
 
-    ConversionOptions *conversionOptions = config->conversionOptionsManager()->getConversionOptions( item->fileListItem->conversionOptionsId );
+    const ConversionOptions *conversionOptions = config->conversionOptionsManager()->getConversionOptions( item->fileListItem->conversionOptionsId );
     if( !conversionOptions )
         return;
 
@@ -98,6 +98,13 @@ void Convert::convert( ConvertItem *item )
     if( !item->fileListItem->tags )
         item->fileListItem->tags = config->tagEngine()->readTags( inputUrl );
 
+    if( item->fileListItem->tags && item->fileListItem->tags->isEncrypted )
+    {
+        logger->log( item->logID, "<br><span style=\"color:#C00000\">" + i18n("File is encrypted, conversion not possible") + "</span>" );
+        remove( item, FileListItem::Encrypted );
+        return;
+    }
+
     if( item->outputUrl.isEmpty() )
     {
         // item->outputUrl = !item->fileListItem->outputUrl.url().isEmpty() ? item->fileListItem->outputUrl : OutputDirectory::calcPath( item->fileListItem, config, usedOutputNames.values() );
@@ -109,10 +116,28 @@ void Convert::convert( ConvertItem *item )
             remove( item, FileListItem::Skipped );
             return;
         }
-        OutputDirectory::makePath( item->outputUrl );
+        if( OutputDirectory::makePath(item->outputUrl) == KUrl() )
+        {
+            logger->log( item->logID, "\t" + i18n("Cannot create output directory \"%1\"",item->outputUrl.toLocalFile()) );
+            item->outputUrl = KUrl();
+            remove( item, FileListItem::CantWriteOutput );
+            return;
+        }
         fileList->updateItem( item->fileListItem );
     }
     usedOutputNames.insert( item->logID, item->outputUrl.toLocalFile() );
+
+    if( config->data.general.copyIfSameCodec && item->fileListItem->codecName == conversionOptions->codecName )
+    {
+        item->state = ConvertItem::convert;
+        logger->log( item->logID, i18n("Copying \"%1\" to \"%2\"",inputUrl.pathOrUrl(),item->outputUrl.toLocalFile()) );
+
+        item->kioCopyJob = KIO::file_copy( item->inputUrl, item->outputUrl, -1 , KIO::HideProgressInfo );
+        connect( item->kioCopyJob.data(), SIGNAL(result(KJob*)), this, SLOT(kioJobFinished(KJob*)) );
+//         connect( item->kioCopyJob.data(), SIGNAL(percent(KJob*,unsigned long)), this, SLOT(kioJobProgress(KJob*,unsigned long)) );
+
+        return;
+    }
 
     if( item->take > item->conversionPipes.count() - 1 )
     {
@@ -140,7 +165,7 @@ void Convert::convert( ConvertItem *item )
             bool useInternalReplayGain = false;
             if( item->conversionPipes.at(item->take).trunks.at(0).data.hasInternalReplayGain && item->mode & ConvertItem::replaygain )
             {
-                foreach( Config::CodecData codecData, config->data.backends.codecs )
+                foreach( const Config::CodecData& codecData, config->data.backends.codecs )
                 {
                     if( codecData.codecName == item->conversionPipes.at(item->take).trunks.at(0).codecTo )
                     {
@@ -202,7 +227,7 @@ void Convert::convert( ConvertItem *item )
 
             const int stepCount = item->conversionPipes.at(item->take).trunks.count() - 1;
             int step = 0;
-            foreach( const ConversionPipeTrunk trunk, item->conversionPipes.at(item->take).trunks )
+            foreach( const ConversionPipeTrunk& trunk, item->conversionPipes.at(item->take).trunks )
             {
                 BackendPlugin *plugin = trunk.plugin;
                 QStringList command;
@@ -212,7 +237,7 @@ void Convert::convert( ConvertItem *item )
                 {
                     if( step == stepCount && trunk.data.hasInternalReplayGain && item->mode & ConvertItem::replaygain )
                     {
-                        foreach( Config::CodecData codecData, config->data.backends.codecs )
+                        foreach( const Config::CodecData& codecData, config->data.backends.codecs )
                         {
                             if( codecData.codecName == trunk.codecTo )
                             {
@@ -250,7 +275,7 @@ void Convert::convert( ConvertItem *item )
             item->state = ConvertItem::convert;
             // merge all conversion times into one since we are doing everything in one step
             float time = 0.0f;
-            foreach( float t, item->convertTimes )
+            foreach( const float t, item->convertTimes )
             {
                 time += t;
             }
@@ -311,7 +336,7 @@ void Convert::convertNextBackend( ConvertItem *item )
     if( !item )
         return;
 
-    ConversionOptions *conversionOptions = config->conversionOptionsManager()->getConversionOptions( item->fileListItem->conversionOptionsId );
+    const ConversionOptions *conversionOptions = config->conversionOptionsManager()->getConversionOptions( item->fileListItem->conversionOptionsId );
     if( !conversionOptions )
         return;
 
@@ -379,7 +404,7 @@ void Convert::convertNextBackend( ConvertItem *item )
         bool useInternalReplayGain = false;
         if( step == stepCount && item->conversionPipes.at(item->take).trunks.at(step).data.hasInternalReplayGain && item->mode & ConvertItem::replaygain )
         {
-            foreach( Config::CodecData codecData, config->data.backends.codecs )
+            foreach( const Config::CodecData& codecData, config->data.backends.codecs )
             {
                 if( codecData.codecName == item->conversionPipes.at(item->take).trunks.at(step).codecTo )
                 {
@@ -441,11 +466,19 @@ void Convert::replaygain( ConvertItem *item )
     if( fileList->waitForAlbumGain(item->fileListItem) )
     {
         logger->log( item->logID, i18n("Skipping Replay Gain, Album Gain will be calculated later") );
-
-        albumGainItems[albumName].append( item );
-
         item->state = ConvertItem::replaygain;
-        executeNextStep( item );
+
+        if( !albumGainItems[albumName].contains(item) )
+        {
+            albumGainItems[albumName].append( item );
+            executeNextStep( item );
+        }
+        else
+        {
+            logger->log( item->logID, "\t" + i18n("No more backends left to try :(") );
+            albumGainItems[albumName].removeAll( item );
+            remove( item, FileListItem::Failed );
+        }
         return;
     }
 
@@ -480,9 +513,10 @@ void Convert::replaygain( ConvertItem *item )
         }
     }
 
-    bool waitForVorbisGainFinish = false;
     if( item->backendPlugin->name() == "Vorbis Gain" )
     {
+        bool waitForVorbisGainFinish = false;
+
         foreach( const QString directory, directories )
         {
             if( activeVorbisGainDirectories.contains(directory) )
@@ -683,7 +717,7 @@ void Convert::executeSameStep( ConvertItem *item )
         case ConvertItem::encode:
         {
             // remove temp/failed files
-            foreach( const KUrl url, item->tempConvertUrls )
+            foreach( const KUrl& url, item->tempConvertUrls )
             {
                 if( QFile::exists(url.toLocalFile()) )
                 {
@@ -739,6 +773,15 @@ void Convert::kioJobFinished( KJob *job )
                         fileTime = item->getTime;
                         break;
                     }
+                    case ConvertItem::convert:
+                    {
+                        fileTime = 0.0f;
+                        foreach( const float t, item->convertTimes )
+                        {
+                            fileTime += t;
+                        }
+                        break;
+                    }
                     default:
                     {
                         fileTime = 0.0f;
@@ -765,15 +808,25 @@ void Convert::kioJobFinished( KJob *job )
             else
             {
                 // remove temp/failed files
-                if( QFile::exists(item->tempInputUrl.toLocalFile()) )
+                KUrl url;
+                if( item->state == ConvertItem::get )
                 {
-                    QFile::remove(item->tempInputUrl.toLocalFile());
-                    logger->log( item->logID, i18nc("removing file","Removing: %1",item->tempInputUrl.toLocalFile()) );
+                    url = item->tempInputUrl;
                 }
-                if( QFile::exists(item->tempInputUrl.toLocalFile()+".part") )
+                else if( item->state == ConvertItem::convert )
                 {
-                    QFile::remove(item->tempInputUrl.toLocalFile()+".part");
-                    logger->log( item->logID, i18nc("removing file","Removing: %1",item->tempInputUrl.toLocalFile()+".part") );
+                    url = item->outputUrl;
+                }
+
+                if( QFile::exists(url.toLocalFile()) )
+                {
+                    QFile::remove(url.toLocalFile());
+                    logger->log( item->logID, i18nc("removing file","Removing: %1",url.toLocalFile()) );
+                }
+                if( QFile::exists(url.toLocalFile()+".part") )
+                {
+                    QFile::remove(url.toLocalFile()+".part");
+                    logger->log( item->logID, i18nc("removing file","Removing: %1",url.toLocalFile()+".part") );
                 }
 
                 if( job->error() == 1 )
@@ -799,7 +852,7 @@ void Convert::processOutput()
             const QString output = item->process.data()->readAllStandardOutput().data();
 
             bool logOutput = true;
-            foreach( const ConversionPipeTrunk trunk, item->conversionPipes.at(item->take).trunks )
+            foreach( const ConversionPipeTrunk& trunk, item->conversionPipes.at(item->take).trunks )
             {
                 const float progress = trunk.plugin->parseOutput( output );
 
@@ -1067,6 +1120,8 @@ void Convert::add( FileListItem *fileListItem )
     ConvertItem *newItem = new ConvertItem( fileListItem );
     items.append( newItem );
 
+    newItem->progressedTime.start();
+
     // register at the logger
     newItem->logID = logger->registerProcess( fileName.pathOrUrl() );
     logger->log( 1000, "\t" + i18n("Got log ID: %1",QString::number(newItem->logID)) );
@@ -1078,13 +1133,20 @@ void Convert::add( FileListItem *fileListItem )
 //     if( newItem->fileListItem->tags ) logger->log( newItem->logID, i18n("Tags successfully read") );
 //     else logger->log( newItem->logID, i18n("Reading tags failed") );
 
+    if( fileListItem->tags && fileListItem->tags->isEncrypted )
+    {
+        logger->log( newItem->logID, "<br><span style=\"color:#C00000\">" + i18n("File is encrypted, conversion not possible") + "</span>" );
+        remove( newItem, FileListItem::Encrypted );
+        return;
+    }
+
     // set some variables to default values
     newItem->mode = (ConvertItem::Mode)0x0000;
     newItem->state = (ConvertItem::Mode)0x0000;
 
     newItem->inputUrl = fileListItem->url;
 
-    ConversionOptions *conversionOptions = config->conversionOptionsManager()->getConversionOptions(fileListItem->conversionOptionsId);
+    const ConversionOptions *conversionOptions = config->conversionOptionsManager()->getConversionOptions(fileListItem->conversionOptionsId);
     if( !conversionOptions )
     {
         logger->log( 1000, "Convert::add(...) no ConversionOptions found" );
@@ -1133,8 +1195,6 @@ void Convert::add( FileListItem *fileListItem )
     // (visual) feedback
     fileListItem->state = FileListItem::Converting;
 
-    newItem->progressedTime.start();
-
     // and start
     executeNextStep( newItem );
 }
@@ -1168,7 +1228,7 @@ void Convert::remove( ConvertItem *item, FileListItem::ReturnCode returnCode )
         QFileInfo inputFileInfo( item->inputUrl.toLocalFile() );
         fileRatio /= inputFileInfo.size();
     }
-    ConversionOptions *conversionOptions = config->conversionOptionsManager()->getConversionOptions( item->fileListItem->conversionOptionsId );
+    const ConversionOptions *conversionOptions = config->conversionOptionsManager()->getConversionOptions( item->fileListItem->conversionOptionsId );
     if( fileRatio < 0.01 && outputFileInfo.size() < 100000 && returnCode != FileListItem::StoppedByUser && ( !conversionOptions || !config->pluginLoader()->isCodecInferiorQuality(conversionOptions->codecName) ) )
     {
         exitMessage = i18n("An error occurred, the output file size is less than one percent of the input file size");
@@ -1204,8 +1264,14 @@ void Convert::remove( ConvertItem *item, FileListItem::ReturnCode returnCode )
         case FileListItem::DiscFull:
             exitMessage = i18nc("Conversion exit status","Not enough space on the output device");
             break;
+        case FileListItem::CantWriteOutput:
+            exitMessage = i18nc("Conversion exit status","Cannot write to output directory, please check permissions");
+            break;
         case FileListItem::Skipped:
             exitMessage = i18nc("Conversion exit status","File already exists");
+            break;
+        case FileListItem::Encrypted:
+            exitMessage = i18nc("Conversion exit status","File is encrypted");
             break;
         case FileListItem::Failed:
             exitMessage = i18nc("Conversion exit status","An error occurred");
@@ -1215,7 +1281,7 @@ void Convert::remove( ConvertItem *item, FileListItem::ReturnCode returnCode )
     if( returnCode == FileListItem::Succeeded || returnCode == FileListItem::SucceededWithProblems )
         writeTags( item );
 
-    if( !waitForAlbumGain && !item->fileListItem->notifyCommand.isEmpty() && ( !config->data.general.waitForAlbumGain || !conversionOptions->replaygain ) )
+    if( !waitForAlbumGain && !item->fileListItem->notifyCommand.isEmpty() && ( !config->data.general.waitForAlbumGain || !conversionOptions || !conversionOptions->replaygain ) )
     {
         QList<ConvertItem*> albumItems;
         if( !albumName.isEmpty() )
@@ -1223,7 +1289,7 @@ void Convert::remove( ConvertItem *item, FileListItem::ReturnCode returnCode )
 
         albumItems.append( item );
 
-        foreach( ConvertItem *albumItem, albumItems )
+        foreach( const ConvertItem *albumItem, albumItems )
         {
             QString command = albumItem->fileListItem->notifyCommand;
             // command.replace( "%u", albumItem->fileListItem->url );
@@ -1240,7 +1306,7 @@ void Convert::remove( ConvertItem *item, FileListItem::ReturnCode returnCode )
     {
         QFile::remove(item->tempInputUrl.toLocalFile());
     }
-    foreach( const KUrl url, item->tempConvertUrls )
+    foreach( const KUrl& url, item->tempConvertUrls )
     {
         if( QFile::exists(url.toLocalFile()) )
         {
@@ -1272,7 +1338,7 @@ void Convert::remove( ConvertItem *item, FileListItem::ReturnCode returnCode )
     {
         QList<ConvertItem*> albumItems = albumGainItems[albumName];
 
-        foreach( ConvertItem *albumItem, albumItems )
+        foreach( const ConvertItem *albumItem, albumItems )
         {
             emit finished( albumItem->fileListItem, FileListItem::Succeeded ); // send signal to FileList
         }
@@ -1341,7 +1407,6 @@ void Convert::itemRemoved( FileListItem *fileListItem )
 void Convert::updateProgress()
 {
     float time = 0.0f;
-    float fileTime;
     QString fileProgressString;
 
     // trigger flushing of the logger cache
@@ -1371,7 +1436,8 @@ void Convert::updateProgress()
             fileProgress = 0; // make it a valid value so the calculations below work
         }
 
-        fileTime = 0.0f;
+        float fileTime = 0.0f;
+
         switch( item->state )
         {
             case ConvertItem::initial:
@@ -1428,7 +1494,7 @@ void Convert::updateProgress()
                     albumItems = albumGainItems[albumName];
                 if( !albumItems.contains(item) )
                     albumItems.append( item );
-                foreach( ConvertItem *albumItem, albumItems )
+                foreach( const ConvertItem *albumItem, albumItems )
                 {
                     fileTime += albumItem->replaygainTime;
                 }

@@ -17,7 +17,7 @@ public:
     /** Default Destructor */
     ~soundkonverter_filter_normalize();
 
-    QString name();
+    QString name() const;
 
     QList<ConversionPipeTrunk> codecTable();
 
@@ -29,8 +29,8 @@ public:
     CodecWidget *newCodecWidget();
     FilterWidget *newFilterWidget();
 
-    unsigned int convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false );
-    QStringList convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false );
+    int convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false );
+    QStringList convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false );
     float parseOutput( const QString& output );
 
     FilterOptions *filterOptionsFromXml( QDomElement filterOptions );

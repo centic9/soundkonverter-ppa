@@ -20,6 +20,8 @@ soundkonverter_codec_libav::soundkonverter_codec_libav( QObject *parent, const Q
 {
     Q_UNUSED(args)
 
+    configDialogExperimantalCodecsEnabledCheckBox = 0;
+
     binaries["avconv"] = "";
 
     KSharedConfig::Ptr conf = KGlobal::config();
@@ -179,7 +181,7 @@ soundkonverter_codec_libav::soundkonverter_codec_libav( QObject *parent, const Q
 soundkonverter_codec_libav::~soundkonverter_codec_libav()
 {}
 
-QString soundkonverter_codec_libav::name()
+QString soundkonverter_codec_libav::name() const
 {
     return global_plugin_name;
 }
@@ -231,6 +233,7 @@ QList<ConversionPipeTrunk> soundkonverter_codec_libav::codecTable()
     /// video
     fromCodecs += "avi";
     fromCodecs += "mkv";
+    fromCodecs += "webm";
     fromCodecs += "ogv";
     fromCodecs += "mpeg";
     fromCodecs += "mov";
@@ -423,14 +426,14 @@ CodecWidget *soundkonverter_codec_libav::newCodecWidget()
     return qobject_cast<CodecWidget*>(widget);
 }
 
-unsigned int soundkonverter_codec_libav::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+int soundkonverter_codec_libav::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     Q_UNUSED(inputCodec)
     Q_UNUSED(tags)
     Q_UNUSED(replayGain)
 
     QStringList command;
-    ConversionOptions *conversionOptions = _conversionOptions;
+    const ConversionOptions *conversionOptions = _conversionOptions;
 
     if( outputCodec != "wav" )
     {
@@ -490,7 +493,7 @@ unsigned int soundkonverter_codec_libav::convert( const KUrl& inputFile, const K
     return newItem->id;
 }
 
-QStringList soundkonverter_codec_libav::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+QStringList soundkonverter_codec_libav::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     Q_UNUSED(inputFile)
     Q_UNUSED(outputFile)
@@ -517,11 +520,11 @@ float soundkonverter_codec_libav::parseOutput( const QString& output, int *lengt
     QRegExp reg2("time=(\\d+)\\.\\d");
     if( output.contains(reg1) )
     {
-        return reg1.cap(1).toInt()*3600 + reg1.cap(2).toInt()*60 + reg1.cap(3).toInt();
+        return (float)reg1.cap(1).toInt()*3600 + (float)reg1.cap(2).toInt()*60 + (float)reg1.cap(3).toInt();
     }
     else if( output.contains(reg2) )
     {
-        return reg2.cap(1).toInt();
+        return (float)reg2.cap(1).toInt();
     }
 
     // TODO error handling
@@ -549,7 +552,7 @@ void soundkonverter_codec_libav::processOutput()
             if( progress == -1 && !output.simplified().isEmpty() )
                 logOutput( backendItems.at(i)->id, output );
 
-            progress = progress * 100 / pluginItem->data.length;
+            progress = progress * 100 / (float)pluginItem->data.length;
             if( progress > backendItems.at(i)->progress )
                 backendItems.at(i)->progress = progress;
 

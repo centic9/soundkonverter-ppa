@@ -30,7 +30,7 @@ soundkonverter_codec_twolame::soundkonverter_codec_twolame( QObject *parent, con
 soundkonverter_codec_twolame::~soundkonverter_codec_twolame()
 {}
 
-QString soundkonverter_codec_twolame::name()
+QString soundkonverter_codec_twolame::name() const
 {
     return global_plugin_name;
 }
@@ -108,7 +108,7 @@ CodecWidget *soundkonverter_codec_twolame::newCodecWidget()
     return qobject_cast<CodecWidget*>(widget);
 }
 
-unsigned int soundkonverter_codec_twolame::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+int soundkonverter_codec_twolame::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     QStringList command = convertCommand( inputFile, outputFile, inputCodec, outputCodec, _conversionOptions, tags, replayGain );
     if( command.isEmpty() )
@@ -131,7 +131,7 @@ unsigned int soundkonverter_codec_twolame::convert( const KUrl& inputFile, const
     return newItem->id;
 }
 
-QStringList soundkonverter_codec_twolame::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+QStringList soundkonverter_codec_twolame::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     Q_UNUSED(inputCodec)
     Q_UNUSED(tags)
@@ -141,7 +141,7 @@ QStringList soundkonverter_codec_twolame::convertCommand( const KUrl& inputFile,
         return QStringList();
 
     QStringList command;
-    ConversionOptions *conversionOptions = _conversionOptions;
+    const ConversionOptions *conversionOptions = _conversionOptions;
 
     if( outputCodec == "mp2" )
     {

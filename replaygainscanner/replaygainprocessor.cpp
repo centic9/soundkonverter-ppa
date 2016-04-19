@@ -21,7 +21,11 @@ ReplayGainProcessorItem::ReplayGainProcessorItem( ReplayGainFileListItem *_fileL
 
     take = 0;
 
+    mode = ReplayGainPlugin::Add;
+
     killed = false;
+
+    logID = -1;
 
     time = 0;
 }
@@ -71,7 +75,7 @@ void ReplayGainProcessor::replaygain( ReplayGainProcessorItem *item )
         bool waitForVorbisGainFinish = false;
         QStringList directories = item->fileListItem->directories();
 
-        foreach( const QString directory, directories )
+        foreach( const QString& directory, directories )
         {
             if( activeVorbisGainDirectories.contains(directory) )
             {
@@ -154,7 +158,7 @@ void ReplayGainProcessor::pluginProcessFinished( int id, int exitCode )
 
             if( item->backendPlugin->name() == "Vorbis Gain" )
             {
-                foreach( const QString directory, item->fileListItem->directories() )
+                foreach( const QString& directory, item->fileListItem->directories() )
                 {
                     activeVorbisGainDirectories.removeAll( directory );
                 }
@@ -284,7 +288,7 @@ void ReplayGainProcessor::add( ReplayGainFileListItem* fileListItem, ReplayGainP
     {
         for( int j=0; j<newItem->fileListItem->childCount(); j++ )
         {
-            ReplayGainFileListItem *child = (ReplayGainFileListItem*)newItem->fileListItem->child(j);
+            ReplayGainFileListItem *child = static_cast<ReplayGainFileListItem*>(newItem->fileListItem->child(j));
             newItem->time += child->length;
         }
     }
@@ -361,7 +365,7 @@ void ReplayGainProcessor::kill( ReplayGainFileListItem *fileListItem )
             {
                 if( item->backendPlugin && item->backendPlugin->name() == "Vorbis Gain" )
                 {
-                    foreach( const QString directory, item->fileListItem->directories() )
+                    foreach( const QString& directory, item->fileListItem->directories() )
                     {
                         activeVorbisGainDirectories.removeAll( directory );
                     }
