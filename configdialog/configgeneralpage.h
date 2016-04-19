@@ -29,7 +29,7 @@ class ConfigGeneralPage : public ConfigPageBase
     Q_OBJECT
 public:
     /** Default Constructor */
-    ConfigGeneralPage( Config *_config, QWidget *parent=0 );
+    ConfigGeneralPage( Config *_config, QWidget *parent );
 
     /** Default Destructor */
     ~ConfigGeneralPage();
@@ -43,6 +43,7 @@ private:
     KComboBox *cConflictHandling;
     KIntSpinBox *iNumFiles;
     QCheckBox *cWaitForAlbumGain;
+    QCheckBox *cCopyIfSameCodec;
     KComboBox *cReplayGainGrouping;
     KIntSpinBox *iNumReplayGainFiles;
 

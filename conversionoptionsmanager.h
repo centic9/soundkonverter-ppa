@@ -1,25 +1,17 @@
-//
-// C++ Interface: conversionoptionsmanager
-//
-// Description: 
-//
-//
-// Author: Daniel Faust <hessijames@gmail.com>, (C) 2008
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+
 #ifndef CONVERSIONOPTIONSMANAGER_H
 #define CONVERSIONOPTIONSMANAGER_H
 
 #include <QList>
+#include <QHash>
 
 class ConversionOptions;
 class PluginLoader;
 
-/** @author Daniel Faust <hessijames@gmail.com> */
-class ConversionOptionsManager
+class ConversionOptionsManager : public QObject
 {
+    Q_OBJECT
+
 public:
     struct ConversionOptionsElement {
         int id;
@@ -27,21 +19,21 @@ public:
         ConversionOptions *conversionOptions;
     };
 
-    ConversionOptionsManager( PluginLoader *_pluginLoader );
+    ConversionOptionsManager( PluginLoader *_pluginLoader, QObject *parent );
     ~ConversionOptionsManager();
 
     int addConversionOptions( ConversionOptions *conversionOptions );
     int increaseReferences( int id );
-    ConversionOptions *getConversionOptions( int id );
+    const ConversionOptions *getConversionOptions( int id ) const;
     void removeConversionOptions( int id );
     int updateConversionOptions( int id, ConversionOptions *conversionOptions );
     
-    QList<int> getAllIds();
+    QList<int> getAllIds() const;
 
 private:
     PluginLoader *pluginLoader;
 
-    QList<ConversionOptionsElement> elements;
+    QHash<int, ConversionOptionsElement> elements;
     int idCounter;
 };
 

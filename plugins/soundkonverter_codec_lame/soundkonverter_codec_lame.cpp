@@ -22,6 +22,8 @@ soundkonverter_codec_lame::soundkonverter_codec_lame( QObject *parent, const QSt
 {
     Q_UNUSED(args)
 
+    configDialogStereoModeComboBox = 0;
+
     binaries["lame"] = "";
 
     allCodecs += "mp3";
@@ -39,7 +41,7 @@ soundkonverter_codec_lame::soundkonverter_codec_lame( QObject *parent, const QSt
 soundkonverter_codec_lame::~soundkonverter_codec_lame()
 {}
 
-QString soundkonverter_codec_lame::name()
+QString soundkonverter_codec_lame::name() const
 {
     return global_plugin_name;
 }
@@ -182,7 +184,7 @@ CodecWidget *soundkonverter_codec_lame::newCodecWidget()
     return qobject_cast<CodecWidget*>(widget);
 }
 
-unsigned int soundkonverter_codec_lame::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+int soundkonverter_codec_lame::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     QStringList command = convertCommand( inputFile, outputFile, inputCodec, outputCodec, _conversionOptions, tags, replayGain );
     if( command.isEmpty() )
@@ -205,7 +207,7 @@ unsigned int soundkonverter_codec_lame::convert( const KUrl& inputFile, const KU
     return newItem->id;
 }
 
-QStringList soundkonverter_codec_lame::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+QStringList soundkonverter_codec_lame::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     Q_UNUSED(inputCodec)
     Q_UNUSED(tags)
@@ -218,11 +220,11 @@ QStringList soundkonverter_codec_lame::convertCommand( const KUrl& inputFile, co
         return QStringList();
 
     QStringList command;
-    ConversionOptions *conversionOptions = _conversionOptions;
-    LameConversionOptions *lameConversionOptions = 0;
+    const ConversionOptions *conversionOptions = _conversionOptions;
+    const LameConversionOptions *lameConversionOptions = 0;
     if( conversionOptions->pluginName == name() )
     {
-        lameConversionOptions = static_cast<LameConversionOptions*>(conversionOptions);
+        lameConversionOptions = dynamic_cast<const LameConversionOptions*>(conversionOptions);
     }
 
     if( outputCodec == "mp3" )

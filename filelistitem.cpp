@@ -11,6 +11,7 @@ FileListItem::FileListItem( QTreeWidget *parent, QTreeWidgetItem *after )
     conversionOptionsId = -1;
 
     state = WaitingForConversion;
+    returnCode = Succeeded;
     local = true;
     track = -1;
     tracks = 0;
@@ -27,6 +28,7 @@ FileListItem::FileListItem( QTreeWidget *parent )
     conversionOptionsId = -1;
 
     state = WaitingForConversion;
+    returnCode = Succeeded;
     local = true;
     track = -1;
     tracks = 0;
@@ -95,9 +97,13 @@ void FileListItemDelegate::paint( QPainter *painter, const QStyleOptionViewItem&
                         isFailed = true;
                         break;
                     case FileListItem::DiscFull:
+                    case FileListItem::CantWriteOutput:
                         isFailed = true;
                         break;
                     case FileListItem::Skipped:
+                        break;
+                    case FileListItem::Encrypted:
+                        isFailed = true;
                         break;
                     case FileListItem::Failed:
                         isFailed = true;

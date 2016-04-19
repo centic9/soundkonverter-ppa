@@ -14,6 +14,7 @@ find_package(Taglib REQUIRED)
 
 include_directories(${KDE4_INCLUDES} ${QT_INCLUDES} ${TAGLIB_INCLUDES} ${CDPARANOIA_INCLUDE_DIR})
 
+set(CMAKE_CXX_STANDARD 11)
 
 # all the warnings about constructions
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
@@ -42,6 +43,7 @@ set(soundkonvertercore_SRCS
    core/ripperplugin.cpp
 )
 kde4_add_library(soundkonvertercore SHARED ${soundkonvertercore_SRCS})
+set_target_properties(soundkonvertercore PROPERTIES SOVERSION 0)
 target_link_libraries(soundkonvertercore ${KDE4_KDEUI_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KIO_LIBS})
 install(TARGETS soundkonvertercore DESTINATION ${LIB_INSTALL_DIR})
 
@@ -103,6 +105,8 @@ install(FILES soundkonverter_filterplugin.desktop DESTINATION ${SERVICETYPES_INS
 install(FILES soundkonverter_replaygainplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 install(FILES soundkonverter_ripperplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 install(FILES soundkonverter-rip-audiocd.desktop DESTINATION ${DATA_INSTALL_DIR}/solid/actions)
+
+install(FILES soundkonverter.appdata.xml DESTINATION ${SHARE_INSTALL_PREFIX}/appdata)
 
 add_subdirectory(icons)
 add_subdirectory(images)

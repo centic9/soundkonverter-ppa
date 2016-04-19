@@ -20,9 +20,12 @@ CodecPlugin::CodecPlugin( QObject *parent )
 }
 
 CodecPlugin::~CodecPlugin()
-{}
+{
+    if( lastUsedConversionOptions )
+        delete lastUsedConversionOptions;
+}
 
-QString CodecPlugin::type()
+QString CodecPlugin::type() const
 {
     return "codec";
 }
@@ -54,3 +57,7 @@ ConversionOptions *CodecPlugin::conversionOptionsFromXml( QDomElement conversion
     return options;
 }
 
+const ConversionOptions* CodecPlugin::lastConversionOptions()
+{
+    return lastUsedConversionOptions;
+}

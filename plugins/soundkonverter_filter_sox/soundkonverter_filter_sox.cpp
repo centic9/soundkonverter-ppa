@@ -20,6 +20,8 @@ soundkonverter_filter_sox::soundkonverter_filter_sox( QObject *parent, const QSt
 {
     Q_UNUSED(args)
 
+    configDialogSamplingRateQualityComboBox = 0;
+
     binaries["sox"] = "";
 
     KSharedConfig::Ptr conf = KGlobal::config();
@@ -118,7 +120,7 @@ soundkonverter_filter_sox::soundkonverter_filter_sox( QObject *parent, const QSt
 soundkonverter_filter_sox::~soundkonverter_filter_sox()
 {}
 
-QString soundkonverter_filter_sox::name()
+QString soundkonverter_filter_sox::name() const
 {
     return global_plugin_name;
 }
@@ -166,13 +168,13 @@ QList<ConversionPipeTrunk> soundkonverter_filter_sox::codecTable()
         allCodecs += codecList.at(i).codecName;
     }
 
-    foreach( const QString fromCodec, allCodecs )
+    foreach( const QString& fromCodec, allCodecs )
     {
-        foreach( const QString toCodec, allCodecs )
+        foreach( const QString& toCodec, allCodecs )
         {
             bool codecEnabled = false;
             QStringList soxProblemInfo;
-            foreach( const SoxCodecData data, codecList )
+            foreach( const SoxCodecData& data, codecList )
             {
                 if( data.codecName == toCodec )
                 {
@@ -300,8 +302,6 @@ FilterWidget *soundkonverter_filter_sox::newFilterWidget()
     if( lastUsedFilterOptions )
     {
         widget->setCurrentFilterOptions( lastUsedFilterOptions );
-        delete lastUsedFilterOptions;
-        lastUsedFilterOptions = 0;
     }
     return qobject_cast<FilterWidget*>(widget);
 }
@@ -312,7 +312,7 @@ CodecWidget *soundkonverter_filter_sox::newCodecWidget()
     return qobject_cast<CodecWidget*>(widget);
 }
 
-unsigned int soundkonverter_filter_sox::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+int soundkonverter_filter_sox::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     QStringList command = convertCommand( inputFile, outputFile, inputCodec, outputCodec, _conversionOptions, tags, replayGain );
     if( command.isEmpty() )
@@ -335,7 +335,7 @@ unsigned int soundkonverter_filter_sox::convert( const KUrl& inputFile, const KU
     return newItem->id;
 }
 
-QStringList soundkonverter_filter_sox::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+QStringList soundkonverter_filter_sox::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     Q_UNUSED( tags );
     Q_UNUSED( replayGain );
@@ -343,15 +343,15 @@ QStringList soundkonverter_filter_sox::convertCommand( const KUrl& inputFile, co
     if( !_conversionOptions )
         return QStringList();
 
-    ConversionOptions *conversionOptions = _conversionOptions;
+    const ConversionOptions *conversionOptions = _conversionOptions;
 
     QStringList command;
 
-    SoxFilterOptions *filterOptions = 0;
-    foreach( FilterOptions *_filterOptions, conversionOptions->filterOptions )
+    const SoxFilterOptions *filterOptions = 0;
+    foreach( const FilterOptions *_filterOptions, conversionOptions->filterOptions )
     {
         if( _filterOptions->pluginName == global_plugin_name )
-            filterOptions = dynamic_cast<SoxFilterOptions*>(_filterOptions);
+            filterOptions = dynamic_cast<const SoxFilterOptions*>(_filterOptions);
     }
 
     command += binaries["sox"];
@@ -441,7 +441,7 @@ QStringList soundkonverter_filter_sox::convertCommand( const KUrl& inputFile, co
     }
     if( filterOptions )
     {
-        foreach( const SoxFilterOptions::EffectData effectData, filterOptions->data.effects )
+        foreach( const SoxFilterOptions::EffectData& effectData, filterOptions->data.effects )
         {
             if( effectData.effectName == "norm" || effectData.effectName == "bass" || effectData.effectName == "treble" )
             {
@@ -479,7 +479,7 @@ FilterOptions *soundkonverter_filter_sox::filterOptionsFromXml( QDomElement filt
 
 QString soundkonverter_filter_sox::soxCodecName( const QString& codecName )
 {
-    foreach( SoxCodecData data, codecList )
+    foreach( const SoxCodecData& data, codecList )
     {
         if( data.codecName == codecName )
             return data.soxCodecName;

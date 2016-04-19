@@ -31,14 +31,14 @@ FFmpegCodecWidget::FFmpegCodecWidget()
     topBox->addWidget( lBitrate );
 
     sBitrate = new QSlider( Qt::Horizontal, this );
-    sBitrate->setRange( 8, 320 );
+    sBitrate->setRange( 48, 320 );
     sBitrate->setValue( 160 );
     connect( sBitrate, SIGNAL(valueChanged(int)), this, SLOT(qualitySliderChanged(int)) );
     connect( sBitrate, SIGNAL(valueChanged(int)), SIGNAL(optionsChanged()) );
     topBox->addWidget( sBitrate );
 
     iBitrate = new QSpinBox( this );
-    iBitrate->setRange( 8, 320 );
+    iBitrate->setRange( 48, 320 );
     iBitrate->setValue( 160 );
     iBitrate->setSuffix( " kbps" );
     iBitrate->setFixedWidth( iBitrate->sizeHint().width() );
@@ -107,12 +107,12 @@ ConversionOptions *FFmpegCodecWidget::currentConversionOptions()
     return options;
 }
 
-bool FFmpegCodecWidget::setCurrentConversionOptions( ConversionOptions *_options )
+bool FFmpegCodecWidget::setCurrentConversionOptions( const ConversionOptions *_options )
 {
     if( !_options || _options->pluginName != global_plugin_name )
         return false;
 
-    ConversionOptions *options = _options;
+    const ConversionOptions *options = _options;
 
     if( currentFormat == "ac3" )
         cBitrate->setCurrentIndex( cBitrate->findText(QString::number(options->bitrate)+" kbps") );
@@ -169,7 +169,12 @@ void FFmpegCodecWidget::setCurrentFormat( const QString& format )
         lCmdArguments->show();
     }
 
-    if( currentFormat == "mp2" )
+    if( currentFormat == "ogg vorbis" )
+    {
+        sBitrate->setRange( 48, 320 );
+        iBitrate->setRange( 48, 320 );
+    }
+    else if( currentFormat == "mp2" )
     {
         sBitrate->setRange( 32, 384 );
         iBitrate->setRange( 32, 384 );

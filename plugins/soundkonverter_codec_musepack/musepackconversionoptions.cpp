@@ -7,6 +7,8 @@ MusePackConversionOptions::MusePackConversionOptions()
     : ConversionOptions()
 {
     pluginName = global_plugin_name;
+
+    data.preset = Data::Standard;
 }
 
 MusePackConversionOptions::~MusePackConversionOptions()
@@ -33,7 +35,7 @@ bool MusePackConversionOptions::equals( ConversionOptions *_other )
     }
 }
 
-QDomElement MusePackConversionOptions::toXml( QDomDocument document )
+QDomElement MusePackConversionOptions::toXml( QDomDocument document ) const
 {
     QDomElement conversionOptions = ConversionOptions::toXml( document );
     QDomElement encodingOptions = conversionOptions.elementsByTagName("encodingOptions").at(0).toElement();
@@ -53,16 +55,29 @@ bool MusePackConversionOptions::fromXml( QDomElement conversionOptions, QList<QD
     return true;
 }
 
+ConversionOptions* MusePackConversionOptions::copy() const
+{
+    MusePackConversionOptions* c = new MusePackConversionOptions();
+    c->pluginName = pluginName;
+    c->qualityMode = qualityMode;
+    c->quality = quality;
+    c->bitrate = bitrate;
+    c->bitrateMode = bitrateMode;
+    c->cmdArguments = cmdArguments;
+    c->compressionLevel = compressionLevel;
+    c->profile = profile;
+    c->codecName = codecName;
+    c->outputDirectoryMode = outputDirectoryMode;
+    c->outputDirectory = outputDirectory;
+    c->outputFilesystem = outputFilesystem;
+    c->replaygain = replaygain;
 
+    foreach( const FilterOptions* f, filterOptions )
+    {
+        c->filterOptions.append(f->copy());
+    }
 
+    c->data.preset = data.preset;
 
-
-
-
-
-
-
-
-
-
-
+    return static_cast<ConversionOptions*>(c);
+}

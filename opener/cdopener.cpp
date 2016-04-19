@@ -447,7 +447,7 @@ CDOpener::CDOpener( Config *_config, const QString& _device, QWidget *parent, Qt
         else
         {
             QStringList list;
-            foreach( const QString desc, devices.values() )
+            foreach( const QString& desc, devices.values() )
             {
                 list.append( desc );
             }
@@ -835,10 +835,9 @@ void CDOpener::trackChanged()
 
     // rebuild the list of the selected tracks
     selectedTracks.clear();
-    QTreeWidgetItem *item;
     for( int i=0; i<trackList->topLevelItemCount(); i++ )
     {
-        item = trackList->topLevelItem( i );
+        QTreeWidgetItem *item = trackList->topLevelItem( i );
         if( item->isSelected() )
         {
             selectedTracks.append( i+1 );

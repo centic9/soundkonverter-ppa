@@ -24,7 +24,7 @@ soundkonverter_codec_musepack::soundkonverter_codec_musepack( QObject *parent, c
 soundkonverter_codec_musepack::~soundkonverter_codec_musepack()
 {}
 
-QString soundkonverter_codec_musepack::name()
+QString soundkonverter_codec_musepack::name() const
 {
     return global_plugin_name;
 }
@@ -129,7 +129,7 @@ CodecWidget *soundkonverter_codec_musepack::newCodecWidget()
     return qobject_cast<CodecWidget*>(widget);
 }
 
-unsigned int soundkonverter_codec_musepack::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+int soundkonverter_codec_musepack::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     QStringList command = convertCommand( inputFile, outputFile, inputCodec, outputCodec, _conversionOptions, tags, replayGain );
     if( command.isEmpty() )
@@ -152,7 +152,7 @@ unsigned int soundkonverter_codec_musepack::convert( const KUrl& inputFile, cons
     return newItem->id;
 }
 
-QStringList soundkonverter_codec_musepack::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+QStringList soundkonverter_codec_musepack::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     Q_UNUSED(inputCodec)
     Q_UNUSED(tags)
@@ -162,11 +162,11 @@ QStringList soundkonverter_codec_musepack::convertCommand( const KUrl& inputFile
         return QStringList();
 
     QStringList command;
-    ConversionOptions *conversionOptions = _conversionOptions;
-    MusePackConversionOptions *musepackConversionOptions = 0;
+    const ConversionOptions *conversionOptions = _conversionOptions;
+    const MusePackConversionOptions *musepackConversionOptions = 0;
     if( conversionOptions->pluginName == name() )
     {
-        musepackConversionOptions = static_cast<MusePackConversionOptions*>(conversionOptions);
+        musepackConversionOptions = dynamic_cast<const MusePackConversionOptions*>(conversionOptions);
     }
 
     if( outputCodec == "musepack" )

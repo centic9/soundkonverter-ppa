@@ -21,7 +21,7 @@ ConversionOptions *FluidsynthCodecWidget::currentConversionOptions()
     return options;
 }
 
-bool FluidsynthCodecWidget::setCurrentConversionOptions( ConversionOptions *_options )
+bool FluidsynthCodecWidget::setCurrentConversionOptions( const ConversionOptions *_options )
 {
     if( !_options || _options->pluginName != global_plugin_name )
         return false;
@@ -50,7 +50,7 @@ bool FluidsynthCodecWidget::setCurrentProfile( const QString& profile )
 
 int FluidsynthCodecWidget::currentDataRate()
 {
-    int dataRate;
+    int dataRate = 0;
 
     if( currentFormat == "wav" )
     {

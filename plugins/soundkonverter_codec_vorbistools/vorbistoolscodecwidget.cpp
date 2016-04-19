@@ -45,7 +45,7 @@ VorbisToolsCodecWidget::VorbisToolsCodecWidget()
     topBox->addWidget( sQuality );
 
     dQuality = new QDoubleSpinBox( this );
-    dQuality->setRange( 8, 320 );
+    dQuality->setRange( 48, 320 );
     dQuality->setSuffix( " kbps" );
     dQuality->setFixedWidth( dQuality->sizeHint().width() );
     connect( dQuality, SIGNAL(valueChanged(double)), this, SLOT(qualitySpinBoxChanged(double)) );
@@ -108,11 +108,11 @@ ConversionOptions *VorbisToolsCodecWidget::currentConversionOptions()
     return options;
 }
 
-bool VorbisToolsCodecWidget::setCurrentConversionOptions( ConversionOptions *_options )
+bool VorbisToolsCodecWidget::setCurrentConversionOptions( const ConversionOptions *_options )
 {
     if( !_options || _options->pluginName != global_plugin_name ) return false;
 
-    ConversionOptions *options = _options;
+    const ConversionOptions *options = _options;
 
     if( options->qualityMode == ConversionOptions::Quality )
     {
@@ -269,9 +269,9 @@ void VorbisToolsCodecWidget::modeChanged( int mode )
     }
     else
     {
-        sQuality->setRange( 800, 32000 );
+        sQuality->setRange( 4800, 32000 );
         sQuality->setSingleStep( 800 );
-        dQuality->setRange( 8, 320 );
+        dQuality->setRange( 48, 320 );
         dQuality->setSingleStep( 1 );
         dQuality->setDecimals( 0 );
         dQuality->setSuffix( " kbps" );

@@ -8,6 +8,8 @@ OpusToolsConversionOptions::OpusToolsConversionOptions()
     : ConversionOptions()
 {
     pluginName = global_plugin_name;
+
+    data.floatBitrate = 160.0f;
 }
 
 OpusToolsConversionOptions::~OpusToolsConversionOptions()
@@ -23,7 +25,7 @@ bool OpusToolsConversionOptions::equals( ConversionOptions *_other )
     return ( equalsBasics(_other) && equalsFilters(_other) && data.floatBitrate == other->data.floatBitrate );
 }
 
-QDomElement OpusToolsConversionOptions::toXml( QDomDocument document )
+QDomElement OpusToolsConversionOptions::toXml( QDomDocument document ) const
 {
     QDomElement conversionOptions = ConversionOptions::toXml( document );
     QDomElement encodingOptions = conversionOptions.elementsByTagName("encodingOptions").at(0).toElement();
@@ -44,16 +46,29 @@ bool OpusToolsConversionOptions::fromXml( QDomElement conversionOptions, QList<Q
     return true;
 }
 
+ConversionOptions* OpusToolsConversionOptions::copy() const
+{
+    OpusToolsConversionOptions* c = new OpusToolsConversionOptions();
+    c->pluginName = pluginName;
+    c->qualityMode = qualityMode;
+    c->quality = quality;
+    c->bitrate = bitrate;
+    c->bitrateMode = bitrateMode;
+    c->cmdArguments = cmdArguments;
+    c->compressionLevel = compressionLevel;
+    c->profile = profile;
+    c->codecName = codecName;
+    c->outputDirectoryMode = outputDirectoryMode;
+    c->outputDirectory = outputDirectory;
+    c->outputFilesystem = outputFilesystem;
+    c->replaygain = replaygain;
 
+    foreach( const FilterOptions* f, filterOptions )
+    {
+        c->filterOptions.append(f->copy());
+    }
 
+    c->data.floatBitrate = data.floatBitrate;
 
-
-
-
-
-
-
-
-
-
-
+    return static_cast<ConversionOptions*>(c);
+}

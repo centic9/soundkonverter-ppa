@@ -13,7 +13,7 @@ class KDE_EXPORT RipperPluginItem : public BackendPluginItem
 {
     Q_OBJECT
 public:
-    RipperPluginItem( QObject *parent=0 );
+    explicit RipperPluginItem( QObject *parent );
     virtual ~RipperPluginItem();
 
     struct Data {
@@ -32,15 +32,15 @@ class KDE_EXPORT RipperPlugin : public BackendPlugin
 {
     Q_OBJECT
 public:
-    RipperPlugin( QObject *parent=0 );
+    explicit RipperPlugin( QObject *parent );
     virtual ~RipperPlugin();
 
-    virtual QString type();
+    virtual QString type() const;
 
     virtual QList<ConversionPipeTrunk> codecTable() = 0;
 
     /** rips a track */
-    virtual unsigned int rip( const QString& device, int track, int tracks, const KUrl& outputFile ) = 0;
+    virtual int rip( const QString& device, int track, int tracks, const KUrl& outputFile ) = 0;
     /** returns a command for ripping a track through a pipe; "" if pipes aren't supported */
     virtual QStringList ripCommand( const QString& device, int track, int tracks, const KUrl& outputFile ) = 0;
 };

@@ -16,6 +16,8 @@ soundkonverter_codec_opustools::soundkonverter_codec_opustools( QObject *parent,
 {
     Q_UNUSED(args)
 
+    configDialogUncoupledChannelsCheckBox = 0;
+
     binaries["opusenc"] = "";
     binaries["opusdec"] = "";
 
@@ -33,7 +35,7 @@ soundkonverter_codec_opustools::soundkonverter_codec_opustools( QObject *parent,
 soundkonverter_codec_opustools::~soundkonverter_codec_opustools()
 {}
 
-QString soundkonverter_codec_opustools::name()
+QString soundkonverter_codec_opustools::name() const
 {
     return global_plugin_name;
 }
@@ -135,7 +137,7 @@ CodecWidget *soundkonverter_codec_opustools::newCodecWidget()
     return qobject_cast<CodecWidget*>(widget);
 }
 
-unsigned int soundkonverter_codec_opustools::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+int soundkonverter_codec_opustools::convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     QStringList command = convertCommand( inputFile, outputFile, inputCodec, outputCodec, _conversionOptions, tags, replayGain );
     if( command.isEmpty() )
@@ -158,7 +160,7 @@ unsigned int soundkonverter_codec_opustools::convert( const KUrl& inputFile, con
     return newItem->id;
 }
 
-QStringList soundkonverter_codec_opustools::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
+QStringList soundkonverter_codec_opustools::convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags, bool replayGain )
 {
     Q_UNUSED(inputCodec)
     Q_UNUSED(tags)
@@ -168,11 +170,11 @@ QStringList soundkonverter_codec_opustools::convertCommand( const KUrl& inputFil
         return QStringList();
 
     QStringList command;
-    ConversionOptions *conversionOptions = _conversionOptions;
-    OpusToolsConversionOptions *opusToolsConversionOptions = 0;
+    const ConversionOptions *conversionOptions = _conversionOptions;
+    const OpusToolsConversionOptions *opusToolsConversionOptions = 0;
     if( conversionOptions->pluginName == name() )
     {
-        opusToolsConversionOptions = static_cast<OpusToolsConversionOptions*>(conversionOptions);
+        opusToolsConversionOptions = dynamic_cast<const OpusToolsConversionOptions*>(conversionOptions);
     }
 
     if( outputCodec == "opus" )

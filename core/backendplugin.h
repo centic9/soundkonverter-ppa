@@ -37,7 +37,7 @@ class BackendPluginItem : public QObject
 {
     Q_OBJECT
 public:
-    BackendPluginItem( QObject *parent=0 );
+    explicit BackendPluginItem( QObject *parent );
     virtual ~BackendPluginItem();
 
     KProcess *process;
@@ -80,11 +80,11 @@ public:
         QStringList extensions;
     };
 
-    BackendPlugin( QObject *parent=0 );
+    explicit BackendPlugin( QObject *parent );
     virtual ~BackendPlugin();
 
-    virtual QString name() = 0;
-    virtual QString type() = 0;
+    virtual QString name() const = 0;
+    virtual QString type() const = 0;
 
     virtual FormatInfo formatInfo( const QString& codecName );
     virtual QString getCodecFromFile( const KUrl& filename, const QString& mimeType = "application/octet-stream", short *rating = 0 );
@@ -105,11 +105,11 @@ public:
     /** holds all backend binaries and their location if they were found */
     QMap<QString,QString> binaries;
 
-    QString standardMessage( const QString& type, const QStringList& arguments );
-    QString standardMessage( const QString& type );
-    QString standardMessage( const QString& type, const QString& arguments1 );
-    QString standardMessage( const QString& type, const QString& arguments1, const QString& arguments2 );
-    QString standardMessage( const QString& type, const QString& arguments1, const QString& arguments2, const QString& arguments3 );
+    QString standardMessage( const QString& type, const QStringList& arguments ) const;
+    QString standardMessage( const QString& type ) const;
+    QString standardMessage( const QString& type, const QString& arguments1 ) const;
+    QString standardMessage( const QString& type, const QString& arguments1, const QString& arguments2 ) const;
+    QString standardMessage( const QString& type, const QString& arguments1, const QString& arguments2, const QString& arguments3 ) const;
 
     /** returns the url as a string with all special characters escaped so the bash can find the files */
     QString escapeUrl( const KUrl& url );

@@ -19,19 +19,13 @@ Config::Config( Logger *_logger, QObject *parent )
 
     pPluginLoader = new PluginLoader( logger, this );
     pTagEngine = new TagEngine( this );
-    pConversionOptionsManager = new ConversionOptionsManager( pPluginLoader );
+    pConversionOptionsManager = new ConversionOptionsManager( pPluginLoader, this );
 }
 
 Config::~Config()
 {
     save();
-
-    qDeleteAll( data.profiles.values() );
-    data.profiles.clear();
-
-    delete pPluginLoader;
-    delete pTagEngine;
-    delete pConversionOptionsManager;
+    qDeleteAll(data.profiles);
 }
 
 void Config::load()
@@ -60,6 +54,7 @@ void Config::load()
     data.general.lastNormalOutputDirectoryPaths = group.readEntry( "lastNormalOutputDirectoryPaths", QStringList() );
     data.general.waitForAlbumGain = group.readEntry( "waitForAlbumGain", true );
     data.general.useVFATNames = group.readEntry( "useVFATNames", false );
+    data.general.copyIfSameCodec = group.readEntry( "copyIfSameCodec", false );
     data.general.writeLogFiles = group.readEntry( "writeLogFiles", false );
     data.general.conflictHandling = (Config::Data::General::ConflictHandling)group.readEntry( "conflictHandling", 0 );
 //     data.general.priority = group.readEntry( "priority", 10 );
@@ -120,7 +115,7 @@ void Config::load()
 
     group = conf->group( "Backends" );
     formats = group.readEntry( "formats", QStringList() );
-    foreach( const QString format, formats )
+    foreach( const QString& format, formats )
     {
         CodecData codecData;
         codecData.codecName = format;
@@ -143,7 +138,7 @@ void Config::load()
 
     // build default backend priority list
 
-    foreach( const QString format, formats )
+    foreach( const QString& format, formats )
     {
         if( format == "wav" )
             continue;
@@ -171,7 +166,7 @@ void Config::load()
         enabledPlugins.clear();
         newPlugins.clear();
         // register existing enabled plugins as such and list new enabled plugins
-        foreach( const ConversionPipeTrunk trunk, pPluginLoader->conversionFilterPipeTrunks )
+        foreach( const ConversionPipeTrunk& trunk, pPluginLoader->conversionFilterPipeTrunks )
         {
             if( trunk.codecTo == format && trunk.enabled )
             {
@@ -203,7 +198,7 @@ void Config::load()
         enabledPlugins.clear();
         newPlugins.clear();
         // register existing enabled plugins as such and list new enabled plugins
-        foreach( const ConversionPipeTrunk trunk, pPluginLoader->conversionFilterPipeTrunks )
+        foreach( const ConversionPipeTrunk& trunk, pPluginLoader->conversionFilterPipeTrunks )
         {
             if( trunk.codecFrom == format && trunk.enabled )
             {
@@ -240,7 +235,7 @@ void Config::load()
         }
         newPlugins.clear();
         // register existing enabled plugins as such and list new enabled plugins
-        foreach( const ReplayGainPipe pipe, pPluginLoader->replaygainPipes )
+        foreach( const ReplayGainPipe& pipe, pPluginLoader->replaygainPipes )
         {
             if( pipe.codecName == format && pipe.enabled )
             {
@@ -281,7 +276,7 @@ void Config::load()
     foreach( FilterPlugin *plugin, pPluginLoader->getAllFilterPlugins() )
     {
         pluginName = plugin->name();
-        foreach( const ConversionPipeTrunk trunk, plugin->codecTable() )
+        foreach( const ConversionPipeTrunk& trunk, plugin->codecTable() )
         {
             if( trunk.enabled && trunk.codecFrom == "wav" && trunk.codecTo == "wav" )
             {
@@ -338,45 +333,44 @@ void Config::load()
                 QDomNodeList conversionOptionsElements = root.elementsByTagName("conversionOptions");
                 for( int i=0; i<conversionOptionsElements.count(); i++ )
                 {
-                    ConversionOptions *conversionOptions = 0;
-                    QList<QDomElement> filterOptionsElements;
                     const QString profileName = conversionOptionsElements.at(i).toElement().attribute("profileName");
                     const QString pluginName = conversionOptionsElements.at(i).toElement().attribute("pluginName");
-                    CodecPlugin *plugin = (CodecPlugin*)pPluginLoader->backendPluginByName( pluginName );
+                    CodecPlugin *plugin = qobject_cast<CodecPlugin*>(pPluginLoader->backendPluginByName( pluginName ));
                     if( plugin )
                     {
-                        conversionOptions = plugin->conversionOptionsFromXml( conversionOptionsElements.at(i).toElement(), &filterOptionsElements );
+                        QList<QDomElement> filterOptionsElements;
+                        ConversionOptions *conversionOptions = plugin->conversionOptionsFromXml( conversionOptionsElements.at(i).toElement(), &filterOptionsElements );
+                        if( conversionOptions )
+                        {
+                            foreach( const QDomElement& filterOptionsElement, filterOptionsElements )
+                            {
+                                FilterOptions *filterOptions = 0;
+                                const QString filterPluginName = filterOptionsElement.attribute("pluginName");
+                                FilterPlugin *filterPlugin = qobject_cast<FilterPlugin*>(pPluginLoader->backendPluginByName( filterPluginName ));
+                                if( filterPlugin )
+                                {
+                                    filterOptions = filterPlugin->filterOptionsFromXml( filterOptionsElement );
+                                }
+                                else
+                                {
+                                    logger->log( 1000, "\tcannot load filter for profile: " + profileName );
+                                    continue;
+                                }
+                                conversionOptions->filterOptions.append( filterOptions );
+                            }
+
+                            pConversionOptionsManager->addConversionOptions( conversionOptions );
+
+                            data.profiles[profileName] = conversionOptions->copy();
+                            if( profileName != "soundkonverter_last_used" )
+                                logger->log( 1000, "\tname: " + profileName + ", plugin: " + pluginName );
+                        }
                     }
                     else
                     {
                         logger->log( 1000, "\tname: " + profileName + ", plugin: " + pluginName );
                         logger->log( 1000, "\t\tcannot be loaded beacause the plugin cannot be found" );
                         continue;
-                    }
-                    if( conversionOptions )
-                    {
-                        foreach( QDomElement filterOptionsElement, filterOptionsElements )
-                        {
-                            FilterOptions *filterOptions = 0;
-                            const QString filterPluginName = filterOptionsElement.attribute("pluginName");
-                            FilterPlugin *filterPlugin = (FilterPlugin*)pPluginLoader->backendPluginByName( filterPluginName );
-                            if( filterPlugin )
-                            {
-                                filterOptions = filterPlugin->filterOptionsFromXml( filterOptionsElement );
-                            }
-                            else
-                            {
-                                logger->log( 1000, "\tcannot load filter for profile: " + profileName );
-                                continue;
-                            }
-                            conversionOptions->filterOptions.append( filterOptions );
-                        }
-                    }
-                    if( conversionOptions )
-                    {
-                        data.profiles[profileName] = conversionOptions;
-                        if( profileName != "soundkonverter_last_used" )
-                            logger->log( 1000, "\tname: " + profileName + ", plugin: " + pluginName );
                     }
                 }
             }
@@ -423,7 +417,7 @@ void Config::load()
         }
         else
         {
-            ConversionOptions *conversionOptions = data.profiles.value( profile );
+            const ConversionOptions *conversionOptions = data.profiles.value( profile );
             if( conversionOptions )
                 sFormat += conversionOptions->codecName;
         }
@@ -488,6 +482,7 @@ void Config::save()
     group.writeEntry( "lastNormalOutputDirectoryPaths", data.general.lastNormalOutputDirectoryPaths );
     group.writeEntry( "waitForAlbumGain", data.general.waitForAlbumGain );
     group.writeEntry( "useVFATNames", data.general.useVFATNames );
+    group.writeEntry( "copyIfSameCodec", data.general.copyIfSameCodec );
     group.writeEntry( "writeLogFiles", data.general.writeLogFiles );
     group.writeEntry( "conflictHandling", (int)data.general.conflictHandling );
 //     group.writeEntry( "priority", data.general.priority );
@@ -518,7 +513,7 @@ void Config::save()
     group = conf->group( "Backends" );
     group.deleteEntry( "rippers" );
     QStringList formats;
-    foreach( const CodecData codec, data.backends.codecs )
+    foreach( const CodecData& codec, data.backends.codecs )
     {
         const QString format = codec.codecName;
         group.writeEntry( format + "_encoders", codec.encoders );
@@ -570,7 +565,7 @@ void Config::writeServiceMenu()
     const QStringList convertFormats = pPluginLoader->formatList( PluginLoader::Decode, PluginLoader::CompressionType(PluginLoader::InferiorQuality|PluginLoader::Lossy|PluginLoader::Lossless|PluginLoader::Hybrid) );
 
     mimeTypes.clear();
-    foreach( const QString format, convertFormats )
+    foreach( const QString& format, convertFormats )
     {
         mimeTypes += pPluginLoader->codecMimeTypes( format );
     }
@@ -606,7 +601,7 @@ void Config::writeServiceMenu()
     const QStringList replaygainFormats = pPluginLoader->formatList( PluginLoader::ReplayGain, PluginLoader::CompressionType(PluginLoader::InferiorQuality|PluginLoader::Lossy|PluginLoader::Lossless|PluginLoader::Hybrid) );
 
     mimeTypes.clear();
-    foreach( const QString format, replaygainFormats )
+    foreach( const QString& format, replaygainFormats )
     {
         mimeTypes += pPluginLoader->codecMimeTypes( format );
     }
@@ -639,15 +634,17 @@ QStringList Config::customProfiles()
 {
     QStringList profiles;
 
-    foreach( const QString profileName, data.profiles.keys() )
+    foreach( const QString& profileName, data.profiles.keys() )
     {
         if( profileName == "soundkonverter_last_used" )
             continue;
 
-        QList<CodecPlugin*> plugins = pPluginLoader->encodersForCodec( data.profiles.value(profileName)->codecName );
-        foreach( CodecPlugin *plugin, plugins )
+        const ConversionOptions* profileConversionOptions = data.profiles.value(profileName);
+
+        QList<CodecPlugin*> plugins = pPluginLoader->encodersForCodec( profileConversionOptions->codecName );
+        foreach( const CodecPlugin *plugin, plugins )
         {
-            if( plugin->name() == data.profiles.value(profileName)->pluginName )
+            if( plugin->name() == profileConversionOptions->pluginName )
             {
                 profiles.append( profileName );
                 break;
@@ -674,7 +671,7 @@ QList<CodecOptimizations::Optimization> Config::getOptimizations( bool includeIg
     bool ignore;
 
     const QStringList formats = pPluginLoader->formatList( PluginLoader::Possibilities(PluginLoader::Encode|PluginLoader::Decode|PluginLoader::ReplayGain), PluginLoader::CompressionType(PluginLoader::InferiorQuality|PluginLoader::Lossy|PluginLoader::Lossless|PluginLoader::Hybrid) );
-    foreach( const QString format, formats )
+    foreach( const QString& format, formats )
     {
         if( format == "wav" )
             continue;

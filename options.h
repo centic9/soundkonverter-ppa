@@ -23,7 +23,7 @@ class Options : public QWidget
     Q_OBJECT
 public:
     /** Constructor */
-    Options( Config *_config, const QString& text, QWidget *parent=0 );
+    Options( Config *_config, const QString& text, QWidget *parent );
 
     /** Destructor */
     ~Options();
@@ -32,7 +32,7 @@ public:
     ConversionOptions *currentConversionOptions();
 
     /** Set the current options */
-    bool setCurrentConversionOptions( ConversionOptions* optionsptions );
+    bool setCurrentConversionOptions( const ConversionOptions* optionsptions );
 
 public slots:
     /** Set the current profile */

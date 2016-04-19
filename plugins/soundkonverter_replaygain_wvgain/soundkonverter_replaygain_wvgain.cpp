@@ -17,7 +17,7 @@ soundkonverter_replaygain_wvgain::soundkonverter_replaygain_wvgain( QObject *par
 soundkonverter_replaygain_wvgain::~soundkonverter_replaygain_wvgain()
 {}
 
-QString soundkonverter_replaygain_wvgain::name()
+QString soundkonverter_replaygain_wvgain::name() const
 {
     return global_plugin_name;
 }
@@ -61,7 +61,7 @@ void soundkonverter_replaygain_wvgain::showInfo( QWidget *parent )
     Q_UNUSED(parent)
 }
 
-unsigned int soundkonverter_replaygain_wvgain::apply( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
+int soundkonverter_replaygain_wvgain::apply( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
 {
     if( fileList.count() <= 0 )
         return BackendPlugin::UnknownError;
@@ -88,7 +88,7 @@ unsigned int soundkonverter_replaygain_wvgain::apply( const KUrl::List& fileList
     {
         command += "-c";
     }
-    foreach( const KUrl file, fileList )
+    foreach( const KUrl& file, fileList )
     {
         command += "\"" + escapeUrl(file) + "\"";
     }

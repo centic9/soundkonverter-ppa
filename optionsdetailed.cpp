@@ -86,7 +86,7 @@ OptionsDetailed::OptionsDetailed( Config* _config, QWidget* parent )
     grid->addWidget( lineFrame, gridRow++, 0 );
 
     int filterCount = 0;
-    foreach( QString pluginName, config->data.backends.enabledFilters )
+    foreach( const QString& pluginName, config->data.backends.enabledFilters )
     {
         FilterPlugin *plugin = qobject_cast<FilterPlugin*>(config->pluginLoader()->backendPluginByName(pluginName));
         if( !plugin )
@@ -201,15 +201,17 @@ CodecPlugin *OptionsDetailed::getCurrentPlugin()
 
 void OptionsDetailed::updateProfiles()
 {
+    if( pProfileLoad->menu() )
+        pProfileLoad->menu()->deleteLater();
+
     QMenu *menu = new QMenu( this );
-    const QStringList profiles = config->customProfiles();
-    for( int i=0; i<profiles.count(); i++ )
+    foreach( const QString& profile, config->customProfiles() )
     {
-        menu->addAction( profiles.at(i), this, SLOT(loadCustomProfileButtonClicked()) );
+        menu->addAction( profile, this, SLOT(loadCustomProfileButtonClicked()) );
     }
 
     pProfileLoad->setMenu( menu );
-    pProfileLoad->setShown( profiles.count() > 0 );
+    pProfileLoad->setShown( config->customProfiles().count() > 0 );
 }
 
 void OptionsDetailed::formatChanged( const QString& format )
@@ -270,7 +272,7 @@ void OptionsDetailed::formatChanged( const QString& format )
 
 void OptionsDetailed::encoderChanged( const QString& encoder )
 {
-    CodecPlugin *plugin = (CodecPlugin*)config->pluginLoader()->backendPluginByName( encoder );
+    CodecPlugin *plugin = qobject_cast<CodecPlugin*>(config->pluginLoader()->backendPluginByName( encoder ));
     if( !plugin )
     {
 //         TODO leads to crashes
@@ -289,11 +291,9 @@ void OptionsDetailed::encoderChanged( const QString& encoder )
     {
         connect( wPlugin, SIGNAL(optionsChanged()), this, SLOT(somethingChanged()) );
         qobject_cast<CodecWidget*>(wPlugin)->setCurrentFormat( cFormat->currentText() );
-        if( plugin->lastUsedConversionOptions )
+        if( plugin->lastConversionOptions() )
         {
-            wPlugin->setCurrentConversionOptions( plugin->lastUsedConversionOptions );
-            delete plugin->lastUsedConversionOptions;
-            plugin->lastUsedConversionOptions = 0;
+            wPlugin->setCurrentConversionOptions( plugin->lastConversionOptions() );
         }
         grid->addWidget( wPlugin, 2, 0 );
     }
@@ -330,7 +330,7 @@ void OptionsDetailed::somethingChanged()
 
 void OptionsDetailed::configurePlugin()
 {
-    CodecPlugin *plugin = (CodecPlugin*)config->pluginLoader()->backendPluginByName( cPlugin->currentText() );
+    CodecPlugin *plugin = qobject_cast<CodecPlugin*>(config->pluginLoader()->backendPluginByName( cPlugin->currentText() ));
 
     if( plugin )
     {
@@ -340,23 +340,21 @@ void OptionsDetailed::configurePlugin()
 
 ConversionOptions *OptionsDetailed::currentConversionOptions( bool saveLastUsed )
 {
-    ConversionOptions *options = 0;
-
     if( wPlugin && currentPlugin )
     {
-        options = wPlugin->currentConversionOptions();
-        if( options )
+        ConversionOptions *conversionOptions = wPlugin->currentConversionOptions();
+        if( conversionOptions )
         {
-            options->codecName = cFormat->currentText();
-            if( options->codecName != "wav" )
-                options->pluginName = currentPlugin->name();
+            conversionOptions->codecName = cFormat->currentText();
+            if( conversionOptions->codecName != "wav" )
+                conversionOptions->pluginName = currentPlugin->name();
             else
-                options->pluginName = "";
-            options->profile = wPlugin->currentProfile();
-            options->outputDirectoryMode = outputDirectory->mode();
-            options->outputDirectory = outputDirectory->directory();
-            options->outputFilesystem = outputDirectory->filesystem();
-            options->replaygain = cReplayGain->isEnabled() && cReplayGain->isChecked();
+                conversionOptions->pluginName = "";
+            conversionOptions->profile = wPlugin->currentProfile();
+            conversionOptions->outputDirectoryMode = outputDirectory->mode();
+            conversionOptions->outputDirectory = outputDirectory->directory();
+            conversionOptions->outputFilesystem = outputDirectory->filesystem();
+            conversionOptions->replaygain = cReplayGain->isEnabled() && cReplayGain->isChecked();
 
             for( int i=0; i<wFilter.size(); i++ )
             {
@@ -368,7 +366,7 @@ ConversionOptions *OptionsDetailed::currentConversionOptions( bool saveLastUsed 
                     if( filterOptions )
                     {
                         filterOptions->pluginName = plugin->name();
-                        options->filterOptions.append( filterOptions );
+                        conversionOptions->filterOptions.append( filterOptions );
                     }
                 }
             }
@@ -379,39 +377,41 @@ ConversionOptions *OptionsDetailed::currentConversionOptions( bool saveLastUsed 
                 saveCustomProfile( true );
                 config->data.general.lastFormat = cFormat->currentText();
             }
+
+            return conversionOptions;
         }
     }
 
-    return options;
+    return 0;
 }
 
-bool OptionsDetailed::setCurrentConversionOptions( ConversionOptions *options )
+bool OptionsDetailed::setCurrentConversionOptions( const ConversionOptions *conversionOptions )
 {
-    if( !options )
+    if( !conversionOptions )
         return false;
 
-    cFormat->setCurrentIndex( cFormat->findText(options->codecName) );
+    cFormat->setCurrentIndex( cFormat->findText(conversionOptions->codecName) );
     formatChanged( cFormat->currentText() );
-    if( options->codecName != "wav" )
+    if( conversionOptions->codecName != "wav" )
     {
-        cPlugin->setCurrentIndex( cPlugin->findText(options->pluginName) );
+        cPlugin->setCurrentIndex( cPlugin->findText(conversionOptions->pluginName) );
         encoderChanged( cPlugin->currentText() );
     }
-    outputDirectory->setMode( (OutputDirectory::Mode)options->outputDirectoryMode );
-    outputDirectory->setDirectory( options->outputDirectory );
-    cReplayGain->setChecked( options->replaygain );
+    outputDirectory->setMode( (OutputDirectory::Mode)conversionOptions->outputDirectoryMode );
+    outputDirectory->setDirectory( conversionOptions->outputDirectory );
+    cReplayGain->setChecked( conversionOptions->replaygain );
 
     bool succeeded = true;
 
-    if( options->codecName == "wav" )
+    if( conversionOptions->codecName == "wav" )
         succeeded = true;
     else if( wPlugin )
-        succeeded = wPlugin->setCurrentConversionOptions( options );
+        succeeded = wPlugin->setCurrentConversionOptions( conversionOptions );
     else
         succeeded = false;
 
     QStringList usedFilter;
-    foreach( FilterOptions *filterOptions, options->filterOptions )
+    foreach( const FilterOptions *filterOptions, conversionOptions->filterOptions )
     {
         bool filterSucceeded = false;
         for( int i=0; i<wFilter.size(); i++ )
@@ -587,7 +587,7 @@ bool OptionsDetailed::setCurrentProfile( const QString& profile )
 {
     if( config->data.profiles.keys().contains(profile) )
     {
-        ConversionOptions *conversionOptions = config->data.profiles.value( profile );
+        const ConversionOptions *conversionOptions = config->data.profiles.value( profile );
         if( conversionOptions )
             return setCurrentConversionOptions( conversionOptions );
     }

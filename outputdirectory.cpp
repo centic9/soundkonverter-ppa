@@ -122,7 +122,7 @@ KUrl OutputDirectory::calcPath( FileListItem *fileListItem, Config *config, cons
 {
     QRegExp regEx( "%[abcdfgnpsty]{1,1}", Qt::CaseInsensitive );
 
-    ConversionOptions *options = config->conversionOptionsManager()->getConversionOptions(fileListItem->conversionOptionsId);
+    const ConversionOptions *options = config->conversionOptionsManager()->getConversionOptions(fileListItem->conversionOptionsId);
     if( !options )
         return KUrl();
 
@@ -232,7 +232,15 @@ KUrl OutputDirectory::calcPath( FileListItem *fileListItem, Config *config, cons
         artist.replace("/",",");
         path.replace( "$replace_by_artist$", artist );
 
-        QString albumArtist = ( fileListItem->tags == 0 || fileListItem->tags->albumArtist.isEmpty() ) ? i18n("Unknown Artist") : fileListItem->tags->albumArtist;
+        QString albumArtist;
+        if( fileListItem->tags )
+        {
+            albumArtist = fileListItem->tags->albumArtist.isEmpty() ? fileListItem->tags->artist : fileListItem->tags->albumArtist;
+        }
+        if( albumArtist.isEmpty() )
+        {
+            albumArtist = i18n("Unknown Artist");
+        }
         albumArtist.replace("/",",");
         path.replace( "$replace_by_albumartist$", albumArtist );
 
@@ -314,6 +322,9 @@ KUrl OutputDirectory::calcPath( FileListItem *fileListItem, Config *config, cons
     {
         path = fileListItem->url.toLocalFile();
 
+        if( config->data.general.useVFATNames )
+            path = vfatPath( path );
+
         url = changeExtension( KUrl(path), extension );
 
         if( config->data.general.conflictHandling == Config::Data::General::NewFileName )
@@ -325,14 +336,13 @@ KUrl OutputDirectory::calcPath( FileListItem *fileListItem, Config *config, cons
 
 KUrl OutputDirectory::changeExtension( const KUrl& url, const QString& extension )
 {
-    KUrl newUrl = url;
+    KUrl changedUrl = url;
 
-    QString fileName = newUrl.fileName();
-    fileName = newUrl.fileName().left( newUrl.fileName().lastIndexOf(".")+1 ) + extension;
+    const QString urlFileName = url.fileName();
+    const QString fileName = urlFileName.left( urlFileName.lastIndexOf(".")+1 ) + extension;
+    changedUrl.setFileName( fileName );
 
-    newUrl.setFileName( fileName );
-
-    return newUrl;
+    return changedUrl;
 }
 
 KUrl OutputDirectory::uniqueFileName( const KUrl& url, const QStringList& usedOutputNames )
@@ -341,8 +351,9 @@ KUrl OutputDirectory::uniqueFileName( const KUrl& url, const QStringList& usedOu
 
     while( QFile::exists(uniqueUrl.toLocalFile()) || usedOutputNames.contains(uniqueUrl.toLocalFile()) )
     {
-        QString fileName = uniqueUrl.fileName();
-        fileName = fileName.left( fileName.lastIndexOf(".")+1 ) + i18nc("will be appended to the filename if a file with the same name already exists","new") + fileName.mid( fileName.lastIndexOf(".") );
+        const QString newString = i18nc("will be appended to the filename if a file with the same name already exists","new");
+        const QString urlFileName = uniqueUrl.fileName();
+        const QString fileName = urlFileName.left( urlFileName.lastIndexOf(".")+1 ) + newString + urlFileName.mid( urlFileName.lastIndexOf(".") );
         uniqueUrl.setFileName( fileName );
     }
 
@@ -353,13 +364,20 @@ KUrl OutputDirectory::makePath( const KUrl& url )
 {
     QFileInfo fileInfo( url.toLocalFile() );
 
-    QStringList dirs = fileInfo.absoluteDir().absolutePath().split( "/" );
+    QStringList directories = fileInfo.absoluteDir().absolutePath().split( "/" );
     QString mkDir;
     QDir dir;
-    for( QStringList::Iterator it = dirs.begin(); it != dirs.end(); ++it ) {
-        mkDir += "/" + *it;
+    foreach( const QString& directory, directories )
+    {
+        mkDir += "/" + directory;
         dir.setPath( mkDir );
-        if( !dir.exists() ) dir.mkdir( mkDir );
+        if( !dir.exists() )
+        {
+            if( !dir.mkdir(mkDir) )
+            {
+                return KUrl();
+            }
+        }
     }
 
     return url;

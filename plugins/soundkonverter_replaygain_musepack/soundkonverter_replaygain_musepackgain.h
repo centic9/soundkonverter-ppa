@@ -19,7 +19,7 @@ public:
     /** Default Destructor */
     ~soundkonverter_replaygain_musepackgain();
 
-    QString name();
+    QString name() const;
 
     /** search for the backend binaries in the given directories */
     virtual void scanForBackends( const QStringList& directoryList = QStringList() );
@@ -31,7 +31,7 @@ public:
     bool hasInfo();
     void showInfo( QWidget *parent );
 
-    unsigned int apply( const KUrl::List& fileList, ApplyMode mode = Add );
+    int apply( const KUrl::List& fileList, ApplyMode mode = Add );
     float parseOutput( const QString& output );
 
 };

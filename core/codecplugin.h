@@ -14,7 +14,7 @@ class KDE_EXPORT CodecPluginItem : public BackendPluginItem
 {
     Q_OBJECT
 public:
-    CodecPluginItem( QObject *parent=0 );
+    explicit CodecPluginItem( QObject *parent );
     virtual ~CodecPluginItem();
 
     struct Data {
@@ -28,10 +28,10 @@ class KDE_EXPORT CodecPlugin : public BackendPlugin
 {
     Q_OBJECT
 public:
-    CodecPlugin( QObject *parent=0 );
+    explicit CodecPlugin( QObject *parent );
     virtual ~CodecPlugin();
 
-    virtual QString type();
+    virtual QString type() const;
 
     virtual QList<ConversionPipeTrunk> codecTable() = 0;
     virtual CodecWidget *newCodecWidget() = 0;
@@ -43,12 +43,15 @@ public:
      * -1   unknown error
      * -100 plugin not configured
      */
-    virtual unsigned int convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false ) = 0;
+    virtual int convert( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false ) = 0;
     /** returns a command for converting a file through a pipe; "" if pipes aren't supported */
-    virtual QStringList convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false ) = 0;
+    virtual QStringList convertCommand( const KUrl& inputFile, const KUrl& outputFile, const QString& inputCodec, const QString& outputCodec, const ConversionOptions *_conversionOptions, TagData *tags = 0, bool replayGain = false ) = 0;
 
     virtual ConversionOptions *conversionOptionsFromXml( QDomElement conversionOptions, QList<QDomElement> *filterOptionsElements = 0 );
 
+    const ConversionOptions* lastConversionOptions();
+
+protected:
     ConversionOptions *lastUsedConversionOptions;
 
 };

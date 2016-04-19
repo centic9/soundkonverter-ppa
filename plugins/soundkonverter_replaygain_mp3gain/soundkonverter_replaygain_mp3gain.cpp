@@ -6,6 +6,7 @@
 #include <KDialog>
 #include <QComboBox>
 #include <QCheckBox>
+#include <QDoubleSpinBox>
 #include <QHBoxLayout>
 #include <QLabel>
 
@@ -23,6 +24,10 @@ soundkonverter_replaygain_mp3gain::soundkonverter_replaygain_mp3gain( QObject *p
 {
     Q_UNUSED(args)
 
+    configDialogTagModeComboBox = 0;
+    configDialogModifyAudioStreamCheckBox = 0;
+    configDialogGainAdjustmentSpinBox = 0;
+
     binaries["mp3gain"] = "";
 
     allCodecs += "mp3";
@@ -32,13 +37,14 @@ soundkonverter_replaygain_mp3gain::soundkonverter_replaygain_mp3gain( QObject *p
 
     group = conf->group( "Plugin-"+name() );
     tagMode = group.readEntry( "tagMode", 0 );
-    modifyAudioStream = group.readEntry( "modifyAudioStream", true );
+    modifyAudioStream = group.readEntry( "modifyAudioStream", false );
+    gainAdjustment = group.readEntry( "gainAdjustment", 0.0 );
 }
 
 soundkonverter_replaygain_mp3gain::~soundkonverter_replaygain_mp3gain()
 {}
 
-QString soundkonverter_replaygain_mp3gain::name()
+QString soundkonverter_replaygain_mp3gain::name() const
 {
     return global_plugin_name;
 }
@@ -88,6 +94,16 @@ void soundkonverter_replaygain_mp3gain::showConfigDialog( ActionType action, con
         configDialogBox1->addWidget( configDialogTagModeComboBox );
         configDialogBox->addLayout( configDialogBox1 );
 
+        QHBoxLayout *configDialogBox3 = new QHBoxLayout();
+        QLabel *configDialogGainAdjustmentLabel = new QLabel( i18n("Adjust gain:"), configDialogWidget );
+        configDialogBox3->addWidget( configDialogGainAdjustmentLabel );
+        configDialogGainAdjustmentSpinBox = new QDoubleSpinBox( configDialogWidget );
+        configDialogGainAdjustmentSpinBox->setRange( -99, 99 );
+        configDialogGainAdjustmentSpinBox->setSuffix( " " + i18nc("decibel","dB") );
+        configDialogGainAdjustmentSpinBox->setToolTip( i18n("Lower or raise the suggested gain") );
+        configDialogBox3->addWidget( configDialogGainAdjustmentSpinBox );
+        configDialogBox->addLayout( configDialogBox3 );
+
         QHBoxLayout *configDialogBox2 = new QHBoxLayout();
         configDialogModifyAudioStreamCheckBox = new QCheckBox( i18n("Modify audio stream"), configDialogWidget );
         configDialogModifyAudioStreamCheckBox->setToolTip( i18n("Write gain adjustments directly into the encoded data. That way the adjustment works with all mp3 players.\nUndoing the changes is still possible since correction data will be written as well.") );
@@ -100,6 +116,7 @@ void soundkonverter_replaygain_mp3gain::showConfigDialog( ActionType action, con
     }
     configDialogTagModeComboBox->setCurrentIndex( tagMode );
     configDialogModifyAudioStreamCheckBox->setChecked( modifyAudioStream );
+    configDialogGainAdjustmentSpinBox->setValue( gainAdjustment );
     configDialog.data()->show();
 }
 
@@ -109,6 +126,7 @@ void soundkonverter_replaygain_mp3gain::configDialogSave()
     {
         tagMode = configDialogTagModeComboBox->currentIndex();
         modifyAudioStream = configDialogModifyAudioStreamCheckBox->isChecked();
+        gainAdjustment = configDialogGainAdjustmentSpinBox->value();
 
         KSharedConfig::Ptr conf = KGlobal::config();
         KConfigGroup group;
@@ -116,6 +134,7 @@ void soundkonverter_replaygain_mp3gain::configDialogSave()
         group = conf->group( "Plugin-"+name() );
         group.writeEntry( "tagMode", tagMode );
         group.writeEntry( "modifyAudioStream", modifyAudioStream );
+        group.writeEntry( "gainAdjustment", gainAdjustment );
 
         configDialog.data()->deleteLater();
     }
@@ -126,7 +145,8 @@ void soundkonverter_replaygain_mp3gain::configDialogDefault()
     if( configDialog.data() )
     {
         configDialogTagModeComboBox->setCurrentIndex( 0 );
-        configDialogModifyAudioStreamCheckBox->setChecked( true );
+        configDialogModifyAudioStreamCheckBox->setChecked( false );
+        configDialogGainAdjustmentSpinBox->setValue( 0.0 );
     }
 }
 
@@ -140,7 +160,7 @@ void soundkonverter_replaygain_mp3gain::showInfo( QWidget *parent )
     Q_UNUSED(parent)
 }
 
-unsigned int soundkonverter_replaygain_mp3gain::apply( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
+int soundkonverter_replaygain_mp3gain::apply( const KUrl::List& fileList, ReplayGainPlugin::ApplyMode mode )
 {
     if( fileList.count() <= 0 )
         return BackendPlugin::UnknownError;
@@ -153,9 +173,9 @@ unsigned int soundkonverter_replaygain_mp3gain::apply( const KUrl::List& fileLis
 
     QStringList command;
     command += binaries["mp3gain"];
-    command += "-k";
     if( mode == ReplayGainPlugin::Add )
     {
+        command += "-k";
         if( modifyAudioStream )
         {
             command += "-a";
@@ -164,6 +184,7 @@ unsigned int soundkonverter_replaygain_mp3gain::apply( const KUrl::List& fileLis
     }
     else if( mode == ReplayGainPlugin::Force )
     {
+        command += "-k";
         if( modifyAudioStream )
         {
             command += "-a";
@@ -177,6 +198,11 @@ unsigned int soundkonverter_replaygain_mp3gain::apply( const KUrl::List& fileLis
         command += "-u";
         connect( newItem->process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(undoProcessExit(int,QProcess::ExitStatus)) );
         newItem->undoFileList = fileList;
+    }
+    if( gainAdjustment != 0 )
+    {
+        command += "-d";
+        command += QString::number(gainAdjustment);
     }
     if( mode == ReplayGainPlugin::Add || mode == ReplayGainPlugin::Force )
     {
@@ -193,7 +219,7 @@ unsigned int soundkonverter_replaygain_mp3gain::apply( const KUrl::List& fileLis
             command += "i";
         }
     }
-    foreach( const KUrl file, fileList )
+    foreach( const KUrl& file, fileList )
     {
         command += "\"" + escapeUrl(file) + "\"";
     }
@@ -219,7 +245,7 @@ void soundkonverter_replaygain_mp3gain::undoProcessExit( int exitCode, QProcess:
     {
         if( backendItems.at(i)->process == QObject::sender() )
         {
-            item = (Mp3GainPluginItem*)backendItems.at(i);
+            item = qobject_cast<Mp3GainPluginItem*>(backendItems.at(i));
             break;
         }
     }
@@ -240,9 +266,16 @@ void soundkonverter_replaygain_mp3gain::undoProcessExit( int exitCode, QProcess:
 
     QStringList command;
     command += binaries["mp3gain"];
+    // APE tags
+    command += "-s";
+    command += "a";
+    // ID3v2 tags
+    command += "-s";
+    command += "i";
+    // delete tags
     command += "-s";
     command += "d";
-    foreach( const KUrl file, item->undoFileList )
+    foreach( const KUrl& file, item->undoFileList )
     {
         command += "\"" + escapeUrl(file) + "\"";
     }
