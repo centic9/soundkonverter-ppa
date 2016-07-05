@@ -17,7 +17,7 @@ At the moment you can find on Debian:
  * vorbisgain (provides vorbisgain)
  * wavpack (provide wvunpack/wavpack/wvgain)
 
-Note: you don't need all of the mentionned programs to use soundKonverter.
+Note: you don't need all of the mentioned programs to use soundKonverter.
 
  -- Fathi Boudra <fabo@debian.org>  Sat, 13 Oct 2007 14:50:28 +0200
 

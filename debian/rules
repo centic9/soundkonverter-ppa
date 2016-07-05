@@ -1,14 +1,13 @@
 #!/usr/bin/make -f
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/cmake.mk
-include /usr/share/dpkg/buildflags.mk
+export DEB_LDFLAGS_MAINT_APPEND := -Wl,--as-needed
 
-#DEB_SRCDIR=src
+%:
+	dh $@ --parallel --with kde --sourcedirectory=src
 
-install/soundkonverter::
-	install -D -p -m0644 debian/soundkonverter.lintian-overrides \
-	    debian/soundkonverter/usr/share/lintian/overrides/soundkonverter
-	find debian -type f -name userscript.sh | xargs rm -f
-	rm -rf debian/soundkonverter/usr/share/apps/soundkonverter/amarokscript
-	install -m 644 *plugin.desktop debian/soundkonverter/usr/share/kde4/servicetypes
+override_dh_auto_install:
+	dh_auto_install -Skde --sourcedirectory=src
+	find debian/soundkonverter -name '*.so' -type l -delete
+
+override_dh_installchangelogs:
+	dh_installchangelogs src/CHANGELOG

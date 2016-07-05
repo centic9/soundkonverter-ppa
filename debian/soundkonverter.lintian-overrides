@@ -1,2 +1,4 @@
-soundkonverter: shlib-without-versioned-soname usr/lib/libsoundkonvertercore.so libsoundkonvertercore.so
-soundkonverter: package-name-doesnt-match-sonames libsoundkonvertercore        
+# private library
+soundkonverter: package-name-doesnt-match-sonames libsoundkonvertercore0
+# private library
+soundkonverter: no-symbols-control-file usr/lib/libsoundkonvertercore.so.0

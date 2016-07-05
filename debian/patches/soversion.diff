@@ -1,0 +1,18 @@
+Author: Pino Toscano <pino@debian.org>
+Description: Set 0 as SOVERSION
+ Partially revert upstream commit 27d670066c3bc2281c4b612569978c7bc1481839
+ to set a SOVERSION to the private soundkonvertercore library, so it is handled
+ better as shared library.
+Last-Update: 2016-07-05
+Forwarded: not-needed
+
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -43,6 +43,7 @@ set(soundkonvertercore_SRCS
+    core/ripperplugin.cpp
+ )
+ kde4_add_library(soundkonvertercore SHARED ${soundkonvertercore_SRCS})
++set_target_properties(soundkonvertercore PROPERTIES SOVERSION 0)
+ target_link_libraries(soundkonvertercore ${KDE4_KDEUI_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KIO_LIBS})
+ install(TARGETS soundkonvertercore DESTINATION ${LIB_INSTALL_DIR})
+ 

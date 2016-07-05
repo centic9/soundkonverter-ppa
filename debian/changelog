@@ -1,8 +1,36 @@
-soundkonverter (2.1.2-1build1) wily; urgency=medium
+soundkonverter (2.2.2-1) unstable; urgency=medium
 
-  * No change rebuild for libtag1v5
+  * Team upload.
+  * New upstream release.
+  * Update watch file.
+  * Update Homepage to the GitHub location.
+  * Update Vcs-* fields.
+  * Convert rules to the dh sequencer with compat 9:
+    - bump the debhelper build dependency to 9
+    - remove the cdbs build dependency
+    - bump compat to 9
+    - make use of the kde dh addon, adding the pkg-kde-tools build dependency
+      for it
+    - drop all the manual install/cleanup rules, no more needed
+  * Remove the dpkg-dev build dependency, satisfied in Wheezy already and not
+    useful anymore
+  * Remove postinst and postrm autoscripts, since this is something done by
+    debhelper automatically.
+  * Remove dirs file, there is no need to create them manually anymore.
+  * Fix typo in README.Debian.
+  * Install README.md instead of README.
+  * Install the CHANGES from the src subdirectory.
+  * Set a SONAME for the private soundkonvertercore library; patch
+    soversion.diff.
+    - do not ship the .so symlinks
+  * Bump Standards-Version to 3.9.8, no changes required.
+  * Update lintian overrides.
+  * Update the recommends:
+    - libav-tools -> ffmpeg
+    - kdemultimedia-kio-plugins -> kio-audiocd (Closes: #779419)
+  * Link in as-needed mode.
 
- -- Micah Gersten <micahg@ubuntu.com>  Sun, 23 Aug 2015 18:58:51 -0500
+ -- Pino Toscano <pino@debian.org>  Tue, 05 Jul 2016 14:19:23 +0200
 
 soundkonverter (2.1.2-1) unstable; urgency=medium
 
