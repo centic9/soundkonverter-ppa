@@ -1,3 +1,9 @@
+soundkonverter (2.2.2-1ubuntu0~ppa2) xenial; urgency=medium
+
+  * Fix package listing in recommends
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 07 Aug 2016 09:56:36 +0200
+
 soundkonverter (2.2.2-1ubuntu0~ppa1) xenial; urgency=medium
 
   * Import latest version

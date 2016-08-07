@@ -14,7 +14,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: cdparanoia, faad, ffmpeg, flac,
  kio-audiocd, mp3gain, mplayer, mppenc, speex, timidity,
- vorbis-tools, vorbisgain, wavpack aften
+ vorbis-tools, vorbisgain, wavpack, aften
 Description: audio converter frontend for KDE
  soundKonverter is a frontend to various audio converters.
  .
