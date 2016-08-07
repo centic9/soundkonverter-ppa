@@ -1,0 +1,3457 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Påvel Nicklasson <pavelnicklasson@bahnhof.se>, 2014
+# Påvel Nicklasson <pavelnicklasson@bahnhof.se>, 2014-2015
+msgid ""
+msgstr ""
+"Project-Id-Version: soundkonverter\n"
+"Report-Msgid-Bugs-To: https://bugs.launchpad.net/ubuntu/%2Bsource/"
+"soundkonverter/\n"
+"POT-Creation-Date: 2016-05-21 10:30+0200\n"
+"PO-Revision-Date: 2016-05-03 15:47+0000\n"
+"Last-Translator: Påvel Nicklasson <pavelnicklasson@bahnhof.se>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/hessijames/"
+"soundkonverter/language/sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: aboutplugins.cpp:20
+msgid "About plugins"
+msgstr "Om insticksprogram"
+
+#: aboutplugins.cpp:34
+msgid "Installed plugins:"
+msgstr "Installerade insticksprogram:"
+
+#: aboutplugins.cpp:131
+msgid "About plugin %1:"
+msgstr "Om insticksprogram %1:"
+
+#: aboutplugins.cpp:133
+msgid "Plugin type: %1"
+msgstr "Insticksprogramtyp: %1"
+
+#: aboutplugins.cpp:139
+msgid "Backend binaries:"
+msgstr "Bakändens binärer:"
+
+#: aboutplugins.cpp:144
+msgid "%1 (found at: %2)"
+msgstr "%1 (finns i: %2)"
+
+#: aboutplugins.cpp:146
+msgid "%1 (not found)"
+msgstr "%1 (hittades inte)"
+
+#: aboutplugins.cpp:167 aboutplugins.cpp:202 aboutplugins.cpp:233
+msgid "Supported codecs:"
+msgstr "Omkodare som stöds:"
+
+#: aboutplugins.cpp:172 aboutplugins.cpp:180 aboutplugins.cpp:207
+#: aboutplugins.cpp:215 aboutplugins.cpp:230
+msgid "Currently deactivated."
+msgstr "För närvarande deaktiverad."
+
+#: aboutplugins.cpp:175 aboutplugins.cpp:210
+msgid "Encode: %1"
+msgstr "Koda: %1"
+
+#: aboutplugins.cpp:183 aboutplugins.cpp:218
+msgid "Decode: %1"
+msgstr "Avkoda: %1"
+
+#: aboutplugins.cpp:243 configdialog/configbackendspage.cpp:163
+#: configdialog/configbackendspage.cpp:309
+#: configdialog/configbackendspage.cpp:388 optionsdetailed.cpp:304
+msgid "Configure %1 ..."
+msgstr "Konfigurera %1 ..."
+
+#: codecoptimizations.cpp:17 codecproblems.cpp:14
+msgid "Solutions for backend problems"
+msgstr "Lösningar för problem med bakänden"
+
+#: codecoptimizations.cpp:27
+msgid ""
+"You have installed or removed backends and your soundKonverter settings can "
+"be optimized."
+msgstr ""
+"Du har installerat eller tagit bort bakändar och soundkonverters "
+"inställningar kan optimeras. "
+
+#: codecoptimizations.cpp:51
+msgid "For encoding %1 files the backend '%2' can be replaced with '%3'."
+msgstr "För att koda %1-filer kan bakända '%2' ersättas med '%3'."
+
+#: codecoptimizations.cpp:55
+msgid "For ripping audio CDs the backend '%1' can be replaced with '%2'."
+msgstr "För att rippa ljud-cd:ar kan bakända '%1' ersättas med '%2'."
+
+#: codecoptimizations.cpp:59
+msgid "For decoding %1 files the backend '%2' can be replaced with '%3'."
+msgstr "För att avkoda %1-filer kan bakändan '%2' ersättas med '%3'."
+
+#: codecoptimizations.cpp:63
+msgid ""
+"For applying Replay Gain to %1 files the backend '%2' can be replaced with "
+"'%3'."
+msgstr ""
+"För att tillämpa Replay Gain för %1-filer kan bakändan '%2' ersättas med "
+"'%3'."
+
+#: codecoptimizations.cpp:66
+msgid "Ignore"
+msgstr "Ignorera"
+
+#: codecoptimizations.cpp:71
+msgid "Fix"
+msgstr "Åtgärda"
+
+#: codecproblems.cpp:28
+msgid ""
+"soundKonverter couldn't find any missing packages.\n"
+"If you are missing some file formats you might need to install an additional "
+"plugin via the package manager of your distribution."
+msgstr ""
+"soundkonverter kunde inte hitta några saknade paket.\n"
+"Om du saknar några filformat kan du behöva installera ytterligare "
+"insticksprogram via pakethanteraren för din distribution."
+
+#: codecproblems.cpp:32
+msgid ""
+"Some of the installed plugins aren't working.\n"
+"Possible solutions are listed below."
+msgstr ""
+"Några installerade insticksprogram fungerar inte\n"
+"Möjliga lösningar listas nedan."
+
+#: codecproblems.cpp:37
+msgid ""
+"Some files can't be decoded.\n"
+"Possible solutions are listed below."
+msgstr ""
+"Några filer kan inte avkodas\n"
+"Möjliga lösningar listas nedan."
+
+#: codecproblems.cpp:41
+msgid ""
+"Replay Gain isn't supported for some files.\n"
+"Possible solutions are listed below."
+msgstr ""
+"Replay Gain stöds inte för några filer.\n"
+"Möjliga lösningar listas nedan."
+
+#: codecproblems.cpp:47
+msgid ""
+"Ripping audio CDs is not supported by any installed plugin.\n"
+"Please have a look at your distributions package manager in order to get a "
+"cd ripper plugin for soundKonverter."
+msgstr ""
+"Rippning av ljud-CD:ar stöds inte av något installerat insticksprogram\n"
+"Sök ett insticksprogram för att rippa cd till soundkonverter i "
+"pakethanteraren för din distribution."
+
+#: codecproblems.cpp:51
+msgid ""
+"Ripping audio CDs is currently not supported because of missing backends.\n"
+"Possible solutions are listed below."
+msgstr ""
+"Rippning av ljud-CD:ar stöds för närvarnade inte på grund av saknad "
+"bakända.\n"
+"Möjliga lösningar listas nedan."
+
+#: codecproblems.cpp:67 codecproblems.cpp:71
+msgid "Possible solutions for %1"
+msgstr "Möjliga lösningar för %1"
+
+#: codecproblems.cpp:67 codecproblems.cpp:71
+#: plugins/soundkonverter_codec_ffmpeg/soundkonverter_codec_ffmpeg.cpp:244
+#: plugins/soundkonverter_codec_libav/soundkonverter_codec_libav.cpp:336
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:216
+msgctxt "like in either or"
+msgid "or"
+msgstr "eller"
+
+#: codecproblems.cpp:71
+msgid "Affected files:"
+msgstr "Påverkade filer:"
+
+#: config.cpp:45 config.cpp:47 config.cpp:385 config.cpp:426
+#: configdialog/configgeneralpage.cpp:55 configdialog/configgeneralpage.cpp:71
+#: configdialog/configgeneralpage.cpp:266
+#: configdialog/configgeneralpage.cpp:268
+#: configdialog/configgeneralpage.cpp:272
+#: configdialog/configgeneralpage.cpp:277
+#: configdialog/configgeneralpage.cpp:282 options.cpp:43 options.cpp:64
+#: optionsdetailed.cpp:476
+msgid "Last used"
+msgstr "Senast använt"
+
+#: config.cpp:46 config.cpp:389 config.cpp:396 config.cpp:402
+#: configdialog/configgeneralpage.cpp:75 configdialog/configgeneralpage.cpp:270
+#: options.cpp:73 optionsdetailed.cpp:472 optionssimple.cpp:166
+#: optionssimple.cpp:202 optionssimple.cpp:300
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:173
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:210
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:143
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:179
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:215
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:238
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:293
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:270
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:318
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:210
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:233
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:288
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:178
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:217
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:167
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:214
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:152
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:185
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:162
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:201
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:163
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:202
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:253
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:400
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:423
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:446
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:532
+#: soundkonverterview.cpp:564 soundkonverterview.cpp:566
+msgid "High"
+msgstr "Hög"
+
+#: config.cpp:114 configdialog/configcoverartpage.cpp:135
+msgctxt "cover file name"
+msgid "cover"
+msgstr "omslag"
+
+#: config.cpp:234 config.cpp:260 config.cpp:262 convert.cpp:172 convert.cpp:244
+#: convert.cpp:411
+msgid "Try internal"
+msgstr "Prova intern"
+
+#: config.cpp:386 config.cpp:402 configdialog/configgeneralpage.cpp:72
+#: configdialog/configgeneralpage.cpp:270 optionsdetailed.cpp:469
+#: optionssimple.cpp:163 optionssimple.cpp:190 optionssimple.cpp:300
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:161
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:186
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:131
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:155
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:203
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:226
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:251
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:258
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:285
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:198
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:221
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:246
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:166
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:190
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:155
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:179
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:140
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:164
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:150
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:174
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:151
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:175
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:388
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:411
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:434
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:463
+#: soundkonverterview.cpp:549 soundkonverterview.cpp:551
+msgid "Very low"
+msgstr "Mycket låg"
+
+#: config.cpp:387 config.cpp:402 configdialog/configgeneralpage.cpp:73
+#: configdialog/configgeneralpage.cpp:270 optionsdetailed.cpp:470
+#: optionssimple.cpp:164 optionssimple.cpp:194 optionssimple.cpp:300
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:165
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:194
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:135
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:163
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:207
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:230
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:265
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:262
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:296
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:202
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:225
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:260
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:170
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:199
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:159
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:191
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:144
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:171
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:154
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:183
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:155
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:184
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:251
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:392
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:415
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:438
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:486
+#: soundkonverterview.cpp:554 soundkonverterview.cpp:556
+msgid "Low"
+msgstr "Låg"
+
+#: config.cpp:388 config.cpp:402 configdialog/configgeneralpage.cpp:74
+#: configdialog/configgeneralpage.cpp:270 optionsdetailed.cpp:471
+#: optionssimple.cpp:165 optionssimple.cpp:198 optionssimple.cpp:300
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:169
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:202
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:139
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:171
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:211
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:234
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:279
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:266
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:307
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:206
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:229
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:274
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:174
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:208
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:163
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:203
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:148
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:178
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:158
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:192
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:159
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:193
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:252
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:396
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:419
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:442
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:509
+#: soundkonverterview.cpp:559 soundkonverterview.cpp:561
+msgid "Medium"
+msgstr "Medium"
+
+#: config.cpp:390 config.cpp:402 configdialog/configgeneralpage.cpp:76
+#: configdialog/configgeneralpage.cpp:270 optionsdetailed.cpp:473
+#: optionssimple.cpp:167 optionssimple.cpp:206 optionssimple.cpp:300
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:177
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:218
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:147
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:187
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:219
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:242
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:307
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:274
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:329
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:214
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:237
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:302
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:182
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:226
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:171
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:225
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:156
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:192
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:166
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:210
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:167
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:211
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:254
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:404
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:427
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:450
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:555
+#: soundkonverterview.cpp:569 soundkonverterview.cpp:571
+msgid "Very high"
+msgstr "Mycket hög"
+
+#: config.cpp:391 config.cpp:406 configdialog/configgeneralpage.cpp:77
+#: configdialog/configgeneralpage.cpp:275 optionsdetailed.cpp:474
+#: optionssimple.cpp:168 optionssimple.cpp:210 optionssimple.cpp:304
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:157
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:127
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:193
+#: plugins/soundkonverter_codec_flac/flaccodecwidget.cpp:88
+#: plugins/soundkonverter_codec_flac/flaccodecwidget.cpp:93
+#: plugins/soundkonverter_codec_flake/flakecodecwidget.cpp:143
+#: plugins/soundkonverter_codec_flake/flakecodecwidget.cpp:148
+#: plugins/soundkonverter_codec_fluidsynth/fluidsynthcodecwidget.cpp:43
+#: plugins/soundkonverter_codec_fluidsynth/fluidsynthcodecwidget.cpp:48
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:254
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:188
+#: plugins/soundkonverter_codec_mac/maccodecwidget.cpp:91
+#: plugins/soundkonverter_codec_mac/maccodecwidget.cpp:96
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:162
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:151
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:136
+#: plugins/soundkonverter_codec_shorten/shortencodecwidget.cpp:74
+#: plugins/soundkonverter_codec_shorten/shortencodecwidget.cpp:79
+#: plugins/soundkonverter_codec_timidity/timiditycodecwidget.cpp:43
+#: plugins/soundkonverter_codec_timidity/timiditycodecwidget.cpp:48
+#: plugins/soundkonverter_codec_ttaenc/ttaenccodecwidget.cpp:74
+#: plugins/soundkonverter_codec_ttaenc/ttaenccodecwidget.cpp:79
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:146
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:147
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:91
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:96
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:382
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:578
+#: soundkonverterview.cpp:574 soundkonverterview.cpp:576
+msgid "Lossless"
+msgstr "Förlustfri"
+
+#: config.cpp:392 config.cpp:410 configdialog/configgeneralpage.cpp:280
+#: optionsdetailed.cpp:475 optionssimple.cpp:214 optionssimple.cpp:308
+#: soundkonverterview.cpp:579 soundkonverterview.cpp:581
+msgid "Hybrid"
+msgstr "Användardefinierad"
+
+#: config.cpp:414 optionsdetailed.cpp:478 optionssimple.cpp:171
+#: optionssimple.cpp:218 optionssimple.cpp:312 optionssimple.cpp:375
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:180
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:150
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:197
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:246
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:41
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:277
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:192
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:241
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:45
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:185
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:174
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:159
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:136
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:141
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:169
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:170
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:455
+msgid "User defined"
+msgstr "Användardefinierad"
+
+#: config.cpp:579
+msgid "Convert with soundKonverter"
+msgstr "Konvertera med soundKonverter"
+
+#: config.cpp:615
+msgid "Add Replay Gain with soundKonverter"
+msgstr "Lägg till Replay Gain med soundKonverter"
+
+#: configdialog/configadvancedpage.cpp:36 configdialog/configdialog.cpp:48
+msgid "Advanced"
+msgstr "Avancerat"
+
+#: configdialog/configadvancedpage.cpp:45
+msgid "Preferred file name extension for ogg vorbis files:"
+msgstr "Föredragen filändelse för ogg vorbis filer:"
+
+#: configdialog/configadvancedpage.cpp:61
+msgid "Preferred comment tag field for ogg vorbis and flac files:"
+msgstr "Föredragen kommentarsetikettsfält för ogg vorbis och flac filer"
+
+#: configdialog/configadvancedpage.cpp:62
+#: configdialog/configadvancedpage.cpp:65
+msgid ""
+"Some applications use the field DESCRIPTION even though the field COMMENT is "
+"the correct one.\n"
+"Comments will be written to the selected field, when reading tags the "
+"selected field will be preferred."
+msgstr ""
+"En del program använder fältet BESKRIVNING trots att fältet KOMMENTAR är det "
+"rätta.\n"
+"Kommentarer kommer att skrivas till valt fält, då etiketter läses kommer "
+"valt fält att föredras."
+
+#: configdialog/configadvancedpage.cpp:79
+msgid "Preferred total tracks number tag field for ogg vorbis and flac files:"
+msgstr ""
+"Föredraget totalt antal spår nummeretikettfält för ogg vorbis och flac filer:"
+
+#: configdialog/configadvancedpage.cpp:80
+#: configdialog/configadvancedpage.cpp:83
+msgid ""
+"Total tracks number will be written to the selected field, when reading tags "
+"the selected field will be preferred.\n"
+"When using the field TRACKNUMBER, the track number and the total tracks "
+"number will be written to the same field separated by a slash ('/')."
+msgstr ""
+"Totalt spårantal kommer att skrivas till valt fält, då etiketter läses "
+"kommer valt fält att föredras.\n"
+"Då fältet SPÅRANTAL används, kommer spårnumret och totala antalet spår att "
+"skrivas till samma fält åtskilda av ett snedstreck  ('/')."
+
+#: configdialog/configadvancedpage.cpp:98
+msgid "Preferred total discs number tag field for ogg vorbis and flac files:"
+msgstr ""
+"Föredraget etikettfält för sammanlagt skivantal för ogg vorbis och flac "
+"filer:"
+
+#: configdialog/configadvancedpage.cpp:99
+#: configdialog/configadvancedpage.cpp:102
+msgid ""
+"Total discs number will be written to the selected field, when reading tags "
+"the selected field will be preferred.\n"
+"When using the field DISCNUMBER, the disc number and the total discs number "
+"will be written to the same field separated by a slash ('/')."
+msgstr ""
+"Sammanlagt skivantal kommer att skrivas till valt fält, då etiketter läses "
+"kommer valt fält att föredras.\n"
+"Då fältet SKIVANTAL används, kommer skivnumret och det totala antalet skivor "
+"att skrivas till samma fält åtskilda av ett snedstreck  ('/')."
+
+#: configdialog/configadvancedpage.cpp:117
+msgid "Always use FAT compatible output file names"
+msgstr "Använd alltid FAT-kompatibla namn på utfiler"
+
+#: configdialog/configadvancedpage.cpp:118
+msgid ""
+"Replaces some special characters like '?' by '_'.\n"
+"If the output directory is on a FAT file system FAT compatible file names "
+"will automatically be used independently from this option."
+msgstr ""
+"Ersätter en del specialtecken som '?' med '_'.\n"
+"Om målkatalogen finns på ett FAT-filsystem kommer FAT-kompatibla filnamn "
+"automatiskt att användas oberoende av detta alternativ."
+
+#: configdialog/configadvancedpage.cpp:128
+msgid "Eject CD after ripping has been completed"
+msgstr "Mata ut CD då rippningen är färdig"
+
+#: configdialog/configadvancedpage.cpp:135
+msgid "Debug"
+msgstr "Felsök"
+
+#: configdialog/configadvancedpage.cpp:144
+msgid "Write log files to disc"
+msgstr "Skriv loggfiler till disk"
+
+#: configdialog/configadvancedpage.cpp:145
+msgid ""
+"Write log files to the hard drive while converting.\n"
+"This can be useful if a crash occurs and you can't access the log file using "
+"the log viewer.\n"
+"Log files will be written to %1"
+msgstr ""
+"Skriver loggfiler till hårddisken under konvertering.\n"
+"Detta kan vara användbart vid en krasch och du inte kan komma åt loggen med "
+"loggläsaren.\n"
+"Loggfiler kommer att skrivas till %1"
+
+#: configdialog/configadvancedpage.cpp:152
+msgid "Experimental"
+msgstr "Experimentell"
+
+#: configdialog/configadvancedpage.cpp:161
+msgid "Store temporary files in memory unless the estimated size is more than:"
+msgstr ""
+"Lagra tillfälliga filer i minnet om inte uppskattad storlek är större än:"
+
+#: configdialog/configadvancedpage.cpp:162
+#: configdialog/configadvancedpage.cpp:166
+msgid ""
+"Don't store files that are expected to be bigger than this value in memory "
+"to avoid swapping"
+msgstr ""
+"Lagra inte filer som förväntas bli större än detta värde i minnet för att "
+"undvika växling"
+
+#: configdialog/configadvancedpage.cpp:167
+msgctxt "mega in bytes"
+msgid "MiB"
+msgstr "MiB"
+
+#: configdialog/configadvancedpage.cpp:174
+msgid "It seems there's no filesystem mounted on /dev/shm"
+msgstr "Det verkar inte finnas ett monterat filsystem på /dev/shm"
+
+#: configdialog/configadvancedpage.cpp:188
+msgid "Use pipes when possible"
+msgstr "Använd rör om möjligt"
+
+#: configdialog/configadvancedpage.cpp:189
+msgid ""
+"Pipes make it unnecessary to use temporary files, therefore increasing the "
+"performance.\n"
+"But some backends cause errors in this mode so be cautious."
+msgstr ""
+"Rör gör temporära filer överflödiga, därför ökas prestandan.\n"
+"En del bakändar förorsakar dock fel så var försiktig."
+
+#: configdialog/configbackendspage.cpp:136
+#: configdialog/configbackendspage.cpp:197
+#: configdialog/configbackendspage.cpp:345
+msgid "Decoder"
+msgstr "Avkodare"
+
+#: configdialog/configbackendspage.cpp:138
+#: configdialog/configbackendspage.cpp:199
+#: configdialog/configbackendspage.cpp:348
+msgid "Encoder"
+msgstr "Kodare"
+
+#: configdialog/configbackendspage.cpp:140
+#: configdialog/configbackendspage.cpp:201
+#: configdialog/configbackendspage.cpp:351 convert.cpp:1501 filelist.cpp:562
+#: filelist.cpp:572
+msgid "Replay Gain"
+msgstr "Replay Gain"
+
+#: configdialog/configbackendspage.cpp:148
+msgid "Move %1 one position up"
+msgstr "Flytta %1 ett steg uppåt"
+
+#: configdialog/configbackendspage.cpp:153
+msgid "Move %1 one position down"
+msgstr "Flytta %1 ett steg nedåt"
+
+#: configdialog/configbackendspage.cpp:158
+msgid "About %1 ..."
+msgstr "Om %1 ..."
+
+#: configdialog/configbackendspage.cpp:232
+msgid "CD ripper"
+msgstr "CD rippare"
+
+#: configdialog/configbackendspage.cpp:241
+msgid "Use plugin:"
+msgstr "Använd insticksprogram:"
+
+#: configdialog/configbackendspage.cpp:265
+msgid "Filters"
+msgstr "Filter"
+
+#: configdialog/configbackendspage.cpp:281
+msgid "Enable plugins:"
+msgstr "Aktivera insticksprogram:"
+
+#: configdialog/configbackendspage.cpp:320
+msgid "Priorities"
+msgstr "Prioriteringar"
+
+#: configdialog/configbackendspage.cpp:332
+msgid "Configure plugin priorities for format:"
+msgstr "Konfigurera insticksprogram för format:"
+
+#: configdialog/configbackendspage.cpp:359
+msgid "Show possible optimizations"
+msgstr "Visa möjliga optimeringar"
+
+#: configdialog/configbackendspage.cpp:399
+msgid ""
+"You have changed the current settings.\n"
+"Do you want to save them?"
+msgstr ""
+"Du har ändrat de aktuella inställningarna.\n"
+"Vill du spara dem?"
+
+#: configdialog/configbackendspage.cpp:399
+msgid "Settings changed"
+msgstr "Inställningar ändrade"
+
+#: configdialog/configbackendspage.cpp:475
+msgid ""
+"This will choose the best backends for all formats and save the new "
+"preferences immediately.\n"
+"\n"
+"Do you want to continue?"
+msgstr ""
+"Detta kommer att välja de bästa bakändarna för alla format och omedelbart "
+"spara de nya instaällningarna.\n"
+"\n"
+"Vill du fortsätta?"
+
+#: configdialog/configbackendspage.cpp:607
+msgid "All backend settings seem to be optimal, there is nothing to do."
+msgstr ""
+"Alla bakändesinställningar verkar vara optimerade, det finns inget att göra."
+
+#: configdialog/configcoverartpage.cpp:24
+msgid "Saving covers to output directory"
+msgstr "Sparar omslag till målkatalog"
+
+#: configdialog/configcoverartpage.cpp:36
+msgid "Save embedded covers to output directory"
+msgstr "Spara inbäddade omslag till målkatalog"
+
+#: configdialog/configcoverartpage.cpp:38
+msgid "Always"
+msgstr "Alltid"
+
+#: configdialog/configcoverartpage.cpp:40
+msgid "Only if embedding the covers into the output files is not possible"
+msgstr "Bara om inbäddning av omslag i utfilerna inte är möjligt"
+
+#: configdialog/configcoverartpage.cpp:42
+msgid "Never"
+msgstr "Aldrig"
+
+#: configdialog/configcoverartpage.cpp:62
+msgid "File name for the cover (when saving to output directory)"
+msgstr "Filnamn för omslaget (då det sparas till målkatalog)"
+
+#: configdialog/configcoverartpage.cpp:64
+msgid "The embedded cover description"
+msgstr "Beskrivning av inbäddat omslag"
+
+#: configdialog/configcoverartpage.cpp:66
+msgid "The default cover file name"
+msgstr "Standardnamn för omslagsfiler"
+
+#: configdialog/configcoverartpage.cpp:70
+msgid "Default cover file name:"
+msgstr "Standardnamn för omslagsfiler:"
+
+#: configdialog/configcoverartpage.cpp:73
+msgid ""
+"The following strings are wildcards that will be replaced\n"
+"by the information in the meta data:\n"
+"\n"
+"%a - Artist\n"
+"%b - Album\n"
+"%d - Cover description\n"
+"%r - Cover role"
+msgstr ""
+"Följande strängar är platshållare som kommer att bytas ut\n"
+"av information i metadatan:\n"
+"\n"
+"%a - Artist\n"
+"%b - Album\n"
+"%d - Omslagsbeskrivning\n"
+"%r - Omslagsroll"
+
+#: configdialog/configdialog.cpp:29
+msgid "Settings"
+msgstr "Inställningar"
+
+#: configdialog/configdialog.cpp:42
+msgid "General"
+msgstr "Allmänt"
+
+#: configdialog/configdialog.cpp:54
+msgid "Cover art"
+msgstr "Omslag"
+
+#: configdialog/configdialog.cpp:60 main.cpp:28
+msgid "Backends"
+msgstr "Bakändar"
+
+#: configdialog/configgeneralpage.cpp:43
+msgid "User interface"
+msgstr "Användargränssnitt"
+
+#: configdialog/configgeneralpage.cpp:52
+msgid "Start in Mode:"
+msgstr "Startläge:"
+
+#: configdialog/configgeneralpage.cpp:56 options.cpp:79
+msgid "Simple"
+msgstr "Enkelt"
+
+#: configdialog/configgeneralpage.cpp:57 options.cpp:80
+msgid "Detailed"
+msgstr "Detaljerat"
+
+#: configdialog/configgeneralpage.cpp:67
+msgid "Default profile:"
+msgstr "Standardprofil:"
+
+#: configdialog/configgeneralpage.cpp:85
+msgid "Default format:"
+msgstr "Standardformat:"
+
+#: configdialog/configgeneralpage.cpp:95 optionseditor.cpp:52
+msgid "Conversion"
+msgstr "Konvertering"
+
+#: configdialog/configgeneralpage.cpp:118
+msgid "Conflict handling:"
+msgstr "Konflikthantering:"
+
+#: configdialog/configgeneralpage.cpp:121
+msgid "Generate new file name"
+msgstr "Generera nytt filnamn"
+
+#: configdialog/configgeneralpage.cpp:122
+msgid "Skip file"
+msgstr "Hoppa över fil"
+
+#. i18n("Overwrite file") );
+#: configdialog/configgeneralpage.cpp:124
+msgid "Do that if the output file already exists"
+msgstr "Gör detta om utfilen redan finns"
+
+#: configdialog/configgeneralpage.cpp:134
+msgid "Number of files to convert at once:"
+msgstr "Antal filer att konvertera på en gång:"
+
+#: configdialog/configgeneralpage.cpp:137
+#: configdialog/configgeneralpage.cpp:196
+msgid ""
+"You shouldn't set this number higher than the amount of installed processor "
+"cores.\n"
+"There have been %1 processor cores detected."
+msgstr ""
+"Du bör inte sätta antalet högre än antalet processorkärnor.\n"
+"Antal upptäckta processorkärnor %1."
+
+#: configdialog/configgeneralpage.cpp:150
+msgid "Apply album gain to converted files"
+msgstr "Tillämpa album gain för konverterade filer"
+
+#: configdialog/configgeneralpage.cpp:151
+msgid ""
+"Keep songs of the same album waiting in file list in order to apply album "
+"gain to all files."
+msgstr ""
+"Behåll låtar från samma album i fillistan för att tillämpa album gain på "
+"alla filer."
+
+#: configdialog/configgeneralpage.cpp:161
+msgid "Copy files instead of converting to the same file format"
+msgstr "Kopiera filer istället för att konvertera till samma filformat"
+
+#: configdialog/configgeneralpage.cpp:162
+msgid ""
+"If the input and the output file format are the same, copy the files instead "
+"of re-encoding them."
+msgstr ""
+"Om infilens och utfilens filformat är detsamma, kopiera filerna istället för "
+"att omkoda dem."
+
+#: configdialog/configgeneralpage.cpp:169
+#: replaygainscanner/replaygainscanner.cpp:34
+#: replaygainscanner/replaygainscanner.cpp:359
+msgid "Replay Gain tool"
+msgstr "Replay Gain-verktyg"
+
+#: configdialog/configgeneralpage.cpp:178
+msgid "Group files in the Replay Gain tool by:"
+msgstr "Gruppera filer i Replay Gain-verktyget enligt:"
+
+#: configdialog/configgeneralpage.cpp:181
+msgctxt "Group files in the Replay Gain tool by"
+msgid "Album tags and directories"
+msgstr "Albumetiketter och kataloger"
+
+#: configdialog/configgeneralpage.cpp:182
+msgctxt "Group files in the Replay Gain tool by"
+msgid "Album tags only"
+msgstr "Bara albumetiketter"
+
+#: configdialog/configgeneralpage.cpp:183
+msgctxt "Group files in the Replay Gain tool by"
+msgid "Directories only"
+msgstr "Bara kataloger"
+
+#: configdialog/configgeneralpage.cpp:193
+msgid "Number of items to process at once:"
+msgstr "Antal poster att bearbeta på en gång:"
+
+#: convert.cpp:68 convert.cpp:1450
+msgid "Getting file"
+msgstr "Hämtar fil"
+
+#: convert.cpp:76 convert.cpp:133
+msgid "Copying \"%1\" to \"%2\""
+msgstr "Kopierar \"%1\" till \"%2\""
+
+#: convert.cpp:103 convert.cpp:1138
+msgid "File is encrypted, conversion not possible"
+msgstr "Filen är krypterad, konvertering ej möjlig"
+
+#: convert.cpp:121
+msgid "Cannot create output directory \"%1\""
+msgstr "Det gick inte att skapa utmatningskatalog \"%1\""
+
+#: convert.cpp:144 convert.cpp:478 convert.cpp:495
+#: replaygainscanner/replaygainprocessor.cpp:64
+msgid "No more backends left to try :("
+msgstr "Inga fler bakändar att prova :("
+
+#: convert.cpp:159 convert.cpp:274 convert.cpp:1456 filelist.cpp:582
+#: soundkonverter.cpp:321 soundkonverter.cpp:323 soundkonverter.cpp:350
+#: soundkonverter.cpp:352
+msgid "Converting"
+msgstr "Konverterar"
+
+#: convert.cpp:196 convert.cpp:435 convert.cpp:552
+msgid ""
+"Conversion failed. At least one of the used backends needs to be configured "
+"properly."
+msgstr ""
+"Konvertering misslyckades. Åtminstone en bakände som används måste "
+"konfigureras rätt."
+
+#: convert.cpp:202 convert.cpp:441 convert.cpp:558
+msgid ""
+"Conversion failed. The preferred plugin lacks support for a necessary "
+"feature."
+msgstr ""
+"Konvertering misslyckades. Föredraget insticksprogram saknar stöd för "
+"nödvändig egenskap."
+
+#: convert.cpp:208 convert.cpp:447 convert.cpp:564
+msgid "Conversion failed. Unknown Error."
+msgstr "Konvertering misslyckades. Okänt fel."
+
+#: convert.cpp:369 convert.cpp:1462 filelist.cpp:577
+msgid "Ripping"
+msgstr "Rippar"
+
+#: convert.cpp:374 convert.cpp:1468
+msgid "Decoding"
+msgstr "Avkodar"
+
+#: convert.cpp:379 convert.cpp:392 convert.cpp:398
+msgid "Applying filter"
+msgstr "Tillämpar filter"
+
+#: convert.cpp:387 convert.cpp:1480
+msgid "Encoding"
+msgstr "Kodar"
+
+#: convert.cpp:468
+msgid "Skipping Replay Gain, Album Gain will be calculated later"
+msgstr "Hoppar över Replay Gain, Album Gain räknas ut senare"
+
+#: convert.cpp:491 replaygainscanner/replaygainprocessor.cpp:60
+msgid "Applying Replay Gain"
+msgstr "Tillämpar Replay Gain"
+
+#: convert.cpp:531 replaygainscanner/replaygainprocessor.cpp:89
+msgid "Waiting for running Vorbis Gain process to finish"
+msgstr "Väntar på att pågående Vorbis Gain-process ska sluta"
+
+#: convert.cpp:580
+msgid "Writing tags"
+msgstr "Skriver etiketter"
+
+#: convert.cpp:632
+msgid "Executing next step"
+msgstr "Verkställer nästa steg"
+
+#: convert.cpp:797
+msgid "Read tags successfully"
+msgstr "Läsning av etiketter lyckades"
+
+#: convert.cpp:801
+msgid "Unable to read tags"
+msgstr "Kunde inte läsa etiketter"
+
+#: convert.cpp:824 convert.cpp:829
+msgctxt "removing file"
+msgid "Removing: %1"
+msgstr "Tar bort: %1"
+
+#: convert.cpp:838
+msgid "An error occurred. Error code: %1 (%2)"
+msgstr "Ett fel inträffade. Felkod: %1 (%2)"
+
+#: convert.cpp:955 convert.cpp:1040
+msgid "Conversion failed. Exit code: %1"
+msgstr "Konvertering misslyckades. Exit code: %1"
+
+#: convert.cpp:1107
+msgctxt "identificator for the logger"
+msgid "CD track %1: %2 - %3"
+msgstr "CD spår %1: %2 - %3"
+
+#: convert.cpp:1111
+msgctxt "identificator for the logger"
+msgid "CD track %1"
+msgstr "CD spår %1"
+
+#: convert.cpp:1118
+msgid "Adding new item to conversion list: '%1'"
+msgstr "Lägger till nytt objekt till konverteringslista: '%1'"
+
+#: convert.cpp:1127 replaygainscanner/replaygainprocessor.cpp:281
+msgid "Got log ID: %1"
+msgstr "Hämtade log ID: %1"
+
+#: convert.cpp:1159
+msgid "Track number: %1, device: %2"
+msgstr "Spår nummer: %1, enhet: %2"
+
+#: convert.cpp:1164
+msgid "Possible conversion strategies:"
+msgstr "Möjliga konverteringsstrategier:"
+
+#: convert.cpp:1178
+msgid "File system type: %1"
+msgstr "Filsystemtyp: %1"
+
+#: convert.cpp:1234
+msgid ""
+"An error occurred, the output file size is less than one percent of the "
+"input file size"
+msgstr ""
+"Ett fel inträffade, utfilens storlek är mindre än en procent av infilens"
+
+#: convert.cpp:1238
+msgid "Conversion failed, trying again. Exit code: -2 (%1)"
+msgstr "Konverteringen misslyckades, försöker igen. Exit code: -2 (%1)"
+
+#: convert.cpp:1240 convert.cpp:1318
+msgid "Removing partially converted output file"
+msgstr "Tar bort delvis konverterad utfil"
+
+#: convert.cpp:1253 replaygainscanner/replaygainprocessor.cpp:323
+msgctxt "Conversion exit status"
+msgid "Normal exit"
+msgstr "Normal avslutning"
+
+#: convert.cpp:1256 replaygainscanner/replaygainprocessor.cpp:326
+msgctxt "Conversion exit status"
+msgid "Succeeded but problems occurred"
+msgstr "Lyckades men problem inträffade"
+
+#: convert.cpp:1259 replaygainscanner/replaygainprocessor.cpp:329
+msgctxt "Conversion exit status"
+msgid "Aborted by the user"
+msgstr "Avbruten av användaren"
+
+#: convert.cpp:1262 replaygainscanner/replaygainprocessor.cpp:332
+msgctxt "Conversion exit status"
+msgid "Backend needs configuration"
+msgstr "Bakänden behöver konfigureras"
+
+#: convert.cpp:1265
+msgctxt "Conversion exit status"
+msgid "Not enough space on the output device"
+msgstr "Inte tillräckligt utrymme på utenheten"
+
+#: convert.cpp:1268
+msgctxt "Conversion exit status"
+msgid "Cannot write to output directory, please check permissions"
+msgstr ""
+"Det gick inte att skriva till utmatningskatalog, kontrollera tillstånd."
+
+#: convert.cpp:1271
+msgctxt "Conversion exit status"
+msgid "File already exists"
+msgstr "Filen finns redan"
+
+#: convert.cpp:1274
+msgctxt "Conversion exit status"
+msgid "File is encrypted"
+msgstr "Filen är krypterad"
+
+#: convert.cpp:1277 replaygainscanner/replaygainprocessor.cpp:338
+msgctxt "Conversion exit status"
+msgid "An error occurred"
+msgstr "Ett fel inträffade"
+
+#: convert.cpp:1298
+msgid "Executing command: \"%1\""
+msgstr "Verkställer kommando: \"%1\""
+
+#: convert.cpp:1324 replaygainscanner/replaygainprocessor.cpp:342
+msgid "Removing file from conversion list. Exit code %1 (%2)"
+msgstr "Tar bort fil från konverteringslistan. Exit code %1 (%2)"
+
+#: convert.cpp:1326
+msgid "Conversion time"
+msgstr "Konverteringstid"
+
+#: convert.cpp:1327
+msgid "Output file size"
+msgstr "Utfilsstorlek"
+
+#: convert.cpp:1328
+msgid "File size ratio"
+msgstr "Filstorleksförhållande"
+
+#: convert.cpp:1435
+msgctxt "The conversion progress can't be determined"
+msgid "Unknown"
+msgstr "Okänd"
+
+#: convert.cpp:1474
+msgid "Filter"
+msgstr "Filter"
+
+#: convert.cpp:1485 filelist.cpp:567
+msgid "Waiting for Replay Gain"
+msgstr "Väntar på Replay Gain"
+
+#: convert.cpp:1509 replaygainscanner/replaygainprocessor.cpp:407
+msgid "Progress: %1"
+msgstr "Förlopp: %1"
+
+#: core/backendplugin.cpp:40
+msgid ""
+"Wave is a very simple audio format that doesn't compress the audio stream so "
+"it's lossless but the file size is very big and it doesn't support advanced "
+"features like tags.<br>It is supported by virtually any software or device."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/WAV\">http://en.wikipedia.org/"
+"wiki/WAV</a>"
+msgstr ""
+"Wave är ett väldigt enkelt ljudformat som inte komprimerar ljudströmmen så "
+"det är förlustfritt men filstorleken är mycket stor och det stöder inte "
+"avancerade funktioner som etiketter. <br>Det stöds av nästan alla program "
+"och apparater.<br><br><a href=\"http://en.wikipedia.org/wiki/WAV\">http://en."
+"wikipedia.org/wiki/WAV</a>"
+
+#: core/backendplugin.cpp:47
+msgid ""
+"Advanced Audio Coding (AAC) is a lossy and popular audio format. It is "
+"widely used by Apple Inc.<br>In soundKonverter \"aac\" refers to only the "
+"codec. In order to get a file with tagging capabilities use \"m4a/aac\"."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/Advanced_Audio_Coding"
+"\">http://en.wikipedia.org/wiki/Advanced Audio Coding</a>"
+msgstr ""
+"Advanced Audio Coding (AAC) är ett förstörande och populärt ljudformat. Det "
+"används ofta av Apple Inc.<br>I soundKonverter refererar \"aac\" bara till "
+"omkodaren. För att få en fil som kan etiketteras använd \"m4a/aac\"."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/Advanced_Audio_Coding"
+"\">http://en.wikipedia.org/wiki/Advanced Audio Coding</a>"
+
+#: core/backendplugin.cpp:54
+msgid ""
+"Advanced Audio Coding (AAC) is a lossy and popular audio format. It is "
+"widely used by Apple Inc.<br>In soundKonverter \"m4a/aac\" refers to a "
+"MPEG-4 audio file encoded with AAC.<br><br><a href=\"http://en.wikipedia.org/"
+"wiki/Advanced_Audio_Coding\">http://en.wikipedia.org/wiki/Advanced Audio "
+"Coding</a>"
+msgstr ""
+"Advanced Audio Coding (AAC) är ett förstörande och populärt ljudformat. Det "
+"används ofta av Apple Inc.<br>I soundKonverter refererar \"m4a/aac\" till en "
+"MPEG-4 ljudfil kodad med AAC.<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"Advanced_Audio_Coding\">http://en.wikipedia.org/wiki/Advanced Audio Coding</"
+"a>"
+
+#: core/backendplugin.cpp:66
+msgid ""
+"Apple Lossless Audio Codec (ALAC) is a lossless audio format. It is widely "
+"used by Apple Inc.<br>In soundKonverter \"m4a/alac\" refers to a MPEG-4 "
+"audio file encoded with ALAC.<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"Apple_Lossless\">http://en.wikipedia.org/wiki/Apple Lossless</a>"
+msgstr ""
+"Apple Lossless Audio Codec (ALAC) är ett förlustfritt ljudformat. Det "
+"används ofta av Apple Inc.<br>I soundKonverter \"m4a/alac\" refererar till "
+"en MPEG-4 ljudfil kodad med ALAC.<br><br><a href=\"http://en.wikipedia.org/"
+"wiki/Apple_Lossless\">http://en.wikipedia.org/wiki/Apple Lossless</a>"
+
+#: core/backendplugin.cpp:84
+msgid ""
+"Ogg Vorbis is a lossy and popular audio format.<br>It is free of any legal "
+"restrictions.<br><br><a href=\"http://en.wikipedia.org/wiki/Vorbis\">http://"
+"en.wikipedia.org/wiki/Vorbis</a>"
+msgstr ""
+"Ogg Vorbis är ett förstörande och populärt ljudformat.<br>Det är fritt från "
+"juridiska restriktioner.<br><br><a href=\"http://en.wikipedia.org/wiki/Vorbis"
+"\">http://en.wikipedia.org/wiki/Vorbis</a>"
+
+#: core/backendplugin.cpp:95
+msgid ""
+"Opus is a lossy audio format designed for real time communication over the "
+"internet.<br>It can cover a wide range of bitrates with a high quality and "
+"it is free of any legal restrictions.<br><br><a href=\"http://en.wikipedia."
+"org/wiki/Opus_(audio_format)\">http://en.wikipedia.org/wiki/Opus (audio "
+"format)</a>"
+msgstr ""
+"Opus är ett förstörande ljudformat utformat för realtidskommunikation över "
+"Internet.<br>Det klarar många bithastigheter med hög kvalitet och är fritt "
+"från juridiska restriktioner.<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"Opus_(audio_format)\">http://en.wikipedia.org/wiki/Opus (audio format)</a>"
+
+#: core/backendplugin.cpp:103
+msgid ""
+"MPEG-1 or MPEG-2 Audio Layer III (MP3) is the most popular lossy audio "
+"format.<br>It is supported by virtually all audio players even though it has "
+"some legal restrictions.<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"MP3\">http://en.wikipedia.org/wiki/MP3</a>"
+msgstr ""
+"MPEG-1 eller MPEG-2 Audio Layer III (MP3) är det populäraste förstörande "
+"ljudformatet.<br>Det stöds av nästan alla ljudspelare även om det har en del "
+"juridiska restriktioner.<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"MP3\">http://en.wikipedia.org/wiki/MP3</a>"
+
+#: core/backendplugin.cpp:112
+msgid ""
+"Free Lossless Audio Codec (FLAC) is a lossless audio format.<br>It is free "
+"of any legal restrictions.<br><br><a href=\"http://en.wikipedia.org/wiki/FLAC"
+"\">http://en.wikipedia.org/wiki/FLAC</a>"
+msgstr ""
+"Free Lossless Audio Codec (FLAC) är ett förlustfritt ljudformat.<br>Det är "
+"fritt från juridiska restriktioner.<br><br><a href=\"http://en.wikipedia.org/"
+"wiki/FLAC\">http://en.wikipedia.org/wiki/FLAC</a>"
+
+#: core/backendplugin.cpp:122
+msgid ""
+"Windows Media Audio (WMA) is a lossy audio format developed by Microsoft."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/Windows_Media_Audio\">http://"
+"en.wikipedia.org/wiki/Windows Media Audio</a>"
+msgstr ""
+"Windows Media Audio (WMA) är ett förstörande ljudformat utvecklat av "
+"Microsoft.<br><br><a href=\"http://en.wikipedia.org/wiki/Windows_Media_Audio"
+"\">http://en.wikipedia.org/wiki/Windows Media Audio</a>"
+
+#: core/backendplugin.cpp:128
+msgid ""
+"AC3 or AC-3 is part of the Dolby Digital format family.<br>It was designed "
+"to be used for movies (e.g. DVDs) and supports surround sound.<br><br><a "
+"href=\"http://en.wikipedia.org/wiki/Dolby_Digital\">http://en.wikipedia.org/"
+"wiki/Dolby Digital</a>"
+msgstr ""
+"AC3 or AC-3 är en del av Dolby Digitals formatfamilj.<br>Det utvecklades för "
+"att användas för filmer (DVD) och stödjer surroundljud.<br><br><a href="
+"\"http://en.wikipedia.org/wiki/Dolby_Digital\">http://en.wikipedia.org/wiki/"
+"Dolby Digital</a>"
+
+#: core/backendplugin.cpp:141
+msgid ""
+"MPEG-1 or MPEG-2 Audio Layer II (MP2) is an old lossy audio format."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/MPEG-1_Audio_Layer_II"
+"\">http://en.wikipedia.org/wiki/MPEG-1 Audio Layer II</a>"
+msgstr ""
+"MPEG-1 or MPEG-2 Audio Layer II (MP2) är ett gammalt förstörande ljudformat."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/MPEG-1_Audio_Layer_II"
+"\">http://en.wikipedia.org/wiki/MPEG-1 Audio Layer II</a>"
+
+#: core/backendplugin.cpp:166
+msgid ""
+"Adaptive Multi-Rate Narrow-Band (AMR NB) is mainly used for speech "
+"compression for mobile communication.<br><br><a href=\"http://en.wikipedia."
+"org/wiki/Adaptive_Multi-Rate_audio_codec\">http://en.wikipedia.org/wiki/"
+"Adaptive Multi-Rate audio codec</a>"
+msgstr ""
+"Adaptive Multi-Rate Narrow-Band (AMR NB) används huvudsakligen för "
+"talkomprimering för mobilkommunikation.<br><br><a href=\"http://en.wikipedia."
+"org/wiki/Adaptive_Multi-Rate_audio_codec\">http://en.wikipedia.org/wiki/"
+"Adaptive Multi-Rate audio codec</a>"
+
+#: core/backendplugin.cpp:175
+msgid ""
+"Adaptive Multi-Rate Wide-Band (AMR WB) is an advanced version of AMR NB "
+"which uses a higher data rate resulting in a higher quality.<br>Still it "
+"should be used only for speech compression.<br><br><a href=\"http://en."
+"wikipedia.org/wiki/Adaptive_Multi-Rate_Wideband\">http://en.wikipedia.org/"
+"wiki/Adaptive Multi-Rate Wideband</a>"
+msgstr ""
+"Adaptive Multi-Rate Wide-Band (AMR WB) är en avancerad version av AMR NB som "
+"använder högre datahastighet vilket resulterar i högre kvalitet.<br>Trots "
+"det ska det bara användas för talkompression.<br><br><a href=\"http://en."
+"wikipedia.org/wiki/Adaptive_Multi-Rate_Wideband\">http://en.wikipedia.org/"
+"wiki/Adaptive Multi-Rate Wideband</a>"
+
+#: core/backendplugin.cpp:183
+msgid ""
+"Monkey's Audio is a lossless audio format.<br><br><a href=\"http://en."
+"wikipedia.org/wiki/Monkey's_Audio\">http://en.wikipedia.org/wiki/Monkey's "
+"Audio</a>"
+msgstr ""
+"Monkey's Audio är ett förlustfritt ljudformat.<br><br><a href=\"http://en."
+"wikipedia.org/wiki/Monkey's_Audio\">http://en.wikipedia.org/wiki/Monkey's "
+"Audio</a>"
+
+#: core/backendplugin.cpp:192
+msgid ""
+"Speex is a lossy audio format designed for speech encoding.<br>It is free of "
+"any legal restrictions. Since the release of Opus, Speex is considered "
+"obsolete.<br><br><a href=\"http://en.wikipedia.org/wiki/Speex\">http://en."
+"wikipedia.org/wiki/Speex<a/>"
+msgstr ""
+"Speex är ett förstörande ljudformat utformat för talkodning.<br>Det är fritt "
+"från juridiska restriktioner. Sedan Opus släppts, anses Speex föråldrat."
+"<br><br><a href=\"http://en.wikipedia.org/wiki/Speex\">http://en.wikipedia."
+"org/wiki/Speex<a/>"
+
+#: core/backendplugin.cpp:206
+msgid ""
+"Musepack (MPC) is a free and lossy file format based on mp2 and optimized "
+"for high quality.<br><br><a href=\"http://en.wikipedia.org/wiki/Musepack"
+"\">http://en.wikipedia.org/wiki/Musepack<a/>"
+msgstr ""
+"Musepack (MPC) är ett fritt och förstörande filformat baserat på mp2 och "
+"optimerat för hög kvalitet.<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"Musepack\">http://en.wikipedia.org/wiki/Musepack<a/>"
+
+#: core/backendplugin.cpp:216
+msgid ""
+"Shorten (SHN) is a free and lossless audio format.<br><br><a href=\"http://"
+"en.wikipedia.org/wiki/Shorten\">http://en.wikipedia.org/wiki/Shorten</a>"
+msgstr ""
+"Shorten (SHN) är ett fritt och förlustfritt ljudformat.<br><br><a href="
+"\"http://en.wikipedia.org/wiki/Shorten\">http://en.wikipedia.org/wiki/"
+"Shorten</a>"
+
+#: core/backendplugin.cpp:238
+msgid ""
+"True Audio (TTA) is a free and lossless audio format.<br><br><a href="
+"\"http://en.wikipedia.org/wiki/TTA_(codec)\">http://en.wikipedia.org/wiki/"
+"TTA (codec)<a/>"
+msgstr ""
+"True Audio (TTA) is a free and lossless audio format.<br><br><a href="
+"\"http://en.wikipedia.org/wiki/TTA_(codec)\">http://en.wikipedia.org/wiki/"
+"TTA (codec)<a/>"
+
+#: core/backendplugin.cpp:245
+msgid ""
+"WavPack (WV) is a free and lossless audio format.<br><br><a href=\"http://en."
+"wikipedia.org/wiki/WavPack\">http://en.wikipedia.org/wiki/WavPack<a/>"
+msgstr ""
+"WavPack (WV) är ett fritt och förlustfritt ljudformat.<br><br><a href="
+"\"http://en.wikipedia.org/wiki/WavPack\">http://en.wikipedia.org/wiki/"
+"WavPack<a/>"
+
+#: core/backendplugin.cpp:375
+msgid ""
+"8-Bit Sampled Voice (8SVX) is an audio file format standard developed by "
+"Electronic Arts for the Commodore-Amiga computer series.<br><br><a href="
+"\"http://en.wikipedia.org/wiki/8SVX\">http://en.wikipedia.org/wiki/8SVX</a>"
+msgstr ""
+"8-Bit Sampled Voice (8SVX) är en ljudfilformatstandard utvecklad av "
+"Electronic Arts för Commodore-Amiga datorserien.<br><br><a href=\"http://en."
+"wikipedia.org/wiki/8SVX\">http://en.wikipedia.org/wiki/8SVX</a>"
+
+#: core/backendplugin.cpp:386
+msgid ""
+"Audio Interchange File Format (AIFF) is a very simple audio format that "
+"doesn't compress the audio stream so it's lossless but the file size is very "
+"big and it doesn't support advanced features like tags.<br><br><a href="
+"\"http://en.wikipedia.org/wiki/Audio_Interchange_File_Format\">http://en."
+"wikipedia.org/wiki/Audio Interchange File Format</a>"
+msgstr ""
+"Audio Interchange File Format (AIFF) är ett mycket enkelt ljudformat som "
+"inte komprimerar ljudströmmen så det är förlustfritt men filstorleken är "
+"mycket stor och det stödjer inte avancerade funktioner som "
+"etiketter<br><br><a href=\"http://en.wikipedia.org/wiki/"
+"Audio_Interchange_File_Format\">http://en.wikipedia.org/wiki/Audio "
+"Interchange File Format</a>"
+
+#: core/backendplugin.cpp:454
+msgid "Killing process on user request"
+msgstr "Dödar processen på användarens begäran"
+
+#: core/backendplugin.cpp:529
+msgid "In order to encode %1 files, you need to install '%2'."
+msgstr "För att koda %1-filer, behöver du installera '%2'."
+
+#: core/backendplugin.cpp:536
+msgid "In order to decode %1 files, you need to install '%2'."
+msgstr "För att avkoda %1-filer, behöver du installera '%2'."
+
+#: core/backendplugin.cpp:543
+msgid "In order to transcode %1 files, you need to install '%2'."
+msgstr "För att koda om %1-filer, behöver du installera '%2'."
+
+#: core/backendplugin.cpp:550
+msgid ""
+"In order to calculate Replay Gain tags for %1 files, you need to install "
+"'%2'."
+msgstr ""
+"För att beräkna Replay Gain-etiketter för %1-filer, behöver du installera "
+"'%2'."
+
+#: core/backendplugin.cpp:557
+msgid "'%1' should be shipped with your distribution."
+msgstr "'%1' bör tillhandahållas av din distribution."
+
+#: core/backendplugin.cpp:564
+msgid ""
+"Since '%1' includes patented codecs, it may not be included in the default "
+"installation of your distribution. Many distributions offer '%1' in an "
+"additional software repository."
+msgstr ""
+"Eftersom '%1' inkluderar patenterade omkodare kanske det inte finns i "
+"standardinstallationen av din distribution. Många distributioner erbjuder "
+"'%1' i extraförråd."
+
+#: core/backendplugin.cpp:571
+msgid "You can download '%1' at %2"
+msgstr "Du kan ladda ner '%1' via %2"
+
+#: core/backendplugin.cpp:580
+msgid "In order to use the filter %1, you need to install '%2'."
+msgstr "För att använda filtret %1, behöver du installera '%2'."
+
+#: core/backendplugin.cpp:584
+msgid "In order to use the filters %1, you need to install '%2'."
+msgstr "För att använda filtren %1, behöver du installera '%2'."
+
+#: filelist.cpp:51
+msgid "State"
+msgstr "Status"
+
+#: filelist.cpp:52
+msgid "Input"
+msgstr "Inmating"
+
+#: filelist.cpp:53
+msgid "Output"
+msgstr "Utmatning"
+
+#: filelist.cpp:54 plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:30
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:104
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:129
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:30
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:75
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:100
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:86
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:184
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:216
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:501
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:513
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:67
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:37
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:97
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:123
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:34
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:84
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:111
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:36
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:93
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:119
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:36
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:93
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:119
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:64
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:137
+msgid "Quality"
+msgstr "Kvalitet"
+
+#: filelist.cpp:80
+msgid "Edit options..."
+msgstr "Redigera alternativ..."
+
+#: filelist.cpp:82
+msgid "Start conversion"
+msgstr "Starta konvertering"
+
+#: filelist.cpp:84
+msgid "Stop conversion"
+msgstr "Stoppa konvertering"
+
+#: filelist.cpp:86 optionssimple.cpp:47
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:101
+#: replaygainscanner/replaygainfilelist.cpp:75
+msgid "Remove"
+msgstr "Ta bort"
+
+#: filelist.cpp:179 opener/fileopener.cpp:142 opener/playlistopener.cpp:145
+#: replaygainscanner/replaygainfilelist.cpp:222
+#: replaygainscanner/replaygainscanner.cpp:208 soundkonverterview.cpp:347
+msgid ""
+"This file type is unknown to soundKonverter.\n"
+"Maybe you need to install an additional soundKonverter plugin.\n"
+"You should have a look at your distribution's package manager for this."
+msgstr ""
+"soundKonverter känner inte till denna filtyp.\n"
+"Du kanske behöver installera ett insticksprogram till soundKonverter.\n"
+"Du bör söka i pakethanteraren för din distribution för detta."
+
+#: filelist.cpp:217 opener/fileopener.cpp:182 opener/playlistopener.cpp:185
+#: opener/playlistopener.cpp:217 replaygainscanner/replaygainfilelist.cpp:260
+#: replaygainscanner/replaygainscanner.cpp:248 soundkonverterview.cpp:385
+msgid "... and %1 more files"
+msgstr "... och %1 fler filer"
+
+#: filelist.cpp:548
+msgid "Will be skipped"
+msgstr "Kommer att hoppas över"
+
+#: filelist.cpp:552
+msgid "Will be copied"
+msgstr "Kommer att kopieras"
+
+#: filelist.cpp:556 soundkonverter.cpp:111 soundkonverter.cpp:115
+msgid "Waiting"
+msgstr "Väntar"
+
+#: filelist.cpp:596
+msgctxt "Short conversion status"
+msgid "Stopped"
+msgstr "Stoppad"
+
+#: filelist.cpp:601
+msgctxt "Short conversion status"
+msgid "Backend not configured"
+msgstr "Bakänden är inte konfigurerad"
+
+#: filelist.cpp:606
+msgctxt "Short conversion status"
+msgid "Disc full"
+msgstr "Disken full"
+
+#: filelist.cpp:611
+msgctxt "Short conversion status"
+msgid "Can't write output"
+msgstr "Det gick inte att skriva utmatning"
+
+#: filelist.cpp:614 filelist.cpp:631 filelist.cpp:643
+msgid ""
+"The conversion has failed.\n"
+"See the log for more information."
+msgstr ""
+"Konverteringen misslyckades.\n"
+"Läs loggfilen för mer information."
+
+#: filelist.cpp:623
+msgid "Skipped"
+msgstr "Överhoppad"
+
+#: filelist.cpp:628
+msgctxt "Short conversion status"
+msgid "File is encrypted"
+msgstr "Filen är krypterad"
+
+#: filelist.cpp:640
+msgctxt "Short conversion status"
+msgid "Failed"
+msgstr "Misslyckades"
+
+#: filelist.cpp:666
+msgid "CD track %1"
+msgstr "CD spår %1"
+
+#: filelist.cpp:1355
+msgid ""
+"Do you want to overwrite the current file list?\n"
+"\n"
+"If not, the saved file list will be appended."
+msgstr ""
+"Vill du skriva över den aktuella fillistan?\n"
+"\n"
+"Om inte kommer den sparade fillistan att utökas."
+
+#: global.cpp:97 global.cpp:99 global.cpp:123 global.cpp:125
+msgctxt "days"
+msgid "d"
+msgstr "d"
+
+#: global.cpp:99 global.cpp:101 global.cpp:125 global.cpp:127
+msgctxt "hours"
+msgid "h"
+msgstr "h"
+
+#: global.cpp:101 global.cpp:103 global.cpp:105 global.cpp:127 global.cpp:129
+#: global.cpp:131
+msgctxt "minutes"
+msgid "m"
+msgstr "m"
+
+#: global.cpp:103 global.cpp:105 global.cpp:107 global.cpp:109 global.cpp:111
+#: global.cpp:129 global.cpp:131 global.cpp:133
+msgctxt "seconds"
+msgid "s"
+msgstr "s"
+
+#: global.cpp:107 global.cpp:109 global.cpp:111 global.cpp:113
+msgctxt "milliseconds"
+msgid "ms"
+msgstr "ms"
+
+#: logger.cpp:75
+msgid "Identifier"
+msgstr "Identifierare"
+
+#: logger.cpp:76
+msgid "Log ID"
+msgstr "Logg ID"
+
+#: logger.cpp:145 logger.cpp:148
+msgid "Finished logging"
+msgstr "Loggning slutförd"
+
+#: logviewer.cpp:27
+msgid "Log Viewer"
+msgstr "Loggläsare"
+
+#: logviewer.cpp:30
+msgid "Update"
+msgstr "Uppdatering"
+
+#: logviewer.cpp:33
+msgid "Save to file..."
+msgstr "Spara till fil..."
+
+#: logviewer.cpp:44
+msgid "Log file:"
+msgstr "Loggfil:"
+
+#: logviewer.cpp:88
+msgid "soundKonverter application log"
+msgstr "soundKonverters programlogg"
+
+#: logviewer.cpp:131
+msgid "Save log file"
+msgstr "Spara loggfil"
+
+#: logviewer.cpp:138
+msgid "File already exists. Do you really want to overwrite it?"
+msgstr "Filen finns redan. Vill du verkligen skriva över den?"
+
+#: logviewer.cpp:143
+msgid ""
+"Writing to file failed.\n"
+"Maybe you haven't got write permission."
+msgstr ""
+"Skrivning till fil misslyckades.\n"
+"Kanske har du inte skrivrättigheter."
+
+#: main.cpp:16
+msgid ""
+"soundKonverter is a frontend to various audio converters, Replay Gain tools "
+"and CD rippers.\n"
+"\n"
+"Please file bug reports at https://github.com/HessiJames/soundkonverter/"
+"issues"
+msgstr ""
+"SoundKonverter är en framända för olika ljudkonverterare, Replay Gain-"
+"verktyg och CD-rippare\n"
+"\n"
+"Lämna felrapporter på https://github.com/HessiJames/soundkonverter/issues"
+
+#: main.cpp:22
+msgid "soundKonverter"
+msgstr "soundKonverter"
+
+#: main.cpp:22
+msgid "(C) 2005-2016 Daniel Faust"
+msgstr "(C) 2005-2016 Daniel Faust"
+
+#: main.cpp:23
+msgid "Daniel Faust"
+msgstr "Daniel Faust"
+
+#: main.cpp:24
+msgid "David Vignoni"
+msgstr "David Vignoni"
+
+#: main.cpp:24
+msgid "Nuvola icon theme"
+msgstr "Nuvola ikontema"
+
+#: main.cpp:25
+msgid "Scott Wheeler"
+msgstr "Scott Wheeler"
+
+#: main.cpp:25
+msgid "TagLib"
+msgstr "TagLib"
+
+#: main.cpp:26
+msgid "Marco Nelles"
+msgstr "Marco Nelles"
+
+#: main.cpp:26
+msgid "Audex"
+msgstr "Audex"
+
+#: main.cpp:27
+msgid "Amarok developers"
+msgstr "Amarokutvecklarna"
+
+#: main.cpp:27
+msgid "Amarok"
+msgstr "Amarok"
+
+#: main.cpp:28
+msgid "All programmers of audio converters"
+msgstr "Alla programmerare av ljudkonverterare"
+
+#: main.cpp:32
+msgid "Open the Replay Gain tool and add all given files"
+msgstr "Öppna Replay Gain-verktyget och lägg till alla angivna filer"
+
+#: main.cpp:33
+msgid "List all tracks on the cd drive <device>, 'auto' will search for a cd"
+msgstr "Lista alla spår på CD-spelaren <enhet>, 'auto' söker efter cd"
+
+#: main.cpp:34
+msgid "Add all files using the given profile"
+msgstr "Lägg till alla filer med angiven profil"
+
+#: main.cpp:35
+msgid "Add all files using the given format"
+msgstr "Lägg till alla filer med angivet format"
+
+#: main.cpp:36
+msgid "Output all files to <directory>"
+msgstr "Spara alla filer till <katalog>"
+
+#: main.cpp:37
+msgid "Start soundKonverter invisible"
+msgstr "Starta soundKonverter osynligt"
+
+#: main.cpp:38
+msgid "Start the conversion immediately (enabled when using '--invisible')"
+msgstr "Starta konvertering direkt (aktiverat då  '--invisible' används)"
+
+#: main.cpp:39
+msgid ""
+"Close soundKonverter after all files are converted (enabled when using '--"
+"invisible')"
+msgstr ""
+"Stäng soundKonverter då alla filer konverterats (aktiverat då '--invisible' "
+"används)"
+
+#: main.cpp:40
+#, c-format
+msgid ""
+"Execute <command> after each file has been converted (%i=input file, "
+"%o=output file)"
+msgstr "Utför <kommando> då varje fil är konverterad  (%i=infil, %o=utfil)"
+
+#: main.cpp:41
+msgid "Load the file list at <path> after starting soundKonverter"
+msgstr "Läs in fillistan i <path> efter SoundKonverter startat"
+
+#: main.cpp:42
+msgid "Audio file(s) to append to the file list"
+msgstr "Ljudfil(er) att bifoga fillistan"
+
+#: metadata/tagengine.cpp:74
+msgctxt "cover type"
+msgid "Unclassified"
+msgstr "Oklassificerad"
+
+#: metadata/tagengine.cpp:76
+msgctxt "cover type"
+msgid "32x32 PNG file icon"
+msgstr "32x32 PNG filikon"
+
+#: metadata/tagengine.cpp:78
+msgctxt "cover type"
+msgid "File icon"
+msgstr "Filikon"
+
+#: metadata/tagengine.cpp:80
+msgctxt "cover type"
+msgid "Front cover"
+msgstr "Framsida"
+
+#: metadata/tagengine.cpp:82
+msgctxt "cover type"
+msgid "Back cover"
+msgstr "Baksida"
+
+#: metadata/tagengine.cpp:84
+msgctxt "cover type"
+msgid "Leaflet page"
+msgstr "Broschyrsida"
+
+#: metadata/tagengine.cpp:86
+msgctxt "cover type"
+msgid "CD photo"
+msgstr "CD-foto"
+
+#: metadata/tagengine.cpp:88
+msgctxt "cover type"
+msgid "Lead artist picture"
+msgstr "Bild på huvudartist"
+
+#: metadata/tagengine.cpp:90
+msgctxt "cover type"
+msgid "Artist picture"
+msgstr "Bild på artist"
+
+#: metadata/tagengine.cpp:92
+msgctxt "cover type"
+msgid "Conductor picture"
+msgstr "Bild på dirigent"
+
+#: metadata/tagengine.cpp:94
+msgctxt "cover type"
+msgid "Band picture"
+msgstr "Bild på band"
+
+#: metadata/tagengine.cpp:96
+msgctxt "cover type"
+msgid "Composer picture"
+msgstr "Bild på kompositör"
+
+#: metadata/tagengine.cpp:98
+msgctxt "cover type"
+msgid "Lyricist picture"
+msgstr "Bild på låtskrivare"
+
+#: metadata/tagengine.cpp:100
+msgctxt "cover type"
+msgid "Picture of the recording location"
+msgstr "Bild på inspelningsplats"
+
+#: metadata/tagengine.cpp:102
+msgctxt "cover type"
+msgid "Picture of the artists during recording"
+msgstr "Bild på artisterna under inspelning"
+
+#: metadata/tagengine.cpp:104
+msgctxt "cover type"
+msgid "Picture of the artists during performance"
+msgstr "Bild på artisterna under framförande"
+
+#: metadata/tagengine.cpp:106
+msgctxt "cover type"
+msgid "Picture from a video"
+msgstr "Bild från video"
+
+#: metadata/tagengine.cpp:108
+msgctxt "cover type"
+msgid "Picture of a large, coloured fish"
+msgstr "Bild på en stor, färgglad fisk"
+
+#: metadata/tagengine.cpp:110
+msgctxt "cover type"
+msgid "Illustration related to the track"
+msgstr "Illustration med samband med spåret"
+
+#: metadata/tagengine.cpp:112
+msgctxt "cover type"
+msgid "Band logo"
+msgstr "Bandlogotyp"
+
+#: metadata/tagengine.cpp:114
+msgctxt "cover type"
+msgid "Publisher logo"
+msgstr "Utgivarens logotyp"
+
+#: opener/cdopener.cpp:123
+msgid "Add CD tracks"
+msgstr "Lägg till CD spår"
+
+#: opener/cdopener.cpp:132
+msgid "1. Select CD tracks"
+msgstr "1. Välj CD spår"
+
+#: opener/cdopener.cpp:137 opener/diropener.cpp:61 opener/urlopener.cpp:56
+msgid "2. Set conversion options"
+msgstr "2. Ange konverteringsalternativ"
+
+#: opener/cdopener.cpp:170 optionseditor.cpp:161
+msgid "Album artist:"
+msgstr "Albumartist:"
+
+#: opener/cdopener.cpp:177 optionseditor.cpp:177
+msgid "Album:"
+msgstr "Album:"
+
+#: opener/cdopener.cpp:183 optionseditor.cpp:193
+msgid "Disc No.:"
+msgstr "Disk Nr.:"
+
+#: opener/cdopener.cpp:191 optionseditor.cpp:118 optionseditor.cpp:204
+msgctxt "Track/Disc No. x of y"
+msgid "of"
+msgstr "av"
+
+#: opener/cdopener.cpp:196 optionseditor.cpp:216
+msgid "Year:"
+msgstr "År:"
+
+#: opener/cdopener.cpp:201 optionseditor.cpp:228
+msgid "Genre:"
+msgstr "Genre:"
+
+#: opener/cdopener.cpp:221
+msgctxt "column title"
+msgid "Rip"
+msgstr "Rippa"
+
+#: opener/cdopener.cpp:222 opener/cdopener.cpp:987
+#: replaygainscanner/replaygainfilelist.cpp:36
+msgid "Track"
+msgstr "Spår"
+
+#: opener/cdopener.cpp:223
+msgid "Artist"
+msgstr "Artist"
+
+#: opener/cdopener.cpp:224
+msgid "Composer"
+msgstr "Kompositör"
+
+#: opener/cdopener.cpp:225
+msgid "Title"
+msgstr "Titel"
+
+#: opener/cdopener.cpp:226
+msgid "Length"
+msgstr "Längd"
+
+#: opener/cdopener.cpp:227
+msgid "Player"
+msgstr "Spelare"
+
+#: opener/cdopener.cpp:243
+msgid "No track selected"
+msgstr "Inget spår valt"
+
+#: opener/cdopener.cpp:268 optionseditor.cpp:96
+msgid "Title:"
+msgstr "Titel:"
+
+#: opener/cdopener.cpp:283 optionseditor.cpp:134
+msgid "Artist:"
+msgstr "Artist:"
+
+#: opener/cdopener.cpp:294 optionseditor.cpp:145
+msgid "Composer:"
+msgstr "Kompositör:"
+
+#: opener/cdopener.cpp:309 optionseditor.cpp:249
+msgid "Comment:"
+msgstr "Kommentar:"
+
+#: opener/cdopener.cpp:360 opener/diropener.cpp:148 opener/fileopener.cpp:59
+#: opener/playlistopener.cpp:44 opener/urlopener.cpp:73 optionseditor.cpp:58
+#: optionslayer.cpp:42
+msgid "Select your desired output options and click on \"Ok\"."
+msgstr "Välj önskade utalternativ och klicka \"Ok\"."
+
+#: opener/cdopener.cpp:378
+msgid "Save cue sheet..."
+msgstr "Spara metadata..."
+
+#: opener/cdopener.cpp:383
+msgid "Request CDDB"
+msgstr "Sök i CDDB"
+
+#: opener/cdopener.cpp:388
+msgid "Rip entire CD to one file"
+msgstr "Rippa CD till en enda fil"
+
+#: opener/cdopener.cpp:398
+msgid ""
+"Ripping an entire cd to a single file is not supported by the installed "
+"backends.\n"
+"Possible solutions are listed below.\n"
+msgstr ""
+"Rippning av cd till en enda fil stöds inte av installerade bakändar.\n"
+"Möjliga lösningar listas nedan.\n"
+
+#: opener/cdopener.cpp:402
+msgid ""
+"Ripping an entire cd to a single file is not supported by the installed "
+"backends.\n"
+"Please check your distribution's package manager in order to install an "
+"additional ripper plugin which supports ripping to one file."
+msgstr ""
+"Rippning av cd till en enda fil stöds inte av installerade bakändar.\n"
+"Kontrollera din distributions pakethanterare för att installera ytterligare "
+"insticksprogram som stöder rippning till en enda fil."
+
+#: opener/cdopener.cpp:409 opener/diropener.cpp:40 opener/urlopener.cpp:84
+msgid "Proceed"
+msgstr "Fortsätt"
+
+#: opener/cdopener.cpp:412 opener/fileopener.cpp:67
+#: opener/playlistopener.cpp:52 opener/urlopener.cpp:87 optionslayer.cpp:49
+msgid "Ok"
+msgstr "Ok"
+
+#: opener/cdopener.cpp:416 opener/fileopener.cpp:70
+#: opener/playlistopener.cpp:55 opener/urlopener.cpp:91 optionslayer.cpp:52
+#: replaygainscanner/replaygainscanner.cpp:88
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: opener/cdopener.cpp:457
+msgid "Select CD-ROM drive"
+msgstr "Välj CD-ROM spelare"
+
+#: opener/cdopener.cpp:457
+msgid "Multiple CD-ROM drives where found. Please select one:"
+msgstr "Flera CD-ROM spelare hittades. Välj en:"
+
+#: opener/cdopener.cpp:555
+msgid "%1 (%2): Audio CD with %3 tracks"
+msgstr "%1 (%2): Ljud CD med %3 spår"
+
+#: opener/cdopener.cpp:680
+msgid "Please wait, trying to download CDDB data ..."
+msgstr "Vänta, försöker ladda ner CDDB data ..."
+
+#: opener/cdopener.cpp:729
+msgid "Select CDDB Entry"
+msgstr "Välj CDDB Post"
+
+#: opener/cdopener.cpp:729
+msgid "Multiple CDDB entries where found. Please select one:"
+msgstr "Flera CDDB poster hittades. Välj en:"
+
+#: opener/cdopener.cpp:889
+msgid "All tracks"
+msgstr "Alla spår"
+
+#: opener/cdopener.cpp:893
+msgid "Tracks"
+msgstr "Spår"
+
+#: opener/cdopener.cpp:1213
+msgid "Please select at least one track in order to proceed."
+msgstr "Välj minst ett spår för att fortsätta."
+
+#: opener/cdopener.cpp:1291 opener/diropener.cpp:212 opener/fileopener.cpp:209
+#: opener/playlistopener.cpp:242 opener/urlopener.cpp:149 optionslayer.cpp:139
+msgid "No conversion options selected."
+msgstr "Inga konverteringsalternativ valda."
+
+#: opener/cdopener.cpp:1305
+msgid ""
+"A file with this name already exists.\n"
+"\n"
+"Do you want to overwrite the existing one?"
+msgstr ""
+"En fil med detta namn finns redan.\n"
+"\n"
+"Vill du skriva över existerande fil?"
+
+#: opener/cdopener.cpp:1306
+msgid "File already exists"
+msgstr "Filen finns redan"
+
+#: opener/diropener.cpp:28
+msgid "Add folder"
+msgstr "Lägg till mapp"
+
+#: opener/diropener.cpp:56
+msgid "1. Select directory"
+msgstr "1. Välj katalog"
+
+#: opener/diropener.cpp:87
+msgid "Directory:"
+msgstr "Katalog:"
+
+#: opener/diropener.cpp:94
+msgid "Only add selected file formats:"
+msgstr "Lägg bara till valda filformat:"
+
+#: opener/diropener.cpp:122 opener/fileopener.cpp:75
+#: replaygainscanner/replaygainscanner.cpp:159
+msgid "Are you missing some file formats?"
+msgstr "Saknar du några filformat?"
+
+#: opener/diropener.cpp:130
+msgid "Select all"
+msgstr "Välj alla"
+
+#: opener/diropener.cpp:134
+msgid "Select none"
+msgstr "Välj ingen"
+
+#: opener/diropener.cpp:138
+msgid "Recursive"
+msgstr "Rekursiv"
+
+#: opener/diropener.cpp:140
+msgid "If checked, files from subdirectories will be added, too."
+msgstr "Om vald kommer filer från undermappar att läggas till."
+
+#: opener/fileopener.cpp:33 opener/fileopener.cpp:79
+#: opener/playlistopener.cpp:60 replaygainscanner/replaygainscanner.cpp:163
+msgid "Add Files"
+msgstr "Lägg till filer"
+
+#: opener/fileopener.cpp:54 replaygainscanner/replaygainscanner.cpp:153
+msgid "%1 files"
+msgstr "%1-filer"
+
+#: opener/fileopener.cpp:56 replaygainscanner/replaygainscanner.cpp:155
+msgid "All supported files"
+msgstr "Alla filer som stöds"
+
+#: opener/fileopener.cpp:57 replaygainscanner/replaygainscanner.cpp:156
+msgid "All files"
+msgstr "Alla filer"
+
+#: opener/playlistopener.cpp:33
+msgid "Add playlist"
+msgstr "Lägg till spellista"
+
+#: opener/playlistopener.cpp:219
+msgid "The following files couldn't be found:\n"
+msgstr "Följande filer kunde inte hittas:\n"
+
+#: opener/playlistopener.cpp:222
+msgid "Files not found"
+msgstr "Filer hittades inte"
+
+#: opener/urlopener.cpp:36
+msgid "Add url"
+msgstr "Lägg till url"
+
+#: opener/urlopener.cpp:51
+msgid "1. Enter url"
+msgstr "1. Ange url"
+
+#: opener/urlopener.cpp:117
+msgid "The Url you entered is invalid. Please try again."
+msgstr "Den Url du angav är ogiltig. Försök igen. "
+
+#: optionsdetailed.cpp:44 optionssimple.cpp:61
+msgid "Format:"
+msgstr "Format:"
+
+#: optionsdetailed.cpp:54
+msgid "Use Plugin:"
+msgstr "Använd insticksprogram:"
+
+#: optionsdetailed.cpp:119 optionssimple.cpp:82
+msgid "Destination:"
+msgstr "Destination:"
+
+#: optionsdetailed.cpp:127 optionssimple.cpp:104
+msgid "Calculate Replay Gain tags"
+msgstr "Beräkna Replay Gain etiketter"
+
+#: optionsdetailed.cpp:137
+msgid "Save current options as a profile"
+msgstr "Spara aktuella alternativ som en profil"
+
+#: optionsdetailed.cpp:144
+msgid "Load saved profiles"
+msgstr "Ladda sparade profiler"
+
+#: optionsdetailed.cpp:257
+msgid ""
+"Replay Gain is not supported for the %1 file format.\n"
+"Possible solutions are listed below."
+msgstr ""
+"Replay Gain stöds inte för %1 filformatet.\n"
+"Möjliga lösningar listas nedan."
+
+#: optionsdetailed.cpp:261
+msgid ""
+"Replay Gain is not supported for the %1 file format.\n"
+"Please check your distribution's package manager in order to install an "
+"additional Replay Gain plugin."
+msgstr ""
+"Replay Gain stöds inte för %1 filformatet.\n"
+"Sök i pakethanteraren för din distribution för att installera ett "
+"insticksprogram för Replay Gain."
+
+#: optionsdetailed.cpp:267
+msgid ""
+"Replay Gain tags can tell your music player how loud a track is\n"
+"so it can adjust the volume to play all tracks with equal loudness."
+msgstr ""
+"Replay Gain etiketter kan säga till din musikspelare hur högt ett spår är\n"
+"så att den kan anpassa volymen för att spela alla spår lika starkt."
+
+#: optionsdetailed.cpp:320 optionssimple.cpp:392
+msgid ""
+"Using the current conversion options will create files with approximately %1 "
+"per minute."
+msgstr ""
+"Att använda aktuella konverteringsinställningar skapar %1-filer per minut."
+
+#: optionsdetailed.cpp:457
+msgid "New profile"
+msgstr "Ny profil"
+
+#: optionsdetailed.cpp:457
+msgid "Enter a name for the new profile:"
+msgstr "Ange ett namn för den nya profilen:"
+
+#: optionsdetailed.cpp:464
+msgid "You cannot save a profile without a name."
+msgstr "Du kan inte spara en profil utan namn."
+
+#: optionsdetailed.cpp:464
+msgid "Profile name is empty"
+msgstr "Profilnamnet är tomt"
+
+#: optionsdetailed.cpp:484
+msgid "You cannot overwrite the built-in profiles."
+msgstr "Du kan inte skriva över inbyggda profiler."
+
+#: optionsdetailed.cpp:484 optionsdetailed.cpp:509
+msgid "Profile already exists"
+msgstr "Profil finns redan"
+
+#: optionsdetailed.cpp:509
+msgid ""
+"A profile with this name already exists.\n"
+"\n"
+"Do you want to overwrite the existing one?"
+msgstr ""
+"En profil med detta namn finns redan.\n"
+"\n"
+"Vill du skriva över befintlig profil?"
+
+#: optionseditor.cpp:41
+msgid "Previous"
+msgstr "Föregående"
+
+#: optionseditor.cpp:43
+msgid "Next"
+msgstr "Nästa"
+
+#: optionseditor.cpp:66
+msgid "Edit conversion options"
+msgstr "Redigera konverteringsalternativ"
+
+#: optionseditor.cpp:75
+msgid "Tags"
+msgstr "Etiketter"
+
+#: optionseditor.cpp:86
+msgid "Covers:"
+msgstr "Omslag:"
+
+#: optionseditor.cpp:103 optionseditor.cpp:114 optionseditor.cpp:125
+#: optionseditor.cpp:141 optionseditor.cpp:152 optionseditor.cpp:168
+#: optionseditor.cpp:184 optionseditor.cpp:200 optionseditor.cpp:211
+#: optionseditor.cpp:223 optionseditor.cpp:240 optionseditor.cpp:256
+msgid "Edit"
+msgstr "Redigera"
+
+#: optionseditor.cpp:107
+msgid "Track No.:"
+msgstr "Spår Nr.:"
+
+#: optionseditor.cpp:266
+msgid "Edit tags"
+msgstr "Redigera etiketter"
+
+#: optionseditor.cpp:374
+msgid "No file selected"
+msgstr "Ingen fil vald"
+
+#: optionseditor.cpp:405
+msgid ""
+"The tags could not be read, because this is not a local file.\n"
+"soundKonverter will try to read the tags, when it is about to convert the "
+"file.\n"
+"If you want to edit the tags, you can hit the button below but then "
+"soundKonverter will not try\n"
+"to read the tags after downloading."
+msgstr ""
+"Etiketterna kunde inte läsas därför att detta inte är en lokal fil.\n"
+"soundKonverter försöker läsa etiketterna vid konverteringen av filen.\n"
+"Om du vill redigera etiketterna, klicka på knappen nedan, men soundKonverter "
+"kommer då inte att\n"
+"försöka läsa etiketterna efter nedladdning."
+
+#: optionseditor.cpp:415
+msgid ""
+"Reading the tags of this file failed.\n"
+"soundKonverter will try to read the tags a second time, when it is about to "
+"convert the file.\n"
+"If you want to edit the tags, you can hit the button below but then "
+"soundKonverter will not try\n"
+"to read the tags a second time."
+msgstr ""
+"Läsning av denna fils etiketter misslyckades.\n"
+"soundKonverter försöker läsa etiketterna en andra gång då filen "
+"konverteras.\n"
+"Om du vill redigera etiketterna, klicka på knappen nedan, men soundKonverter "
+"kommer då inte att\n"
+"försöka läsa etiketterna en andra gång."
+
+#: optionseditor.cpp:441
+msgctxt "cover tooltip"
+msgid "Cover type:"
+msgstr "Omslagstyp:"
+
+#: optionseditor.cpp:443
+msgctxt "cover tooltip"
+msgid "Description:"
+msgstr "Beskrivning:"
+
+#: optionseditor.cpp:444
+msgctxt "cover tooltip"
+msgid "Size:"
+msgstr "Storlek:"
+
+#: optionseditor.cpp:444
+msgctxt "cover tooltip"
+msgid "%1 x %2 pixels (%3)"
+msgstr "%1 x %2 pixlar (%3)"
+
+#: optionseditor.cpp:446
+msgctxt "cover tooltip"
+msgid "Mime type:"
+msgstr "Mime typ:"
+
+#: optionseditor.cpp:471
+msgid "%1 Files"
+msgstr "%1-Filer"
+
+#: optionseditor.cpp:493
+msgid ""
+"You have selected multiple files with different conversion options.\n"
+"You can change the options of all files by hitting the button below."
+msgstr ""
+"Du har valt filer med olika konverteringsalternativ.\n"
+"Du kan ändra alternativen för alla filer genom att trycka på knappen nedan."
+
+#: optionseditor.cpp:501
+msgid ""
+"Reading the tags of one or more files failed.\n"
+"soundKonverter will try to read the tags a second time, when it is about to "
+"convert the files.\n"
+"If you want to edit the tags, you can hit the button below but then "
+"soundKonverter will not try\n"
+"to read the tags a second time."
+msgstr ""
+"Läsning av etiketter på en eller flera filer misslyckades.\n"
+"soundKonverter försöker läsa etiketterna igen då filerna konverteras.\n"
+"Om du vill redigera etiketterna trycker du på knappen nedan men "
+"soundKonverter kommer då\n"
+"inte att försöka läsa etiketterna igen."
+
+#: optionssimple.cpp:38 plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:70
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:291
+msgid "Quality:"
+msgstr "Kvalitet:"
+
+#: optionssimple.cpp:49
+msgid "Remove the selected profile"
+msgstr "Ta bort vald profil"
+
+#: optionssimple.cpp:52 optionssimple.cpp:71
+msgid "Info"
+msgstr "Information"
+
+#: optionssimple.cpp:54
+msgid "Information about the selected profile"
+msgstr "Information om vald profil"
+
+#: optionssimple.cpp:73
+msgid "Information about the selected file format"
+msgstr "Information om valt filformat"
+
+#: optionssimple.cpp:77
+msgid "More formats..."
+msgstr "Fler format..."
+
+#: optionssimple.cpp:99
+msgid "Optional:"
+msgstr "Tillval:"
+
+#: optionssimple.cpp:192
+msgid ""
+"Encoding files with a very low quality can be useful if you have a mobile "
+"device where your storage space is limited.\n"
+"It is not recommended to save your music in this quality without a copy of "
+"higher quality."
+msgstr ""
+"Att koda filer med mycket låg kvalitet kan vara användbart om du har en "
+"mobil enhet där ditt lagringsutrymme är begränsat.\n"
+"Det är inte att rekommendera att spara din musik i denna kvalitet utan en "
+"kopia med högre kvalitet."
+
+#: optionssimple.cpp:196
+msgid ""
+"Encoding files with a low quality can be useful if you have a mobile device "
+"where your storage space is limited.\n"
+"It is not recommended to save your music in this quality without a copy of "
+"higher quality."
+msgstr ""
+"Att koda filer med låg kvalitet kan vara användbart om du har en mobil enhet "
+"där ditt lagringsutrymme är begränsat.\n"
+"Det är inte att rekommendera att spara din musik i denna kvalitet utan en "
+"kopia med högre kvalitet."
+
+#: optionssimple.cpp:200
+msgid ""
+"Encoding files with a medium quality is a compromise between quality and "
+"file size.\n"
+"Most people might not hear much of a difference to the original files but "
+"you should only use it to save music if your storage space is limited."
+msgstr ""
+"Att koda filer med mediumkvalitet är en kompromiss mellan kvalitet och "
+"filstorlek.\n"
+"De flesta hör nog ingen stor skillnad jämfört med originalfilerna men du bör "
+"bara använda det för att spara musik om ditt lagringsutrymme är begränsat."
+
+#: optionssimple.cpp:204
+msgid ""
+"Encoding files with a high quality is a good choice if you have enough "
+"storage space available. You can use this to save your music."
+msgstr ""
+"Koda filer med hög kvalitet är ett bra val om du har tillräckligt med "
+"lagringsutrymme. Du kan använda detta för att spara din musik."
+
+#: optionssimple.cpp:208
+msgid ""
+"Encoding files with a very high quality is fine if you have enough storage "
+"space."
+msgstr ""
+"Koda musik med mycket hög kvalitet är bra om du har tillräckligt "
+"lagringsutrymme."
+
+#: optionssimple.cpp:212
+msgid ""
+"Encoding files lossless will preserve the quality of the original file.\n"
+"It is only then useful if the original file has a good quality (e.g. audio "
+"CD).\n"
+"The file size will be big, so you should only use it if you have enough "
+"storage space."
+msgstr ""
+"Lagra filer förlustfritt bevarar originalfilens kvalitet.\n"
+"Det är bara användbart om originalfilen är av god kvalitet (ljud-CD).\n"
+"Filstorleken blir stor, så du bör bara använda det om du har tillräckligt "
+"lagringsutrymme."
+
+#: optionssimple.cpp:220
+msgid "You can define your own profile in the \"Detailed\" tab."
+msgstr "Du kan definiera din egen profil under fliken \"detaljerat\"."
+
+#: optionssimple.cpp:224
+msgid "This is a user defined profile."
+msgstr "Detta är en användardefinierad profil."
+
+#: optionssimple.cpp:227
+msgid "Profile info for %1"
+msgstr "Profilinformation för %1"
+
+#: optionssimple.cpp:234
+msgid "Do you really want to remove the profile: %1"
+msgstr "Vill du verkligen ta bort profilen: %1"
+
+#: optionssimple.cpp:234
+msgid "Remove profile?"
+msgstr "Ta bort profil?"
+
+#: optionssimple.cpp:283
+msgid "Format info for %1"
+msgstr "Formatinformation för %1"
+
+#: optionssimple.cpp:287
+msgid "Sorry, no format information available."
+msgstr "Tyvärr, ingen tillgänglig formatinformation."
+
+#: outputdirectory.cpp:38
+msgid "By meta data"
+msgstr "Genom metadata"
+
+#: outputdirectory.cpp:39
+msgid "Source directory"
+msgstr "Källkatalog"
+
+#: outputdirectory.cpp:40
+msgid "Specify output directory"
+msgstr "Bestäm målkatalog"
+
+#: outputdirectory.cpp:41
+msgid "Copy directory structure"
+msgstr "Kopiera katalogstruktur"
+
+#: outputdirectory.cpp:52 outputdirectory.cpp:495
+msgid "Choose an output directory"
+msgstr "Välj en målkatalog"
+
+#: outputdirectory.cpp:57
+msgid "Open the output directory with Dolphin"
+msgstr "Öppna målkatalogen med Dolphin"
+
+#: outputdirectory.cpp:231 outputdirectory.cpp:242
+msgid "Unknown Artist"
+msgstr "Okänd artist"
+
+#: outputdirectory.cpp:247
+msgid "Unknown Album"
+msgstr "Okänt album"
+
+#: outputdirectory.cpp:251
+msgid "No Comment"
+msgstr "Ingen kommentar"
+
+#: outputdirectory.cpp:258
+msgid "Unknown Genre"
+msgstr "Okänd genre"
+
+#: outputdirectory.cpp:265
+msgid "Unknown Composer"
+msgstr "Okänd kompositör"
+
+#: outputdirectory.cpp:269
+msgid "Unknown Title"
+msgstr "Okänd titel"
+
+#: outputdirectory.cpp:354
+msgctxt ""
+"will be appended to the filename if a file with the same name already exists"
+msgid "new"
+msgstr "ny"
+
+#: outputdirectory.cpp:550
+msgid "Name all converted files according to the specified pattern"
+msgstr "Namnge alla konverterade filer enligt det angivna mönstret"
+
+#: outputdirectory.cpp:551
+msgid ""
+"The following strings are wildcards that will be replaced\n"
+"by the information in the meta data:\n"
+"\n"
+"%a - Artist\n"
+"%z - Album artist\n"
+"%b - Album\n"
+"%c - Comment\n"
+"%d - Disc number\n"
+"%g - Genre\n"
+"%n - Track number\n"
+"%p - Composer\n"
+"%t - Title\n"
+"%y - Year\n"
+"%f - Original file name\n"
+"%s - Path to the source directory\n"
+"\n"
+"You may parenthesize these wildcards and surrounding characters with squared "
+"brackets ('[' and ']')\n"
+"so they will be ignored if the replacement value is empty.\n"
+"In order to use squared brackets you will have to escape them with a "
+"backslash ('\\[' and '\\]')."
+msgstr ""
+"De följande strängarna är platshållare som kommer att bytas ut\n"
+"av informationen i metadatan:\n"
+"\n"
+"%a - Artist\n"
+"%z - Albumartist\n"
+"%b - Album\n"
+"%c - Kommentar\n"
+"%d - Skivnummer\n"
+"%g - Genre\n"
+"%n - Spårummer\n"
+"%p - Kompositör\n"
+"%t - Titel\n"
+"%y - År\n"
+"%f - Ursprungligt filnamn\n"
+"%s - Sökväg till källkatalogen\n"
+"\n"
+"Du kan sätta platshållarna och omgivande tecken inom hakparentes ('[' och "
+"']')\n"
+"för att de ska ignoreras om ersättningsvärdet är tomt.\n"
+"För att kunna använda hakparentes måste du lämna dem med ett omvänt "
+"snedstreck ('\\[' and '\\]')."
+
+#: outputdirectory.cpp:563
+msgid ""
+"Output all converted files into the same directory as the original files"
+msgstr "Spara alla konverterade filer i samma katalog som originalfilerna"
+
+#: outputdirectory.cpp:574
+msgid "Output all converted files into the specified output directory"
+msgstr "Spara alla konverterade filer i angiven katalog"
+
+#: outputdirectory.cpp:585
+msgid "Copy the whole directory structure for all converted files"
+msgstr "Kopiera hela katalogstrukturen for alla konverterade filer"
+
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:27
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:27
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:82
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:34
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:31
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:32
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:33
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:61
+msgid "Mode:"
+msgstr "Metod:"
+
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:31
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:135
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:31
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:106
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:87
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:223
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:38
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:130
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:35
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:117
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:37
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:125
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:269
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:37
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:126
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:65
+msgid "Bitrate"
+msgstr "Bitrate"
+
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:42
+#: plugins/soundkonverter_codec_aften/aftencodecwidget.cpp:52
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:230
+#: plugins/soundkonverter_codec_faac/faaccodecwidget.cpp:231
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:470
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:471
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:79
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:89
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:288
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:289
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:170
+#: plugins/soundkonverter_codec_speex/speexcodecwidget.cpp:171
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:257
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:258
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:263
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:264
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:302
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:303
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:631
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:632
+msgid ""
+"Quality level from %1 to %2 where %2 is the highest quality.\n"
+"The higher the quality, the bigger the file size and vice versa."
+msgstr ""
+"Kvalitetsnivå från %1 till %2 där %2 är den högsta kvaliteten.\n"
+"Ju högre kvalitet, desto större filstorlek och vice versa. "
+
+#: plugins/soundkonverter_codec_faac/soundkonverter_codec_faac.cpp:87
+msgid "Compile faac with MP4 support."
+msgstr "Kompilera faac med MP4-stöd"
+
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:30
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:30
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:89
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:249
+msgid "Bitrate:"
+msgstr "Bitrate:"
+
+#: plugins/soundkonverter_codec_ffmpeg/ffmpegcodecwidget.cpp:81
+#: plugins/soundkonverter_codec_flake/flakecodecwidget.cpp:59
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:148
+#: plugins/soundkonverter_codec_libav/libavcodecwidget.cpp:81
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:98
+#: plugins/soundkonverter_codec_shorten/shortencodecwidget.cpp:25
+#: plugins/soundkonverter_codec_ttaenc/ttaenccodecwidget.cpp:25
+#: plugins/soundkonverter_codec_twolame/twolamecodecwidget.cpp:63
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:46
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:103
+msgid "Additional encoder arguments:"
+msgstr "Ytterligare kodningsargument"
+
+#: plugins/soundkonverter_codec_ffmpeg/soundkonverter_codec_ffmpeg.cpp:211
+msgid "Enable experimental codecs in the ffmpeg configuration dialog."
+msgstr ""
+"Aktivera experimentella omkodare i konfigurationsdialogrutan för ffmpeg."
+
+#: plugins/soundkonverter_codec_ffmpeg/soundkonverter_codec_ffmpeg.cpp:216
+msgid "Compile ffmpeg with %1 support."
+msgstr "Kompilera ffmpeg med %1 stöd."
+
+#: plugins/soundkonverter_codec_ffmpeg/soundkonverter_codec_ffmpeg.cpp:276
+#: plugins/soundkonverter_codec_fluidsynth/soundkonverter_codec_fluidsynth.cpp:85
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:113
+#: plugins/soundkonverter_codec_libav/soundkonverter_codec_libav.cpp:368
+#: plugins/soundkonverter_codec_opustools/soundkonverter_codec_opustools.cpp:83
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:242
+#: plugins/soundkonverter_replaygain_aacgain/soundkonverter_replaygain_aacgain.cpp:89
+#: plugins/soundkonverter_replaygain_mp3gain/soundkonverter_replaygain_mp3gain.cpp:82
+#: plugins/soundkonverter_ripper_cdparanoia/soundkonverter_ripper_cdparanoia.cpp:82
+msgid "Configure %1"
+msgstr "Konfigurera %1"
+
+#: plugins/soundkonverter_codec_ffmpeg/soundkonverter_codec_ffmpeg.cpp:281
+#: plugins/soundkonverter_codec_libav/soundkonverter_codec_libav.cpp:373
+msgid "Enable experimental codecs"
+msgstr "Aktivera experimentella omkodare"
+
+#: plugins/soundkonverter_codec_ffmpeg/soundkonverter_codec_ffmpeg.cpp:307
+#: plugins/soundkonverter_codec_libav/soundkonverter_codec_libav.cpp:399
+msgid "Please restart soundKonverter in order to activate the changes."
+msgstr "Starta om soundKonverter för att aktivera ändringarna."
+
+#: plugins/soundkonverter_codec_flac/flaccodecwidget.cpp:28
+#: plugins/soundkonverter_codec_flake/flakecodecwidget.cpp:30
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:125
+#: plugins/soundkonverter_codec_mac/maccodecwidget.cpp:30
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:29
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:37
+msgid "Compression level:"
+msgstr "Kompressionsnivå:"
+
+#: plugins/soundkonverter_codec_flac/flaccodecwidget.cpp:40
+#: plugins/soundkonverter_codec_flac/flaccodecwidget.cpp:50
+#: plugins/soundkonverter_codec_mac/maccodecwidget.cpp:42
+#: plugins/soundkonverter_codec_mac/maccodecwidget.cpp:53
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:228
+#: plugins/soundkonverter_filter_sox/soxcodecwidget.cpp:229
+msgid ""
+"Compression level from %1 to %2 where %2 is the best compression.\n"
+"The better the compression, the slower the conversion but the smaller the "
+"file size and vice versa."
+msgstr ""
+"Kompressionsnivå från %1 till %2 där %2 är den bästa kompressionen.\n"
+"Ju bättre kompression, desto långsammare konvertering men mindre filstorlek "
+"och vice versa."
+
+#: plugins/soundkonverter_codec_fluidsynth/soundkonverter_codec_fluidsynth.cpp:90
+msgid "Use SoundFont file:"
+msgstr "Använd SoundFont-fil:"
+
+#: plugins/soundkonverter_codec_fluidsynth/soundkonverter_codec_fluidsynth.cpp:91
+msgid ""
+"In order to convert the midi data to a wave form you need a SoundFont which "
+"maps the midi data to sound effects.\n"
+"Have a look at %1 in order to get SoundFont files."
+msgstr ""
+"För att konvertera mididata till wave-typ behöver du en SoundFont som ändrar "
+"mididata till ljudeffekter.\n"
+"Titta i %1 för att få SoundFont-filer."
+
+#: plugins/soundkonverter_codec_fluidsynth/soundkonverter_codec_fluidsynth.cpp:140
+msgid "FluidSynth is not configured, yet. You need to set a SoundFont file."
+msgstr ""
+"FluidSynth är inte konfigurerat än. Du måste ställa in en SoundFont-fil."
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:33
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:35
+msgid "Preset:"
+msgstr "Förinställning:"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:36
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:398
+msgctxt "Backend profile"
+msgid "Medium"
+msgstr "Medium"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:37
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:405
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:41
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:277
+msgctxt "Backend profile"
+msgid "Standard"
+msgstr "Standard"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:38
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:412
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:42
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:282
+msgctxt "Backend profile"
+msgid "Extreme"
+msgstr "Extrem"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:39
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:419
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:43
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:287
+msgctxt "Backend profile"
+msgid "Insane"
+msgstr "Galen"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:40
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:426
+msgid "Specify bitrate"
+msgstr "Ange bitrate"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:55
+msgid "cbr"
+msgstr "cbr"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:58
+msgid ""
+"Encode using a constant bitrate.\n"
+"Only works with 80, 96, 112, 128, 160, 192, 224, 256 and 320 kbps"
+msgstr ""
+"Koda med konstant bitrate.\n"
+"Fungerar bara med 80, 96, 112, 128, 160, 192, 224, 256 och 320 kbps"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:62
+msgid "Fast encoding"
+msgstr "Snabbkodning"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:65
+msgid ""
+"Use a faster encoding algorithm (results in a slightly lower output quality)."
+msgstr ""
+"Använd en snabbare kodningsalgoritm (leder till något sämre utkvalitet)."
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:108
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:61
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:55
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:57
+msgid "Bitrate mode:"
+msgstr "Bitrate-inställning:"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:111
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:219
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:474
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:64
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:126
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:292
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:60
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:122
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:267
+msgid "Variable"
+msgstr "Varierande"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:112
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:195
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:227
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:493
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:65
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:109
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:133
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:311
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:58
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:93
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:116
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:61
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:105
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:129
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:286
+msgid "Average"
+msgstr "Genomsnittlig"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:113
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:229
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:494
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:66
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:134
+#: plugins/soundkonverter_codec_neroaac/neroaaccodecwidget.cpp:312
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:59
+#: plugins/soundkonverter_codec_opustools/opustoolscodecwidget.cpp:118
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:62
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:130
+#: plugins/soundkonverter_codec_vorbistools/vorbistoolscodecwidget.cpp:287
+msgid "Constant"
+msgstr "Konstant"
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:135
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:144
+msgid ""
+"Compression level from %1 to %2 where %2 is the best compression.\n"
+"The better the compression, the slower the conversion but the smaller the "
+"file size and vice versa.\n"
+"A value of %3 is recommended."
+msgstr ""
+"Kompressionsnivå från %1 till %2 där %2 är den bästa kompressionen.\n"
+"Ju bättre kompression, desto långsammare konvertering men mindre filstorlek "
+"och vice versa.\n"
+"Ett värde på %3 rekommenderas."
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:403
+msgid ""
+"This preset should provide near transparency to most people on most music "
+"(~150 kbps abr)."
+msgstr ""
+"Denna förinställning ger nästan transparens för de flesta för den mesta "
+"musik (~150 kbps abr)."
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:410
+msgid ""
+"This preset should generally be transparent to most people on most music\n"
+"and is already quite high in quality (~230 kbps abr)."
+msgstr ""
+"Denna förinställning är i allmänhet transparent för de flesta för den mesta "
+"musik\n"
+"och ger redan hög kvalitet (~230 kbps abr)."
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:417
+msgid ""
+"If you have extremely good hearing and similar equipment, this preset will "
+"generally provide\n"
+"slightly higher quality than the standard mode (~280 kbps abr)."
+msgstr ""
+"Om du har extremt god hörsel och utrustning, ger denna förinställning i "
+"allmänhet\n"
+"något högre kvalitet än standardinställningen (~280 kbps abr)."
+
+#: plugins/soundkonverter_codec_lame/lamecodecwidget.cpp:424
+msgid ""
+"This preset will usually be overkill for most people and most situations, "
+"but if you must have\n"
+"the absolute highest quality with no regard to filesize, this is the way to "
+"go (320 kbps cbr)."
+msgstr ""
+"Denna förinställning är onödig för de flesta i nästan alla lägen, men om du "
+"måste ha\n"
+"den absolut högsta kvaliteten utan hänsyn till filstorlek är detta rätt läge "
+"(320 kbps cbr)."
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:118
+msgid "Stereo mode:"
+msgstr "Stereoläge:"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:121
+msgid "Automatic"
+msgstr "Automatisk"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:122
+msgid "Joint Stereo"
+msgstr "Joint stereo"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:123
+msgid "Simple Stereo"
+msgstr "Enkel stereo"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:124
+msgid "Forced Joint Stereo"
+msgstr "Tvingad Joint stereo"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:125
+msgid "Dual Mono"
+msgstr "Dual mono"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:168
+#: plugins/soundkonverter_codec_twolame/soundkonverter_codec_twolame.cpp:92
+msgid "About %1"
+msgstr "Omkring %1"
+
+#: plugins/soundkonverter_codec_lame/soundkonverter_codec_lame.cpp:173
+msgid ""
+"LAME is a free high quality MP3 encoder.\n"
+"You can get it at: http://lame.sourceforge.net"
+msgstr ""
+"LAME är en fri MP3 kodare med hög kvalitet.\n"
+"Du kan hämta den på: http://lame.sourceforge.net"
+
+#: plugins/soundkonverter_codec_libav/soundkonverter_codec_libav.cpp:304
+msgid "Enable experimental codecs in the libav configuration dialog."
+msgstr "Aktivera experimentell omkodare i libav dialogfönstret."
+
+#: plugins/soundkonverter_codec_libav/soundkonverter_codec_libav.cpp:308
+msgid "Compile libav with %1 support."
+msgstr "Kompilera libav med &1 stöd."
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:38
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:262
+msgctxt "Backend profile"
+msgid "Telephone"
+msgstr "Telefon"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:39
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:267
+msgctxt "Backend profile"
+msgid "Thumb"
+msgstr "Miniatyrbild"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:40
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:272
+msgctxt "Backend profile"
+msgid "Radio"
+msgstr "Radio"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:44
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:292
+msgctxt "Backend profile"
+msgid "Braindead"
+msgstr "Hjärndöd"
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:47
+msgid "Either use one of MusePacks's presets or your own settings."
+msgstr "Använd antingen en av MusePacks förinställningar eller dina egna."
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:265
+msgid "low quality (~60 kbps abr)."
+msgstr "låg kvalitet (~60 kbps abr)."
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:270
+msgid "low/medium quality (~90 kbps abr)."
+msgstr "låg/medium kvalitet (~90 kbps abr)."
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:275
+msgid "medium quality (~130 kbps abr)."
+msgstr "medium kvalitet (~130 kbps abr)."
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:280
+msgid "high quality (~180 kbps abr)."
+msgstr "hög kvalitet (~180 kbps abr)."
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:285
+msgid "excellent quality (~210 kbps abr)."
+msgstr "utmärkt kvalitet (~210 kbps abr)."
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:290
+msgid "excellent quality (~240 kbps abr)."
+msgstr "utmärkt kvalitet (~240 kbps abr)."
+
+#: plugins/soundkonverter_codec_musepack/musepackcodecwidget.cpp:295
+msgid "excellent quality (~270 kbps abr)."
+msgstr "utmärkt kvalitet (~270 kbps abr)."
+
+#: plugins/soundkonverter_codec_neroaac/soundkonverter_codec_neroaac.cpp:42
+#: plugins/soundkonverter_codec_neroaac/soundkonverter_codec_neroaac.cpp:50
+#: plugins/soundkonverter_codec_neroaac/soundkonverter_codec_neroaac.cpp:58
+msgid "You can download '%1' at '%2' after entering an email address."
+msgstr "Du kan ladda ner '%1' på '%2' efter det du fyllt i en e-postadress."
+
+#: plugins/soundkonverter_codec_opustools/soundkonverter_codec_opustools.cpp:52
+#: plugins/soundkonverter_codec_opustools/soundkonverter_codec_opustools.cpp:60
+#: plugins/soundkonverter_codec_vorbistools/soundkonverter_codec_vorbistools.cpp:38
+#: plugins/soundkonverter_codec_vorbistools/soundkonverter_codec_vorbistools.cpp:46
+#: plugins/soundkonverter_replaygain_metaflac/soundkonverter_replaygain_metaflac.cpp:33
+msgid ""
+"'%1' is usually in the package '%2' which should be shipped with your "
+"distribution."
+msgstr "'%1' finns ofta i paketet '%2' som bör skeppas med din distribution."
+
+#: plugins/soundkonverter_codec_opustools/soundkonverter_codec_opustools.cpp:88
+msgid "Uncoupled channels"
+msgstr "Okopplade kanaler"
+
+#: plugins/soundkonverter_codec_opustools/soundkonverter_codec_opustools.cpp:89
+msgid "Use one mono stream per channel"
+msgstr "Använd en monoström per kanal"
+
+#: plugins/soundkonverter_codec_twolame/soundkonverter_codec_twolame.cpp:97
+msgid ""
+"TwoLame is a free MP2 encoder.\n"
+"You can get it at: http://www.twolame.org"
+msgstr ""
+"TwoLame är en fri MP2 kodare.\n"
+"Du kan hämta den på: http://www.twolame.org"
+
+#: plugins/soundkonverter_codec_wavpack/soundkonverter_codec_wavpack.cpp:46
+#: plugins/soundkonverter_replaygain_wvgain/soundkonverter_replaygain_wvgain.cpp:33
+msgid "'%1' is usually in the package '%2' which you can download at %3"
+msgstr "'%1' finns ofta i paketet '%2' som kan laddas ner på %3"
+
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:33
+msgid "Fast"
+msgstr "Snabb"
+
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:34
+msgid "Normal"
+msgstr "Normal"
+
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:35
+msgid "High quality"
+msgstr "Hög kvalitet"
+
+#: plugins/soundkonverter_codec_wavpack/wavpackcodecwidget.cpp:36
+msgid "Very high quality"
+msgstr "Mycket hög kvalitet"
+
+#: plugins/soundkonverter_filter_normalize/normalizefilterwidget.cpp:23
+msgid "Normalize"
+msgstr "Normalisera"
+
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:188
+msgid "Enable experimental codecs in the sox configuration dialog."
+msgstr "Aktivera experimentella omkodare i sox dialogfönstret."
+
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:192
+msgid "Compile sox with %1 support."
+msgstr "Kompilera sox med %1 stöd."
+
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:247
+msgid "Sample rate change quality:"
+msgstr "Samplingsfrekvens ändra kvalitet:"
+
+#: plugins/soundkonverter_filter_sox/soundkonverter_filter_sox.cpp:250
+msgid "Quick"
+msgstr "Snabbt"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:22
+msgid "Effect:"
+msgstr "Effekt:"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:27
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:189
+#: plugins/soundkonverter_filter_sox/soxfilteroptions.cpp:86
+#: plugins/soundkonverter_filter_sox/soxfilterwidget.cpp:135
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:102
+msgid "Remove this effect"
+msgstr "Ta bort denna effekt"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:106
+msgid "Add"
+msgstr "Lägg till"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:107
+msgid "Add another effect"
+msgstr "Lägg till en annan effekt"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:146
+msgid ""
+"Normalize:\n"
+"Change the volume so all files have the same loudness"
+msgstr ""
+"Normalisera:\n"
+"Ändra volymen så alla filer har samma ljudstyrka"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:150
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:166
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:180
+#: plugins/soundkonverter_replaygain_aacgain/soundkonverter_replaygain_aacgain.cpp:109
+#: plugins/soundkonverter_replaygain_mp3gain/soundkonverter_replaygain_mp3gain.cpp:102
+msgctxt "decibel"
+msgid "dB"
+msgstr "dB"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:162
+msgid ""
+"Bass:\n"
+"Amplify the low frequencies"
+msgstr ""
+"Bas:\n"
+"Förstärk låga frekvenser"
+
+#: plugins/soundkonverter_filter_sox/soxeffectwidget.cpp:176
+msgid ""
+"Treble:\n"
+"Amplify the high frequencies"
+msgstr ""
+"Diskant:\n"
+"Förstärk höga frekvenser"
+
+#: plugins/soundkonverter_filter_sox/soxfilterwidget.cpp:31
+msgid "Sample rate:"
+msgstr "Samplingsfrekvens:"
+
+#: plugins/soundkonverter_filter_sox/soxfilterwidget.cpp:53
+msgid "Sample size:"
+msgstr "Samplingsstorlek:"
+
+#: plugins/soundkonverter_filter_sox/soxfilterwidget.cpp:69
+msgid "Channels:"
+msgstr "Kanaler:"
+
+#: plugins/soundkonverter_filter_sox/soxfilterwidget.cpp:73
+msgid "Mono"
+msgstr "Mono"
+
+#: plugins/soundkonverter_filter_sox/soxfilterwidget.cpp:74
+msgid "Stereo"
+msgstr "Stereo"
+
+#: plugins/soundkonverter_replaygain_aacgain/soundkonverter_replaygain_aacgain.cpp:96
+#: plugins/soundkonverter_replaygain_mp3gain/soundkonverter_replaygain_mp3gain.cpp:89
+msgid "Use tag format:"
+msgstr "Använd etikettformat:"
+
+#: plugins/soundkonverter_replaygain_aacgain/soundkonverter_replaygain_aacgain.cpp:105
+#: plugins/soundkonverter_replaygain_mp3gain/soundkonverter_replaygain_mp3gain.cpp:98
+msgid "Adjust gain:"
+msgstr "Justera förstärkning:"
+
+#: plugins/soundkonverter_replaygain_aacgain/soundkonverter_replaygain_aacgain.cpp:110
+#: plugins/soundkonverter_replaygain_mp3gain/soundkonverter_replaygain_mp3gain.cpp:103
+msgid "Lower or raise the suggested gain"
+msgstr "Sänk eller höj föreslagen förstärkning"
+
+#: plugins/soundkonverter_replaygain_aacgain/soundkonverter_replaygain_aacgain.cpp:115
+#: plugins/soundkonverter_replaygain_mp3gain/soundkonverter_replaygain_mp3gain.cpp:108
+msgid "Modify audio stream"
+msgstr "Ändra ljudström"
+
+#: plugins/soundkonverter_replaygain_aacgain/soundkonverter_replaygain_aacgain.cpp:116
+#: plugins/soundkonverter_replaygain_mp3gain/soundkonverter_replaygain_mp3gain.cpp:109
+msgid ""
+"Write gain adjustments directly into the encoded data. That way the "
+"adjustment works with all mp3 players.\n"
+"Undoing the changes is still possible since correction data will be written "
+"as well."
+msgstr ""
+"Skriv gain-justeringar direkt till kodad data. På det sättet fungerar "
+"justeringar med alla mp3 spelare.\n"
+"Ångra ändringarna är fortfarande möjligt eftersom korrigeringsdata också "
+"kommer att skrivas."
+
+#: plugins/soundkonverter_ripper_cdparanoia/soundkonverter_ripper_cdparanoia.cpp:60
+msgid ""
+"In order to rip audio cds per track or to a single file, you need to install "
+"'cdparanoia'.\n"
+"'cdparanoia' is usually shipped with your distribution, the package name can "
+"vary."
+msgstr ""
+"För att rippa ljud-cd:ar spår för spår eller till en enda fil, måste du "
+"installera 'cdparanoia'.\n"
+"'cdparanoia' skeppas oftast med din distribution, paketnamnet kan växla."
+
+#: plugins/soundkonverter_ripper_cdparanoia/soundkonverter_ripper_cdparanoia.cpp:89
+msgid "Force read speed:"
+msgstr "Tvinga läshastighet:"
+
+#: plugins/soundkonverter_ripper_cdparanoia/soundkonverter_ripper_cdparanoia.cpp:99
+msgctxt "Byte-Order"
+msgid "Endianness:"
+msgstr "Endian:"
+
+#: plugins/soundkonverter_ripper_cdparanoia/soundkonverter_ripper_cdparanoia.cpp:109
+msgid "Maximum read retries:"
+msgstr "Maximala läsförsök:"
+
+#: plugins/soundkonverter_ripper_cdparanoia/soundkonverter_ripper_cdparanoia.cpp:117
+msgid "Enable paranoia"
+msgstr "Aktivera paranoia"
+
+#: plugins/soundkonverter_ripper_cdparanoia/soundkonverter_ripper_cdparanoia.cpp:122
+msgid "Enable extra paranoia"
+msgstr "Aktivera extra paranoia"
+
+#: plugins/soundkonverter_ripper_icedax/soundkonverter_ripper_icedax.cpp:34
+msgid ""
+"In order to rip audio cds per track or to a single file, you need to install "
+"'icedax'.\n"
+"'icedax' is usually shipped with your distribution, the package name can "
+"vary."
+msgstr ""
+"För att rippa cd-skivor per spår eller till en enda fil, måste du installera "
+"'icedax'.\n"
+"'icedax' skickas vanligtvis med din distribution, paketnamnet kan variera."
+
+#: progressindicator.cpp:88
+msgid "Speed:"
+msgstr "Hastighet"
+
+#: progressindicator.cpp:101
+msgid "Remaining time:"
+msgstr "Återstående tid"
+
+#: progressindicator.cpp:164 soundkonverter.cpp:336 soundkonverter.cpp:338
+msgid "Finished"
+msgstr "Färdig"
+
+#: replaygainscanner/replaygainfilelist.cpp:35
+msgid "File"
+msgstr "Fil"
+
+#: replaygainscanner/replaygainfilelist.cpp:37
+msgid "Album"
+msgstr "Album"
+
+#: replaygainscanner/replaygainfilelist.cpp:59
+msgid "Collapse all"
+msgstr "Fäll ihop allt"
+
+#: replaygainscanner/replaygainfilelist.cpp:63
+msgid "Expand all"
+msgstr "Expandera alla"
+
+#. i18n("Calculate Replay Gain"), this );
+#. connect( processAddAction, SIGNAL(triggered()), this, SLOT(processAddSelectedItems()) );
+#. processRemoveAction = new KAction( KIcon("list-remove"), i18n("Remove Replay Gain"), this );
+#. connect( processRemoveAction, SIGNAL(triggered()), this, SLOT(processRemoveSelectedItems()) );
+#. killAction = new KAction( KIcon("process-stop"), i18n("Stop calculation"), this );
+#. connect( killAction, SIGNAL(triggered()), this, SLOT(killSelectedItems()) );
+#: replaygainscanner/replaygainfilelist.cpp:73
+msgid "Move to new Album"
+msgstr "Flytta till nytt album"
+
+#: replaygainscanner/replaygainfilelist.cpp:149
+msgid ""
+"Some tracks can't be added to the album because either the codec or the "
+"sampling rate is different."
+msgstr ""
+"Några spår kan inte läggas till albumet eftersom antingen omkodaren eller "
+"samplingsfrekvensen är annorlunda."
+
+#: replaygainscanner/replaygainfilelist.cpp:1080
+msgid "New album"
+msgstr "Nytt album"
+
+#: replaygainscanner/replaygainprocessor.cpp:118
+msgid "Replay Gain failed. The used backend needs to be configured properly."
+msgstr ""
+"Replay Gain misslyckades. Bakändan som används behöver ställas in rätt."
+
+#: replaygainscanner/replaygainprocessor.cpp:124
+msgid ""
+"Replay Gain failed. The preferred plugin lacks support for a necessary "
+"feature."
+msgstr ""
+"Replay Gain misslyckades. Det föredragna insticksprogrammet saknar stöd för "
+"en nödvändig funktion."
+
+#: replaygainscanner/replaygainprocessor.cpp:131
+msgid "Replay Gain failed. Unknown Error."
+msgstr "Replay Gain misslyckades. Okänt fel."
+
+#: replaygainscanner/replaygainprocessor.cpp:200
+msgid "Replay Gain failed. Exit code: %1"
+msgstr "Replay Gain misslyckades. Exit code: %1"
+
+#: replaygainscanner/replaygainprocessor.cpp:272
+msgid "Adding new item to Replay Gain processing list: '%1'"
+msgstr "Lägger till nytt objekt till Replay Gain bearbetar lista: '%1'"
+
+#: replaygainscanner/replaygainprocessor.cpp:280
+msgid "Replay Gain for %1"
+msgstr "Replay Gain för %1"
+
+#: replaygainscanner/replaygainprocessor.cpp:298
+msgid "Possible Replay Gain backends:"
+msgstr "Möjlig Replay Gain i bakändar:"
+
+#: replaygainscanner/replaygainprocessor.cpp:335
+msgctxt "Conversion exit status"
+msgid "Skipped"
+msgstr "Överhoppad"
+
+#: replaygainscanner/replaygainscanner.cpp:48 soundkonverter.cpp:163
+#: soundkonverterview.cpp:83
+msgid "Add folder..."
+msgstr "Lägg till mapp..."
+
+#: replaygainscanner/replaygainscanner.cpp:49 soundkonverter.cpp:158
+#: soundkonverterview.cpp:82
+msgid "Add files..."
+msgstr "Lägg till filer..."
+
+#: replaygainscanner/replaygainscanner.cpp:55
+msgid "Show soundKonverter main window"
+msgstr "Visa SoundKonverters huvudfönster"
+
+#: replaygainscanner/replaygainscanner.cpp:78
+msgid "Tag untagged"
+msgstr "Etikettera oetiketterade"
+
+#: replaygainscanner/replaygainscanner.cpp:79
+msgid ""
+"Calculate Replay Gain tags for all files in the file list without Replay "
+"Gain tags."
+msgstr ""
+"Beräkna Replay Gain-etiketter för alla filer på listan utan Replay Gain-"
+"etiketter."
+
+#: replaygainscanner/replaygainscanner.cpp:83
+msgid "Untag tagged"
+msgstr "Ta bort etiketter"
+
+#: replaygainscanner/replaygainscanner.cpp:84
+msgid "Remove the Replay Gain tags from all files in the file list."
+msgstr "Ta bort Replay Gain-etiketter från alla filer i fillistan."
+
+#: replaygainscanner/replaygainscanner.cpp:93
+msgid "Force recalculation"
+msgstr "Tvinga omräkning"
+
+#: replaygainscanner/replaygainscanner.cpp:94
+msgid ""
+"Recalculate Replay Gain tags for files that already have Replay Gain tags "
+"set."
+msgstr ""
+"Räkna om Replay Gain-etiketter för filer som redan har Replay Gain etiketter "
+"satta."
+
+#: replaygainscanner/replaygainscanner.cpp:99
+msgid "Close"
+msgstr "Stäng"
+
+#: replaygainscanner/replaygainscanner.cpp:329
+msgid ""
+"There are still Replay Gain jobs running.\n"
+"Do you really want to cancel them?"
+msgstr ""
+"Det finns fortfarande Replay Gain-jobb som kör.\n"
+"Vill du verkligen avbryta dem?"
+
+#: soundkonverter.cpp:47
+msgid "This is soundKonverter %1"
+msgstr "Detta är soundKonverter %1"
+
+#: soundkonverter.cpp:49
+msgid "Compiled with TagLib %1.%2.%3"
+msgstr "Kompilerat med TagLib %1.%2.%3"
+
+#: soundkonverter.cpp:51
+msgid ""
+"Support for cover art in FLAC picture format for Xiph tags requires taglib "
+"1.7 or later."
+msgstr ""
+"Stöd för omslagsbilder i FLAC bildformat för Xiph-etiketter kräver taglib "
+"1.7 eller senare."
+
+#: soundkonverter.cpp:52
+msgid "Support for cover art for ASF/WMA tags requires taglib 1.7 or later."
+msgstr ""
+"Stöd för omslagsbilder för ASF/WMA-etiketter kräver taglib 1.7 eller senare."
+
+#: soundkonverter.cpp:55
+msgid "Support for tags for Ogg Opus files requires taglib 1.9 or later."
+msgstr "Stöd för etiketter för Ogg Opus-filer kräver taglib 1.9 eller senare."
+
+#: soundkonverter.cpp:143
+msgid "View logs..."
+msgstr "Se loggar..."
+
+#: soundkonverter.cpp:148
+msgid "Replay Gain tool..."
+msgstr "Replay Gain-verktyg..."
+
+#: soundkonverter.cpp:153
+msgid "About plugins..."
+msgstr "Om insticksprogram..."
+
+#: soundkonverter.cpp:168 soundkonverterview.cpp:84
+msgid "Add CD tracks..."
+msgstr "Lägg till CD-spår..."
+
+#: soundkonverter.cpp:173 soundkonverterview.cpp:85
+msgid "Add url..."
+msgstr "Lägg till url..."
+
+#: soundkonverter.cpp:178 soundkonverterview.cpp:86
+msgid "Add playlist..."
+msgstr "Lägg till spellista..."
+
+#: soundkonverter.cpp:183
+msgid "Load file list"
+msgstr "Ladda fillista"
+
+#: soundkonverter.cpp:188
+msgid "Save file list"
+msgstr "Spara fillista"
+
+#: soundkonverter.cpp:273
+msgid ""
+"No codec plugins could be loaded. Without codec plugins soundKonverter can't "
+"work.\n"
+"This problem can have two causes:\n"
+"1. You just installed soundKonverter and the KDE System Configuration Cache "
+"is not up-to-date, yet.\n"
+"In this case, run kbuildsycoca4 and restart soundKonverter to fix the "
+"problem.\n"
+"2. Your installation is broken.\n"
+"In this case try reinstalling soundKonverter."
+msgstr ""
+"Inga insticksprogram med omkodare kunde läsas in. Utan insticksprogram med "
+"omkodare fungerar inte soundKonverter.\n"
+"Problemet kan ha två orsaker:\n"
+"1. Du installerade precis soundKonverter och KDE:s systemkonfigurationscache "
+"har inte uppdaterats än.\n"
+"I detta fall, kör kbuildsycoca4 och starta om soundKonverter för att lösa "
+"problemet.\n"
+"2. Din installation är trasig.\n"
+"I detta fall kan du försöka installera om soundKonverter."
+
+#: soundkonverter.cpp:282 soundkonverter.cpp:287 soundkonverter.cpp:302
+msgid "Removing old file: %1"
+msgstr "Tar bort gammal fil: %1"
+
+#: soundkonverterview.cpp:94 soundkonverterview.cpp:97
+msgid "Start"
+msgstr "Starta"
+
+#: soundkonverterview.cpp:104 soundkonverterview.cpp:117
+msgid "Stop"
+msgstr "Stopp"
+
+#: soundkonverterview.cpp:106
+msgid "Stop immediatelly"
+msgstr "Stoppa omedelbart"
+
+#: soundkonverterview.cpp:109
+msgid "Stop after current conversions are completed"
+msgstr "Stoppa då pågående konvertering är slutförd"
+
+#: soundkonverterview.cpp:112
+msgid "Continue after current conversions are completed"
+msgstr "Fortsätt då pågående konverteringar är slutförda"
+
+#: soundkonverterview.cpp:263
+msgid "No CD device found"
+msgstr "Ingen Cd-enhet hittades"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Påvel Nicklasson"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "pavel@frimix.se"
+
+#: rc.cpp:3
+msgid "Audio file converter, CD ripper and Replay Gain tool"
+msgstr "Ljudfilkonverterare, CD-rippare och Replay Gain-verktyg"
+
+#: rc.cpp:4
+msgid "Rip Audio CD with soundKonverter"
+msgstr "Rippa ljud CD med soundKonverter"
